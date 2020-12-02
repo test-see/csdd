@@ -11,5 +11,7 @@ namespace foundation.ef5
         public DbSet<Client> Client { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserVerificationCode> UserVerificationCode { get; set; }
+        public DbSet<DataIdentityCategory> DataIdentityCategory { get; set; }
+        public DbSet<DataWhitePhone> DataWhitePhone { get; set; }
     }
 }

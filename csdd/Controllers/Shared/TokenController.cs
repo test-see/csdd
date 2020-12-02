@@ -23,7 +23,7 @@ namespace csdd.Controllers.Shared
         [HttpPost]
         public string Post(LoginOrRegisterApiModel login)
         {
-            var user = _userService.LoginOrRegisterAsync(login);
+            var user = _userService.LoginOrRegister(login);
             var identity = new ClaimsIdentity();
             var key = Encoding.UTF8.GetBytes(_appConfig.Authentication.IssuerSigningKey);
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Id.ToString()));

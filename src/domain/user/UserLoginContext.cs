@@ -9,27 +9,29 @@ namespace domain.user
     {
         private readonly IUserRespository _userRespository;
         private readonly IUserVerificationCodeRespository _userVerificationCodeRespository;
+        private readonly IDataWhitePhoneRespository _dataWhitePhoneRespository;
         public UserLoginContext(IUserRespository userRespository,
-            IUserVerificationCodeRespository userVerificationCodeRespository)
+            IUserVerificationCodeRespository userVerificationCodeRespository,
+            IDataWhitePhoneRespository dataWhitePhoneRespository)
         {
             _userRespository = userRespository;
             _userVerificationCodeRespository = userVerificationCodeRespository;
+            _dataWhitePhoneRespository = dataWhitePhoneRespository;
         }
-        public async Task<User> LoginOrRegisterAsync(LoginOrRegisterApiModel login)
+        public User LoginOrRegister(LoginOrRegisterApiModel login)
         {
             if (!_userVerificationCodeRespository.CheckVerificationCode(login))
-                throw new UnauthorizedAccessException();
+                throw new UnauthorizedAccessException("phone or code is invalid.");
             var user = _userRespository.GetByPhone(login.Phone);
             if (user == null)
-            {
-                // await _userRespository.AddActiveUserAsync(login.Phone);
-                throw new UnauthorizedAccessException();
-            }
+                throw new UnauthorizedAccessException("the user isnot exist.");
             return user;
         }
         public async Task<string> GenerateVerificationCodeAsync(string phone)
         {
-            // check white phone list
+            var whitephone = _dataWhitePhoneRespository.GetByPhone(phone);
+            if (whitephone == null)
+                throw new UnauthorizedAccessException("this phone is unauth.");
             if (_userVerificationCodeRespository.GetCountVerificationCodeInMinuteOne(phone) > 0)
                 throw new InvalidOperationException("get the verification code too more.");
             await _userVerificationCodeRespository.InActiveVerificationCodeListAsync(phone);

@@ -19,9 +19,9 @@ namespace service.user
             //send sms;
             return code;
         }
-        public async Task<User> LoginOrRegisterAsync(LoginOrRegisterApiModel login)
+        public User LoginOrRegister(LoginOrRegisterApiModel login)
         {
-            return await _userLoginContext.LoginOrRegisterAsync(login);
+            return _userLoginContext.LoginOrRegister(login);
         }
     }
 }
