@@ -21,11 +21,15 @@ namespace domain.user
                 throw new UnauthorizedAccessException();
             var user = _userRespository.GetByPhone(login.Phone);
             if (user == null)
-                await _userRespository.AddActiveUserAsync(login.Phone);
+            {
+                // await _userRespository.AddActiveUserAsync(login.Phone);
+                throw new UnauthorizedAccessException();
+            }
             return user;
         }
         public async Task<string> GenerateVerificationCodeAsync(string phone)
         {
+            // check white phone list
             if (_userVerificationCodeRespository.GetCountVerificationCodeInMinuteOne(phone) > 0)
                 throw new InvalidOperationException("get the verification code too more.");
             await _userVerificationCodeRespository.InActiveVerificationCodeListAsync(phone);
