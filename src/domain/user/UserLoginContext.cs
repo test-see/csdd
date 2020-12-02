@@ -29,8 +29,7 @@ namespace domain.user
         }
         public async Task<string> GenerateVerificationCodeAsync(string phone)
         {
-            var whitephone = _dataWhitePhoneRespository.GetByPhone(phone);
-            if (whitephone == null)
+            if (!_dataWhitePhoneRespository.Exists(phone))
                 throw new UnauthorizedAccessException("this phone is unauth.");
             if (_userVerificationCodeRespository.GetCountVerificationCodeInMinuteOne(phone) > 0)
                 throw new InvalidOperationException("get the verification code too more.");

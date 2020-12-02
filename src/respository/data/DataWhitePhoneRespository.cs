@@ -12,9 +12,9 @@ namespace respository.user
         {
             _context = context;
         }
-        public DataWhitePhone GetByPhone(string phone)
+        public bool Exists(string phone)
         {
-            return _context.DataWhitePhone.Where(x => x.Phone == phone).FirstOrDefault();
+            return _context.DataWhitePhone.Where(x => x.Phone == phone).Any();
         }
     }
 }

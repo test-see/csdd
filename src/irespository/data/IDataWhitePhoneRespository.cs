@@ -4,6 +4,6 @@ namespace irespository.user
 {
     public interface IDataWhitePhoneRespository
     {
-        DataWhitePhone GetByPhone(string phone);
+        bool Exists(string phone);
     }
 }
