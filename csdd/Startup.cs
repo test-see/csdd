@@ -24,7 +24,7 @@ namespace csdd
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            AppConfig = Configuration.Get<AppConfig>();
+            AppConfig = Configuration.GetSection("AppConfig").Get<AppConfig>();
         }
 
         public IConfiguration Configuration { get; }
