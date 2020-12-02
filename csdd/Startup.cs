@@ -86,6 +86,7 @@ namespace csdd
             });
 
             var logpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "nlog");
+            if (!Directory.Exists(logpath)) Directory.CreateDirectory(logpath);
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(logpath),
