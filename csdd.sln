@@ -11,17 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.domain", "2.domain", "{04
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.service", "3.service", "{6249983F-7CF5-46CB-BB70-A585ACC30046}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "foundation", "foundation\foundation.csproj", "{4DDA4978-D114-4D29-8163-97E6493BA084}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "foundation", "src\foundation\foundation.csproj", "{4DDA4978-D114-4D29-8163-97E6493BA084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "domain", "domain\domain.csproj", "{CC986B4E-ACC1-4F8B-9B91-68868E6865E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "domain", "src\domain\domain.csproj", "{CC986B4E-ACC1-4F8B-9B91-68868E6865E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "irespository", "irespository\irespository.csproj", "{9A2B0DE6-DF80-4C8E-B1F1-91ADD94A6F5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "irespository", "src\irespository\irespository.csproj", "{9A2B0DE6-DF80-4C8E-B1F1-91ADD94A6F5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "service", "service\service.csproj", "{F8904D89-8187-4E9D-B4F2-DA833F271168}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "service", "src\service\service.csproj", "{F8904D89-8187-4E9D-B4F2-DA833F271168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "respository", "respository\respository.csproj", "{0F1134D0-DFCE-4870-B8FD-06888A973328}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "respository", "src\respository\respository.csproj", "{0F1134D0-DFCE-4870-B8FD-06888A973328}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iservice", "iservice\iservice.csproj", "{5C22208C-9EFC-4D1B-AA1F-9E4E18FF9D7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iservice", "src\iservice\iservice.csproj", "{5C22208C-9EFC-4D1B-AA1F-9E4E18FF9D7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
