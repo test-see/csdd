@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using irespository.user;
 using iservice.user;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -21,6 +22,7 @@ namespace csdd.Controllers.Shared
             _appConfig = appConfig;
         }
         [HttpPost]
+        [AllowAnonymous]
         public string Post(LoginOrRegisterApiModel login)
         {
             var user = _userService.LoginOrRegister(login);
