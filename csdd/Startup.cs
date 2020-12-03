@@ -15,7 +15,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using VueCliMiddleware;
 
 namespace csdd
 {
@@ -49,10 +48,6 @@ namespace csdd
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp";
-            });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
@@ -75,7 +70,6 @@ namespace csdd
             }
             app.UseHealthChecks("/health");
             app.UseRouting();
-            app.UseSpaStaticFiles();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -104,20 +98,6 @@ namespace csdd
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
-
-            app.UseSpa(spa =>
-            {
-                if (env.IsDevelopment())
-                    spa.Options.SourcePath = "ClientApp/";
-                else
-                    spa.Options.SourcePath = "dist";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseVueCli(npmScript: "serve");
-                }
-
             });
         }
     }
