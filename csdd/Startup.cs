@@ -1,3 +1,4 @@
+using csdd.Middlewares;
 using foundation.config;
 using foundation.ef5;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -69,6 +70,7 @@ namespace csdd
                 app.UseDeveloperExceptionPage();
             }
             app.UseHealthChecks("/health");
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseRouting();
 
             app.UseAuthentication();
