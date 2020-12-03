@@ -6,5 +6,6 @@ namespace iservice.data.model
     public class DataTouristRegisterApiModel
     {
         public IEnumerable<DataIdentityCategory> IdentityCategories { get; set; }
+        public IEnumerable<DataProvince> Provinces { get; set; }
     }
 }
