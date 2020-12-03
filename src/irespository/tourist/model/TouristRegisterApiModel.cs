@@ -1,6 +1,6 @@
 ﻿namespace irespository.tourist.model
 {
-    public class TouristCreateApiModel
+    public class TouristRegisterApiModel
     {
         public string Username { get; set; }
         public string Phone { get; set; }
