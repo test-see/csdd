@@ -22,7 +22,7 @@ namespace foundation.ef5
         #region data
         public DbSet<DataIdentityCategory> DataIdentityCategory { get; set; }
         public DbSet<DataWhitePhone> DataWhitePhone { get; set; }
-
+        public DbSet<DataProvince> DataProvince { get; set; }
         #endregion
 
         #region tourist
