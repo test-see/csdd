@@ -27,6 +27,7 @@ namespace foundation.ef5
 
         #region hospital
         public DbSet<Hospital> Hospital { get; set; }
+        public DbSet<HospitalDepartment> HospitalDepartment { get; set; }
         #endregion
 
         #region tourist
