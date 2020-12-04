@@ -3,6 +3,7 @@ using foundation.exception;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
 using System.Net;
@@ -33,7 +34,8 @@ namespace csdd.Middlewares
                 var code = ex is DefaultException ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.InternalServerError;
                 var response = new OkMessage(code, ex.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                var data = JsonConvert.SerializeObject(response, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                await context.Response.WriteAsync(data);
             }
         }
     }
