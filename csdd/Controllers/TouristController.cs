@@ -1,7 +1,6 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
 using iservice.data;
-using iservice.data.model;
 using iservice.tourist;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +24,15 @@ namespace csdd.Controllers
         public OkMessage GetStepOneData()
         {
             var data = _dataTouristRegisterService.GetStepOneData();
+            return new OkMessage(data);
+        }
+
+        [HttpGet]
+        [Route("register/steptwo/hospital")]
+        [AllowAnonymous]
+        public OkMessage GetStepTowHospital(int provinceId)
+        {
+            var data = _touristService.GetHospitals(provinceId);
             return new OkMessage(data);
         }
     }
