@@ -1,13 +1,12 @@
-﻿using foundation.ef5.poco;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace irespository.tourist.model
 {
     public class TouristRegisterApiModel
     {
-        public TouristRegisterStepOneApiModel Profile { get; set; }
-        public IEnumerable<TouristClientPreference> TouristClientPreferences { get; set; }
-        public IEnumerable<TouristHospitalPreference> TouristHospitalPreferences { get; set; }
-        public IEnumerable<TouristSalesPreference> TouristSalesPreferences { get; set; }
+        public TouristRegisterProfileApiModel Profile { get; set; }
+        public IEnumerable<TouristRegisterClientPreferenceApiModel> ClientPreferences { get; set; }
+        public IEnumerable<TouristRegisterHospitalPreferenceApiModel> HospitalPreferences { get; set; }
+        public IEnumerable<TouristRegisterSalesPreferenceApiModel> SalesPreferences { get; set; }
     }
 }
