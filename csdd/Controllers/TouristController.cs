@@ -1,4 +1,5 @@
 ﻿using csdd.Controllers.Shared;
+using foundation.config;
 using iservice.data;
 using iservice.data.model;
 using iservice.tourist;
@@ -21,9 +22,10 @@ namespace csdd.Controllers
         [HttpGet]
         [Route("register/data")]
         [AllowAnonymous]
-        public DataTouristRegisterApiModel GetData()
+        public OkMessage GetData()
         {
-            return _dataTouristRegisterService.GetData();
+            var data = _dataTouristRegisterService.GetData();
+            return new OkMessage(data);
         }
     }
 }

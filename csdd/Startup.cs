@@ -70,7 +70,8 @@ namespace csdd
                 app.UseDeveloperExceptionPage();
             }
             app.UseHealthChecks("/health");
-            app.UseMiddleware<ExceptionMiddleware>();
+            app.UseWhen(p => p.Request.Path.Value.StartsWith("/api"), action => action.UseMiddleware<ApiResponseMiddleware>());
+
             app.UseRouting();
 
             app.UseAuthentication();
