@@ -34,9 +34,9 @@ namespace service.tourist
         {
             return _hospitalDepartmentRespository.GetListByHospital(hospitalId);
         }
-        public IEnumerable<HospitalGoods> GetHospitalGoods(int hospitalId)
+        public IEnumerable<HospitalGoods> GetHospitalGoods(int hospitalId, string name)
         {
-            return _hospitalGoodsRespository.GetListByHospital(hospitalId);
+            return _hospitalGoodsRespository.GetListByHospital(hospitalId, name);
         }
     }
 }

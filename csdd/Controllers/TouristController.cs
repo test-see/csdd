@@ -28,7 +28,7 @@ namespace csdd.Controllers
         }
 
         [HttpGet]
-        [Route("register/steptwo/hospital")]
+        [Route("register/steptwo/{provinceId}/hospital")]
         [AllowAnonymous]
         public OkMessage GetStepTowHospitals(int provinceId)
         {
@@ -37,7 +37,7 @@ namespace csdd.Controllers
         }
 
         [HttpGet]
-        [Route("register/steptwo/client")]
+        [Route("register/steptwo/{provinceId}/client")]
         [AllowAnonymous]
         public OkMessage GetStepTowClients(int provinceId)
         {
@@ -46,7 +46,7 @@ namespace csdd.Controllers
         }
 
         [HttpGet]
-        [Route("register/steptwo/department")]
+        [Route("register/steptwo/{hospitalId}/department")]
         [AllowAnonymous]
         public OkMessage GetStepTowDepartments(int hospitalId)
         {
@@ -55,11 +55,11 @@ namespace csdd.Controllers
         }
 
         [HttpGet]
-        [Route("register/steptwo/goods")]
+        [Route("register/steptwo/{hospitalId}/goods")]
         [AllowAnonymous]
-        public OkMessage GetStepTowGoods(int hospitalId)
+        public OkMessage GetStepTowGoods(int hospitalId, string name)
         {
-            var data = _touristService.GetHospitalGoods(hospitalId);
+            var data = _touristService.GetHospitalGoods(hospitalId, name);
             return new OkMessage(data);
         }
     }

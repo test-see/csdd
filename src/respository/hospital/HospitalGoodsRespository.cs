@@ -14,9 +14,9 @@ namespace respository.hospital
             _context = context;
         }
 
-        public IEnumerable<HospitalGoods> GetListByHospital(int hospitalId)
+        public IEnumerable<HospitalGoods> GetListByHospital(int hospitalId, string name)
         {
-            return _context.HospitalGoods.Where(x => x.HospitalId == hospitalId).ToList();
+            return _context.HospitalGoods.Where(x => x.HospitalId == hospitalId && x.Name.Contains(name)).ToList();
         }
     }
 }
