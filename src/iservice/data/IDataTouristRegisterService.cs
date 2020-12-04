@@ -4,6 +4,6 @@ namespace iservice.data
 {
     public interface IDataTouristRegisterService
     {
-        DataTouristRegisterApiModel GetData();
+        DataTouristRegisterApiModel GetStepOneData();
     }
 }

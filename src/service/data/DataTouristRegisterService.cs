@@ -15,7 +15,7 @@ namespace service.data
             _dataProvinceRespository = dataProvinceRespository;
         }
 
-        public DataTouristRegisterApiModel GetData()
+        public DataTouristRegisterApiModel GetStepOneData()
         {
             var data = new DataTouristRegisterApiModel();
             data.IdentityCategories = _dataIdentityCategoryrRespository.GetList();

@@ -25,6 +25,9 @@ namespace foundation.ef5
         public DbSet<DataProvince> DataProvince { get; set; }
         #endregion
 
+        #region hospital
+        #endregion
+
         #region tourist
         public DbSet<Tourist> Tourist { get; set; }
         public DbSet<TouristClientPreference> TouristClientPreference { get; set; }

@@ -20,11 +20,11 @@ namespace csdd.Controllers
         }
 
         [HttpGet]
-        [Route("register/data")]
+        [Route("register/stepone/data")]
         [AllowAnonymous]
-        public OkMessage GetData()
+        public OkMessage GetStepOneData()
         {
-            var data = _dataTouristRegisterService.GetData();
+            var data = _dataTouristRegisterService.GetStepOneData();
             return new OkMessage(data);
         }
     }
