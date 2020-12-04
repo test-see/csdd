@@ -1,9 +1,11 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
+using irespository.tourist.model;
 using iservice.data;
 using iservice.tourist;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers
 {
@@ -60,6 +62,15 @@ namespace csdd.Controllers
         public OkMessage GetStepTowGoods(int hospitalId, string name)
         {
             var data = _touristService.GetHospitalGoods(hospitalId, name);
+            return new OkMessage(data);
+        }
+
+        [HttpPost]
+        [Route("register/tourist")]
+        [AllowAnonymous]
+        public async Task<OkMessage> CreateTouristAsync(TouristRegisterApiModel tourist)
+        {
+            var data = await _touristService.CreateTouristAsync(tourist);
             return new OkMessage(data);
         }
     }
