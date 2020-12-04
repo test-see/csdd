@@ -8,5 +8,6 @@ namespace iservice.tourist
         IEnumerable<Hospital> GetHospitals(int provinceId);
         IEnumerable<Client> GetClients(int provinceId);
         IEnumerable<HospitalDepartment> GetHospitalDepartments(int hospitalId);
+        IEnumerable<HospitalGoods> GetHospitalGoods(int hospitalId);
     }
 }

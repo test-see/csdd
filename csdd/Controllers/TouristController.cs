@@ -53,5 +53,14 @@ namespace csdd.Controllers
             var data = _touristService.GetHospitalDepartments(hospitalId);
             return new OkMessage(data);
         }
+
+        [HttpGet]
+        [Route("register/steptwo/goods")]
+        [AllowAnonymous]
+        public OkMessage GetStepTowGoods(int hospitalId)
+        {
+            var data = _touristService.GetHospitalGoods(hospitalId);
+            return new OkMessage(data);
+        }
     }
 }
