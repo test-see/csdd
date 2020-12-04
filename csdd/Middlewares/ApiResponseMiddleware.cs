@@ -31,7 +31,7 @@ namespace csdd.Middlewares
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Path: {context.Request.Path}. Message: {ex.Message}");
-                var code = ex is DefaultException ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.InternalServerError;
+                var code = (ex as DefaultException)?.StatusCode ?? context.Response.StatusCode;
                 var response = new OkMessage(code, ex.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                 var data = JsonConvert.SerializeObject(response, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
