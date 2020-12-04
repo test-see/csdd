@@ -30,9 +30,18 @@ namespace csdd.Controllers
         [HttpGet]
         [Route("register/steptwo/hospital")]
         [AllowAnonymous]
-        public OkMessage GetStepTowHospital(int provinceId)
+        public OkMessage GetStepTowHospitals(int provinceId)
         {
             var data = _touristService.GetHospitals(provinceId);
+            return new OkMessage(data);
+        }
+
+        [HttpGet]
+        [Route("register/steptwo/client")]
+        [AllowAnonymous]
+        public OkMessage GetStepTowClients(int provinceId)
+        {
+            var data = _touristService.GetClients(provinceId);
             return new OkMessage(data);
         }
 
