@@ -11,6 +11,7 @@ namespace iservice.tourist
         IEnumerable<Client> GetClients(int provinceId);
         IEnumerable<HospitalDepartment> GetHospitalDepartments(int hospitalId);
         IEnumerable<HospitalGoods> GetHospitalGoods(int hospitalId, string name);
+        IEnumerable<HospitalClient> GetHospitalClients(int hospitalId, string name);
         Task<int> CreateTouristAsync(TouristRegisterApiModel tourist);
     }
 }

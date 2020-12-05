@@ -16,17 +16,20 @@ namespace service.tourist
         private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
         private readonly ITouristRegisterFactory _touristRegisterFactory;
+        private readonly IHospitalClientRespository _hospitalClientRespository;
         public TouristService(IHospitalRespository hospitalRespository,
             IClientRespository clientRespository,
             IHospitalDepartmentRespository hospitalDepartmentRespository,
             IHospitalGoodsRespository hospitalGoodsRespository,
-            ITouristRegisterFactory touristRegisterFactory)
+            ITouristRegisterFactory touristRegisterFactory,
+            IHospitalClientRespository hospitalClientRespository)
         {
             _hospitalRespository = hospitalRespository;
             _clientRespository = clientRespository;
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
             _hospitalGoodsRespository = hospitalGoodsRespository;
             _touristRegisterFactory = touristRegisterFactory;
+            _hospitalClientRespository = hospitalClientRespository;
         }
         public IEnumerable<Hospital> GetHospitals(int provinceId)
         {
@@ -43,6 +46,10 @@ namespace service.tourist
         public IEnumerable<HospitalGoods> GetHospitalGoods(int hospitalId, string name)
         {
             return _hospitalGoodsRespository.GetListByHospital(hospitalId, name);
+        }
+        public IEnumerable<HospitalClient> GetHospitalClients(int hospitalId, string name)
+        {
+            return _hospitalClientRespository.GetListByHospital(hospitalId, name);
         }
         public async Task<int> CreateTouristAsync(TouristRegisterApiModel tourist)
         {

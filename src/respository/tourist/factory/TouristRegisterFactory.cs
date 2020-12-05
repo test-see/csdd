@@ -32,7 +32,7 @@ namespace respository.tourist
                     await _context.TouristClientPreference.AddAsync(new TouristClientPreference
                     {
                         ClientId = client.ClientId,
-                        HospitalId = client.HospitalId,
+                        HospitalClientId = client.HospitalClientId,
                         TouristId = data.Entity.Id,
                     });
                 }

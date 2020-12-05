@@ -11,7 +11,7 @@ namespace foundation.ef5.poco
         public int TouristId { get; set; }
         [Column("client_id")]
         public int ClientId { get; set; }
-        [Column("hospital_id")]
-        public int HospitalId { get; set; }
+        [Column("hospital_client_id")]
+        public int HospitalClientId { get; set; }
     }
 }
