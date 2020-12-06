@@ -27,33 +27,33 @@ namespace respository.tourist
                     Username = tourist.Profile.Username,
                     CreateTime = DateTime.UtcNow,
                 });
-                _context.SaveChanges();
-                //foreach (var client in tourist.ClientPreferences)
-                //{
-                //    await _context.TouristClientPreference.AddAsync(new TouristClientPreference
-                //    {
-                //        ClientId = client.ClientId,
-                //        HospitalClientId = client.HospitalClientId,
-                //        TouristId = profile.Entity.Id,
-                //    });
-                //}
-                //foreach (var hospital in tourist.HospitalPreferences)
-                //{
-                //    await _context.TouristHospitalPreference.AddAsync(new TouristDepartmentPreference
-                //    {
-                //        DepartmentId = hospital.DepartmentId,
-                //        TouristId = profile.Entity.Id,
-                //    });
-                //}
-                //foreach (var sales in tourist.SalesPreferences)
-                //{
-                //    await _context.TouristSalesPreference.AddAsync(new TouristSalesPreference
-                //    {
-                //        HospitalGoodsId = sales.HospitalGoodsId,
-                //        TouristId = profile.Entity.Id,
-                //    });
-                //}
-                //_context.SaveChanges();
+                await _context.SaveChangesAsync();
+                foreach (var client in tourist.ClientPreferences)
+                {
+                    await _context.TouristClientPreference.AddAsync(new TouristClientPreference
+                    {
+                        ClientId = client.ClientId,
+                        HospitalClientId = client.HospitalClientId,
+                        TouristId = profile.Entity.Id,
+                    });
+                }
+                foreach (var hospital in tourist.HospitalPreferences)
+                {
+                    await _context.TouristHospitalPreference.AddAsync(new TouristDepartmentPreference
+                    {
+                        DepartmentId = hospital.DepartmentId,
+                        TouristId = profile.Entity.Id,
+                    });
+                }
+                foreach (var sales in tourist.SalesPreferences)
+                {
+                    await _context.TouristSalesPreference.AddAsync(new TouristSalesPreference
+                    {
+                        HospitalGoodsId = sales.HospitalGoodsId,
+                        TouristId = profile.Entity.Id,
+                    });
+                }
+                await _context.SaveChangesAsync();
                 await trans.CommitAsync();
                 return profile.Entity.Id;
             }
