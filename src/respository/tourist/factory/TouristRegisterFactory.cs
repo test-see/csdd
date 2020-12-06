@@ -53,6 +53,7 @@ namespace respository.tourist
                         TouristId = data.Entity.Id,
                     });
                 }
+                _context.SaveChanges();
                 await trans.CommitAsync();
                 return data.Entity.Id;
             }
