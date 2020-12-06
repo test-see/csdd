@@ -39,9 +39,8 @@ namespace respository.tourist
                 }
                 foreach (var hospital in tourist.HospitalPreferences)
                 {
-                    await _context.TouristHospitalPreference.AddAsync(new TouristHospitalPreference
+                    await _context.TouristHospitalPreference.AddAsync(new TouristDepartmentPreference
                     {
-
                         DepartmentId = hospital.DepartmentId,
                         TouristId = profile.Entity.Id,
                     });

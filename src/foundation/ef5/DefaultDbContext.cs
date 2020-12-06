@@ -35,7 +35,7 @@ namespace foundation.ef5
         #region tourist
         public DbSet<Tourist> Tourist { get; set; }
         public DbSet<TouristClientPreference> TouristClientPreference { get; set; }
-        public DbSet<TouristHospitalPreference> TouristHospitalPreference { get; set; }
+        public DbSet<TouristDepartmentPreference> TouristHospitalPreference { get; set; }
         public DbSet<TouristSalesPreference> TouristSalesPreference { get; set; }
         #endregion
     }

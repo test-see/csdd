@@ -2,8 +2,8 @@
 
 namespace foundation.ef5.poco
 {
-    [Table("tourist_hospital_preference")]
-    public class TouristHospitalPreference
+    [Table("tourist_department_preference")]
+    public class TouristDepartmentPreference
     {
         [Column("id")]
         public int Id { get; set; }
