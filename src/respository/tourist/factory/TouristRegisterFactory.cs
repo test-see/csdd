@@ -28,15 +28,15 @@ namespace respository.tourist
                     CreateTime = DateTime.UtcNow,
                 });
                 _context.SaveChanges();
-                foreach (var client in tourist.ClientPreferences)
-                {
-                    await _context.TouristClientPreference.AddAsync(new TouristClientPreference
-                    {
-                        ClientId = client.ClientId,
-                        HospitalClientId = client.HospitalClientId,
-                        TouristId = profile.Entity.Id,
-                    });
-                }
+                //foreach (var client in tourist.ClientPreferences)
+                //{
+                //    await _context.TouristClientPreference.AddAsync(new TouristClientPreference
+                //    {
+                //        ClientId = client.ClientId,
+                //        HospitalClientId = client.HospitalClientId,
+                //        TouristId = profile.Entity.Id,
+                //    });
+                //}
                 //foreach (var hospital in tourist.HospitalPreferences)
                 //{
                 //    await _context.TouristHospitalPreference.AddAsync(new TouristDepartmentPreference
@@ -53,7 +53,7 @@ namespace respository.tourist
                 //        TouristId = profile.Entity.Id,
                 //    });
                 //}
-                _context.SaveChanges();
+                //_context.SaveChanges();
                 await trans.CommitAsync();
                 return profile.Entity.Id;
             }
