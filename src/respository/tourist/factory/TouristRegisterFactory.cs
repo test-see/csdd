@@ -37,22 +37,22 @@ namespace respository.tourist
                         TouristId = profile.Entity.Id,
                     });
                 }
-                foreach (var hospital in tourist.HospitalPreferences)
-                {
-                    await _context.TouristHospitalPreference.AddAsync(new TouristDepartmentPreference
-                    {
-                        DepartmentId = hospital.DepartmentId,
-                        TouristId = profile.Entity.Id,
-                    });
-                }
-                foreach (var sales in tourist.SalesPreferences)
-                {
-                    await _context.TouristSalesPreference.AddAsync(new TouristSalesPreference
-                    {
-                        HospitalGoodsId = sales.HospitalGoodsId,
-                        TouristId = profile.Entity.Id,
-                    });
-                }
+                //foreach (var hospital in tourist.HospitalPreferences)
+                //{
+                //    await _context.TouristHospitalPreference.AddAsync(new TouristDepartmentPreference
+                //    {
+                //        DepartmentId = hospital.DepartmentId,
+                //        TouristId = profile.Entity.Id,
+                //    });
+                //}
+                //foreach (var sales in tourist.SalesPreferences)
+                //{
+                //    await _context.TouristSalesPreference.AddAsync(new TouristSalesPreference
+                //    {
+                //        HospitalGoodsId = sales.HospitalGoodsId,
+                //        TouristId = profile.Entity.Id,
+                //    });
+                //}
                 _context.SaveChanges();
                 await trans.CommitAsync();
                 return profile.Entity.Id;
