@@ -18,7 +18,7 @@ namespace respository.tourist
         {
             using (var trans = await _context.Database.BeginTransactionAsync())
             {
-                var profile = new Tourist
+                var profile = await _context.Tourist.AddAsync(new Tourist
                 {
                     IdentityCategoryId = tourist.Profile.IdentityCategoryId,
                     Phone = tourist.Profile.Phone,
@@ -26,8 +26,7 @@ namespace respository.tourist
                     Status = 0,
                     Username = tourist.Profile.Username,
                     CreateTime = DateTime.UtcNow,
-                };
-                await _context.Tourist.AddAsync(profile);
+                });
                 _context.SaveChanges();
                 foreach (var client in tourist.ClientPreferences)
                 {
@@ -35,7 +34,7 @@ namespace respository.tourist
                     {
                         ClientId = client.ClientId,
                         HospitalClientId = client.HospitalClientId,
-                        TouristId = profile.Id,
+                        TouristId = profile.Entity.Id,
                     });
                 }
                 foreach (var hospital in tourist.HospitalPreferences)
@@ -44,7 +43,7 @@ namespace respository.tourist
                     {
 
                         DepartmentId = hospital.DepartmentId,
-                        TouristId = profile.Id,
+                        TouristId = profile.Entity.Id,
                     });
                 }
                 foreach (var sales in tourist.SalesPreferences)
@@ -52,12 +51,12 @@ namespace respository.tourist
                     await _context.TouristSalesPreference.AddAsync(new TouristSalesPreference
                     {
                         HospitalGoodsId = sales.HospitalGoodsId,
-                        TouristId = profile.Id,
+                        TouristId = profile.Entity.Id,
                     });
                 }
                 _context.SaveChanges();
                 await trans.CommitAsync();
-                return profile.Id;
+                return profile.Entity.Id;
             }
         }
     }
