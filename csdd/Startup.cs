@@ -82,10 +82,7 @@ namespace csdd
             app.UseWhen(p => p.Request.Path.Value.StartsWith("/api"), action => action.UseMiddleware<ApiResponseMiddleware>());
 
             app.UseRouting();
-            app.UseCors(builder => builder
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials());
+            app.UseCors("csdd");
 
             app.UseAuthentication();
             app.UseAuthorization();
