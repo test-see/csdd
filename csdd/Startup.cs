@@ -35,9 +35,17 @@ namespace csdd
         {
             services.AddHealthChecks();
             services.AddControllers();
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("csdd", builder =>
+                {
+                    builder.WithOrigins("*")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
 
-           services.AddSingleton(AppConfig);
+            services.AddSingleton(AppConfig);
             services.AddDbContext<DefaultDbContext>(options => options.UseMySQL(AppConfig.ConnectionString));
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("respository")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
