@@ -66,7 +66,7 @@ namespace csdd.Controllers
         }
 
         [HttpGet]
-        [Route("register/steptwo/{hospitalId}/client")]
+        [Route("register/steptwo/{hospitalId}/hospital/client")]
         [AllowAnonymous]
         public OkMessage GetStepTowClients(int hospitalId, string name)
         {

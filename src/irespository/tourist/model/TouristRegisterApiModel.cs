@@ -6,7 +6,7 @@ namespace irespository.tourist.model
     {
         public TouristRegisterProfileApiModel Profile { get; set; }
         public IEnumerable<TouristRegisterClientPreferenceApiModel> ClientPreferences { get; set; }
-        public IEnumerable<TouristRegisterHospitalPreferenceApiModel> HospitalPreferences { get; set; }
+        public IEnumerable<TouristRegisterDepartmentPreferenceApiModel> HospitalPreferences { get; set; }
         public IEnumerable<TouristRegisterSalesPreferenceApiModel> SalesPreferences { get; set; }
     }
 }

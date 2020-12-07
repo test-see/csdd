@@ -1,6 +1,6 @@
 ﻿namespace irespository.tourist.model
 {
-    public class TouristRegisterHospitalPreferenceApiModel
+    public class TouristRegisterDepartmentPreferenceApiModel
     {
         public int DepartmentId { get; set; }
     }

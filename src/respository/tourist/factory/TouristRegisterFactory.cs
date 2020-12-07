@@ -18,7 +18,7 @@ namespace respository.tourist
         {
             using (var trans = await _context.Database.BeginTransactionAsync())
             {
-                var data = await _context.Tourist.AddAsync(new Tourist
+                var profile = new Tourist
                 {
                     IdentityCategoryId = tourist.Profile.IdentityCategoryId,
                     Phone = tourist.Profile.Phone,
@@ -26,23 +26,24 @@ namespace respository.tourist
                     Status = 0,
                     Username = tourist.Profile.Username,
                     CreateTime = DateTime.UtcNow,
-                });
+                };
+                await _context.Tourist.AddAsync(profile);
+                await _context.SaveChangesAsync();
                 foreach (var client in tourist.ClientPreferences)
                 {
                     await _context.TouristClientPreference.AddAsync(new TouristClientPreference
                     {
                         ClientId = client.ClientId,
                         HospitalClientId = client.HospitalClientId,
-                        TouristId = data.Entity.Id,
+                        TouristId = profile.Id,
                     });
                 }
                 foreach (var hospital in tourist.HospitalPreferences)
                 {
-                    await _context.TouristHospitalPreference.AddAsync(new TouristHospitalPreference
+                    await _context.TouristHospitalPreference.AddAsync(new TouristDepartmentPreference
                     {
-
                         DepartmentId = hospital.DepartmentId,
-                        TouristId = data.Entity.Id,
+                        TouristId = profile.Id,
                     });
                 }
                 foreach (var sales in tourist.SalesPreferences)
@@ -50,11 +51,12 @@ namespace respository.tourist
                     await _context.TouristSalesPreference.AddAsync(new TouristSalesPreference
                     {
                         HospitalGoodsId = sales.HospitalGoodsId,
-                        TouristId = data.Entity.Id,
+                        TouristId = profile.Id,
                     });
                 }
+                await _context.SaveChangesAsync();
                 await trans.CommitAsync();
-                return data.Entity.Id;
+                return profile.Id;
             }
         }
     }
