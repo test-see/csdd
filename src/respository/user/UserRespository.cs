@@ -21,7 +21,7 @@ namespace respository.user
         }
         public User GetByPhone(string phone)
         {
-            return _context.User.Where(x => x.Phone == phone).FirstOrDefault();
+            return _context.User.Where(x => x.Phone == phone && x.IsActive == 1).FirstOrDefault();
         }
     }
 }
