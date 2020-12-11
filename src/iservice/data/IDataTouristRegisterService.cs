@@ -1,9 +1,9 @@
-﻿using iservice.data.model;
+﻿//using iservice.data.model;
 
-namespace iservice.data
-{
-    public interface IDataTouristRegisterService
-    {
-        DataTouristRegisterApiModel GetStepOneData();
-    }
-}
+//namespace iservice.data
+//{
+//    public interface IDataTouristRegisterService
+//    {
+//        DataTouristRegisterApiModel GetStepOneData();
+//    }
+//}
