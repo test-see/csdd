@@ -9,10 +9,10 @@ namespace domain.user
     {
         private readonly IUserRespository _userRespository;
         private readonly IUserVerificationCodeRespository _userVerificationCodeRespository;
-        private readonly IDataWhitePhoneRespository _dataWhitePhoneRespository;
+        private readonly ISysWhitePhoneRespository _dataWhitePhoneRespository;
         public UserLoginContext(IUserRespository userRespository,
             IUserVerificationCodeRespository userVerificationCodeRespository,
-            IDataWhitePhoneRespository dataWhitePhoneRespository)
+            ISysWhitePhoneRespository dataWhitePhoneRespository)
         {
             _userRespository = userRespository;
             _userVerificationCodeRespository = userVerificationCodeRespository;

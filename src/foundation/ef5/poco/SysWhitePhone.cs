@@ -2,8 +2,8 @@
 
 namespace foundation.ef5.poco
 {
-    [Table("data_white_phone")]
-    public class DataWhitePhone
+    [Table("sys_white_phone")]
+    public class SysWhitePhone
     {
         [Column("id")]
         public int Id { get; set; }

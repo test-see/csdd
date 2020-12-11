@@ -21,10 +21,13 @@ namespace foundation.ef5
 
         #region data
         //public DbSet<DataIdentityCategory> DataIdentityCategory { get; set; }
-        public DbSet<DataWhitePhone> DataWhitePhone { get; set; }
         public DbSet<DataProvince> DataProvince { get; set; }
         #endregion
 
+        #region sys
+        //public DbSet<DataIdentityCategory> DataIdentityCategory { get; set; }
+        public DbSet<SysWhitePhone> SysWhitePhone { get; set; }
+        #endregion
         #region hospital
         public DbSet<Hospital> Hospital { get; set; }
         public DbSet<HospitalGoods> HospitalGoods { get; set; }

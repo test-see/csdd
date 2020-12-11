@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace respository.user
 {
-    public class DataWhitePhoneRespository : IDataWhitePhoneRespository
+    public class SysWhitePhoneRespository : ISysWhitePhoneRespository
     {
         private readonly DefaultDbContext _context;
-        public DataWhitePhoneRespository(DefaultDbContext context)
+        public SysWhitePhoneRespository(DefaultDbContext context)
         {
             _context = context;
         }
         public bool Exists(string phone)
         {
-            return _context.DataWhitePhone.Where(x => x.Phone == phone).Any();
+            return _context.SysWhitePhone.Where(x => x.Phone == phone).Any();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace irespository.user
 {
-    public interface IDataWhitePhoneRespository
+    public interface ISysWhitePhoneRespository
     {
         bool Exists(string phone);
     }
