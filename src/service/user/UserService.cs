@@ -16,12 +16,11 @@ namespace service.user
         public async Task<string> GenerateVerificationCodeAsync(string phone)
         {
             var code = await _userLoginContext.GenerateVerificationCodeAsync(phone);
-            //send sms;
             return code;
         }
-        public User LoginOrRegister(LoginOrRegisterApiModel login)
+        public User Login(LoginApiModel login)
         {
-            return _userLoginContext.LoginOrRegister(login);
+            return _userLoginContext.Login(login);
         }
     }
 }

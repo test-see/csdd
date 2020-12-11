@@ -6,7 +6,7 @@ namespace irespository.user
 {
     public interface IUserVerificationCodeRespository
     {
-        bool CheckVerificationCode(LoginOrRegisterApiModel login);
+        bool CheckVerificationCode(LoginApiModel login);
         IEnumerable<UserVerificationCode> GetActiveVerificationCodeList(string phone);
         int GetCountVerificationCodeInMinuteOne(string phone);
         Task InActiveVerificationCodeListAsync(string phone);

@@ -15,7 +15,7 @@ namespace respository.user
         {
             _context = context;
         }
-        public bool CheckVerificationCode(LoginOrRegisterApiModel login)
+        public bool CheckVerificationCode(LoginApiModel login)
         {
             var verification = _context.UserVerificationCode.Where(x => x.Expiration > DateTime.UtcNow && x.IsActive == 1
                 && x.VerificationCode == login.Code && x.Phone == login.Phone).FirstOrDefault();

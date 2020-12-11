@@ -6,7 +6,7 @@ namespace iservice.user
 {
     public interface IUserService
     {
-        User LoginOrRegister(LoginOrRegisterApiModel login);
+        User Login(LoginApiModel login);
         Task<string> GenerateVerificationCodeAsync(string phone);
     }
 }

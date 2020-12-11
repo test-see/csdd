@@ -1,6 +1,6 @@
 ﻿namespace irespository.user
 {
-    public class LoginOrRegisterApiModel
+    public class LoginApiModel
     {
         public string Phone { get; set; }
         public string Code { get; set; }

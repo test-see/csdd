@@ -23,9 +23,9 @@ namespace csdd.Controllers.Shared
         }
         [HttpPost]
         [AllowAnonymous]
-        public OkMessage Post(LoginOrRegisterApiModel login)
+        public OkMessage Post(LoginApiModel login)
         {
-            var user = _userService.LoginOrRegister(login);
+            var user = _userService.Login(login);
             var identity = new ClaimsIdentity();
             var key = Encoding.UTF8.GetBytes(_appConfig.Authentication.IssuerSigningKey);
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Id.ToString()));

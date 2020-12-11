@@ -18,7 +18,7 @@ namespace domain.user
             _userVerificationCodeRespository = userVerificationCodeRespository;
             _dataWhitePhoneRespository = dataWhitePhoneRespository;
         }
-        public User LoginOrRegister(LoginOrRegisterApiModel login)
+        public User Login(LoginApiModel login)
         {
             if (!_userVerificationCodeRespository.CheckVerificationCode(login))
                 throw new DefaultException("phone or code is invalid.");
