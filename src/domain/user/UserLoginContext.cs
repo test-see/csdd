@@ -25,6 +25,8 @@ namespace domain.user
             var user = _userRespository.GetByPhone(login.Phone);
             if (user == null)
                 throw new DefaultException("the user isnot exist.");
+            if (user.IsActive == 0)
+                throw new DefaultException("the user isnot active.");
             return user;
         }
         public async Task<string> GenerateVerificationCodeAsync(string phone)
