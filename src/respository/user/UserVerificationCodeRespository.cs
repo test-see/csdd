@@ -27,8 +27,8 @@ namespace respository.user
         }
         public int GetCountVerificationCodeInMinuteOne(string phone)
         {
-            var limittime = DateTime.UtcNow.AddMinutes(1);
-            var count = _context.UserVerificationCode.Where(x => x.CreateTime < limittime && x.IsActive == 1 && x.Phone == phone).Count();
+            var limittime = DateTime.UtcNow.AddMinutes(-1);
+            var count = _context.UserVerificationCode.Where(x => x.CreateTime > limittime && x.IsActive == 1 && x.Phone == phone).Count();
             return count;
         }
         public async Task InActiveVerificationCodeListAsync(string phone)
