@@ -26,6 +26,7 @@ namespace foundation.ef5
 
         #region sys
         public DbSet<SysWhitePhone> SysWhitePhone { get; set; }
+        public DbSet<SysRole> SysRole { get; set; }
         #endregion
         #region hospital
         public DbSet<Hospital> Hospital { get; set; }

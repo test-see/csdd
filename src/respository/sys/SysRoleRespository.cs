@@ -1,0 +1,47 @@
+﻿using foundation.ef5;
+using foundation.ef5.poco;
+using irespository.sys.model;
+using irespository.user;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace respository.sys
+{
+    public class SysRoleRespository : ISysRoleRespository
+    {
+        private readonly DefaultDbContext _context;
+        public SysRoleRespository(DefaultDbContext context)
+        {
+            _context = context;
+        }
+        public SysRole Create(string name, int userId)
+        {
+            var role = new SysRole { Name = name, UserId = userId, CreateTime = DateTime.UtcNow };
+            _context.SysRole.Add(role);
+            _context.SaveChanges();
+            return role;
+        }
+
+        public int Delete(int id)
+        {
+            var role = _context.SysRole.Find(id);
+            _context.SysRole.Remove(role);
+            _context.SaveChanges();
+            return id;
+        }
+
+        public IEnumerable<RoleListApiModel> GetList()
+        {
+            return (from r in _context.SysRole
+                    join u in _context.User on r.UserId equals u.Id
+                    select new RoleListApiModel
+                    {
+                        CreateTime = r.CreateTime,
+                        Id = r.Id,
+                        Name = r.Name,
+                        CreateUserName = u.Phone,
+                    }).ToList();
+        }
+    }
+}
