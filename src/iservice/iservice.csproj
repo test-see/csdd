@@ -8,4 +8,8 @@
     <ProjectReference Include="..\irespository\irespository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="data\" />
+  </ItemGroup>
+
 </Project>

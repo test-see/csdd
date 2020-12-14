@@ -20,12 +20,11 @@ namespace foundation.ef5
         #endregion
 
         #region data
-        //public DbSet<DataIdentityCategory> DataIdentityCategory { get; set; }
         public DbSet<DataProvince> DataProvince { get; set; }
+        public DbSet<DataMenu> DataMenu { get; set; }
         #endregion
 
         #region sys
-        //public DbSet<DataIdentityCategory> DataIdentityCategory { get; set; }
         public DbSet<SysWhitePhone> SysWhitePhone { get; set; }
         #endregion
         #region hospital
@@ -35,11 +34,5 @@ namespace foundation.ef5
         public DbSet<HospitalClient> HospitalClient { get; set; }
         #endregion
 
-        //#region tourist
-        //public DbSet<Tourist> Tourist { get; set; }
-        //public DbSet<TouristClientPreference> TouristClientPreference { get; set; }
-        //public DbSet<TouristDepartmentPreference> TouristHospitalPreference { get; set; }
-        //public DbSet<TouristSalesPreference> TouristSalesPreference { get; set; }
-        //#endregion
     }
 }
