@@ -69,10 +69,18 @@ namespace csdd
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-                var scheme = new OpenApiSecurityScheme { In = ParameterLocation.Header, Name = "Bearer", Type = SecuritySchemeType.ApiKey, };
-                c.AddSecurityDefinition("Bearer", scheme);
-                var scheme2 = new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }, };
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement() { { scheme2, new List<string>() } });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement() { {  new OpenApiSecurityScheme 
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }, 
+                    },           
+                    new List<string>() } 
+                });
             });
         }
 
