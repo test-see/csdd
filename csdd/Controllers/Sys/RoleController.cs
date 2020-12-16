@@ -20,5 +20,20 @@ namespace csdd.Controllers
             var data = _roleService.GetList();
             return new OkMessage(data);
         }
+
+        [HttpPost]
+        public OkMessage Post(string name)
+        {
+            var data = _roleService.Create(name, UserId);
+            return new OkMessage(data);
+        }
+
+        [HttpPost]
+        [Route("delete")]
+        public OkMessage Delete(int id)
+        {
+            var data = _roleService.Delete(id);
+            return new OkMessage(data);
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace csdd.Controllers.Shared
     [EnableCors("csdd")]
     public class DefaultControllerBase : ControllerBase
     {
+        protected int UserId => int.Parse(HttpContext.User.Identity.Name);
     }
 }

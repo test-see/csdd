@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -54,11 +55,6 @@ namespace csdd
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
               {
@@ -69,6 +65,15 @@ namespace csdd
                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConfig.Authentication.IssuerSigningKey))
                   };
               });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                var scheme = new OpenApiSecurityScheme { In = ParameterLocation.Header, Name = "Bearer", Type = SecuritySchemeType.ApiKey, };
+                c.AddSecurityDefinition("Bearer", scheme);
+                var scheme2 = new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }, };
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement() { { scheme2, new List<string>() } });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
