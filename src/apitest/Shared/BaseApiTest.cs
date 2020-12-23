@@ -1,9 +1,6 @@
 ﻿using Flurl;
 using Flurl.Http;
-using Flurl.Http.Configuration;
 using foundation.config;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Threading.Tasks;
 
@@ -19,7 +16,7 @@ namespace apitest.Shared
             {
                 var code = await _rootpath
                     .AppendPathSegment("/api/User/verification/generate")
-                    .SetQueryParams(new { phone = "+8617775776208" })        
+                    .SetQueryParam("phone", "+8617775776208")
                     .GetJsonAsync<OkMessage<string>>();
                 var token = await _rootpath
                     .AppendPathSegment("/api/Token")
