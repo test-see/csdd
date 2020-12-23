@@ -5,6 +5,6 @@ namespace iservice.sys
 {
     public interface IPrivilegeService
     {
-        IEnumerable<MenuEntity> GetList();
+        IEnumerable<MenuEntity> GetMenuList();
     }
 }

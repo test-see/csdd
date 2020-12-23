@@ -14,9 +14,9 @@ namespace csdd.Controllers.Sys
 
         [HttpGet]
         [Route("menu/list")]
-        public JsonResult GetList()
+        public JsonResult GetMenuList()
         {
-            var data = _privilegeService.GetList();
+            var data = _privilegeService.GetMenuList();
             return Json(data);
         }
     }

@@ -12,9 +12,9 @@ namespace service.sys
         {
             _privilegeContext = privilegeContext;
         }
-        public IEnumerable<MenuEntity> GetList()
+        public IEnumerable<MenuEntity> GetMenuList()
         {
-            return _privilegeContext.GetList();
+            return _privilegeContext.GetMenuList();
         }
     }
 }

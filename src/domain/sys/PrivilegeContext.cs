@@ -17,7 +17,7 @@ namespace domain.sys
             _mapper = mapper;
         }
 
-        public IEnumerable<MenuEntity> GetList()
+        public IEnumerable<MenuEntity> GetMenuList()
         {
             var data = _dataMenuRespository.GetList();
             var menus = _mapper.Map<IEnumerable<MenuEntity>>(data.Where(x => x.PatientId == 0));
