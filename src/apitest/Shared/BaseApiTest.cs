@@ -15,7 +15,7 @@ namespace apitest.Shared
             if (string.IsNullOrEmpty(_token))
             {
                 var code = await _rootpath
-                    .AppendPathSegment("/api/User/verification/generate")
+                    .AppendPathSegment("/api/Token/verification/generate")
                     .SetQueryParam("phone", "+8617775776208")
                     .GetJsonAsync<OkMessage<string>>();
                 var token = await _rootpath

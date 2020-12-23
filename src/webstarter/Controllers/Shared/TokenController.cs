@@ -8,6 +8,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Shared
 {
@@ -40,6 +41,15 @@ namespace csdd.Controllers.Shared
             var handler = new JwtSecurityTokenHandler();
             var token = handler.CreateJwtSecurityToken(descriptor);
             return Json(handler.WriteToken(token));
+        }
+
+        [HttpGet]
+        [Route("verification/generate")]
+        [AllowAnonymous]
+        public async Task<JsonResult> GenerateVerificationCodeAsync(string phone)
+        {
+            var data = await _userService.GenerateVerificationCodeAsync(phone);
+            return Json(data);
         }
     }
 }
