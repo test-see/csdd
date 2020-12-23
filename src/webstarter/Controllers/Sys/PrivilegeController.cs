@@ -13,7 +13,7 @@ namespace csdd.Controllers.Sys
         }
 
         [HttpGet]
-        [Route("list")]
+        [Route("menu/list")]
         public JsonResult GetList()
         {
             var data = _privilegeService.GetList();
