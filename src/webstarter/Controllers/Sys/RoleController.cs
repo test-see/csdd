@@ -1,5 +1,4 @@
 ﻿using csdd.Controllers.Shared;
-using foundation.config;
 using iservice.sys;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,25 +14,25 @@ namespace csdd.Controllers
 
         [HttpGet]
         [Route("list")]
-        public OkMessage GetList()
+        public JsonResult GetList()
         {
             var data = _roleService.GetList();
-            return new OkMessage(data);
+            return Json(data);
         }
 
         [HttpPost]
-        public OkMessage Post(string name)
+        public JsonResult Post(string name)
         {
             var data = _roleService.Create(name, UserId);
-            return new OkMessage(data);
+            return Json(data);
         }
 
         [HttpPost]
         [Route("delete")]
-        public OkMessage Delete(int id)
+        public JsonResult Delete(int id)
         {
             var data = _roleService.Delete(id);
-            return new OkMessage(data);
+            return Json(data);
         }
     }
 }

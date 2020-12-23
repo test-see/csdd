@@ -23,7 +23,7 @@ namespace csdd.Controllers.Shared
         }
         [HttpPost]
         [AllowAnonymous]
-        public OkMessage Post(LoginApiModel login)
+        public JsonResult Post(LoginApiModel login)
         {
             var user = _userService.Login(login);
             var identity = new ClaimsIdentity();
@@ -39,7 +39,7 @@ namespace csdd.Controllers.Shared
             };
             var handler = new JwtSecurityTokenHandler();
             var token = handler.CreateJwtSecurityToken(descriptor);
-            return new OkMessage(handler.WriteToken(token));
+            return Json(handler.WriteToken(token));
         }
     }
 }

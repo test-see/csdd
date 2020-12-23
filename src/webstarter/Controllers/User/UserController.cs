@@ -1,5 +1,4 @@
 ﻿using csdd.Controllers.Shared;
-using foundation.config;
 using iservice.user;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +17,10 @@ namespace csdd.Controllers
         [HttpGet]
         [Route("verification/generate")]
         [AllowAnonymous]
-        public async Task<OkMessage> GenerateVerificationCodeAsync(string phone)
+        public async Task<JsonResult> GenerateVerificationCodeAsync(string phone)
         {
             var data = await _userService.GenerateVerificationCodeAsync(phone);
-            return new OkMessage(data);
+            return Json(data);
         }
     }
 }

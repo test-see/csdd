@@ -1,13 +1,16 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace foundation.config
 {
-    public class OkMessage
+    [Serializable]
+    public class OkMessage<T>
     {
-        public dynamic Data { get; } 
-        public int Code { get; } 
+        public T Data { get; }
+        public int Code { get; }
         public string Msg { get; }
-        public OkMessage(dynamic data) { Data = data; Code = (int)HttpStatusCode.OK; Msg = string.Empty;}
-        public OkMessage(int code, string msg) { Code = code; Msg = msg; Data = new { }; }
+        public OkMessage() { }
+        public OkMessage(T data) { Data = data; Code = (int)HttpStatusCode.OK; }
+        public OkMessage(int code, string msg) { Code = code; Msg = msg; }
     }
 }
