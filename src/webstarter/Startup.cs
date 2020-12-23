@@ -1,3 +1,4 @@
+using AutoMapper;
 using csdd.Middlewares;
 using foundation.config;
 using foundation.ef5;
@@ -54,6 +55,12 @@ namespace csdd
                 .AsSelfWithInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddMaps(Assembly.Load("domain"));
+            });
+            services.AddSingleton(config.CreateMapper());
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>

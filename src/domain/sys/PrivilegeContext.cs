@@ -1,20 +1,32 @@
-﻿using foundation.ef5.poco;
+﻿using AutoMapper;
+using domain.sys.entities;
 using irespository.user;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace domain.sys
 {
     public class PrivilegeContext
     {
         private readonly IDataMenuRespository _dataMenuRespository;
-        public PrivilegeContext(IDataMenuRespository dataMenuRespository)
+        private readonly IMapper _mapper;
+        public PrivilegeContext(IDataMenuRespository dataMenuRespository,
+            IMapper mapper)
         {
             _dataMenuRespository = dataMenuRespository;
+            _mapper = mapper;
         }
 
-        public IEnumerable<DataMenu> GetList()
+        public IEnumerable<MenuEntity> GetList()
         {
-            return _dataMenuRespository.GetList();
+            var data = _dataMenuRespository.GetList();
+            var menus = _mapper.Map<IEnumerable<MenuEntity>>(data.Where(x => x.PatientId == 0));
+            foreach(var m in menus)
+            {
+                m.FindChildren(menus.ToList());
+            }
+            return menus;
         }
+
     }
 }

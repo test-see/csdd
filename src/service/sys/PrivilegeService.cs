@@ -1,5 +1,5 @@
 ﻿using domain.sys;
-using foundation.ef5.poco;
+using domain.sys.entities;
 using iservice.sys;
 using System.Collections.Generic;
 
@@ -12,7 +12,7 @@ namespace service.sys
         {
             _privilegeContext = privilegeContext;
         }
-        public IEnumerable<DataMenu> GetList()
+        public IEnumerable<MenuEntity> GetList()
         {
             return _privilegeContext.GetList();
         }

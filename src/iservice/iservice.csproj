@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\domain\domain.csproj" />
     <ProjectReference Include="..\irespository\irespository.csproj" />
   </ItemGroup>
 
