@@ -1,12 +1,10 @@
 ﻿using apitest.Shared;
-using domain.sys.entities;
 using Flurl;
 using Flurl.Http;
 using foundation.config;
+using irespository.sys.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace apitest.Sys
@@ -18,9 +16,9 @@ namespace apitest.Sys
         public async Task Menu_Post_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/Privilege/menu/list")
+                .AppendPathSegment("/api/Privilege/list")
                 .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<IEnumerable<MenuEntity>>>();
+                .GetJsonAsync<OkMessage<IEnumerable<PrivilegeListApiModel>>>();
             Assert.AreEqual(200, message.Code);
         }
     }

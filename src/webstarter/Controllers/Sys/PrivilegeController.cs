@@ -13,11 +13,14 @@ namespace csdd.Controllers.Sys
         }
 
         [HttpGet]
-        [Route("menu/list")]
-        public JsonResult GetMenuList()
+        [Route("list")]
+        public JsonResult GetPrivilegeList(int roleId)
         {
-            var data = _privilegeService.GetMenuList();
+            var data = _privilegeService.GetPrivilegeList(roleId);
             return Json(data);
         }
+
+
+
     }
 }

@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using domain.sys.entities;
-using irespository.user;
+﻿using irespository.sys;
+using irespository.sys.model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,25 +7,21 @@ namespace domain.sys
 {
     public class PrivilegeContext
     {
-        private readonly IDataMenuRespository _dataMenuRespository;
-        private readonly IMapper _mapper;
-        public PrivilegeContext(IDataMenuRespository dataMenuRespository,
-            IMapper mapper)
+        private readonly ISysPrivilegeRespository _sysPrivilegeRespository;
+        public PrivilegeContext(ISysPrivilegeRespository sysPrivilegeRespository)
         {
-            _dataMenuRespository = dataMenuRespository;
-            _mapper = mapper;
+            _sysPrivilegeRespository = sysPrivilegeRespository;
         }
 
-        public IEnumerable<MenuEntity> GetMenuList()
+        public IEnumerable<PrivilegeListApiModel> GetPrivilegeList(int roleId)
         {
-            var data = _dataMenuRespository.GetList();
-            var menus = _mapper.Map<IEnumerable<MenuEntity>>(data.Where(x => x.ParentId == 0));
-            foreach(var m in menus)
+            var all = _sysPrivilegeRespository.GetPrivilegeList(roleId);
+            var privileges = all.Where(x => x.ParentMenuId == 0);
+            foreach(var m in privileges)
             {
-                m.FindChildren(menus.ToList());
+                m.FindChildren(all.ToList());
             }
-            return menus;
-        }
-
+            return privileges;
+        }      
     }
 }

@@ -1,5 +1,5 @@
 ﻿using domain.sys;
-using domain.sys.entities;
+using irespository.sys.model;
 using iservice.sys;
 using System.Collections.Generic;
 
@@ -12,9 +12,9 @@ namespace service.sys
         {
             _privilegeContext = privilegeContext;
         }
-        public IEnumerable<MenuEntity> GetMenuList()
+        public IEnumerable<PrivilegeListApiModel> GetPrivilegeList(int roleId)
         {
-            return _privilegeContext.GetMenuList();
+            return _privilegeContext.GetPrivilegeList(roleId);
         }
     }
 }

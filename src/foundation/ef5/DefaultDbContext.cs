@@ -29,6 +29,7 @@ namespace foundation.ef5
         public DbSet<SysRole> SysRole { get; set; }
         public DbSet<SysPrivilege> SysPrivilege { get; set; }
         #endregion
+
         #region hospital
         public DbSet<Hospital> Hospital { get; set; }
         public DbSet<HospitalGoods> HospitalGoods { get; set; }

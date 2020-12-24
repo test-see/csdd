@@ -1,9 +1,9 @@
 ﻿using irespository.sys.model;
 using System.Collections.Generic;
 
-namespace iservice.sys
+namespace irespository.sys
 {
-    public interface IPrivilegeService
+    public interface ISysPrivilegeRespository
     {
         IEnumerable<PrivilegeListApiModel> GetPrivilegeList(int roleId);
     }
