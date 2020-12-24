@@ -29,7 +29,7 @@ namespace apitest.Sys
             var message = await _rootpath
                 .AppendPathSegment("/api/Privilege/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PrivilegeListUpdateModel { RoleId = 1, })
+                .PostJsonAsync(new PrivilegeListUpdateModel { RoleId = 1, MenuIds = new List<int> { } })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }
