@@ -20,7 +20,7 @@ namespace domain.sys
         public IEnumerable<MenuEntity> GetMenuList()
         {
             var data = _dataMenuRespository.GetList();
-            var menus = _mapper.Map<IEnumerable<MenuEntity>>(data.Where(x => x.PatientId == 0));
+            var menus = _mapper.Map<IEnumerable<MenuEntity>>(data.Where(x => x.ParentId == 0));
             foreach(var m in menus)
             {
                 m.FindChildren(menus.ToList());

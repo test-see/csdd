@@ -12,8 +12,8 @@ namespace foundation.ef5.poco
         public string Name { get; set; }
         [Column("path")]
         public string Path { get; set; }
-        [Column("patient_id")]
-        public int PatientId { get; set; }
+        [Column("parent_id")]
+        public int ParentId { get; set; }
         [Column("createtime")]
         public DateTime CreateTime { get; set; }
     }
