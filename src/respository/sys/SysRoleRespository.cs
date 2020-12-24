@@ -42,10 +42,7 @@ namespace respository.sys
                             Name = r.Name,
                             CreateUserName = u.Phone,
                         };
-            var page = new PagerResult<RoleListApiModel>(query.Index, query.Size);
-            page.Result = sql.Skip(page.Size * (page.Index - 1)).Take(page.Size).ToList();
-            page.Total = sql.Count();
-            return page;
+            return new PagerResult<RoleListApiModel>(query.Index, query.Size, sql);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace csdd.Controllers
         [Route("list")]
         public JsonResult GetList(PagerQuery<RoleListQueryModel> query)
         {
+            query = query ?? new PagerQuery<RoleListQueryModel>();
             var data = _roleService.GetPagerList(query);
             return Json(data);
         }

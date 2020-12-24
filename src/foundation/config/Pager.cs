@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace foundation.config
 {
@@ -14,6 +15,13 @@ namespace foundation.config
         {
             Index = index;
             Size = size;
+        }
+        public PagerResult(int index, int size, IQueryable<T> query)
+        {
+            Index = index;
+            Size = size;
+            Result = query.Skip(size * (index - 1)).Take(size).ToList();
+            Total = query.Count();
         }
     }
 
