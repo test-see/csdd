@@ -31,7 +31,7 @@ namespace respository.sys
             return id;
         }
 
-        public PagerResult<RoleListApiModel, RoleListQueryModel> GetPagerList(RoleListQueryModel query)
+        public PagerResult<RoleListApiModel> GetPagerList(PagerQuery<RoleListQueryModel> query)
         {
             var sql = from r in _context.SysRole
                         join u in _context.User on r.UserId equals u.Id
@@ -42,7 +42,7 @@ namespace respository.sys
                             Name = r.Name,
                             CreateUserName = u.Phone,
                         };
-            var page = new PagerResult<RoleListApiModel, RoleListQueryModel>();
+            var page = new PagerResult<RoleListApiModel>(query.Index, query.Size);
             page.Result = sql.Skip(page.Size * (page.Index - 1)).Take(page.Size).ToList();
             page.Total = sql.Count();
             return page;

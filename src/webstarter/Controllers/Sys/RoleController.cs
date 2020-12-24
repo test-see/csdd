@@ -1,4 +1,5 @@
 ﻿using csdd.Controllers.Shared;
+using foundation.config;
 using irespository.sys.model;
 using iservice.sys;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace csdd.Controllers
 
         [HttpGet]
         [Route("list")]
-        public JsonResult GetList(RoleListQueryModel query)
+        public JsonResult GetList(PagerQuery<RoleListQueryModel> query)
         {
             var data = _roleService.GetPagerList(query);
             return Json(data);

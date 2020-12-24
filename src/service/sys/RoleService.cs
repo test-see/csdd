@@ -23,7 +23,7 @@ namespace service.sys
             return _roleContext.Delete(id);
         }
 
-        public PagerResult<RoleListApiModel, RoleListQueryModel> GetPagerList(RoleListQueryModel query)
+        public PagerResult<RoleListApiModel> GetPagerList(PagerQuery<RoleListQueryModel> query)
         {
             return _roleContext.GetPagerList(query);
         }

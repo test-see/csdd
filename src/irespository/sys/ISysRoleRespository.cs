@@ -6,7 +6,7 @@ namespace irespository.user
 {
     public interface ISysRoleRespository
     {
-        PagerResult<RoleListApiModel, RoleListQueryModel> GetPagerList(RoleListQueryModel query);
+        PagerResult<RoleListApiModel> GetPagerList(PagerQuery<RoleListQueryModel> query);
         SysRole Create(string name, int userId);
         int Delete(int id);
     }

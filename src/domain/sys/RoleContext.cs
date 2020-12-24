@@ -13,7 +13,7 @@ namespace domain.sys
             _sysRoleRespository = sysRoleRespository;
         }
 
-        public PagerResult<RoleListApiModel, RoleListQueryModel> GetPagerList(RoleListQueryModel query)
+        public PagerResult<RoleListApiModel> GetPagerList(PagerQuery<RoleListQueryModel> query)
         {
             return _sysRoleRespository.GetPagerList(query);
         }

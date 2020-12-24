@@ -2,10 +2,19 @@
 
 namespace foundation.config
 {
-    public class PagerResult<T, R> : PagerQuery<R>
+    public class PagerResult<T>
     {
+        public int Index { get; set; }
+        public int Size { get; set; }
         public int Total { get; set; }
         public IEnumerable<T> Result { get; set; }
+
+        public PagerResult() { }
+        public PagerResult(int index, int size)
+        {
+            Index = index;
+            Size = size;
+        }
     }
 
     public class PagerQuery<T>
