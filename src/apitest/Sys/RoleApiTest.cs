@@ -5,7 +5,6 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.sys.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace apitest.Sys
@@ -20,7 +19,7 @@ namespace apitest.Sys
                 .AppendPathSegment("/api/Role/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<RoleListQueryModel> { })
-                .ReceiveJson<OkMessage<IEnumerable<RoleListApiModel>>>();
+                .ReceiveJson<OkMessage<PagerResult<RoleListApiModel>>>();
             Assert.AreEqual(200, message.Code);
         }
         [TestMethod]
