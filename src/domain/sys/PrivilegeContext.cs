@@ -17,11 +17,15 @@ namespace domain.sys
         {
             var all = _sysPrivilegeRespository.GetPrivilegeList(roleId);
             var privileges = all.Where(x => x.ParentMenuId == 0);
-            foreach(var m in privileges)
+            foreach (var m in privileges)
             {
                 m.FindChildren(all.ToList());
             }
             return privileges;
-        }      
+        }
+        public int UpdatePrivilegeList(PrivilegeListUpdateModel privileges)
+        {
+            return _sysPrivilegeRespository.UpdatePrivilegeList(privileges);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using csdd.Controllers.Shared;
+using irespository.sys.model;
 using iservice.sys;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,13 @@ namespace csdd.Controllers.Sys
             return Json(data);
         }
 
+        [HttpPost]
+        [Route("update")]
+        public JsonResult UpdatePrivilegeList(PrivilegeListUpdateModel privileges)
+        {
+            var data = _privilegeService.UpdatePrivilegeList(privileges);
+            return Json(data);
+        }
 
 
     }

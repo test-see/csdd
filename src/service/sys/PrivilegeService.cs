@@ -16,5 +16,10 @@ namespace service.sys
         {
             return _privilegeContext.GetPrivilegeList(roleId);
         }
+
+        public int UpdatePrivilegeList(PrivilegeListUpdateModel privileges)
+        {
+            return _privilegeContext.UpdatePrivilegeList(privileges);
+        }
     }
 }

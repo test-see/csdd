@@ -1,4 +1,5 @@
 ﻿using foundation.ef5;
+using foundation.ef5.poco;
 using irespository.sys;
 using irespository.sys.model;
 using System.Collections.Generic;
@@ -29,6 +30,21 @@ namespace respository.sys
                              };
 
             return privileges.ToList();
+        }
+
+        public int UpdatePrivilegeList(PrivilegeListUpdateModel updated)
+        {
+            var privileges = _context.SysPrivilege.Where(x => x.RoleId == updated.RoleId);
+            _context.SysPrivilege.RemoveRange(privileges);
+
+            _context.SysPrivilege.AddRange(updated.MenuIds.Select(x => new SysPrivilege
+            {
+                MenuId = x,
+                RoleId = updated.RoleId,
+            }));
+
+            _context.SaveChanges();
+            return updated.MenuIds.Count;
         }
     }
 }
