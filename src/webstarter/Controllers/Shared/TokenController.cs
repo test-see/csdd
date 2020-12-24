@@ -33,7 +33,7 @@ namespace csdd.Controllers.Shared
             var descriptor = new SecurityTokenDescriptor
             {
                 Subject = identity,
-                Expires = DateTime.UtcNow.AddMinutes(30),
+                Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Audience = _appConfig.Authentication.ValidAudience,
                 Issuer = _appConfig.Authentication.ValidIssuer
