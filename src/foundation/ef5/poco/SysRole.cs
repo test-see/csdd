@@ -12,7 +12,7 @@ namespace foundation.ef5.poco
         public string Name { get; set; }
         [Column("createtime")]
         public DateTime CreateTime { get; set; }
-        [Column("user_id")]
-        public int UserId { get; set; }
+        [Column("createuser_id")]
+        public int CreateUserId { get; set; }
     }
 }
