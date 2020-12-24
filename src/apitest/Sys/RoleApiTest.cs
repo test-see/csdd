@@ -19,7 +19,8 @@ namespace apitest.Sys
             var message = await _rootpath
                 .AppendPathSegment("/api/Role/list")
                 .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<IEnumerable<RoleListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<RoleListQueryModel> { })
+                .ReceiveJson<OkMessage<IEnumerable<RoleListApiModel>>>();
             Assert.AreEqual(200, message.Code);
         }
         [TestMethod]
