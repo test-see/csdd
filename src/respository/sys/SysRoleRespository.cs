@@ -1,9 +1,9 @@
-﻿using foundation.ef5;
+﻿using foundation.config;
+using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.sys
@@ -31,17 +31,21 @@ namespace respository.sys
             return id;
         }
 
-        public IEnumerable<RoleListApiModel> GetList()
+        public PagerResult<RoleListApiModel, RoleListQueryModel> GetPagerList(RoleListQueryModel query)
         {
-            return (from r in _context.SysRole
-                    join u in _context.User on r.UserId equals u.Id
-                    select new RoleListApiModel
-                    {
-                        CreateTime = r.CreateTime,
-                        Id = r.Id,
-                        Name = r.Name,
-                        CreateUserName = u.Phone,
-                    }).ToList();
+            var sql = from r in _context.SysRole
+                        join u in _context.User on r.UserId equals u.Id
+                        select new RoleListApiModel
+                        {
+                            CreateTime = r.CreateTime,
+                            Id = r.Id,
+                            Name = r.Name,
+                            CreateUserName = u.Phone,
+                        };
+            var page = new PagerResult<RoleListApiModel, RoleListQueryModel>();
+            page.Result = sql.Skip(page.Size * (page.Index - 1)).Take(page.Size).ToList();
+            page.Total = sql.Count();
+            return page;
         }
     }
 }

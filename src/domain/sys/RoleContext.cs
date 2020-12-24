@@ -1,7 +1,7 @@
-﻿using foundation.ef5.poco;
+﻿using foundation.config;
+using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user;
-using System.Collections.Generic;
 
 namespace domain.sys
 {
@@ -13,9 +13,9 @@ namespace domain.sys
             _sysRoleRespository = sysRoleRespository;
         }
 
-        public IEnumerable<RoleListApiModel> GetList()
+        public PagerResult<RoleListApiModel, RoleListQueryModel> GetPagerList(RoleListQueryModel query)
         {
-            return _sysRoleRespository.GetList();
+            return _sysRoleRespository.GetPagerList(query);
         }
         public SysRole Create(string name, int userId)
         {

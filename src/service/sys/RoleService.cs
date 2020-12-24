@@ -1,8 +1,8 @@
 ﻿using domain.sys;
+using foundation.config;
 using foundation.ef5.poco;
 using irespository.sys.model;
 using iservice.sys;
-using System.Collections.Generic;
 
 namespace service.sys
 {
@@ -23,9 +23,9 @@ namespace service.sys
             return _roleContext.Delete(id);
         }
 
-        public IEnumerable<RoleListApiModel> GetList()
+        public PagerResult<RoleListApiModel, RoleListQueryModel> GetPagerList(RoleListQueryModel query)
         {
-            return _roleContext.GetList();
+            return _roleContext.GetPagerList(query);
         }
     }
 }
