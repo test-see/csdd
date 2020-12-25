@@ -1,15 +1,15 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
-using irespository.user;
+using irespository.sys.model;
 using irespository.user.model;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace iservice.user
 {
     public interface IUserService
     {
-        User Login(LoginApiModel login);
-        Task<string> GenerateVerificationCodeAsync(string phone);
         PagerResult<User> GetPagerList(PagerQuery<UserListQueryModel> query);
+        IEnumerable<UserRoleListApiModel> GetUserRoleList(int userId);
+        int UpdateUserRoleList(UserRoleListUpdateModel updated);
     }
 }

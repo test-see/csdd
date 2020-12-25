@@ -27,8 +27,9 @@ namespace respository.sys
         {
             var privileges = _context.SysPrivilege.Where(x => x.RoleId == id);
             _context.SysPrivilege.RemoveRange(privileges);
-            //var userroles = _context.SysPrivilege.Where(x => x.RoleId == id);
-            //_context.SysPrivilege.RemoveRange(privileges);
+            var userroles = _context.UserRole.Where(x => x.RoleId == id);
+            _context.UserRole.RemoveRange(userroles);
+
             var role = _context.SysRole.Find(id);
             _context.SysRole.Remove(role);
             _context.SaveChanges();

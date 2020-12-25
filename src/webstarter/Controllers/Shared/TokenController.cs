@@ -14,9 +14,9 @@ namespace csdd.Controllers.Shared
 {
     public class TokenController : DefaultControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly ITokenService _userService;
         private readonly AppConfig _appConfig;
-        public TokenController(IUserService userService,
+        public TokenController(ITokenService userService,
             AppConfig appConfig)
         {
             _userService = userService;
