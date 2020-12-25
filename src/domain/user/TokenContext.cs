@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace domain.user
 {
-    public class UserLoginContext
+    public class TokenContext
     {
         private readonly IUserRespository _userRespository;
         private readonly IUserVerificationCodeRespository _userVerificationCodeRespository;
         private readonly ISysWhitePhoneRespository _dataWhitePhoneRespository;
-        public UserLoginContext(IUserRespository userRespository,
+        public TokenContext(IUserRespository userRespository,
             IUserVerificationCodeRespository userVerificationCodeRespository,
             ISysWhitePhoneRespository dataWhitePhoneRespository)
         {
