@@ -31,5 +31,15 @@ namespace respository.user
                       select r;
             return new PagerResult<User>(query.Index, query.Size, sql);
         }
+
+        public User UpdateIsActive(int userId, bool isActive)
+        {
+            var user = _context.User.Where(x => x.Id == userId).FirstOrDefault();
+            user.IsActive = isActive ? 1 : 0;
+            _context.User.Update(user);
+            _context.SaveChanges();
+            return user;
+        }
+
     }
 }

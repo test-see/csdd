@@ -38,5 +38,23 @@ namespace csdd.Controllers.User
             var data = _userService.UpdateUserRoleList(Updated);
             return Json(data);
         }
+
+
+        [HttpGet]
+        [Route("{userId}/active")]
+        public JsonResult UpdateActive(int userId)
+        {
+            var data = _userService.UpdateIsActive(userId, true);
+            return Json(data);
+        }
+
+
+        [HttpGet]
+        [Route("{userId}/inactive")]
+        public JsonResult UpdateInActive(int userId)
+        {
+            var data = _userService.UpdateIsActive(userId, false);
+            return Json(data);
+        }
     }
 }

@@ -21,6 +21,10 @@ namespace domain.user
         {
             return _userRespository.GetPagerList(query);
         }
+        public User UpdateIsActive(int userId, bool isActive)
+        {
+            return _userRespository.UpdateIsActive(userId, isActive);
+        }
         public IEnumerable<UserRoleListApiModel> GetUserRoleList(int userId)
         {
             return _userRoleRespository.GetUserRoleList(userId);

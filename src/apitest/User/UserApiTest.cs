@@ -26,6 +26,27 @@ namespace apitest.User
 
 
         [TestMethod]
+        public async Task User_Active_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/User/1/active")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<foundation.ef5.poco.User>>();
+            Assert.AreEqual(200, message.Code);
+        }
+
+        [TestMethod]
+        public async Task User_InActive_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/User/1/inactive")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<foundation.ef5.poco.User>>();
+            Assert.AreEqual(200, message.Code);
+        }
+
+
+        [TestMethod]
         public async Task UserRole_Get_ReturnListAsync()
         {
             var message = await _rootpath

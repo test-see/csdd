@@ -10,5 +10,6 @@ namespace irespository.user
         Task AddActiveUserAsync(string phone);
         User GetByPhone(string phone);
         PagerResult<User> GetPagerList(PagerQuery<UserListQueryModel> query);
+        User UpdateIsActive(int userId, bool isActive);
     }
 }

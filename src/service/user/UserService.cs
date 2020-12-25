@@ -30,5 +30,10 @@ namespace service.user
         {
             return _userContext.UpdateUserRoleList(updated);
         }
+
+        public User UpdateIsActive(int userId, bool isActive)
+        {
+            return _userContext.UpdateIsActive(userId, isActive);
+        }
     }
 }
