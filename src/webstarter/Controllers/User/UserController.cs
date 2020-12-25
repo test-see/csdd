@@ -49,7 +49,7 @@ namespace csdd.Controllers.User
         }
 
         [HttpGet]
-        [Route("{userId}/add")]
+        [Route("add")]
         public async Task<JsonResult> AddActiveUserAsync(UserCreateApiModel created)
         {
             var userId = await _userService.AddActiveUserAsync(created, base.UserId);
