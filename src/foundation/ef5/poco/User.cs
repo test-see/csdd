@@ -17,6 +17,6 @@ namespace foundation.ef5.poco
         [Column("is_active")]
         public int IsActive { get; set; }
         [Column("createuser_id")]
-        public int CreateUserId { get; set; }
+        public int? CreateUserId { get; set; }
     }
 }
