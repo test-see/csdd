@@ -48,7 +48,7 @@ namespace csdd.Controllers.User
             return Json(data);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("add")]
         public async Task<JsonResult> AddActiveUserAsync(UserCreateApiModel created)
         {
