@@ -17,16 +17,17 @@ namespace respository.sys
 
         public IEnumerable<PrivilegeListApiModel> GetPrivilegeList(int roleId)
         {
-            var privileges = from p in _context.SysPrivilege
-                             join m in _context.DataMenu on p.MenuId equals m.Id
-                             where p.RoleId == roleId
+            var privileges = from m in _context.DataMenu
+                             join p in _context.SysPrivilege on new { MenuId = m.Id, RoleId = roleId } equals new { p.MenuId, p.RoleId } into p_t
+                             from p_tt in p_t.DefaultIfEmpty()
                              select new PrivilegeListApiModel
                              {
                                  MenuName = m.Name,
                                  MenuPath = m.Path,
                                  ParentMenuId = m.ParentId,
-                                 RoleId = p.RoleId,
-                                 MenuId = p.MenuId,
+                                 MenuId = m.Id,
+                                 RoleId = p_tt.RoleId,
+                                 IsCheck = p_t.Any()
                              };
 
             return privileges.ToList();

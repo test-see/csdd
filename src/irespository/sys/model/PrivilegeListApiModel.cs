@@ -11,6 +11,7 @@ namespace irespository.sys.model
         public int ParentMenuId { get; set; }
         public int RoleId { get; set; }
         public int MenuId { get; set; }
+        public bool IsCheck { get; set; }
 
         public IList<PrivilegeListApiModel> Children { get; set; }
         public void FindChildren(IList<PrivilegeListApiModel> privileges)

@@ -32,7 +32,7 @@ namespace csdd.Controllers.User
         }
 
         [HttpPost]
-        [Route("update")]
+        [Route("role/update")]
         public JsonResult UpdateUserRoleList(UserRoleListUpdateModel Updated)
         {
             var data = _userService.UpdateUserRoleList(Updated);

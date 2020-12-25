@@ -17,14 +17,15 @@ namespace respository.user
         }
         public IEnumerable<UserRoleListApiModel> GetUserRoleList(int userId)
         {
-            var roles = from p in _context.UserRole
-                             join m in _context.SysRole on p.RoleId equals m.Id
-                             where p.UserId == userId
+            var roles = from m in _context.SysRole
+                             join p in _context.UserRole on new { RoleId = m.Id, UserId = userId } equals new { p.RoleId, p.UserId } into m_t
+                             from m_tt in m_t.DefaultIfEmpty()
                              select new UserRoleListApiModel
                              {
                                  RoleName = m.Name,
-                                 RoleId = p.RoleId,
-                                 UserId = p.UserId,
+                                 RoleId = m.Id,
+                                 UserId = m_tt.UserId,
+                                 IsCheck = m_t.Any(),
                              };
 
             return roles.ToList();
