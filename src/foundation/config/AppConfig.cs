@@ -4,7 +4,6 @@
     {
         public string ConnectionString { get; set; }
         public AuthenticationConfig Authentication { get; set; }
-        public string Version { get; set; }
     }
     public class AuthenticationConfig
     {

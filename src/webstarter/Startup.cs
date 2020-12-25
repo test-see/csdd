@@ -27,10 +27,12 @@ namespace csdd
         {
             Configuration = configuration;
             AppConfig = Configuration.GetSection("AppConfig").Get<AppConfig>();
+            Version = Configuration.GetSection("Version").Get<string>();
         }
 
         public IConfiguration Configuration { get; }
         public AppConfig AppConfig { get; }
+        public string Version { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -130,7 +132,7 @@ namespace csdd
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"My API {AppConfig.Version}");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"My API {Version}");
             });
         }
     }
