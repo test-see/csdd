@@ -5,6 +5,7 @@ using irespository.sys.model;
 using irespository.user.model;
 using iservice.user;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace service.user
 {
@@ -34,6 +35,10 @@ namespace service.user
         public User UpdateIsActive(int userId, bool isActive)
         {
             return _userContext.UpdateIsActive(userId, isActive);
+        }
+        public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
+        {
+            return await _userContext.AddActiveUserAsync(created, userId);
         }
     }
 }

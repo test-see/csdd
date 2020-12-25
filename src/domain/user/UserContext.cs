@@ -4,6 +4,7 @@ using irespository.sys.model;
 using irespository.user;
 using irespository.user.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace domain.user
 {
@@ -33,6 +34,10 @@ namespace domain.user
         public int UpdateUserRoleList(UserRoleListUpdateModel updated)
         {
             return _userRoleRespository.UpdateUserRoleList(updated);
+        }
+        public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
+        {
+            return await _userRespository.AddActiveUserAsync(created, userId);
         }
     }
 }

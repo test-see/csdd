@@ -3,6 +3,7 @@ using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace iservice.user
 {
@@ -12,5 +13,6 @@ namespace iservice.user
         IEnumerable<UserRoleListApiModel> GetUserRoleList(int userId);
         int UpdateUserRoleList(UserRoleListUpdateModel updated);
         User UpdateIsActive(int userId, bool isActive);
+        Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId);
     }
 }

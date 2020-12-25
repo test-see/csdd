@@ -4,6 +4,7 @@ using irespository.sys.model;
 using irespository.user.model;
 using iservice.user;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.User
 {
@@ -39,7 +40,6 @@ namespace csdd.Controllers.User
             return Json(data);
         }
 
-
         [HttpGet]
         [Route("{userId}/active")]
         public JsonResult UpdateActive(int userId)
@@ -48,6 +48,13 @@ namespace csdd.Controllers.User
             return Json(data);
         }
 
+        [HttpGet]
+        [Route("{userId}/add")]
+        public async Task<JsonResult> AddActiveUserAsync(UserCreateApiModel created)
+        {
+            var userId = await _userService.AddActiveUserAsync(created, base.UserId);
+            return Json(userId);
+        }
 
         [HttpGet]
         [Route("{userId}/inactive")]

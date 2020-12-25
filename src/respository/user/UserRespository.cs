@@ -16,16 +16,18 @@ namespace respository.user
         {
             _context = context;
         }
-        public async Task AddActiveUserAsync(string phone, int userId)
+        public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
         {
-            _context.User.Add(new User
+            var user = new User
             {
                 IsActive = 1,
-                Username = phone,
-                Phone = phone,
+                Username = created.Username,
+                Phone = created.Phone,
                 CreateTime = DateTime.UtcNow
-            });
+            };
+            _context.User.Add(user);
             await _context.SaveChangesAsync();
+            return user;
         }
         public User GetByPhone(string phone)
         {

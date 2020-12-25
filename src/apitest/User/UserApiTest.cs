@@ -24,6 +24,16 @@ namespace apitest.User
             Assert.AreEqual(200, message.Code);
         }
 
+        [TestMethod]
+        public async Task User_Add_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/User/add")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new UserCreateApiModel { Phone = "Test1", Username = "Test1", })
+                .ReceiveJson<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+        }
 
         [TestMethod]
         public async Task User_InActive_ReturnListAsync()
