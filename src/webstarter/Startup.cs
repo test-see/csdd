@@ -130,7 +130,7 @@ namespace csdd
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"/swagger/{AppConfig.Version}/swagger.json", "My API V1");
+                c.SwaggerEndpoint($"/swagger/{AppConfig.Version}/swagger.json", $"My API {AppConfig.Version}");
             });
         }
     }
