@@ -27,7 +27,7 @@ namespace respository.sys
                                  ParentMenuId = m.ParentId,
                                  MenuId = m.Id,
                                  RoleId = p_tt.RoleId,
-                                 IsCheck = p_t.Any()
+                                 IsCheck = p_tt != null,
                              };
 
             return privileges.ToList();
