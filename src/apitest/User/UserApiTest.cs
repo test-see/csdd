@@ -5,6 +5,7 @@ using foundation.config;
 using irespository.sys.model;
 using irespository.user.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -30,7 +31,11 @@ namespace apitest.User
             var message = await _rootpath
                 .AppendPathSegment("/api/User/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new UserCreateApiModel { Phone = "Test1", Username = "Test1", })
+                .PostJsonAsync(new UserCreateApiModel
+                {
+                    Phone = "+T" + DateTime.UtcNow.ToString("yyMMddmmHHss"),
+                    Username = "Test1",
+                })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }
