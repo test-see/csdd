@@ -75,18 +75,18 @@ namespace csdd
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc(AppConfig.Version, new OpenApiInfo { Title = "My API", Version = AppConfig.Version });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement() { {  new OpenApiSecurityScheme 
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement() { {  new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }, 
-                    },           
-                    new List<string>() } 
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
+                    },
+                    new List<string>() }
                 });
             });
         }
@@ -130,7 +130,7 @@ namespace csdd
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"/swagger/{AppConfig.Version}/swagger.json", $"My API {AppConfig.Version}");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"My API {AppConfig.Version}");
             });
         }
     }
