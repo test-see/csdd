@@ -45,7 +45,7 @@ namespace respository.sys
                             CreateTime = r.CreateTime,
                             Id = r.Id,
                             Name = r.Name,
-                            CreateUserName = u.Phone,
+                            CreateUserName = u.Username,
                         };
             return new PagerResult<RoleListApiModel>(query.Index, query.Size, sql);
         }

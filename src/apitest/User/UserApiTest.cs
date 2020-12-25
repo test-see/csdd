@@ -20,26 +20,21 @@ namespace apitest.User
                 .AppendPathSegment("/api/User/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<UserListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<foundation.ef5.poco.User>>>();
+                .ReceiveJson<OkMessage<PagerResult<UserListApiModel>>>();
             Assert.AreEqual(200, message.Code);
         }
 
-
-        [TestMethod]
-        public async Task User_Active_ReturnListAsync()
-        {
-            var message = await _rootpath
-                .AppendPathSegment("/api/User/1/active")
-                .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<foundation.ef5.poco.User>>();
-            Assert.AreEqual(200, message.Code);
-        }
 
         [TestMethod]
         public async Task User_InActive_ReturnListAsync()
         {
             var message = await _rootpath
                 .AppendPathSegment("/api/User/1/inactive")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<foundation.ef5.poco.User>>();
+            Assert.AreEqual(200, message.Code);
+            message = await _rootpath
+                .AppendPathSegment("/api/User/1/active")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<foundation.ef5.poco.User>>();
             Assert.AreEqual(200, message.Code);

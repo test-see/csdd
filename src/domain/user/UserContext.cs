@@ -17,7 +17,7 @@ namespace domain.user
             _userRespository = userRespository;
             _userRoleRespository = userRoleRespository;
         }
-        public PagerResult<User> GetPagerList(PagerQuery<UserListQueryModel> query)
+        public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
             return _userRespository.GetPagerList(query);
         }

@@ -8,7 +8,7 @@ namespace iservice.user
 {
     public interface IUserService
     {
-        PagerResult<User> GetPagerList(PagerQuery<UserListQueryModel> query);
+        PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query);
         IEnumerable<UserRoleListApiModel> GetUserRoleList(int userId);
         int UpdateUserRoleList(UserRoleListUpdateModel updated);
         User UpdateIsActive(int userId, bool isActive);

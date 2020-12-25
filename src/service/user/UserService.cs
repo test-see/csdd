@@ -16,7 +16,7 @@ namespace service.user
             _userContext = userContext;
         }
 
-        public PagerResult<User> GetPagerList(PagerQuery<UserListQueryModel> query)
+        public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
             return _userContext.GetPagerList(query);
         }

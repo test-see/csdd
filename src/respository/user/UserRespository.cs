@@ -16,20 +16,36 @@ namespace respository.user
         {
             _context = context;
         }
-        public async Task AddActiveUserAsync(string phone)
+        public async Task AddActiveUserAsync(string phone, int userId)
         {
-            _context.User.Add(new User { IsActive = 1, Phone = phone, CreateTime = DateTime.UtcNow });
+            _context.User.Add(new User
+            {
+                IsActive = 1,
+                Username = phone,
+                Phone = phone,
+                CreateTime = DateTime.UtcNow
+            });
             await _context.SaveChangesAsync();
         }
         public User GetByPhone(string phone)
         {
             return _context.User.Where(x => x.Phone == phone).FirstOrDefault();
         }
-        public PagerResult<User> GetPagerList(PagerQuery<UserListQueryModel> query)
+        public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
             var sql = from r in _context.User
-                      select r;
-            return new PagerResult<User>(query.Index, query.Size, sql);
+                      join p in _context.User on r.CreateUserId equals p.Id into p_t
+                      from p_tt in p_t.DefaultIfEmpty()
+                      select new UserListApiModel
+                      {
+                          Id = r.Id,
+                          IsActive = r.IsActive,
+                          Phone = r.Phone,
+                          Username = r.Username,
+                          CreateTime = r.CreateTime,
+                          CreateUsername = p_tt.Username,
+                      };
+            return new PagerResult<UserListApiModel>(query.Index, query.Size, sql);
         }
 
         public User UpdateIsActive(int userId, bool isActive)
