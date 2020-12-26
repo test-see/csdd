@@ -23,7 +23,7 @@ namespace csdd.Controllers
         }
 
         [HttpPost]
-        [Route("delete")]
+        [Route("delete/{id}")]
         public JsonResult Delete(int id)
         {
             var data = _roleService.Delete(id);
