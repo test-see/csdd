@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace domain.sys
@@ -41,6 +42,11 @@ namespace domain.sys
         public int UpdateRole(RoleIndexUpdateModel updated)
         {
             return _sysRoleRespository.UpdateRole(updated);
+        }
+
+        public IList<RoleMenuApiModel> GetMenuList()
+        {
+            return _roleContext.GetMenuList();
         }
     }
 }

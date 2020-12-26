@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.sys.model;
 using iservice.sys;
+using System.Collections.Generic;
 
 namespace service.sys
 {
@@ -35,6 +36,11 @@ namespace service.sys
         public int UpdateRole(RoleIndexUpdateModel updated)
         {
             return _roleContext.UpdateRole(updated);
+        }
+
+        public IList<RoleMenuApiModel> GetMenuList()
+        {
+            return _roleContext.GetMenuList();
         }
     }
 }

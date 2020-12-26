@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.sys
@@ -82,6 +83,20 @@ namespace respository.sys
 
             return role;
         }
+        public IList<RoleMenuApiModel> GetMenuList()
+        {
+            var menus = from m in _context.DataMenu
+                        select new RoleMenuApiModel
+                        {
+                            MenuName = m.Name,
+                            MenuPath = m.Path,
+                            ParentMenuId = m.ParentId,
+                            MenuId = m.Id,
+                            IsCheck = false,
+                        };
+            return menus.ToList();
+        }
+
 
         public int UpdateRole(RoleIndexUpdateModel updated)
         {

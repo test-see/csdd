@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.sys.model;
+using System.Collections.Generic;
 
 namespace iservice.sys
 {
@@ -11,5 +12,6 @@ namespace iservice.sys
         int Delete(int id);
         RoleIndexApiModel GetRoleIndex(int roleId);
         int UpdateRole(RoleIndexUpdateModel updated);
+        IList<RoleMenuApiModel> GetMenuList();
     }
 }

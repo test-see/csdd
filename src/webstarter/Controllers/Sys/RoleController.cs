@@ -39,6 +39,13 @@ namespace csdd.Controllers
             return Json(data);
         }
 
+        [HttpGet]
+        [Route("menu")]
+        public JsonResult GetMenuList()
+        {
+            var data = _roleService.GetMenuList();
+            return Json(data);
+        }
 
         [HttpGet]
         [Route("{roleId}/index")]
