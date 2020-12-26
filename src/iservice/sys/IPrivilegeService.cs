@@ -5,7 +5,7 @@ namespace iservice.sys
 {
     public interface IPrivilegeService
     {
-        IEnumerable<PrivilegeListApiModel> GetPrivilegeList(int roleId);
-        int UpdatePrivilegeList(PrivilegeListUpdateModel privileges);
+        IEnumerable<RoleMenuApiModel> GetPrivilegeList(int roleId);
+        int UpdatePrivilegeList(RoleIndexUpdateModel privileges);
     }
 }

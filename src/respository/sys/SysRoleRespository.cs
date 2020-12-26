@@ -15,10 +15,20 @@ namespace respository.sys
         {
             _context = context;
         }
-        public SysRole Create(string name, int userId)
+        public SysRole Create(RoleCreateApiModel created, int userId)
         {
-            var role = new SysRole { Name = name, CreateUserId = userId, CreateTime = DateTime.UtcNow };
+            var role = new SysRole { Name = created.RoleName, CreateUserId = userId, CreateTime = DateTime.UtcNow };
             _context.SysRole.Add(role);
+
+            if (created.MenuIds != null && created.MenuIds.Any())
+            {
+                _context.SysPrivilege.AddRange(created.MenuIds.Select(x => new SysPrivilege
+                {
+                    MenuId = x,
+                    RoleId = role.Id,
+                }));
+            }
+
             _context.SaveChanges();
             return role;
         }
@@ -48,6 +58,50 @@ namespace respository.sys
                             CreateUserName = u.Username,
                         };
             return new PagerResult<RoleListApiModel>(query.Index, query.Size, sql);
+        }
+
+        public RoleIndexApiModel GetRoleIndex(int roleId)
+        {
+            var role = _context.SysRole.Where(x => x.Id == roleId).Select(x => new RoleIndexApiModel
+            {
+                RoleId = roleId,
+                RoleName = x.Name,
+            }).First();
+
+            role.Menus = (from m in _context.DataMenu
+                          join p in _context.SysPrivilege on new { MenuId = m.Id, RoleId = roleId } equals new { p.MenuId, p.RoleId } into p_t
+                          from p_tt in p_t.DefaultIfEmpty()
+                          select new RoleMenuApiModel
+                          {
+                              MenuName = m.Name,
+                              MenuPath = m.Path,
+                              ParentMenuId = m.ParentId,
+                              MenuId = m.Id,
+                              IsCheck = p_tt != null,
+                          }).ToList();
+
+            return role;
+        }
+
+        public int UpdateRole(RoleIndexUpdateModel updated)
+        {
+            var role = _context.SysRole.First(x => x.Id == updated.RoleId);
+            role.Name = updated.RoleName;
+            _context.SysRole.Update(role);
+
+            var privileges = _context.SysPrivilege.Where(x => x.RoleId == updated.RoleId);
+            _context.SysPrivilege.RemoveRange(privileges);
+
+            if (updated.MenuIds != null && updated.MenuIds.Any())
+            {
+                _context.SysPrivilege.AddRange(updated.MenuIds.Select(x => new SysPrivilege
+                {
+                    MenuId = x,
+                    RoleId = updated.RoleId,
+                }));
+            }
+            _context.SaveChanges();
+            return role.Id;
         }
     }
 }

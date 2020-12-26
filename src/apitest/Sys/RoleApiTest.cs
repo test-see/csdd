@@ -5,6 +5,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.sys.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace apitest.Sys
@@ -28,8 +29,7 @@ namespace apitest.Sys
             var role = await _rootpath
                 .AppendPathSegment("/api/Role")
                 .WithOAuthBearerToken(await getToken())
-                .SetQueryParam("name", "test")
-                .PostAsync()
+                .PostJsonAsync(new RoleCreateApiModel { RoleName = "1" })
                 .ReceiveJson<OkMessage<SysRole>>();
             var message = await _rootpath
                 .AppendPathSegment("/api/Role/delete")
@@ -39,6 +39,28 @@ namespace apitest.Sys
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
+        }
+
+        [TestMethod]
+        public async Task Privilege_Get_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Role/1/index")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<RoleIndexApiModel>>();
+            Assert.AreEqual(200, message.Code);
+        }
+
+
+        [TestMethod]
+        public async Task Privilege_Update_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Role/update")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new RoleIndexUpdateModel { RoleId = 1, MenuIds = new List<int> { } })
+                .ReceiveJson<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
         }
     }
 }

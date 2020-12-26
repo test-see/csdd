@@ -13,9 +13,9 @@ namespace service.sys
         {
             _roleContext = roleContext;
         }
-        public SysRole Create(string name, int userId)
+        public SysRole Create(RoleCreateApiModel created, int userId)
         {
-            return _roleContext.Create(name, userId);
+            return _roleContext.Create(created, userId);
         }
 
         public int Delete(int id)
@@ -26,6 +26,15 @@ namespace service.sys
         public PagerResult<RoleListApiModel> GetPagerList(PagerQuery<RoleListQueryModel> query)
         {
             return _roleContext.GetPagerList(query);
+        }
+        public RoleIndexApiModel GetRoleIndex(int roleId)
+        {
+            return _roleContext.GetRoleIndex(roleId);
+        }
+
+        public int UpdateRole(RoleIndexUpdateModel updated)
+        {
+            return _roleContext.UpdateRole(updated);
         }
     }
 }

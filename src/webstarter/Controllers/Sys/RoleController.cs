@@ -23,18 +23,37 @@ namespace csdd.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(string name)
-        {
-            var data = _roleService.Create(name, UserId);
-            return Json(data);
-        }
-
-        [HttpPost]
         [Route("delete")]
         public JsonResult Delete(int id)
         {
             var data = _roleService.Delete(id);
             return Json(data);
         }
+    
+    
+        [HttpPost]
+        public JsonResult Post(RoleCreateApiModel created)
+        {
+            var data = _roleService.Create(created, UserId);
+            return Json(data);
+        }
+
+
+        [HttpGet]
+        [Route("{roleId}/index")]
+        public JsonResult GetRoleIndex(int roleId)
+        {
+            var data = _roleService.GetRoleIndex(roleId);
+            return Json(data);
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public JsonResult UpdateRole(RoleIndexUpdateModel updated)
+        {
+            var data = _roleService.UpdateRole(updated);
+            return Json(data);
+        }
+
     }
 }

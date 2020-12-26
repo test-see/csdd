@@ -7,7 +7,9 @@ namespace iservice.sys
     public interface IRoleService
     {
         PagerResult<RoleListApiModel> GetPagerList(PagerQuery<RoleListQueryModel> query);
-        SysRole Create(string name, int userId);
+        SysRole Create(RoleCreateApiModel created, int userId);
         int Delete(int id);
+        RoleIndexApiModel GetRoleIndex(int roleId);
+        int UpdateRole(RoleIndexUpdateModel updated);
     }
 }

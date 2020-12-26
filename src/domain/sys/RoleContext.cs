@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user;
+using System.Linq;
 
 namespace domain.sys
 {
@@ -17,13 +18,29 @@ namespace domain.sys
         {
             return _sysRoleRespository.GetPagerList(query);
         }
-        public SysRole Create(string name, int userId)
+        public SysRole Create(RoleCreateApiModel created, int userId)
         {
-            return _sysRoleRespository.Create(name, userId);
+            return _sysRoleRespository.Create(created, userId);
         }
         public int Delete(int id)
         {
             return _sysRoleRespository.Delete(id);
+        }
+
+        public RoleIndexApiModel GetRoleIndex(int roleId)
+        {
+            var role = _sysRoleRespository.GetRoleIndex(roleId);
+            var menus = role.Menus.Where(x => x.ParentMenuId == 0);
+            foreach (var m in menus)
+            {
+                m.FindChildren(role.Menus.ToList());
+            }
+            role.Menus = menus.ToList();
+            return role;
+        }
+        public int UpdateRole(RoleIndexUpdateModel updated)
+        {
+            return _sysRoleRespository.UpdateRole(updated);
         }
     }
 }
