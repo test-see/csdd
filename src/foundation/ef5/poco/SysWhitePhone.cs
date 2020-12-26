@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace foundation.ef5.poco
 {
@@ -9,5 +10,9 @@ namespace foundation.ef5.poco
         public int Id { get; set; }
         [Column("phone")]
         public string Phone { get; set; }
+        [Column("createtime")]
+        public DateTime CreateTime { get; set; }
+        [Column("createuser_id")]
+        public int? CreateUserId { get; set; }
     }
 }

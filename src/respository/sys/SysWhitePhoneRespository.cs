@@ -1,5 +1,6 @@
-﻿using foundation.ef5;
-using foundation.ef5.poco;
+﻿using foundation.config;
+using foundation.ef5;
+using irespository.sys.model;
 using irespository.user;
 using System.Linq;
 
@@ -15,6 +16,20 @@ namespace respository.user
         public bool Exists(string phone)
         {
             return _context.SysWhitePhone.Where(x => x.Phone == phone).Any();
+        }
+
+        public PagerResult<WhitePhoneListApiModel> GetPagerList(PagerQuery<WhitePhoneListQueryModel> query)
+        {
+            var sql = from r in _context.SysWhitePhone
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      select new WhitePhoneListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Phone = r.Phone,
+                          CreateUserName = u.Username,
+                      };
+            return new PagerResult<WhitePhoneListApiModel>(query.Index, query.Size, sql);
         }
     }
 }
