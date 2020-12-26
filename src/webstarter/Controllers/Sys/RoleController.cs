@@ -22,7 +22,7 @@ namespace csdd.Controllers
             return Json(data);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("delete/{id}")]
         public JsonResult Delete(int id)
         {

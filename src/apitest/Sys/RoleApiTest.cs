@@ -34,8 +34,7 @@ namespace apitest.Sys
             var message = await _rootpath
                 .AppendPathSegment($"/api/Role/delete/{role.Data.Id}")
                 .WithOAuthBearerToken(await getToken())
-                .PostAsync()
-                .ReceiveJson<OkMessage<int>>();
+                .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
         }
