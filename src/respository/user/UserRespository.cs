@@ -99,13 +99,11 @@ namespace respository.user
             }).First();
 
             user.Roles = (from m in _context.SysRole
-                          join p in _context.UserRole on new { RoleId = m.Id, UserId = userId } equals new { p.RoleId, p.UserId } into m_t
-                          from m_tt in m_t.DefaultIfEmpty()
-                          select new UserRoleCheckApiModel
+                          join p in _context.UserRole on new { RoleId = m.Id, UserId = userId } equals new { p.RoleId, p.UserId } 
+                          select new UserRoleIndexApiModel
                           {
                               RoleName = m.Name,
                               RoleId = m.Id,
-                              IsCheck = m_tt != null,
                           }).ToList();
             return user;
         }

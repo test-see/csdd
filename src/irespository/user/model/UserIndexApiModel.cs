@@ -7,6 +7,6 @@ namespace irespository.sys.model
     {
         public int UserId { get; set; }
         public string Username { get; set; }
-        public IList<UserRoleCheckApiModel> Roles { get; set; }
+        public IList<UserRoleIndexApiModel> Roles { get; set; }
     }
 }
