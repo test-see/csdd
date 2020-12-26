@@ -71,7 +71,8 @@ namespace respository.sys
 
             role.Menus = (from m in _context.DataMenu
                           join p in _context.SysPrivilege on new { MenuId = m.Id, RoleId = roleId } equals new { p.MenuId, p.RoleId } into p_t
-                          from p_tt in p_t.DefaultIfEmpty()
+                          from p_tt in p_t.DefaultIfEmpty() 
+                          orderby m.Rank
                           select new RoleMenuApiModel
                           {
                               MenuName = m.Name,
@@ -86,6 +87,7 @@ namespace respository.sys
         public IList<RoleMenuApiModel> GetMenuList()
         {
             var menus = from m in _context.DataMenu
+                        orderby m.Rank
                         select new RoleMenuApiModel
                         {
                             MenuName = m.Name,

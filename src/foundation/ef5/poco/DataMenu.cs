@@ -16,5 +16,7 @@ namespace foundation.ef5.poco
         public int ParentId { get; set; }
         [Column("createtime")]
         public DateTime CreateTime { get; set; }
+        [Column("rank")]
+        public int Rank { get; set; }
     }
 }
