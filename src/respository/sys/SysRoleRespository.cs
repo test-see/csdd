@@ -69,18 +69,10 @@ namespace respository.sys
                 RoleName = x.Name,
             }).First();
 
-            role.Menus = (from m in _context.DataMenu
-                          join p in _context.SysPrivilege on new { MenuId = m.Id, RoleId = roleId } equals new { p.MenuId, p.RoleId } into p_t
-                          from p_tt in p_t.DefaultIfEmpty() 
-                          orderby m.Rank
-                          select new RoleMenuApiModel
-                          {
-                              MenuName = m.Name,
-                              MenuPath = m.Path,
-                              ParentMenuId = m.ParentId,
-                              MenuId = m.Id,
-                              IsCheck = p_tt != null,
-                          }).ToList();
+            role.MenuIds = (from m in _context.DataMenu
+                            join p in _context.SysPrivilege on new { MenuId = m.Id, RoleId = roleId } equals new { p.MenuId, p.RoleId } into p_t
+                            from p_tt in p_t.DefaultIfEmpty()
+                            select m.Id).ToList();
 
             return role;
         }

@@ -7,6 +7,6 @@ namespace irespository.sys.model
         public int RoleId { get; set; }
         public string RoleName { get; set; }
 
-        public IList<RoleMenuApiModel> Menus { get; set; }
+        public IList<int> MenuIds { get; set; }
     }
 }

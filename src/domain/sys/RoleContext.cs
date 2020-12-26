@@ -30,14 +30,7 @@ namespace domain.sys
 
         public RoleIndexApiModel GetRoleIndex(int roleId)
         {
-            var role = _sysRoleRespository.GetRoleIndex(roleId);
-            var menus = role.Menus.Where(x => x.ParentMenuId == 0);
-            foreach (var m in menus)
-            {
-                m.FindChildren(role.Menus.ToList());
-            }
-            role.Menus = menus.ToList();
-            return role;
+            return _sysRoleRespository.GetRoleIndex(roleId);
         }
         public int UpdateRole(RoleIndexUpdateModel updated)
         {
