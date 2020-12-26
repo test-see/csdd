@@ -32,7 +32,7 @@ namespace apitest.Sys
                 .PostJsonAsync(new RoleCreateApiModel { RoleName = "1" })
                 .ReceiveJson<OkMessage<SysRole>>();
             var message = await _rootpath
-                .AppendPathSegment($"/api/Role/delete/{role.Data.Id}")
+                .AppendPathSegment($"/api/Role/{role.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
