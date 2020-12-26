@@ -62,6 +62,7 @@ namespace apitest.User
             var message = await _rootpath
                 .AppendPathSegment("/api/User/index")
                 .WithOAuthBearerToken(await getToken())
+                .SetQueryParam("userId", 1)
                 .GetJsonAsync<OkMessage<UserIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
         }

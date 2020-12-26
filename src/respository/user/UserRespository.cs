@@ -28,13 +28,14 @@ namespace respository.user
                 CreateTime = DateTime.UtcNow
             };
             _context.User.Add(user);
-
-            _context.UserRole.AddRange(created.RoleIds.Select(x => new UserRole
+            if (created.RoleIds != null && created.RoleIds.Any())
             {
-                RoleId = x,
-                UserId = userId,
-            }));
-
+                _context.UserRole.AddRange(created.RoleIds.Select(x => new UserRole
+                {
+                    RoleId = x,
+                    UserId = userId,
+                }));
+            }
             await _context.SaveChangesAsync();
             return user;
         }
@@ -77,12 +78,14 @@ namespace respository.user
             var roles = _context.UserRole.Where(x => x.UserId == updated.UserId);
             _context.UserRole.RemoveRange(roles);
 
-            _context.UserRole.AddRange(updated.RoleIds.Select(x => new UserRole
+            if (updated.RoleIds != null && updated.RoleIds.Any())
             {
-                RoleId = x,
-                UserId = updated.UserId,
-            }));
-
+                _context.UserRole.AddRange(updated.RoleIds.Select(x => new UserRole
+                {
+                    RoleId = x,
+                    UserId = updated.UserId,
+                }));
+            }
             _context.SaveChanges();
             return updated.RoleIds.Count;
         }
