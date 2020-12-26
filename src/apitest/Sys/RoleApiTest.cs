@@ -45,7 +45,7 @@ namespace apitest.Sys
         public async Task Privilege_Get_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/Role/1/index")
+                .AppendPathSegment("/api/Role/2/index")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<RoleIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
@@ -58,7 +58,7 @@ namespace apitest.Sys
             var message = await _rootpath
                 .AppendPathSegment("/api/Role/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new RoleIndexUpdateModel { RoleId = 1, MenuIds = new List<int> { } })
+                .PostJsonAsync(new RoleIndexUpdateModel { RoleId = 2, RoleName = "Test", MenuIds = new List<int> { 1 } })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }
