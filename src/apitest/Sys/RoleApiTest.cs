@@ -19,8 +19,7 @@ namespace apitest.Sys
             var message = await _rootpath
                 .AppendPathSegment("/api/Role/menu")
                 .WithOAuthBearerToken(await getToken())
-                .PostAsync()
-                .ReceiveJson<OkMessage<IList<RoleMenuApiModel>>>();
+                .GetJsonAsync<OkMessage<IList<RoleMenuApiModel>>>();
             Assert.AreEqual(200, message.Code);
         }
 
