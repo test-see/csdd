@@ -14,6 +14,17 @@ namespace apitest.Sys
     public class RoleApiTest: BaseApiTest
     {
         [TestMethod]
+        public async Task Menu_Post_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Role/menu")
+                .WithOAuthBearerToken(await getToken())
+                .PostAsync()
+                .ReceiveJson<OkMessage<IList<RoleMenuApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+        }
+
+        [TestMethod]
         public async Task Role_Post_ReturnListAsync()
         {
             var message = await _rootpath
