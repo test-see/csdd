@@ -87,7 +87,7 @@ namespace respository.user
                 }));
             }
             _context.SaveChanges();
-            return updated.RoleIds.Count;
+            return user.Id;
         }
 
         public UserIndexApiModel GetUserIndex(int userId)
