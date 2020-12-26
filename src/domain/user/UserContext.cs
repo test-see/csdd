@@ -31,9 +31,9 @@ namespace domain.user
             return _userRoleRespository.GetUserRoleList(userId);
         }
 
-        public int UpdateUserRoleList(UserRoleListUpdateModel updated)
+        public int UpdateUser(UserUpdateApiModel updated)
         {
-            return _userRoleRespository.UpdateUserRoleList(updated);
+            return _userRoleRespository.UpdateUser(updated);
         }
         public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
         {

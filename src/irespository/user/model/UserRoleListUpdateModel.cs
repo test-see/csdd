@@ -2,9 +2,10 @@
 
 namespace irespository.sys.model
 {
-    public class UserRoleListUpdateModel
+    public class UserUpdateApiModel
     {
         public int UserId { get; set; }
+        public string Username { get; set; }
         public IList<int> RoleIds { get; set; }
     }
 }

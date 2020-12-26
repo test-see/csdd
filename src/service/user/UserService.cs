@@ -27,9 +27,9 @@ namespace service.user
             return _userContext.GetUserRoleList(userId);
         }
 
-        public int UpdateUserRoleList(UserRoleListUpdateModel updated)
+        public int UpdateUser(UserUpdateApiModel updated)
         {
-            return _userContext.UpdateUserRoleList(updated);
+            return _userContext.UpdateUser(updated);
         }
 
         public User UpdateIsActive(int userId, bool isActive)

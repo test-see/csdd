@@ -6,6 +6,6 @@ namespace irespository.user
     public interface IUserRoleRespository
     {
         IEnumerable<UserRoleListApiModel> GetUserRoleList(int userId);
-        int UpdateUserRoleList(UserRoleListUpdateModel updated);
+        int UpdateUser(UserUpdateApiModel updated);
     }
 }

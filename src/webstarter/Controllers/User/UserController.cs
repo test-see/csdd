@@ -26,17 +26,17 @@ namespace csdd.Controllers.User
 
         [HttpGet]
         [Route("role")]
-        public JsonResult GetUserRoleList(int roleId)
+        public JsonResult GetUserRoleList(int userId)
         {
-            var data = _userService.GetUserRoleList(roleId);
+            var data = _userService.GetUserRoleList(userId);
             return Json(data);
         }
 
-        [HttpPost]
-        [Route("role/update")]
-        public JsonResult UpdateUserRoleList(UserRoleListUpdateModel Updated)
+        [HttpGet]
+        [Route("{userId}/inactive")]
+        public JsonResult UpdateInActive(int userId)
         {
-            var data = _userService.UpdateUserRoleList(Updated);
+            var data = _userService.UpdateIsActive(userId, false);
             return Json(data);
         }
 
@@ -56,11 +56,11 @@ namespace csdd.Controllers.User
             return Json(user.Id);
         }
 
-        [HttpGet]
-        [Route("{userId}/inactive")]
-        public JsonResult UpdateInActive(int userId)
+        [HttpPost]
+        [Route("update")]
+        public JsonResult UpdateUser(UserUpdateApiModel Updated)
         {
-            var data = _userService.UpdateIsActive(userId, false);
+            var data = _userService.UpdateUser(Updated);
             return Json(data);
         }
     }

@@ -71,9 +71,9 @@ namespace apitest.User
         public async Task UserRole_Update_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/User/role/update")
+                .AppendPathSegment("/api/User/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new UserRoleListUpdateModel { UserId = 1, RoleIds = new List<int> { } })
+                .PostJsonAsync(new UserUpdateApiModel { UserId = 1, RoleIds = new List<int> { } })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }

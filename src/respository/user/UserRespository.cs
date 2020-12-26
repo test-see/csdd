@@ -26,6 +26,13 @@ namespace respository.user
                 CreateTime = DateTime.UtcNow
             };
             _context.User.Add(user);
+
+            _context.UserRole.AddRange(created.RoleIds.Select(x => new UserRole
+            {
+                RoleId = x,
+                UserId = userId,
+            }));
+
             await _context.SaveChangesAsync();
             return user;
         }

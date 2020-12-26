@@ -31,8 +31,12 @@ namespace respository.user
             return roles.ToList();
         }
 
-        public int UpdateUserRoleList(UserRoleListUpdateModel updated)
+        public int UpdateUser(UserUpdateApiModel updated)
         {
+            var user = _context.User.First(x => x.Id == updated.UserId);
+            user.Username = updated.Username;
+            _context.User.Update(user);
+
             var roles = _context.UserRole.Where(x => x.UserId == updated.UserId);
             _context.UserRole.RemoveRange(roles);
 
