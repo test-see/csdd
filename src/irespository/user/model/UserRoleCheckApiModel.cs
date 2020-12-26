@@ -1,10 +1,9 @@
-﻿namespace irespository.sys.model
+﻿namespace irespository.user.model
 {
-    public class UserRoleListApiModel
+    public class UserRoleCheckApiModel
     {
         public string RoleName { get; set; }
         public int RoleId { get; set; }
-        public int UserId { get; set; }
         public bool IsCheck { get; set; }
     }
 }

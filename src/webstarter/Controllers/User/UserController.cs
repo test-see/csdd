@@ -25,10 +25,10 @@ namespace csdd.Controllers.User
 
 
         [HttpGet]
-        [Route("role")]
-        public JsonResult GetUserRoleList(int userId)
+        [Route("index")]
+        public JsonResult GetUserIndex(int userId)
         {
-            var data = _userService.GetUserRoleList(userId);
+            var data = _userService.GetUserIndex(userId);
             return Json(data);
         }
 

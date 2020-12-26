@@ -4,7 +4,6 @@ using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user.model;
 using iservice.user;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace service.user
@@ -22,9 +21,9 @@ namespace service.user
             return _userContext.GetPagerList(query);
         }
 
-        public IEnumerable<UserRoleListApiModel> GetUserRoleList(int userId)
+        public UserIndexApiModel GetUserIndex(int userId)
         {
-            return _userContext.GetUserRoleList(userId);
+            return _userContext.GetUserIndex(userId);
         }
 
         public int UpdateUser(UserUpdateApiModel updated)

@@ -1,9 +1,11 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using irespository.sys.model;
 using irespository.user;
 using irespository.user.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -66,5 +68,43 @@ namespace respository.user
             return user;
         }
 
+        public int UpdateUser(UserUpdateApiModel updated)
+        {
+            var user = _context.User.First(x => x.Id == updated.UserId);
+            user.Username = updated.Username;
+            _context.User.Update(user);
+
+            var roles = _context.UserRole.Where(x => x.UserId == updated.UserId);
+            _context.UserRole.RemoveRange(roles);
+
+            _context.UserRole.AddRange(updated.RoleIds.Select(x => new UserRole
+            {
+                RoleId = x,
+                UserId = updated.UserId,
+            }));
+
+            _context.SaveChanges();
+            return updated.RoleIds.Count;
+        }
+
+        public UserIndexApiModel GetUserIndex(int userId)
+        {
+            var user = _context.User.Where(x => x.Id == userId).Select(x => new UserIndexApiModel
+            {
+                UserId = userId,
+                Username = x.Username,
+            }).First();
+
+            user.Roles = (from m in _context.SysRole
+                          join p in _context.UserRole on new { RoleId = m.Id, UserId = userId } equals new { p.RoleId, p.UserId } into m_t
+                          from m_tt in m_t.DefaultIfEmpty()
+                          select new UserRoleCheckApiModel
+                          {
+                              RoleName = m.Name,
+                              RoleId = m.Id,
+                              IsCheck = m_tt != null,
+                          }).ToList();
+            return user;
+        }
     }
 }

@@ -60,9 +60,9 @@ namespace apitest.User
         public async Task UserRole_Get_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/User/role")
+                .AppendPathSegment("/api/User/index")
                 .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<IEnumerable<UserRoleListApiModel>>>();
+                .GetJsonAsync<OkMessage<UserIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
         }
 

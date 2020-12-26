@@ -11,12 +11,9 @@ namespace domain.user
     public class UserContext
     {
         private readonly IUserRespository _userRespository;
-        private readonly IUserRoleRespository _userRoleRespository;
-        public UserContext(IUserRespository userRespository,
-            IUserRoleRespository userRoleRespository)
+        public UserContext(IUserRespository userRespository)
         {
             _userRespository = userRespository;
-            _userRoleRespository = userRoleRespository;
         }
         public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
@@ -26,14 +23,14 @@ namespace domain.user
         {
             return _userRespository.UpdateIsActive(userId, isActive);
         }
-        public IEnumerable<UserRoleListApiModel> GetUserRoleList(int userId)
+        public UserIndexApiModel GetUserIndex(int userId)
         {
-            return _userRoleRespository.GetUserRoleList(userId);
+            return _userRespository.GetUserIndex(userId);
         }
 
         public int UpdateUser(UserUpdateApiModel updated)
         {
-            return _userRoleRespository.UpdateUser(updated);
+            return _userRespository.UpdateUser(updated);
         }
         public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
         {
