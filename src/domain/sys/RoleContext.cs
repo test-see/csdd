@@ -46,7 +46,7 @@ namespace domain.sys
 
         public IList<RoleMenuApiModel> GetMenuList()
         {
-            return _roleContext.GetMenuList();
+            return _sysRoleRespository.GetMenuList();
         }
     }
 }
