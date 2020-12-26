@@ -32,6 +32,7 @@ namespace csdd.Controllers
     
     
         [HttpPost]
+        [Route("add")]
         public JsonResult Post(RoleCreateApiModel created)
         {
             var data = _roleService.Create(created, UserId);

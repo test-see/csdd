@@ -27,7 +27,7 @@ namespace apitest.Sys
         public async Task Role_AddAndDelete_ReturnIntAsync()
         {
             var role = await _rootpath
-                .AppendPathSegment("/api/Role")
+                .AppendPathSegment("/api/Role/add")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new RoleCreateApiModel { RoleName = "1" })
                 .ReceiveJson<OkMessage<SysRole>>();
