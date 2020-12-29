@@ -21,5 +21,23 @@ namespace csdd.Controllers.Sys
             var data = _whitePhoneService.GetPagerList(query);
             return Json(data);
         }
+
+
+        [HttpGet]
+        [Route("{id}/delete")]
+        public JsonResult Delete(int id)
+        {
+            var data = _whitePhoneService.Delete(id);
+            return Json(data);
+        }
+
+
+        [HttpPost]
+        [Route("add")]
+        public JsonResult Post(WhitePhoneCreateApiModel created)
+        {
+            var data = _whitePhoneService.Create(created, UserId);
+            return Json(data);
+        }
     }
 }
