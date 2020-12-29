@@ -29,6 +29,7 @@ namespace foundation.ef5
         public DbSet<SysRole> SysRole { get; set; }
         public DbSet<SysPrivilege> SysPrivilege { get; set; }
         public DbSet<SysEventlog> SysEventlog { get; set; }
+        public DbSet<SysConfig> SysConfig { get; set; }
         #endregion
 
         #region hospital
