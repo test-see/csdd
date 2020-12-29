@@ -63,5 +63,13 @@ namespace csdd.Controllers.User
             var data = _userService.UpdateUser(Updated);
             return Json(data);
         }
+
+        [HttpGet]
+        [Route("profile")]
+        public JsonResult GetProfile()
+        {
+            var data = _userService.GetUserIndex(UserId);
+            return Json(data);
+        }
     }
 }

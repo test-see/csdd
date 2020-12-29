@@ -68,6 +68,17 @@ namespace apitest.User
 
 
         [TestMethod]
+        public async Task UserRole_Profile_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/User/profile")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<UserIndexApiModel>>();
+            Assert.AreEqual(200, message.Code);
+        }
+
+
+        [TestMethod]
         public async Task UserRole_Update_ReturnListAsync()
         {
             var message = await _rootpath
