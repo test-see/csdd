@@ -5,7 +5,6 @@ using irespository.sys.model;
 using irespository.user;
 using irespository.user.model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,16 +26,20 @@ namespace respository.user
                 Phone = created.Phone,
                 CreateTime = DateTime.UtcNow
             };
-            _context.User.Add(user);
-            if (created.RoleIds != null && created.RoleIds.Any())
+            using (var tran = await _context.Database.BeginTransactionAsync())
             {
-                _context.UserRole.AddRange(created.RoleIds.Select(x => new UserRole
+                _context.User.Add(user);
+                if (created.RoleIds != null && created.RoleIds.Any())
                 {
-                    RoleId = x,
-                    UserId = userId,
-                }));
+                    _context.UserRole.AddRange(created.RoleIds.Select(x => new UserRole
+                    {
+                        RoleId = x,
+                        UserId = userId,
+                    }));
+                }
+                await _context.SaveChangesAsync();
+                await tran.CommitAsync();
             }
-            await _context.SaveChangesAsync();
             return user;
         }
         public User GetByPhone(string phone)
@@ -72,21 +75,25 @@ namespace respository.user
         public int UpdateUser(UserUpdateApiModel updated)
         {
             var user = _context.User.First(x => x.Id == updated.UserId);
-            user.Username = updated.Username;
-            _context.User.Update(user);
-
-            var roles = _context.UserRole.Where(x => x.UserId == updated.UserId);
-            _context.UserRole.RemoveRange(roles);
-
-            if (updated.RoleIds != null && updated.RoleIds.Any())
+            using (var tran = _context.Database.BeginTransaction())
             {
-                _context.UserRole.AddRange(updated.RoleIds.Select(x => new UserRole
+                user.Username = updated.Username;
+                _context.User.Update(user);
+
+                var roles = _context.UserRole.Where(x => x.UserId == updated.UserId);
+                _context.UserRole.RemoveRange(roles);
+
+                if (updated.RoleIds != null && updated.RoleIds.Any())
                 {
-                    RoleId = x,
-                    UserId = updated.UserId,
-                }));
+                    _context.UserRole.AddRange(updated.RoleIds.Select(x => new UserRole
+                    {
+                        RoleId = x,
+                        UserId = updated.UserId,
+                    }));
+                }
+                _context.SaveChanges();
+                tran.Commit();
             }
-            _context.SaveChanges();
             return user.Id;
         }
 
