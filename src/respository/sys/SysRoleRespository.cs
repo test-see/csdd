@@ -22,6 +22,7 @@ namespace respository.sys
             using (var tran = _context.Database.BeginTransaction())
             {
                 _context.SysRole.Add(role);
+                _context.SaveChanges();
 
                 if (created.MenuIds != null && created.MenuIds.Any())
                 {

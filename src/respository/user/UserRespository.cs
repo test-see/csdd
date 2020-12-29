@@ -24,17 +24,19 @@ namespace respository.user
                 IsActive = 1,
                 Username = created.Username,
                 Phone = created.Phone,
-                CreateTime = DateTime.UtcNow
+                CreateTime = DateTime.UtcNow,
+                CreateUserId = userId,
             };
             using (var tran = await _context.Database.BeginTransactionAsync())
             {
                 _context.User.Add(user);
+                _context.SaveChanges();
                 if (created.RoleIds != null && created.RoleIds.Any())
                 {
                     _context.UserRole.AddRange(created.RoleIds.Select(x => new UserRole
                     {
                         RoleId = x,
-                        UserId = userId,
+                        UserId = user.Id,
                     }));
                 }
                 await _context.SaveChangesAsync();
