@@ -19,18 +19,22 @@ namespace respository.sys
         public SysRole Create(RoleCreateApiModel created, int userId)
         {
             var role = new SysRole { Name = created.RoleName, CreateUserId = userId, CreateTime = DateTime.UtcNow };
-            _context.SysRole.Add(role);
-
-            if (created.MenuIds != null && created.MenuIds.Any())
+            using (var tran = _context.Database.BeginTransaction())
             {
-                _context.SysPrivilege.AddRange(created.MenuIds.Select(x => new SysPrivilege
-                {
-                    MenuId = x,
-                    RoleId = role.Id,
-                }));
-            }
+                _context.SysRole.Add(role);
 
-            _context.SaveChanges();
+                if (created.MenuIds != null && created.MenuIds.Any())
+                {
+                    _context.SysPrivilege.AddRange(created.MenuIds.Select(x => new SysPrivilege
+                    {
+                        MenuId = x,
+                        RoleId = role.Id,
+                    }));
+                }
+
+                _context.SaveChanges();
+                tran.Commit();
+            }
             return role;
         }
 
@@ -94,21 +98,25 @@ namespace respository.sys
         public int UpdateRole(RoleIndexUpdateModel updated)
         {
             var role = _context.SysRole.First(x => x.Id == updated.RoleId);
-            role.Name = updated.RoleName;
-            _context.SysRole.Update(role);
-
-            var privileges = _context.SysPrivilege.Where(x => x.RoleId == updated.RoleId);
-            _context.SysPrivilege.RemoveRange(privileges);
-
-            if (updated.MenuIds != null && updated.MenuIds.Any())
+            using (var tran = _context.Database.BeginTransaction())
             {
-                _context.SysPrivilege.AddRange(updated.MenuIds.Select(x => new SysPrivilege
+                role.Name = updated.RoleName;
+                _context.SysRole.Update(role);
+
+                var privileges = _context.SysPrivilege.Where(x => x.RoleId == updated.RoleId);
+                _context.SysPrivilege.RemoveRange(privileges);
+
+                if (updated.MenuIds != null && updated.MenuIds.Any())
                 {
-                    MenuId = x,
-                    RoleId = updated.RoleId,
-                }));
+                    _context.SysPrivilege.AddRange(updated.MenuIds.Select(x => new SysPrivilege
+                    {
+                        MenuId = x,
+                        RoleId = updated.RoleId,
+                    }));
+                }
+                _context.SaveChanges();
+                tran.Commit();
             }
-            _context.SaveChanges();
             return role.Id;
         }
     }
