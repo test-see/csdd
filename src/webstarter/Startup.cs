@@ -2,6 +2,7 @@ using AutoMapper;
 using csdd.Middlewares;
 using foundation.config;
 using foundation.ef5;
+using irespository.user.enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -74,6 +75,11 @@ namespace csdd
                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConfig.Authentication.IssuerSigningKey))
                   };
               });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(AuthorizeRole.Admin.ToString()));
+            });
 
             services.AddSwaggerGen(c =>
             {
