@@ -93,7 +93,7 @@ namespace apitest.Sys
         public async Task UserAuthorizeRole_Get_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/User/authorize/role")
+                .AppendPathSegment("/api/User/data/authorize")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<IEnumerable<DataAuthorizeRole>>>();
             Assert.AreEqual(200, message.Code);

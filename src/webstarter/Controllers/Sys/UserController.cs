@@ -73,10 +73,10 @@ namespace csdd.Controllers.User
         }
 
         [HttpGet]
-        [Route("authorize/role")]
-        public JsonResult GetList()
+        [Route("data/authorize")]
+        public JsonResult GetDataAuthorizeList()
         {
-            var data = _userService.GetList();
+            var data = _userService.GetDataAuthorizeList();
             return Json(data);
         }
     }

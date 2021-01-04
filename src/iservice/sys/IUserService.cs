@@ -14,6 +14,6 @@ namespace iservice.user
         int UpdateUser(UserUpdateApiModel updated);
         User UpdateIsActive(int userId, bool isActive);
         Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId);
-        IEnumerable<DataAuthorizeRole> GetList();
+        IEnumerable<DataAuthorizeRole> GetDataAuthorizeList();
     }
 }

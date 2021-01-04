@@ -40,9 +40,9 @@ namespace service.user
         {
             return await _userContext.AddActiveUserAsync(created, userId);
         }
-        public IEnumerable<DataAuthorizeRole> GetList()
+        public IEnumerable<DataAuthorizeRole> GetDataAuthorizeList()
         {
-            return _userContext.GetList();
+            return _userContext.GetDataAuthorizeList();
         }
     }
 }

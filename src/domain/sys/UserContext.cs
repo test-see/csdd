@@ -40,7 +40,7 @@ namespace domain.user
         {
             return await _userRespository.AddActiveUserAsync(created, userId);
         }
-        public IEnumerable<DataAuthorizeRole> GetList()
+        public IEnumerable<DataAuthorizeRole> GetDataAuthorizeList()
         {
             return _authorizeRoleRespository.GetList();
         }
