@@ -25,9 +25,9 @@ namespace respository.user
         {
             return _context.UserVerificationCode.Where(x => x.IsActive == 1 && x.Phone == phone).ToList();
         }
-        public int GetCountVerificationCodeInMinuteOne(string phone)
+        public int GetCountVerificationCodeInMinuteOne(string phone, bool isTest = false)
         {
-            var limittime = DateTime.UtcNow.AddMinutes(-1);
+            var limittime = isTest ? DateTime.UtcNow.AddMinutes(-1) : DateTime.UtcNow;
             var count = _context.UserVerificationCode.Where(x => x.CreateTime > limittime && x.IsActive == 1 && x.Phone == phone).Count();
             return count;
         }

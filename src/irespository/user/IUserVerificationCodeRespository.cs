@@ -8,7 +8,7 @@ namespace irespository.user
     {
         bool CheckVerificationCode(LoginApiModel login);
         IEnumerable<UserVerificationCode> GetActiveVerificationCodeList(string phone);
-        int GetCountVerificationCodeInMinuteOne(string phone);
+        int GetCountVerificationCodeInMinuteOne(string phone, bool isTest = false);
         Task InActiveVerificationCodeListAsync(string phone);
         Task<string> AddVerificationCodeAsync(string phone);
     }
