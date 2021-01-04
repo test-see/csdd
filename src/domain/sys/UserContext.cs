@@ -1,5 +1,6 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
+using irespository.data;
 using irespository.sys.model;
 using irespository.user;
 using irespository.user.model;
@@ -11,9 +12,12 @@ namespace domain.user
     public class UserContext
     {
         private readonly IUserRespository _userRespository;
-        public UserContext(IUserRespository userRespository)
+        private readonly IAuthorizeRoleRespository _authorizeRoleRespository;
+        public UserContext(IUserRespository userRespository,
+            IAuthorizeRoleRespository authorizeRoleRespository)
         {
             _userRespository = userRespository;
+            _authorizeRoleRespository = authorizeRoleRespository;
         }
         public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
@@ -35,6 +39,10 @@ namespace domain.user
         public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
         {
             return await _userRespository.AddActiveUserAsync(created, userId);
+        }
+        public IEnumerable<DataAuthorizeRole> GetList()
+        {
+            return _authorizeRoleRespository.GetList();
         }
     }
 }

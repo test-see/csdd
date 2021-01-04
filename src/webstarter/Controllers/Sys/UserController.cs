@@ -1,9 +1,11 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
+using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user.model;
 using iservice.user;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace csdd.Controllers.User
@@ -70,6 +72,13 @@ namespace csdd.Controllers.User
         {
             var data = _userService.GetUserIndex(UserId);
             return Json(data);
+        }
+
+        [HttpGet]
+        [Route("authorize/role")]
+        public IEnumerable<DataAuthorizeRole> GetList()
+        {
+            return _userService.GetList();
         }
     }
 }

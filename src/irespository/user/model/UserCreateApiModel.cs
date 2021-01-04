@@ -6,6 +6,7 @@ namespace irespository.user.model
     {
         public string Phone { get; set; }
         public string Username { get; set; }
+        //public 
         public IList<int> RoleIds { get; set; }
     }
 }
