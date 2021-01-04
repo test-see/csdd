@@ -76,7 +76,7 @@ namespace apitest.Sys
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new UserUpdateApiModel
                 {
-                    UserId = 1,
+                    Id = 1,
                     Username = "Test",
                     AuthorizeRoleId = (int)AuthorizeRole.Admin,
                     RoleIds = new List<int> { }

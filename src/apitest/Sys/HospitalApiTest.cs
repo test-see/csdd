@@ -37,5 +37,16 @@ namespace apitest.Sys
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
         }
+        [TestMethod]
+        public async Task Hospital_Update_ReturnIntAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Hospital/1/update")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new HospitalUpdateApiModel { Name = "q", Remark = "d" })
+                .ReceiveJson<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data > 0);
+        }
     }
 }

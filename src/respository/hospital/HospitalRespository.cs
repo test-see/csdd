@@ -53,5 +53,16 @@ namespace respository.hospital
             _context.SaveChanges();
             return id;
         }
+
+        public int Update(HospitalUpdateApiModel updated)
+        {
+            var hospital = _context.Hospital.First(x => x.Id == updated.Id);
+            hospital.Name = updated.Name;
+            hospital.Remark = updated.Remark;
+
+            _context.Hospital.Update(hospital);
+            _context.SaveChanges();
+            return hospital.Id;
+        }
     }
 }

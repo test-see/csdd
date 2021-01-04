@@ -41,5 +41,13 @@ namespace csdd.Controllers.Info
             var data = _hospitalService.Create(created, UserId);
             return Json(data);
         }
+
+        [HttpPost]
+        [Route("{id}/update")]
+        public JsonResult Update(HospitalUpdateApiModel updated)
+        {
+            var data = _hospitalService.Update(updated);
+            return Json(data);
+        }
     }
 }

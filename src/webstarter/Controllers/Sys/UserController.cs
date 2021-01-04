@@ -60,9 +60,9 @@ namespace csdd.Controllers.User
 
         [HttpPost]
         [Route("update")]
-        public JsonResult UpdateUser(UserUpdateApiModel Updated)
+        public JsonResult Update(UserUpdateApiModel Updated)
         {
-            var data = _userService.UpdateUser(Updated);
+            var data = _userService.Update(Updated);
             return Json(data);
         }
 

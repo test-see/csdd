@@ -75,16 +75,16 @@ namespace respository.user
             return user;
         }
 
-        public int UpdateUser(UserUpdateApiModel updated)
+        public int Update(UserUpdateApiModel updated)
         {
-            var user = _context.User.First(x => x.Id == updated.UserId);
+            var user = _context.User.First(x => x.Id == updated.Id);
             using (var tran = _context.Database.BeginTransaction())
             {
                 user.Username = updated.Username;
                 user.AuthorizeRoleId = updated.AuthorizeRoleId;
                 _context.User.Update(user);
 
-                var roles = _context.UserRole.Where(x => x.UserId == updated.UserId);
+                var roles = _context.UserRole.Where(x => x.UserId == updated.Id);
                 _context.UserRole.RemoveRange(roles);
 
                 if (updated.RoleIds != null && updated.RoleIds.Any())
@@ -92,7 +92,7 @@ namespace respository.user
                     _context.UserRole.AddRange(updated.RoleIds.Select(x => new UserRole
                     {
                         RoleId = x,
-                        UserId = updated.UserId,
+                        UserId = updated.Id,
                     }));
                 }
                 _context.SaveChanges();

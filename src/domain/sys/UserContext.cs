@@ -32,9 +32,9 @@ namespace domain.user
             return _userRespository.GetUserIndex(userId);
         }
 
-        public int UpdateUser(UserUpdateApiModel updated)
+        public int Update(UserUpdateApiModel updated)
         {
-            return _userRespository.UpdateUser(updated);
+            return _userRespository.Update(updated);
         }
         public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
         {

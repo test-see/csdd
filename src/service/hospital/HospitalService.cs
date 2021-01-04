@@ -26,5 +26,10 @@ namespace service.hospital
         {
             return _hospitalContext.Delete(id);
         }
+
+        public int Update(HospitalUpdateApiModel updated)
+        {
+            return _hospitalContext.Update(updated);
+        }
     }
 }
