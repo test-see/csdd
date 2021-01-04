@@ -5,10 +5,6 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.hospital.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace apitest.Info
@@ -29,13 +25,13 @@ namespace apitest.Info
         [TestMethod]
         public async Task Hospital_AddAndDelete_ReturnIntAsync()
         {
-            var role = await _rootpath
-                .AppendPathSegment("/api/Config/add")
+            var hospital = await _rootpath
+                .AppendPathSegment("/api/Hospital/add")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new HospitalCreateApiModel { Name = "q", Remark = "d" })
                 .ReceiveJson<OkMessage<Hospital>>();
             var message = await _rootpath
-                .AppendPathSegment($"/api/Hospital/{role.Data.Id}/delete")
+                .AppendPathSegment($"/api/Hospital/{hospital.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
