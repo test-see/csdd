@@ -4,6 +4,7 @@ using Flurl.Http;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.sys.model;
+using irespository.user.enums;
 using irespository.user.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -36,6 +37,7 @@ namespace apitest.Sys
                 {
                     Phone = "+T" + DateTime.UtcNow.ToString("yyMMddmmHHss"),
                     Username = "Test1",
+                    AuthorizeRole = AuthorizeRole.Admin,
                 })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);

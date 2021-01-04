@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using irespository.user.enums;
+using System.Collections.Generic;
 
 namespace irespository.user.model
 {
@@ -6,7 +7,7 @@ namespace irespository.user.model
     {
         public string Phone { get; set; }
         public string Username { get; set; }
-        //public 
+        public AuthorizeRole AuthorizeRole { get; set; }
         public IList<int> RoleIds { get; set; }
     }
 }

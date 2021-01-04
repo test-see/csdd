@@ -26,6 +26,7 @@ namespace respository.user
                 Phone = created.Phone,
                 CreateTime = DateTime.UtcNow,
                 CreateUserId = userId,
+                AuthorizeRoleId = (int)created.AuthorizeRole,
             };
             using (var tran = await _context.Database.BeginTransactionAsync())
             {
@@ -80,6 +81,7 @@ namespace respository.user
             using (var tran = _context.Database.BeginTransaction())
             {
                 user.Username = updated.Username;
+                user.AuthorizeRoleId = (int)updated.AuthorizeRole;
                 _context.User.Update(user);
 
                 var roles = _context.UserRole.Where(x => x.UserId == updated.UserId);
