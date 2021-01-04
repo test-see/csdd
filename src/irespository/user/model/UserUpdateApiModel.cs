@@ -7,7 +7,7 @@ namespace irespository.sys.model
     {
         public int UserId { get; set; }
         public string Username { get; set; }
-        public AuthorizeRole AuthorizeRole { get; set; }
+        public int AuthorizeRoleId { get; set; }
         public IList<int> RoleIds { get; set; }
     }
 }

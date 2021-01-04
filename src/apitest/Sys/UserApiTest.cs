@@ -37,7 +37,7 @@ namespace apitest.Sys
                 {
                     Phone = "+T" + DateTime.UtcNow.ToString("yyMMddmmHHss"),
                     Username = "Test1",
-                    AuthorizeRole = AuthorizeRole.Admin,
+                    AuthorizeRoleId = int.Parse(AuthorizeRole.Admin),
                 })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
