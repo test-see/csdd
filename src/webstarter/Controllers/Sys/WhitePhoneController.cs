@@ -2,10 +2,12 @@
 using foundation.config;
 using irespository.sys.model;
 using iservice.sys;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace csdd.Controllers.Sys
 {
+    [Authorize(Policy = "RequireAdministratorRole")]
     public class WhitePhoneController : DefaultControllerBase
     {
         private readonly IWhitePhoneService _whitePhoneService;

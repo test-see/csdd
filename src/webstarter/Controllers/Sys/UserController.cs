@@ -3,11 +3,13 @@ using foundation.config;
 using irespository.sys.model;
 using irespository.user.model;
 using iservice.user;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace csdd.Controllers.User
 {
+    [Authorize(Policy = "RequireAdministratorRole")]
     public class UserController : DefaultControllerBase
     {
         private readonly IUserService _userService;

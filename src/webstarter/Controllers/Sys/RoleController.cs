@@ -2,10 +2,12 @@
 using foundation.config;
 using irespository.sys.model;
 using iservice.sys;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace csdd.Controllers
 {
+    [Authorize(Policy = "RequireAdministratorRole")]
     public class RoleController : DefaultControllerBase
     {
         private readonly IRoleService  _roleService;

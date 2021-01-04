@@ -2,10 +2,12 @@
 using foundation.config;
 using irespository.hospital.model;
 using iservice.hospital;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace csdd.Controllers.Info
 {
+    [Authorize(Policy = "RequireAdministratorRole")]
     public class HospitalController : DefaultControllerBase
     {
         private readonly IHospitalService _hospitalService;
