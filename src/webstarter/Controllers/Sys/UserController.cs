@@ -67,14 +67,6 @@ namespace csdd.Controllers.User
         }
 
         [HttpGet]
-        [Route("profile")]
-        public JsonResult GetProfile()
-        {
-            var data = _userService.GetUserIndex(UserId);
-            return Json(data);
-        }
-
-        [HttpGet]
         [Route("data/authorize")]
         public JsonResult GetDataAuthorizeList()
         {
