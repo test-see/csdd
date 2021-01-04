@@ -7,7 +7,7 @@ namespace csdd.Controllers.Shared
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "RequireAdministratorRole")]
+    [Authorize(Policy = "RequireDefaultRole")]
     [EnableCors("csdd")]
     public class DefaultControllerBase : ControllerBase
     {

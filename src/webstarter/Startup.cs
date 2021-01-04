@@ -79,6 +79,10 @@ namespace csdd
 
             services.AddAuthorization(options =>
             {
+                options.AddPolicy("RequireDefaultRole", policy =>
+                {
+                    policy.RequireRole(AuthorizeRole.Admin.ToString(), AuthorizeRole.Client.ToString(), AuthorizeRole.Hospital.ToString());
+                });
                 options.AddPolicy("RequireAdministratorRole", policy =>
                 {
                     policy.RequireRole(AuthorizeRole.Admin.ToString());
