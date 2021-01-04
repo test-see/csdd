@@ -77,10 +77,13 @@ namespace csdd
                   };
               });
 
-            services.AddIdentityCore<IdentityUser>().AddRoles<IdentityRole>();
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(AuthorizeRole.Admin.ToString()));
+                options.AddPolicy("RequireAdministratorRole", policy =>
+                {
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireRole(AuthorizeRole.Admin.ToString());
+                });
             });
 
             services.AddSwaggerGen(c =>
