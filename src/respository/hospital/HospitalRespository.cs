@@ -13,9 +13,9 @@ namespace respository.hospital
         {
             _context = context;
         }
-        public IEnumerable<Hospital> GetListByProvince(int provinceId)
+        public IEnumerable<Hospital> GetList()
         {
-            return _context.Hospital.Where(x => x.ProvinceId == provinceId).ToList();
+            return _context.Hospital.ToList();
         }
     }
 }

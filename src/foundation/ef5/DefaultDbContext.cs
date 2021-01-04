@@ -20,7 +20,6 @@ namespace foundation.ef5
         #endregion
 
         #region data
-        public DbSet<DataProvince> DataProvince { get; set; }
         public DbSet<DataMenu> DataMenu { get; set; }
         #endregion
 

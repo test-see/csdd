@@ -5,6 +5,6 @@ namespace irespository.hospital
 {
     public interface IHospitalRespository
     {
-        IEnumerable<Hospital> GetListByProvince(int provinceId);
+        IEnumerable<Hospital> GetList();
     }
 }
