@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace apitest.User
+namespace apitest.Sys
 {
     [TestClass]
     public class UserApiTest : BaseApiTest

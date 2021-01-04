@@ -2,9 +2,9 @@
 using foundation.ef5.poco;
 using irespository.hospital.model;
 
-namespace irespository.hospital
+namespace iservice.hospital
 {
-    public interface IHospitalRespository
+    public interface IHospitalService
     {
         PagerResult<HospitalListApiModel> GetPagerList(PagerQuery<HospitalListQueryModel> query);
         Hospital Create(HospitalCreateApiModel created, int userId);
