@@ -2,6 +2,7 @@
 using Flurl;
 using Flurl.Http;
 using foundation.config;
+using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -55,9 +56,8 @@ namespace apitest.Sys
             Assert.AreEqual(200, message.Code);
         }
 
-
         [TestMethod]
-        public async Task UserRole_Get_ReturnListAsync()
+        public async Task User_Get_ReturnListAsync()
         {
             var message = await _rootpath
                 .AppendPathSegment("/api/User/1/index")
@@ -66,9 +66,8 @@ namespace apitest.Sys
             Assert.AreEqual(200, message.Code);
         }
 
-
         [TestMethod]
-        public async Task UserRole_Profile_ReturnListAsync()
+        public async Task User_Profile_ReturnListAsync()
         {
             var message = await _rootpath
                 .AppendPathSegment("/api/User/profile")
@@ -77,15 +76,24 @@ namespace apitest.Sys
             Assert.AreEqual(200, message.Code);
         }
 
-
         [TestMethod]
-        public async Task UserRole_Update_ReturnListAsync()
+        public async Task User_Update_ReturnListAsync()
         {
             var message = await _rootpath
                 .AppendPathSegment("/api/User/update")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new UserUpdateApiModel { UserId = 1, Username = "Test", RoleIds = new List<int> { } })
                 .ReceiveJson<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+        }
+        
+        [TestMethod]
+        public async Task UserAuthorizeRole_Get_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/User/authorize/role")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<IEnumerable<DataAuthorizeRole>>>();
             Assert.AreEqual(200, message.Code);
         }
     }

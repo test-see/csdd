@@ -1,11 +1,9 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
-using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user.model;
 using iservice.user;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace csdd.Controllers.User
@@ -76,9 +74,10 @@ namespace csdd.Controllers.User
 
         [HttpGet]
         [Route("authorize/role")]
-        public IEnumerable<DataAuthorizeRole> GetList()
+        public JsonResult GetList()
         {
-            return _userService.GetList();
+            var data = _userService.GetList();
+            return Json(data);
         }
     }
 }
