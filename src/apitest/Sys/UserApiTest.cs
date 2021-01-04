@@ -84,7 +84,13 @@ namespace apitest.Sys
             var message = await _rootpath
                 .AppendPathSegment("/api/User/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new UserUpdateApiModel { UserId = 1, Username = "Test", RoleIds = new List<int> { } })
+                .PostJsonAsync(new UserUpdateApiModel
+                {
+                    UserId = 1,
+                    Username = "Test",
+                    AuthorizeRoleId = (int)AuthorizeRole.Admin,
+                    RoleIds = new List<int> { }
+                })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }
