@@ -1,6 +1,6 @@
 ﻿using csdd.Controllers.Shared;
 
-namespace csdd.Controllers.Info
+namespace csdd.Controllers.Hospital
 {
     public class HospitalGoodsController : DefaultControllerBase
     {

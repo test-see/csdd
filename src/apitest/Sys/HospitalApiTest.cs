@@ -2,7 +2,6 @@
 using Flurl;
 using Flurl.Http;
 using foundation.config;
-using foundation.ef5.poco;
 using irespository.hospital.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
@@ -29,7 +28,7 @@ namespace apitest.Sys
                 .AppendPathSegment("/api/Hospital/add")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new HospitalCreateApiModel { Name = "q", Remark = "d" })
-                .ReceiveJson<OkMessage<Hospital>>();
+                .ReceiveJson<OkMessage<foundation.ef5.poco.Hospital>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/Hospital/{hospital.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())
