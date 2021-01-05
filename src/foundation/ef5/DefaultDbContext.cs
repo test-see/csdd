@@ -40,6 +40,7 @@ namespace foundation.ef5
 
         #region eventlog
         public DbSet<Eventlog> Eventlog { get; set; }
+        public DbSet<EventlogHospitalGoods> EventlogHospitalGoods { get; set; }
         #endregion
     }
 }

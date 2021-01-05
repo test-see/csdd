@@ -6,7 +6,7 @@ using irespository.sys.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace apitest.eventlog
+namespace apitest.sys
 {
     [TestClass]
     public class EventlogApiTest : BaseApiTest
