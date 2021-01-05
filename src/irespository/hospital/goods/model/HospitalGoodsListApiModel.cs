@@ -12,5 +12,6 @@ namespace irespository.hospital.model
         public string Producer { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
+        public int IsActive { get; set; }
     }
 }

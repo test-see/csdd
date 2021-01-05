@@ -31,6 +31,7 @@ namespace respository.hospital
                           Spec = r.Spec,
                           UnitPurchase = r.UnitPurchase,
                           CreateUserName = u.Username,
+                          IsActive = r.IsActive,
                       };
             return new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
         }
@@ -45,7 +46,8 @@ namespace respository.hospital
                 Spec = created.Spec,
                 UnitPurchase = created.UnitPurchase,
                 CreateUserId = userId,
-                CreateTime = DateTime.UtcNow
+                CreateTime = DateTime.UtcNow,
+                IsActive = 1,
             };
 
             _context.HospitalGoods.Add(goods);
@@ -70,6 +72,7 @@ namespace respository.hospital
             goods.Producer = updated.Producer;
             goods.Spec = updated.Spec;
             goods.UnitPurchase = updated.UnitPurchase;
+            goods.IsActive = updated.IsActive;
 
             _context.HospitalGoods.Update(goods);
             _context.SaveChanges();

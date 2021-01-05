@@ -22,5 +22,7 @@ namespace foundation.ef5.poco
         public DateTime CreateTime { get; set; }
         [Column("createuser_id")]
         public int CreateUserId { get; set; }
+        [Column("is_active")]
+        public int IsActive { get; set; }
     }
 }

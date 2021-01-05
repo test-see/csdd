@@ -28,7 +28,14 @@ namespace apitest.sys
             var hospital = await _rootpath
                 .AppendPathSegment("/api/HospitalGoods/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalGoodsCreateApiModel { Name = "q", HospitalId = 1, Producer = "x", UnitPurchase = "x", Spec = "x" })
+                .PostJsonAsync(new HospitalGoodsCreateApiModel
+                {
+                    Name = "q",
+                    HospitalId = 1,
+                    Producer = "x",
+                    UnitPurchase = "x",
+                    Spec = "x"
+                })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.HospitalGoods>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/HospitalGoods/{hospital.Data.Id}/delete")
@@ -43,7 +50,15 @@ namespace apitest.sys
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalGoods/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalGoodsUpdateApiModel { Id = 1, Name = "q", Producer = "x", UnitPurchase = "x", Spec = "x" })
+                .PostJsonAsync(new HospitalGoodsUpdateApiModel
+                {
+                    Id = 1,
+                    Name = "q",
+                    Producer = "x",
+                    UnitPurchase = "x",
+                    Spec = "x",
+                    IsActive = 1,
+                })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
