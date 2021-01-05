@@ -6,8 +6,8 @@ namespace domain.sys
 {
     public class EventlogContext
     {
-        private readonly ISysEventlogRespository _sysEventlogRespository;
-        public EventlogContext(ISysEventlogRespository sysEventlogRespository)
+        private readonly IEventlogRespository _sysEventlogRespository;
+        public EventlogContext(IEventlogRespository sysEventlogRespository)
         {
             _sysEventlogRespository = sysEventlogRespository;
         }

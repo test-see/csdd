@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace respository.sys
 {
-    public class SysEventlogRespository : ISysEventlogRespository
+    public class EventlogRespository : IEventlogRespository
     {
         private readonly DefaultDbContext _context;
-        public SysEventlogRespository(DefaultDbContext context)
+        public EventlogRespository(DefaultDbContext context)
         {
             _context = context;
         }
         public PagerResult<EventlogListApiModel> GetPagerList(PagerQuery<EventlogListQueryModel> query)
         {
-            var sql = from r in _context.SysEventlog
+            var sql = from r in _context.Eventlog
                       join u in _context.User on r.OptionUserId equals u.Id
                       select new EventlogListApiModel
                       {
@@ -23,7 +23,6 @@ namespace respository.sys
                           Id = r.Id,
                           Content = r.Content,
                           OptionUsername = u.Username,
-                          Group = r.Group,
                           Title = r.Title,
                       };
             return new PagerResult<EventlogListApiModel>(query.Index, query.Size, sql);

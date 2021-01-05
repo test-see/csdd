@@ -3,13 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace foundation.ef5.poco
 {
-    [Table("sys_eventlog")]
-    public class SysEventlog
+    [Table("eventlog")]
+    public class Eventlog
     {
         [Column("id")]
         public int Id { get; set; }
-        [Column("group")]
-        public string Group { get; set; }
         [Column("title")]
         public string Title { get; set; }
         [Column("content")]

@@ -28,7 +28,6 @@ namespace foundation.ef5
         public DbSet<SysWhitePhone> SysWhitePhone { get; set; }
         public DbSet<SysRole> SysRole { get; set; }
         public DbSet<SysPrivilege> SysPrivilege { get; set; }
-        public DbSet<SysEventlog> SysEventlog { get; set; }
         public DbSet<SysConfig> SysConfig { get; set; }
         #endregion
 
@@ -39,5 +38,8 @@ namespace foundation.ef5
         public DbSet<HospitalClient> HospitalClient { get; set; }
         #endregion
 
+        #region eventlog
+        public DbSet<Eventlog> Eventlog { get; set; }
+        #endregion
     }
 }
