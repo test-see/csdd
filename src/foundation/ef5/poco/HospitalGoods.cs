@@ -20,5 +20,7 @@ namespace foundation.ef5.poco
         public string Producer { get; set; }
         [Column("createtime")]
         public DateTime CreateTime { get; set; }
+        [Column("createuser_id")]
+        public int CreateUserId { get; set; }
     }
 }
