@@ -4,7 +4,7 @@ using foundation.config;
 using System;
 using System.Threading.Tasks;
 
-namespace apitest.Shared
+namespace apitest.shared
 {
     public class BaseApiTest
     {

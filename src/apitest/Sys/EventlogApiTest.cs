@@ -1,4 +1,4 @@
-﻿using apitest.Shared;
+﻿using apitest.shared;
 using Flurl;
 using Flurl.Http;
 using foundation.config;
@@ -6,7 +6,7 @@ using irespository.sys.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace apitest.Sys
+namespace apitest.sys
 {
     [TestClass]
     public class EventlogApiTest : BaseApiTest

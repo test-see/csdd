@@ -11,9 +11,9 @@ namespace csdd.Controllers.Info
     public class HospitalController : DefaultControllerBase
     {
         private readonly IHospitalService _hospitalService;
-        public HospitalController(IHospitalService HospitalService)
+        public HospitalController(IHospitalService hospitalService)
         {
-            _hospitalService = HospitalService;
+            _hospitalService = hospitalService;
         }
 
         [HttpPost]

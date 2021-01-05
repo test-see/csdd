@@ -5,7 +5,7 @@ using irespository.sys.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace apitest.Shared
+namespace apitest.shared
 {
     [TestClass]
     public class ProfileApiTest : BaseApiTest

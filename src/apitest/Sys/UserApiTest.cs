@@ -1,4 +1,4 @@
-﻿using apitest.Shared;
+﻿using apitest.shared;
 using Flurl;
 using Flurl.Http;
 using foundation.config;
@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace apitest.Sys
+namespace apitest.sys
 {
     [TestClass]
     public class UserApiTest : BaseApiTest
