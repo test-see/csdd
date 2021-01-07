@@ -52,6 +52,7 @@ namespace respository.user
         public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
             var sql = from r in _context.User
+                      join a in _context.DataAuthorizeRole on r.AuthorizeRoleId equals a.Id
                       join p in _context.User on r.CreateUserId equals p.Id into p_t
                       from p_tt in p_t.DefaultIfEmpty()
                       select new UserListApiModel
@@ -62,6 +63,7 @@ namespace respository.user
                           Username = r.Username,
                           CreateTime = r.CreateTime,
                           CreateUsername = p_tt.Username,
+                          AuthorizeRoleName = a.Name,
                       };
             return new PagerResult<UserListApiModel>(query.Index, query.Size, sql);
         }
