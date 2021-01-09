@@ -11,5 +11,7 @@ namespace irespository.hospital
         HospitalGoods Create(HospitalGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(HospitalGoodsUpdateApiModel updated);
+        HospitalGoods Get(int id);
+        HospitalGoodsIndexApiModel GetIndex(int id);
     }
 }

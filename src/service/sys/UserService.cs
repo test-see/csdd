@@ -22,9 +22,9 @@ namespace service.user
             return _userContext.GetPagerList(query);
         }
 
-        public UserIndexApiModel GetUserIndex(int userId)
+        public UserIndexApiModel GetIndex(int userId)
         {
-            return _userContext.GetUserIndex(userId);
+            return _userContext.GetIndex(userId);
         }
 
         public int Update(UserUpdateApiModel updated)

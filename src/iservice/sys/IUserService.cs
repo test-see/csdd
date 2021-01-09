@@ -10,7 +10,7 @@ namespace iservice.user
     public interface IUserService
     {
         PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query);
-        UserIndexApiModel GetUserIndex(int userId);
+        UserIndexApiModel GetIndex(int userId);
         int Update(UserUpdateApiModel updated);
         User UpdateIsActive(int userId, bool isActive);
         Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId);

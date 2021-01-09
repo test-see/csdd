@@ -28,9 +28,9 @@ namespace csdd.Controllers.User
 
         [HttpGet]
         [Route("{userId}/index")]
-        public JsonResult GetUserIndex(int userId)
+        public JsonResult GetIndex(int userId)
         {
-            var data = _userService.GetUserIndex(userId);
+            var data = _userService.GetIndex(userId);
             return Json(data);
         }
 

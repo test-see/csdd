@@ -46,7 +46,16 @@ namespace csdd.Controllers.Sys
         [Route("{id}/update")]
         public JsonResult Update(HospitalGoodsUpdateApiModel updated)
         {
-            var data = _hospitalGoodsService.Update(updated);
+            var data = _hospitalGoodsService.Update(updated, UserId);
+            return Json(data);
+        }
+
+
+        [HttpGet]
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
+        {
+            var data = _hospitalGoodsService.GetIndex(id);
             return Json(data);
         }
     }

@@ -104,7 +104,7 @@ namespace respository.user
             return user.Id;
         }
 
-        public UserIndexApiModel GetUserIndex(int userId)
+        public UserIndexApiModel GetIndex(int userId)
         {
             var user = _context.User.Where(x => x.Id == userId).Select(x => new UserIndexApiModel
             {

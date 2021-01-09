@@ -14,6 +14,6 @@ namespace irespository.user
         PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query);
         User UpdateIsActive(int userId, bool isActive);
         int Update(UserUpdateApiModel updated);
-        UserIndexApiModel GetUserIndex(int userId);
+        UserIndexApiModel GetIndex(int userId);
     }
 }

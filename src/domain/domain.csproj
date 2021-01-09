@@ -12,8 +12,4 @@
     <ProjectReference Include="..\irespository\irespository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="eventlog\valueobjects\" />
-  </ItemGroup>
-
 </Project>

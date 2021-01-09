@@ -14,7 +14,7 @@ namespace csdd.Controllers.Shared
         [Route("index")]
         public JsonResult GetProfile()
         {
-            var data = _userService.GetUserIndex(UserId);
+            var data = _userService.GetIndex(UserId);
             return Json(data);
         }
     }

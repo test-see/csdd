@@ -18,8 +18,4 @@
     <ProjectReference Include="..\service\service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="hospital\" />
-  </ItemGroup>
-
 </Project>

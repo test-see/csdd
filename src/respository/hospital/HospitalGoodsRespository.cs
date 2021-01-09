@@ -62,6 +62,12 @@ namespace respository.hospital
             return goods;
         }
 
+        public HospitalGoods Get(int id)
+        {
+            return _context.HospitalGoods.Find(id);
+        }
+
+
         public int Delete(int id)
         {
             var goods = _context.HospitalGoods.Find(id);
@@ -83,6 +89,32 @@ namespace respository.hospital
             _context.HospitalGoods.Update(goods);
             _context.SaveChanges();
             return goods.Id;
+        }
+
+        public HospitalGoodsIndexApiModel GetIndex(int id)
+        {
+            var sql = from r in _context.HospitalGoods
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join h in _context.Hospital on r.HospitalId equals h.Id
+                      where r.Id == id
+                      select new HospitalGoodsIndexApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Name = r.Name,
+                          Hospital = new HospitalValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                              Remark = h.Remark,
+                          },
+                          Producer = r.Producer,
+                          Spec = r.Spec,
+                          UnitPurchase = r.UnitPurchase,
+                          CreateUserName = u.Username,
+                          IsActive = r.IsActive,
+                      };
+            return sql.FirstOrDefault();
         }
     }
 }

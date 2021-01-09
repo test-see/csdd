@@ -63,5 +63,16 @@ namespace apitest.sys
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
         }
+
+
+        [TestMethod]
+        public async Task HospitalGoods_Get_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/1/index")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<HospitalGoodsIndexApiModel>>();
+            Assert.AreEqual(200, message.Code);
+        }
     }
 }

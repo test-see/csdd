@@ -27,9 +27,9 @@ namespace domain.user
         {
             return _userRespository.UpdateIsActive(userId, isActive);
         }
-        public UserIndexApiModel GetUserIndex(int userId)
+        public UserIndexApiModel GetIndex(int userId)
         {
-            return _userRespository.GetUserIndex(userId);
+            return _userRespository.GetIndex(userId);
         }
 
         public int Update(UserUpdateApiModel updated)

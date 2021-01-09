@@ -1,4 +1,6 @@
-﻿using foundation.config;
+﻿using domain.eventlog;
+using domain.eventlog.valueobjects;
+using foundation.config;
 using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.goods.model;
@@ -9,9 +11,12 @@ namespace domain.hospital
     public class HospitalGoodsContext
     {
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
-        public HospitalGoodsContext(IHospitalGoodsRespository hospitalGoodsRespository)
+        private readonly EventlogHospitalGoodsContext _eventlogHospitalGoodsContext;
+        public HospitalGoodsContext(IHospitalGoodsRespository hospitalGoodsRespository,
+            EventlogHospitalGoodsContext eventlogHospitalGoodsContext)
         {
             _hospitalGoodsRespository = hospitalGoodsRespository;
+            _eventlogHospitalGoodsContext = eventlogHospitalGoodsContext;
         }
 
         public PagerResult<HospitalGoodsListApiModel> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query)
@@ -26,9 +31,21 @@ namespace domain.hospital
         {
             return _hospitalGoodsRespository.Delete(id);
         }
-        public int Update(HospitalGoodsUpdateApiModel updated)
+        public int Update(HospitalGoodsUpdateApiModel updated, int userId)
         {
-            return _hospitalGoodsRespository.Update(updated);
+            var id = _hospitalGoodsRespository.Update(updated);
+            _eventlogHospitalGoodsContext.Create(new EventlogHospitalGoodsChangeValueModel
+            {
+                GoodId = id,
+                ChangeValue = null,
+            }, userId);
+            return id;
+        }
+        public HospitalGoodsIndexApiModel GetIndex(int id)
+        {
+            var goods = _hospitalGoodsRespository.GetIndex(id);
+            goods.Logs = _eventlogHospitalGoodsContext.GetList(id);
+            return goods;
         }
     }
 }
