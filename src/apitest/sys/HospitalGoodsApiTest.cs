@@ -48,7 +48,7 @@ namespace apitest.sys
         public async Task HospitalGoods_Update_ReturnIntAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/HospitalGoods/1/update")
+                .AppendPathSegment("/api/HospitalGoods/6/update")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new HospitalGoodsUpdateApiModel
                 {
@@ -69,7 +69,7 @@ namespace apitest.sys
         public async Task HospitalGoods_Get_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/HospitalGoods/1/index")
+                .AppendPathSegment("/api/HospitalGoods/6/index")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<HospitalGoodsIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
