@@ -52,7 +52,7 @@ namespace apitest.sys
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new HospitalGoodsUpdateApiModel
                 {
-                    Id = 1,
+                    Id = 6,
                     Name = "q",
                     Producer = "x",
                     UnitPurchase = "x",
