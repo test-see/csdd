@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.goods.model;
 using irespository.hospital.model;
+using irespository.hospital.profile.model;
 using System;
 using System.Linq;
 
@@ -26,7 +27,12 @@ namespace respository.hospital
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Name = r.Name,
-                          HospitalName = h.Name,
+                          Hospital = new HospitalValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                              Remark = h.Remark,
+                          },
                           Producer = r.Producer,
                           Spec = r.Spec,
                           UnitPurchase = r.UnitPurchase,

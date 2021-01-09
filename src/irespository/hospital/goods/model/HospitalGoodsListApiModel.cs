@@ -1,4 +1,5 @@
-﻿using System;
+﻿using irespository.hospital.profile.model;
+using System;
 
 namespace irespository.hospital.model
 {
@@ -6,7 +7,7 @@ namespace irespository.hospital.model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string HospitalName { get; set; }
+        public HospitalValueModel Hospital { get; set; }
         public string Spec { get; set; }
         public string UnitPurchase { get; set; }
         public string Producer { get; set; }
