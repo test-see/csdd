@@ -64,6 +64,7 @@ namespace respository.user
                           CreateTime = r.CreateTime,
                           CreateUsername = p_tt.Username,
                           AuthorizeRoleName = a.Name,
+                          AuthorizeRoleId = a.Id,
                       };
             return new PagerResult<UserListApiModel>(query.Index, query.Size, sql);
         }

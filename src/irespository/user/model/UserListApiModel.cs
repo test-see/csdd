@@ -11,5 +11,6 @@ namespace irespository.user.model
         public int IsActive { get; set; }
         public string CreateUsername { get; set; }
         public string AuthorizeRoleName { get; set; }
+        public int AuthorizeRoleId { get; set; }
     }
 }
