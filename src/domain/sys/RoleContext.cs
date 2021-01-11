@@ -28,9 +28,9 @@ namespace domain.sys
             return _sysRoleRespository.Delete(id);
         }
 
-        public RoleIndexApiModel GetRoleIndex(int roleId)
+        public RoleIndexApiModel GetIndex(int roleId)
         {
-            return _sysRoleRespository.GetRoleIndex(roleId);
+            return _sysRoleRespository.GetIndex(roleId);
         }
         public int UpdateRole(RoleIndexUpdateModel updated)
         {

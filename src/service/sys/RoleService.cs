@@ -28,9 +28,9 @@ namespace service.sys
         {
             return _roleContext.GetPagerList(query);
         }
-        public RoleIndexApiModel GetRoleIndex(int roleId)
+        public RoleIndexApiModel GetIndex(int roleId)
         {
-            return _roleContext.GetRoleIndex(roleId);
+            return _roleContext.GetIndex(roleId);
         }
 
         public int UpdateRole(RoleIndexUpdateModel updated)

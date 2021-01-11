@@ -51,9 +51,9 @@ namespace csdd.Controllers
 
         [HttpGet]
         [Route("{roleId}/index")]
-        public JsonResult GetRoleIndex(int roleId)
+        public JsonResult GetIndex(int roleId)
         {
-            var data = _roleService.GetRoleIndex(roleId);
+            var data = _roleService.GetIndex(roleId);
             return Json(data);
         }
 

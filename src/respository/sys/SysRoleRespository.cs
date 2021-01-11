@@ -66,7 +66,7 @@ namespace respository.sys
             return new PagerResult<RoleListApiModel>(query.Index, query.Size, sql);
         }
 
-        public RoleIndexApiModel GetRoleIndex(int roleId)
+        public RoleIndexApiModel GetIndex(int roleId)
         {
             var role = _context.SysRole.Where(x => x.Id == roleId).Select(x => new RoleIndexApiModel
             {

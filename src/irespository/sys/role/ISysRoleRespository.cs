@@ -11,7 +11,7 @@ namespace irespository.user
         SysRole Create(RoleCreateApiModel created, int userId);
         int Delete(int id);
         int UpdateRole(RoleIndexUpdateModel updated);
-        RoleIndexApiModel GetRoleIndex(int roleId);
+        RoleIndexApiModel GetIndex(int roleId);
         IList<RoleMenuApiModel> GetMenuList();
     }
 }

@@ -10,7 +10,7 @@ namespace iservice.sys
         PagerResult<RoleListApiModel> GetPagerList(PagerQuery<RoleListQueryModel> query);
         SysRole Create(RoleCreateApiModel created, int userId);
         int Delete(int id);
-        RoleIndexApiModel GetRoleIndex(int roleId);
+        RoleIndexApiModel GetIndex(int roleId);
         int UpdateRole(RoleIndexUpdateModel updated);
         IList<RoleMenuApiModel> GetMenuList();
     }
