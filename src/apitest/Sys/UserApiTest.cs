@@ -72,11 +72,10 @@ namespace apitest.sys
         public async Task User_Update_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/User/update")
+                .AppendPathSegment("/api/User/1/update")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new UserUpdateApiModel
                 {
-                    Id = 1,
                     Username = "Test",
                     AuthorizeRoleId = (int)AuthorizeRole.Admin,
                     RoleIds = new List<int> { }

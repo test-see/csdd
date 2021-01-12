@@ -27,26 +27,26 @@ namespace csdd.Controllers.User
 
 
         [HttpGet]
-        [Route("{userId}/index")]
-        public JsonResult GetIndex(int userId)
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
         {
-            var data = _userService.GetIndex(userId);
+            var data = _userService.GetIndex(id);
             return Json(data);
         }
 
         [HttpGet]
-        [Route("{userId}/inactive")]
-        public JsonResult UpdateInActive(int userId)
+        [Route("{id}/inactive")]
+        public JsonResult UpdateInActive(int id)
         {
-            var data = _userService.UpdateIsActive(userId, false);
+            var data = _userService.UpdateIsActive(id, false);
             return Json(data);
         }
 
         [HttpGet]
-        [Route("{userId}/active")]
-        public JsonResult UpdateActive(int userId)
+        [Route("{id}/active")]
+        public JsonResult UpdateActive(int id)
         {
-            var data = _userService.UpdateIsActive(userId, true);
+            var data = _userService.UpdateIsActive(id, true);
             return Json(data);
         }
 
@@ -59,10 +59,10 @@ namespace csdd.Controllers.User
         }
 
         [HttpPost]
-        [Route("update")]
-        public JsonResult Update(UserUpdateApiModel updated)
+        [Route("{id}/update")]
+        public JsonResult Update(int id, UserUpdateApiModel updated)
         {
-            var data = _userService.Update(updated);
+            var data = _userService.Update(id, updated);
             return Json(data);
         }
 

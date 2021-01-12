@@ -27,9 +27,9 @@ namespace service.user
             return _userContext.GetIndex(userId);
         }
 
-        public int Update(UserUpdateApiModel updated)
+        public int Update(int id, UserUpdateApiModel updated)
         {
-            return _userContext.Update(updated);
+            return _userContext.Update(id, updated);
         }
 
         public User UpdateIsActive(int userId, bool isActive)

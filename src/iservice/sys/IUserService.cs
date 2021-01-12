@@ -11,7 +11,7 @@ namespace iservice.user
     {
         PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query);
         UserIndexApiModel GetIndex(int userId);
-        int Update(UserUpdateApiModel updated);
+        int Update(int id, UserUpdateApiModel updated);
         User UpdateIsActive(int userId, bool isActive);
         Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId);
         IEnumerable<DataAuthorizeRole> GetDataAuthorizeList();

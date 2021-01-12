@@ -13,7 +13,7 @@ namespace irespository.user
         User GetByPhone(string phone);
         PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query);
         User UpdateIsActive(int userId, bool isActive);
-        int Update(UserUpdateApiModel updated);
+        int Update(int id, UserUpdateApiModel updated);
         UserIndexApiModel GetIndex(int userId);
     }
 }
