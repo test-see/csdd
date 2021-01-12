@@ -64,9 +64,9 @@ namespace apitest.sys
         public async Task Privilege_Update_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/Role/update")
+                .AppendPathSegment("/api/Role/2/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new RoleIndexUpdateModel { RoleId = 2, RoleName = "Test", MenuIds = new List<int> { 1 } })
+                .PostJsonAsync(new RoleIndexUpdateModel {  RoleName = "Test", MenuIds = new List<int> { 1 } })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }

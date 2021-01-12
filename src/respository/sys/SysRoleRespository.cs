@@ -112,7 +112,7 @@ namespace respository.sys
                     _context.SysPrivilege.AddRange(updated.MenuIds.Select(x => new SysPrivilege
                     {
                         MenuId = x,
-                        RoleId = updated.RoleId,
+                        RoleId = id,
                     }));
                 }
                 _context.SaveChanges();
