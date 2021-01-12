@@ -32,9 +32,9 @@ namespace domain.sys
         {
             return _sysRoleRespository.GetIndex(roleId);
         }
-        public int UpdateRole(RoleIndexUpdateModel updated)
+        public int Update(int id, RoleIndexUpdateModel updated)
         {
-            return _sysRoleRespository.UpdateRole(updated);
+            return _sysRoleRespository.Update(id, updated);
         }
 
         public IList<RoleMenuApiModel> GetMenuList()

@@ -2,7 +2,6 @@
 {
     public class HospitalDepartmentUpdateApiModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

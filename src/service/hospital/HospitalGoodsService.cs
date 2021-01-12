@@ -28,9 +28,9 @@ namespace service.hospital
             return _hospitalGoodsContext.Delete(id);
         }
 
-        public int Update(HospitalGoodsUpdateApiModel updated, int userId)
+        public int Update(int id, HospitalGoodsUpdateApiModel updated, int userId)
         {
-            return _hospitalGoodsContext.Update(updated, userId);
+            return _hospitalGoodsContext.Update(id, updated, userId);
         }
 
         public HospitalGoodsIndexApiModel GetIndex(int id)

@@ -48,7 +48,6 @@ namespace apitest.sys
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new HospitalDepartmentUpdateApiModel
                 {
-                    Id = 1,
                     Name = "q",
                 })
                 .ReceiveJson<OkMessage<int>>();

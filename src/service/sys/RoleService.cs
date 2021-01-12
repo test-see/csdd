@@ -33,9 +33,9 @@ namespace service.sys
             return _roleContext.GetIndex(roleId);
         }
 
-        public int UpdateRole(RoleIndexUpdateModel updated)
+        public int Update(int id, RoleIndexUpdateModel updated)
         {
-            return _roleContext.UpdateRole(updated);
+            return _roleContext.Update(id, updated);
         }
 
         public IList<RoleMenuApiModel> GetMenuList()

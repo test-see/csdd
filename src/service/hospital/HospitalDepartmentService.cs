@@ -27,9 +27,9 @@ namespace service.hospital
             return _HospitalDepartmentContext.Delete(id);
         }
 
-        public int Update(HospitalDepartmentUpdateApiModel updated, int userId)
+        public int Update(int id, HospitalDepartmentUpdateApiModel updated, int userId)
         {
-            return _HospitalDepartmentContext.Update(updated);
+            return _HospitalDepartmentContext.Update(id, updated);
         }
     }
 }

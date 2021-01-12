@@ -9,6 +9,6 @@ namespace iservice.hospital
         PagerResult<HospitalDepartmentListApiModel> GetPagerList(PagerQuery<HospitalDepartmentListQueryModel> query);
         HospitalDepartment Create(HospitalDepartmentCreateApiModel created, int userId);
         int Delete(int id);
-        int Update(HospitalDepartmentUpdateApiModel updated, int userId);
+        int Update(int id, HospitalDepartmentUpdateApiModel updated, int userId);
     }
 }

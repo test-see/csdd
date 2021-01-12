@@ -25,9 +25,9 @@ namespace domain.hospital
         {
             return _hospitalRespository.Delete(id);
         }
-        public int Update(HospitalUpdateApiModel updated)
+        public int Update(int id, HospitalUpdateApiModel updated)
         {
-            return _hospitalRespository.Update(updated);
+            return _hospitalRespository.Update(id, updated);
         }
     }
 }

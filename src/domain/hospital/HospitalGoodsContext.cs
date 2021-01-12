@@ -31,9 +31,9 @@ namespace domain.hospital
         {
             return _hospitalGoodsRespository.Delete(id);
         }
-        public int Update(HospitalGoodsUpdateApiModel updated, int userId)
+        public int Update(int id, HospitalGoodsUpdateApiModel updated, int userId)
         {
-            var id = _hospitalGoodsRespository.Update(updated);
+            _hospitalGoodsRespository.Update(id, updated);
             _eventlogHospitalGoodsContext.Create(new EventlogHospitalGoodsChangeValueModel
             {
                 GoodId = id,

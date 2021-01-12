@@ -10,7 +10,7 @@ namespace irespository.hospital
         PagerResult<HospitalGoodsListApiModel> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query);
         HospitalGoods Create(HospitalGoodsCreateApiModel created, int userId);
         int Delete(int id);
-        int Update(HospitalGoodsUpdateApiModel updated);
+        int Update(int id, HospitalGoodsUpdateApiModel updated);
         HospitalGoods Get(int id);
         HospitalGoodsIndexApiModel GetIndex(int id);
     }

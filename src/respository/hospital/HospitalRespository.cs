@@ -54,9 +54,9 @@ namespace respository.hospital
             return id;
         }
 
-        public int Update(HospitalUpdateApiModel updated)
+        public int Update(int id, HospitalUpdateApiModel updated)
         {
-            var hospital = _context.Hospital.First(x => x.Id == updated.Id);
+            var hospital = _context.Hospital.First(x => x.Id ==id);
             hospital.Name = updated.Name;
             hospital.Remark = updated.Remark;
 

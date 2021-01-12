@@ -25,10 +25,10 @@ namespace csdd.Controllers
         }
 
         [HttpGet]
-        [Route("{roleId}/delete")]
-        public JsonResult Delete(int roleId)
+        [Route("{id}/delete")]
+        public JsonResult Delete(int id)
         {
-            var data = _roleService.Delete(roleId);
+            var data = _roleService.Delete(id);
             return Json(data);
         }
     
@@ -50,18 +50,18 @@ namespace csdd.Controllers
         }
 
         [HttpGet]
-        [Route("{roleId}/index")]
-        public JsonResult GetIndex(int roleId)
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
         {
-            var data = _roleService.GetIndex(roleId);
+            var data = _roleService.GetIndex(id);
             return Json(data);
         }
 
         [HttpPost]
-        [Route("update")]
-        public JsonResult UpdateRole(RoleIndexUpdateModel updated)
+        [Route("{id}/update")]
+        public JsonResult Update(int id, RoleIndexUpdateModel updated)
         {
-            var data = _roleService.UpdateRole(updated);
+            var data = _roleService.Update(id, updated);
             return Json(data);
         }
 

@@ -11,7 +11,7 @@ namespace iservice.sys
         SysRole Create(RoleCreateApiModel created, int userId);
         int Delete(int id);
         RoleIndexApiModel GetIndex(int roleId);
-        int UpdateRole(RoleIndexUpdateModel updated);
+        int Update(int id, RoleIndexUpdateModel updated);
         IList<RoleMenuApiModel> GetMenuList();
     }
 }

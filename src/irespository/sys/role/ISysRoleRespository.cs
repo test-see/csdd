@@ -10,7 +10,7 @@ namespace irespository.user
         PagerResult<RoleListApiModel> GetPagerList(PagerQuery<RoleListQueryModel> query);
         SysRole Create(RoleCreateApiModel created, int userId);
         int Delete(int id);
-        int UpdateRole(RoleIndexUpdateModel updated);
+        int Update(int id, RoleIndexUpdateModel updated);
         RoleIndexApiModel GetIndex(int roleId);
         IList<RoleMenuApiModel> GetMenuList();
     }

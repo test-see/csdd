@@ -48,8 +48,7 @@ namespace apitest.sys
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new HospitalClientUpdateApiModel
                 {
-                    Id = 1,
-                    Name = "q",
+                    Name = "qxx",
                 })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);

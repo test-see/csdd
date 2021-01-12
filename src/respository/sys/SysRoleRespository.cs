@@ -96,15 +96,15 @@ namespace respository.sys
         }
 
 
-        public int UpdateRole(RoleIndexUpdateModel updated)
+        public int Update(int id, RoleIndexUpdateModel updated)
         {
-            var role = _context.SysRole.First(x => x.Id == updated.RoleId);
+            var role = _context.SysRole.First(x => x.Id == id);
             using (var tran = _context.Database.BeginTransaction())
             {
                 role.Name = updated.RoleName;
                 _context.SysRole.Update(role);
 
-                var privileges = _context.SysPrivilege.Where(x => x.RoleId == updated.RoleId);
+                var privileges = _context.SysPrivilege.Where(x => x.RoleId == id);
                 _context.SysPrivilege.RemoveRange(privileges);
 
                 if (updated.MenuIds != null && updated.MenuIds.Any())
