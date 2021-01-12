@@ -1,0 +1,61 @@
+﻿using apitest.shared;
+using Flurl;
+using Flurl.Http;
+using foundation.config;
+using irespository.hospital.client.model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
+
+namespace apitest.sys
+{
+    [TestClass]
+    public class HospitalClientApiTest : BaseApiTest
+    {
+        [TestMethod]
+        public async Task HospitalClient_Post_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalClient/list")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new PagerQuery<HospitalClientListQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<HospitalClientListApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+        }
+        [TestMethod]
+        public async Task HospitalClient_AddAndDelete_ReturnIntAsync()
+        {
+            var hospital = await _rootpath
+                .AppendPathSegment("/api/HospitalClient/add")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new HospitalClientCreateApiModel
+                {
+                    Name = "q",
+                    HospitalId = 1,
+                })
+                .ReceiveJson<OkMessage<foundation.ef5.poco.HospitalClient>>();
+            var message = await _rootpath
+                .AppendPathSegment($"/api/HospitalClient/{hospital.Data.Id}/delete")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data > 0);
+        }
+        [TestMethod]
+        public async Task HospitalClient_Update_ReturnIntAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalClient/1/update")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new HospitalClientUpdateApiModel
+                {
+                    Id = 6,
+                    Name = "q",
+                })
+                .ReceiveJson<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data > 0);
+        }
+
+
+    }
+}
