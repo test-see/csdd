@@ -44,9 +44,9 @@ namespace csdd.Controllers.Sys
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(HospitalClientUpdateApiModel updated)
+        public JsonResult Update(int id, HospitalClientUpdateApiModel updated)
         {
-            var data = _HospitalClientService.Update(updated, UserId);
+            var data = _HospitalClientService.Update(id, updated, UserId);
             return Json(data);
         }
 
