@@ -2,9 +2,9 @@
 using foundation.ef5.poco;
 using irespository.client.model;
 
-namespace irespository.client
+namespace iservice.client
 {
-    public interface IClientRespository
+    public interface IClientService
     {
         PagerResult<ClientListApiModel> GetPagerList(PagerQuery<ClientListQueryModel> query);
         Client Create(ClientCreateApiModel created, int userId);
