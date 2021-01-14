@@ -2,53 +2,53 @@
 using Flurl;
 using Flurl.Http;
 using foundation.config;
-using irespository.hospital.client.model;
+using irespository.hospital.department.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace apitest.sys
+namespace apitest.hospital
 {
     [TestClass]
-    public class HospitalClientApiTest : BaseApiTest
+    public class HospitalDepartmentApiTest : BaseApiTest
     {
         [TestMethod]
-        public async Task HospitalClient_Post_ReturnListAsync()
+        public async Task HospitalDepartment_Post_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/HospitalClient/list")
+                .AppendPathSegment("/api/HospitalDepartment/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<HospitalClientListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<HospitalClientListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<HospitalDepartmentListQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<HospitalDepartmentListApiModel>>>();
             Assert.AreEqual(200, message.Code);
         }
         [TestMethod]
-        public async Task HospitalClient_AddAndDelete_ReturnIntAsync()
+        public async Task HospitalDepartment_AddAndDelete_ReturnIntAsync()
         {
             var hospital = await _rootpath
-                .AppendPathSegment("/api/HospitalClient/add")
+                .AppendPathSegment("/api/HospitalDepartment/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalClientCreateApiModel
+                .PostJsonAsync(new HospitalDepartmentCreateApiModel
                 {
                     Name = "q",
                     HospitalId = 1,
                 })
-                .ReceiveJson<OkMessage<foundation.ef5.poco.HospitalClient>>();
+                .ReceiveJson<OkMessage<foundation.ef5.poco.HospitalDepartment>>();
             var message = await _rootpath
-                .AppendPathSegment($"/api/HospitalClient/{hospital.Data.Id}/delete")
+                .AppendPathSegment($"/api/HospitalDepartment/{hospital.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
         }
         [TestMethod]
-        public async Task HospitalClient_Update_ReturnIntAsync()
+        public async Task HospitalDepartment_Update_ReturnIntAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/HospitalClient/1/update")
+                .AppendPathSegment("/api/HospitalDepartment/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalClientUpdateApiModel
+                .PostJsonAsync(new HospitalDepartmentUpdateApiModel
                 {
-                    Name = "qxx",
+                    Name = "q",
                 })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);

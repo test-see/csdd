@@ -18,4 +18,8 @@
     <ProjectReference Include="..\service\service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="client\" />
+  </ItemGroup>
+
 </Project>
