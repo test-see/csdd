@@ -22,6 +22,7 @@ namespace respository.hospital
             var sql = from r in _context.HospitalDepartment
                       join u in _context.User on r.CreateUserId equals u.Id
                       join h in _context.Hospital on r.HospitalId equals h.Id
+                      join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
                       select new HospitalDepartmentListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -34,6 +35,8 @@ namespace respository.hospital
                               Remark = h.Remark,
                           },
                           CreateUserName = u.Username,
+                          DepartmentType = d,
+                          
                       };
             return new PagerResult<HospitalDepartmentListApiModel>(query.Index, query.Size, sql);
         }
@@ -44,6 +47,7 @@ namespace respository.hospital
             {
                 Name = created.Name,
                 HospitalId = created.HospitalId,
+                DepartmentTypeId = created.DepartmentTypeId,
                 CreateUserId = userId,
                 CreateTime = DateTime.UtcNow,
             };
@@ -69,6 +73,7 @@ namespace respository.hospital
             var goods = _context.HospitalDepartment.First(x => x.Id == id);
 
             goods.Name = updated.Name;
+            goods.DepartmentTypeId = updated.DepartmentTypeId;
 
             _context.HospitalDepartment.Update(goods);
             _context.SaveChanges();
