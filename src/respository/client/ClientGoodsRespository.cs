@@ -57,6 +57,19 @@ namespace respository.client
             _context.ClientGoods.Add(goods);
             _context.SaveChanges();
 
+
+            if (created.Mappings != null && created.Mappings.Any())
+            {
+                _context.ClientMappingGoods.AddRange(created.Mappings.Select(x => new ClientMappingGoods
+                {
+                    ClientGoodsId = x.ClientGoodsId,
+                    ClientQty = x.ClientQty,
+                    HospitalGoodsId = x.HospitalGoodsId,
+                    HospitalQty = x.HospitalQty,
+                    CreateUserId = userId,
+                }));
+            }
+            _context.SaveChanges();
             return goods;
         }
 
