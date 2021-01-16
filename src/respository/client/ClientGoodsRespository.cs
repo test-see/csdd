@@ -142,7 +142,10 @@ namespace respository.client
                           
                       };
 
-            return sql.FirstOrDefault();
+            var profile = sql.FirstOrDefault();
+            //profile.Mappings = 
+
+            return profile;
         }
     }
 }

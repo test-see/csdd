@@ -1,5 +1,6 @@
 ﻿using irespository.client.profile.model;
 using System;
+using System.Collections.Generic;
 
 namespace irespository.client.goods.model
 {
@@ -14,5 +15,6 @@ namespace irespository.client.goods.model
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
         public int IsActive { get; set; }
+        public IList<ClientMappingGoodsListApiModel> Mappings { get; set; }
     }
 }

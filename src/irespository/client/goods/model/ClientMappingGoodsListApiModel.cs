@@ -5,7 +5,6 @@ namespace irespository.client.goods.model
 {
     public class ClientMappingGoodsListApiModel
     {
-        public ClientGoodsValueModel ClientGoods { get; set; }
         public HospitalGoodsValueModel HospitalGoods { get; set; }
         public int ClientQty { get; set; }
         public int HospitalQty { get; set; }
