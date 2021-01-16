@@ -51,7 +51,6 @@ namespace respository.client
                 Spec = created.Spec,
                 UnitPurchase = created.UnitPurchase,
                 CreateUserId = userId,
-                CreateTime = DateTime.UtcNow,
                 IsActive = 1,
             };
 

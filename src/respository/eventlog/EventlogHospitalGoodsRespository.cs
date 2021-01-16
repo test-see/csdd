@@ -24,7 +24,6 @@ namespace respository.eventlog
                 Content = created.Content,
                 Title = created.Title,
                 OptionUserId = userId,
-                CreateTime = DateTime.UtcNow
             };
 
             _context.Eventlog.Add(log);

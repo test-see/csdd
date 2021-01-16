@@ -24,7 +24,6 @@ namespace respository.user
                 IsActive = 1,
                 Username = created.Username,
                 Phone = created.Phone,
-                CreateTime = DateTime.UtcNow,
                 CreateUserId = userId,
                 AuthorizeRoleId = created.AuthorizeRoleId,
             };

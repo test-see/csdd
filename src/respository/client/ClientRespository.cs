@@ -35,7 +35,6 @@ namespace respository.client
             {
                 Name = created.Name,
                 CreateUserId = userId,
-                CreateTime = DateTime.UtcNow
             };
 
             _context.Client.Add(client);
@@ -48,7 +47,6 @@ namespace respository.client
                 {
                     HospitalClientId = x,
                     ClientId = client.Id,
-                    CreateTime = DateTime.UtcNow,
                     CreateUserId = userId,
                 }));
             }
@@ -83,7 +81,6 @@ namespace respository.client
                 {
                     HospitalClientId = x,
                     ClientId = id,
-                    CreateTime = DateTime.UtcNow,
                     CreateUserId = userId,
                 }));
             }

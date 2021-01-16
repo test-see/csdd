@@ -40,7 +40,6 @@ namespace respository.user
                 Key = created.Key,
                 Remark = created.Remark,
                 CreateUserId = userId,
-                CreateTime = DateTime.UtcNow
             };
 
             _context.SysConfig.Add(config);

@@ -52,7 +52,6 @@ namespace respository.hospital
                 HospitalId = created.HospitalId,
                 DepartmentTypeId = created.DepartmentTypeId,
                 CreateUserId = userId,
-                CreateTime = DateTime.UtcNow,
                 ParentId = created.ParentId,
             };
 
