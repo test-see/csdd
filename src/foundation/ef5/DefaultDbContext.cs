@@ -10,7 +10,7 @@ namespace foundation.ef5
 
         #region client
         public DbSet<Client> Client { get; set; }
-
+        public DbSet<ClientGoods> ClientGoods { get; set; }
         #endregion
 
         #region user
