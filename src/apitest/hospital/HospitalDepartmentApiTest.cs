@@ -2,8 +2,10 @@
 using Flurl;
 using Flurl.Http;
 using foundation.config;
+using foundation.ef5.poco;
 using irespository.hospital.department.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace apitest.hospital
@@ -55,6 +57,15 @@ namespace apitest.hospital
             Assert.IsTrue(message.Data > 0);
         }
 
+        [TestMethod]
+        public async Task HospitalDepartment_Type_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalDepartment/type")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<IEnumerable<DataDepartmentType>>>();
+            Assert.AreEqual(200, message.Code);
+        }
 
     }
 }

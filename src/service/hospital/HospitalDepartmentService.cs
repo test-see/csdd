@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.hospital.department.model;
 using iservice.hospital;
+using System.Collections.Generic;
 
 namespace service.hospital
 {
@@ -30,6 +31,10 @@ namespace service.hospital
         public int Update(int id, HospitalDepartmentUpdateApiModel updated, int userId)
         {
             return _HospitalDepartmentContext.Update(id, updated);
+        }
+        public IEnumerable<DataDepartmentType> GetDepartmentTypeList()
+        {
+            return _HospitalDepartmentContext.GetDepartmentTypeList();
         }
     }
 }

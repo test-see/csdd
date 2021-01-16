@@ -1,16 +1,21 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
+using irespository.data;
 using irespository.hospital;
 using irespository.hospital.department.model;
+using System.Collections.Generic;
 
 namespace domain.hospital
 {
     public class HospitalDepartmentContext
     {
         private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
-        public HospitalDepartmentContext(IHospitalDepartmentRespository hospitalDepartmentRespository)
+        private readonly IDepartmentTypeRespository _departmentTypeRespository;
+        public HospitalDepartmentContext(IHospitalDepartmentRespository hospitalDepartmentRespository,
+            IDepartmentTypeRespository departmentTypeRespository)
         {
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _departmentTypeRespository = departmentTypeRespository;
         }
 
         public PagerResult<HospitalDepartmentListApiModel> GetPagerList(PagerQuery<HospitalDepartmentListQueryModel> query)
@@ -28,6 +33,11 @@ namespace domain.hospital
         public int Update(int id, HospitalDepartmentUpdateApiModel updated)
         {
             return _hospitalDepartmentRespository.Update(id, updated);
+        }
+
+        public IEnumerable<DataDepartmentType> GetDepartmentTypeList()
+        {
+            return _departmentTypeRespository.GetList();
         }
     }
 }

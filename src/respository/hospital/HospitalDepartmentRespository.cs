@@ -23,6 +23,7 @@ namespace respository.hospital
                       join u in _context.User on r.CreateUserId equals u.Id
                       join h in _context.Hospital on r.HospitalId equals h.Id
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
+
                       select new HospitalDepartmentListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -36,7 +37,10 @@ namespace respository.hospital
                           },
                           CreateUserName = u.Username,
                           DepartmentType = d,
-                          
+                          Parent = new IdNameValueModel
+                          {
+                              Id = r.ParentId
+                          }
                       };
             return new PagerResult<HospitalDepartmentListApiModel>(query.Index, query.Size, sql);
         }
@@ -50,6 +54,7 @@ namespace respository.hospital
                 DepartmentTypeId = created.DepartmentTypeId,
                 CreateUserId = userId,
                 CreateTime = DateTime.UtcNow,
+                ParentId = created.ParentId,
             };
 
             _context.HospitalDepartment.Add(goods);
@@ -57,8 +62,6 @@ namespace respository.hospital
 
             return goods;
         }
-
-
 
         public int Delete(int id)
         {
@@ -70,14 +73,15 @@ namespace respository.hospital
 
         public int Update(int id, HospitalDepartmentUpdateApiModel updated)
         {
-            var goods = _context.HospitalDepartment.First(x => x.Id == id);
+            var department = _context.HospitalDepartment.First(x => x.Id == id);
 
-            goods.Name = updated.Name;
-            goods.DepartmentTypeId = updated.DepartmentTypeId;
+            department.Name = updated.Name;
+            department.DepartmentTypeId = updated.DepartmentTypeId;
+            department.ParentId = updated.ParentId;
 
-            _context.HospitalDepartment.Update(goods);
+            _context.HospitalDepartment.Update(department);
             _context.SaveChanges();
-            return goods.Id;
+            return department.Id;
         }
     }
 }

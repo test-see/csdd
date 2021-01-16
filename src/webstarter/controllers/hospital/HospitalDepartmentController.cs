@@ -50,5 +50,12 @@ namespace csdd.Controllers.Sys
             return Json(data);
         }
 
+        [HttpGet]
+        [Route("type")]
+        public JsonResult GetDepartmentTypeList()
+        {
+            var data = _HospitalDepartmentService.GetDepartmentTypeList();
+            return Json(data);
+        }
     }
 }
