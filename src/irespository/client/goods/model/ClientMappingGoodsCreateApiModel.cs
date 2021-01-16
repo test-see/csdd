@@ -3,7 +3,7 @@
     public class ClientMappingGoodsCreateApiModel
     {
         public int ClientGoodsId { get; set; }
-        public int HospitalClientGoodsId { get; set; }
+        public int HospitalGoodsId { get; set; }
         public int ClientQty { get; set; }
         public int HospitalQty { get; set; }
     }
