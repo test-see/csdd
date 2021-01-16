@@ -11,5 +11,6 @@ namespace iservice.client
         ClientGoods Create(ClientGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, ClientGoodsUpdateApiModel updated, int userId);
+        ClientGoodsIndexApiModel GetIndex(int id);
     }
 }

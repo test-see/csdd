@@ -83,5 +83,30 @@ namespace respository.client
             return goods.Id;
         }
 
+        public ClientGoodsIndexApiModel GetIndex(int id)
+        {
+            var sql = from r in _context.ClientGoods
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join h in _context.Client on r.ClientId equals h.Id
+                      where r.Id == id
+                      select new ClientGoodsIndexApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Name = r.Name,
+                          Client = new ClientValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                          },
+                          Producer = r.Producer,
+                          Spec = r.Spec,
+                          UnitPurchase = r.UnitPurchase,
+                          CreateUserName = u.Username,
+                          IsActive = r.IsActive,
+                      };
+
+            return sql.FirstOrDefault();
+        }
     }
 }

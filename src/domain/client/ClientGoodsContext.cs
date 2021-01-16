@@ -1,6 +1,4 @@
-﻿using domain.eventlog;
-using domain.eventlog.valueobjects;
-using foundation.config;
+﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.goods.model;
@@ -32,6 +30,11 @@ namespace domain.client
         {
             _clientGoodsRespository.Update(id, updated);
             return id;
+        }
+
+        public ClientGoodsIndexApiModel GetIndex(int id)
+        {
+            return _clientGoodsRespository.GetIndex(id);
         }
     }
 }

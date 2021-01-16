@@ -11,5 +11,6 @@ namespace irespository.client
         ClientGoods Create(ClientGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, ClientGoodsUpdateApiModel updated);
+        ClientGoodsIndexApiModel GetIndex(int id);
     }
 }

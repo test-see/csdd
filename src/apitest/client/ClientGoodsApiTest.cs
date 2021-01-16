@@ -63,5 +63,14 @@ namespace apitest.client
             Assert.IsTrue(message.Data > 0);
         }
 
+        [TestMethod]
+        public async Task ClientGoods_Index_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/ClientGoods/1/index")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<ClientGoodsIndexApiModel>>();
+            Assert.AreEqual(200, message.Code);
+        }
     }
 }

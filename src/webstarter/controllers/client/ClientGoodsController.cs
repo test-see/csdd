@@ -49,5 +49,14 @@ namespace csdd.Controllers.Sys
             var data = _clientGoodsService.Update(id, updated, UserId);
             return Json(data);
         }
+
+
+        [HttpGet]
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
+        {
+            var data = _clientGoodsService.GetIndex(id);
+            return Json(data);
+        }
     }
 }
