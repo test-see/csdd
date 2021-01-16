@@ -67,5 +67,14 @@ namespace apitest.hospital
             Assert.AreEqual(200, message.Code);
         }
 
+        [TestMethod]
+        public async Task HospitalDepartment_Parent_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalDepartment/parent")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<IEnumerable<IdNameValueModel>>>();
+            Assert.AreEqual(200, message.Code);
+        }
     }
 }

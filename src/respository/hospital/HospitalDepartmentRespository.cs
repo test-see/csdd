@@ -5,6 +5,7 @@ using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.profile.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.hospital
@@ -83,5 +84,11 @@ namespace respository.hospital
             _context.SaveChanges();
             return department.Id;
         }
+   
+        public IList<IdNameValueModel> GetParentList()
+        {
+            return _context.HospitalDepartment.Select(x => new IdNameValueModel { Id = x.Id, Name = x.Name }).ToList();
+        }
+    
     }
 }

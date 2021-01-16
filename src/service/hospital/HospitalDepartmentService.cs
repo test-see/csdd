@@ -9,32 +9,37 @@ namespace service.hospital
 {
     public class HospitalDepartmentService : IHospitalDepartmentService
     {
-        private readonly HospitalDepartmentContext _HospitalDepartmentContext;
+        private readonly HospitalDepartmentContext _hospitalDepartmentContext;
         public HospitalDepartmentService(HospitalDepartmentContext HospitalDepartmentContext)
         {
-            _HospitalDepartmentContext = HospitalDepartmentContext;
+            _hospitalDepartmentContext = HospitalDepartmentContext;
         }
         public PagerResult<HospitalDepartmentListApiModel> GetPagerList(PagerQuery<HospitalDepartmentListQueryModel> query)
         {
-            return _HospitalDepartmentContext.GetPagerList(query);
+            return _hospitalDepartmentContext.GetPagerList(query);
         }
         public HospitalDepartment Create(HospitalDepartmentCreateApiModel created, int userId)
         {
-            return _HospitalDepartmentContext.Create(created, userId);
+            return _hospitalDepartmentContext.Create(created, userId);
         }
 
         public int Delete(int id)
         {
-            return _HospitalDepartmentContext.Delete(id);
+            return _hospitalDepartmentContext.Delete(id);
         }
 
         public int Update(int id, HospitalDepartmentUpdateApiModel updated, int userId)
         {
-            return _HospitalDepartmentContext.Update(id, updated);
+            return _hospitalDepartmentContext.Update(id, updated);
         }
         public IEnumerable<DataDepartmentType> GetDepartmentTypeList()
         {
-            return _HospitalDepartmentContext.GetDepartmentTypeList();
+            return _hospitalDepartmentContext.GetDepartmentTypeList();
+        }
+
+        public IEnumerable<IdNameValueModel> GetParentList()
+        {
+            return _hospitalDepartmentContext.GetParentList();
         }
     }
 }

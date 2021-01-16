@@ -12,5 +12,6 @@ namespace iservice.hospital
         int Delete(int id);
         int Update(int id, HospitalDepartmentUpdateApiModel updated, int userId);
         IEnumerable<DataDepartmentType> GetDepartmentTypeList();
+        IEnumerable<IdNameValueModel> GetParentList();
     }
 }
