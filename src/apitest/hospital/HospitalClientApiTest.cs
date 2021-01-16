@@ -17,7 +17,13 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalClient/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<HospitalClientListQueryModel> { })
+                .PostJsonAsync(new PagerQuery<HospitalClientListQueryModel>
+                {
+                    Query = new HospitalClientListQueryModel
+                    {
+                        HospitalId = 1,
+                    }
+                })
                 .ReceiveJson<OkMessage<PagerResult<HospitalClientListApiModel>>>();
             Assert.AreEqual(200, message.Code);
         }
