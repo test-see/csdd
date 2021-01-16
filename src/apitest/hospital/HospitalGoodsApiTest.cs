@@ -73,5 +73,20 @@ namespace apitest.hospital
                 .GetJsonAsync<OkMessage<HospitalGoodsIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
         }
+
+        [TestMethod]
+        public async Task HospitalGoods_InActive_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/1/inactive")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<foundation.ef5.poco.HospitalGoods>>();
+            Assert.AreEqual(200, message.Code);
+            message = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/1/active")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<foundation.ef5.poco.HospitalGoods>>();
+            Assert.AreEqual(200, message.Code);
+        }
     }
 }
