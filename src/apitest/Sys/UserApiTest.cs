@@ -59,7 +59,7 @@ namespace apitest.sys
         }
 
         [TestMethod]
-        public async Task User_Get_ReturnListAsync()
+        public async Task User_Index_ReturnListAsync()
         {
             var message = await _rootpath
                 .AppendPathSegment("/api/User/1/index")

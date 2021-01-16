@@ -10,17 +10,17 @@ namespace csdd.Controllers.Info
     [Authorize(Policy = "RequireAdministratorRole")]
     public class ClientController : DefaultControllerBase
     {
-        private readonly IClientService _ClientService;
-        public ClientController(IClientService ClientService)
+        private readonly IClientService _clientService;
+        public ClientController(IClientService clientService)
         {
-            _ClientService = ClientService;
+            _clientService = clientService;
         }
 
         [HttpPost]
         [Route("list")]
         public JsonResult GetList(PagerQuery<ClientListQueryModel> query)
         {
-            var data = _ClientService.GetPagerList(query);
+            var data = _clientService.GetPagerList(query);
             return Json(data);
         }
 
@@ -29,7 +29,7 @@ namespace csdd.Controllers.Info
         [Route("{id}/delete")]
         public JsonResult Delete(int id)
         {
-            var data = _ClientService.Delete(id);
+            var data = _clientService.Delete(id);
             return Json(data);
         }
 
@@ -38,7 +38,7 @@ namespace csdd.Controllers.Info
         [Route("add")]
         public JsonResult Post(ClientCreateApiModel created)
         {
-            var data = _ClientService.Create(created, UserId);
+            var data = _clientService.Create(created, UserId);
             return Json(data);
         }
 
@@ -46,7 +46,16 @@ namespace csdd.Controllers.Info
         [Route("{id}/update")]
         public JsonResult Update(int id, ClientUpdateApiModel updated)
         {
-            var data = _ClientService.Update(id, updated, UserId);
+            var data = _clientService.Update(id, updated, UserId);
+            return Json(data);
+        }
+
+
+        [HttpGet]
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
+        {
+            var data = _clientService.GetIndex(id);
             return Json(data);
         }
     }

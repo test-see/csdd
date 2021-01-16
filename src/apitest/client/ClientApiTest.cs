@@ -47,5 +47,17 @@ namespace apitest.client
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
         }
+
+
+        [TestMethod]
+        public async Task Client_Index_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Client/1/index")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<ClientIndexApiModel>>();
+            Assert.AreEqual(200, message.Code);
+        }
+
     }
 }
