@@ -1,4 +1,5 @@
-﻿using irespository.hospital.profile.model;
+﻿using foundation.ef5.poco;
+using irespository.hospital.profile.model;
 using System;
 
 namespace irespository.hospital.department.model
@@ -10,5 +11,6 @@ namespace irespository.hospital.department.model
         public HospitalValueModel Hospital { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
+        public DataDepartmentType DepartmentType { get; set; }
     }
 }

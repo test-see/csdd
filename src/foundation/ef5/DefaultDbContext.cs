@@ -22,6 +22,7 @@ namespace foundation.ef5
         #region data
         public DbSet<DataMenu> DataMenu { get; set; }
         public DbSet<DataAuthorizeRole> DataAuthorizeRole { get; set; }
+        public DbSet<DataDepartmentType> DataDepartmentType { get; set; }
         #endregion
 
         #region sys
