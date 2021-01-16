@@ -31,17 +31,31 @@ namespace respository.client
 
         public Client Create(ClientCreateApiModel created, int userId)
         {
-            var Client = new Client
+            var client = new Client
             {
                 Name = created.Name,
                 CreateUserId = userId,
                 CreateTime = DateTime.UtcNow
             };
 
-            _context.Client.Add(Client);
+            _context.Client.Add(client);
             _context.SaveChanges();
 
-            return Client;
+
+            if (created.HospitalClientIds != null && created.HospitalClientIds.Any())
+            {
+                _context.ClientMapping.AddRange(created.HospitalClientIds.Select(x => new ClientMapping
+                {
+                    HospitalClientId = x,
+                    ClientId = client.Id,
+                    CreateTime = DateTime.UtcNow,
+                    CreateUserId = userId,
+                }));
+            }
+            _context.SaveChanges();
+
+
+            return client;
         }
 
         public int Delete(int id)
@@ -52,14 +66,29 @@ namespace respository.client
             return id;
         }
 
-        public int Update(int id, ClientUpdateApiModel updated)
+        public int Update(int id, ClientUpdateApiModel updated, int userId)
         {
-            var Client = _context.Client.First(x => x.Id == id);
-            Client.Name = updated.Name;
+            var client = _context.Client.First(x => x.Id == id);
+            client.Name = updated.Name;
 
-            _context.Client.Update(Client);
+            _context.Client.Update(client);
             _context.SaveChanges();
-            return Client.Id;
+
+            var mappings = _context.ClientMapping.Where(x => x.ClientId == id);
+            _context.ClientMapping.RemoveRange(mappings);
+
+            if (updated.HospitalClientIds != null && updated.HospitalClientIds.Any())
+            {
+                _context.ClientMapping.AddRange(updated.HospitalClientIds.Select(x => new ClientMapping
+                {
+                    HospitalClientId = x,
+                    ClientId = id,
+                    CreateTime = DateTime.UtcNow,
+                    CreateUserId = userId,
+                }));
+            }
+            _context.SaveChanges();
+            return client.Id;
         }
     }
 }

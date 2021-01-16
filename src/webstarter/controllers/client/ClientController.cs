@@ -46,7 +46,7 @@ namespace csdd.Controllers.Info
         [Route("{id}/update")]
         public JsonResult Update(int id, ClientUpdateApiModel updated)
         {
-            var data = _ClientService.Update(id, updated);
+            var data = _ClientService.Update(id, updated, UserId);
             return Json(data);
         }
     }

@@ -8,8 +8,10 @@ namespace foundation.ef5.poco
     {
         [Column("id")]
         public int Id { get; set; }
-        [Column("name")]
-        public string Name { get; set; }
+        [Column("client_id")]
+        public int ClientId { get; set; }
+        [Column("hospital_client_id")]
+        public int HospitalClientId { get; set; }
         [Column("createtime")]
         public DateTime CreateTime { get; set; }
         [Column("createuser_id")]

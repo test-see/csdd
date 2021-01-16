@@ -9,6 +9,6 @@ namespace iservice.client
         PagerResult<ClientListApiModel> GetPagerList(PagerQuery<ClientListQueryModel> query);
         Client Create(ClientCreateApiModel created, int userId);
         int Delete(int id);
-        int Update(int id, ClientUpdateApiModel updated);
+        int Update(int id, ClientUpdateApiModel updated, int userId);
     }
 }

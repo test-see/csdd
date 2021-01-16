@@ -27,9 +27,9 @@ namespace service.client
             return _ClientContext.Delete(id);
         }
 
-        public int Update(int id, ClientUpdateApiModel updated)
+        public int Update(int id, ClientUpdateApiModel updated, int userId)
         {
-            return _ClientContext.Update(id, updated);
+            return _ClientContext.Update(id, updated, userId);
         }
     }
 }
