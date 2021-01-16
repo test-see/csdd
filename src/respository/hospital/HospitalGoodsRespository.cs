@@ -39,6 +39,10 @@ namespace respository.hospital
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                       };
+            if (query.Query.HospitalId.HasValue)
+            {
+                sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId);
+            }
             return new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
         }
 

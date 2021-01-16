@@ -104,6 +104,7 @@ namespace respository.client
                           UnitPurchase = r.UnitPurchase,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
+                          
                       };
 
             return sql.FirstOrDefault();
