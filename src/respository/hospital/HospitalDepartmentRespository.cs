@@ -24,7 +24,8 @@ namespace respository.hospital
                       join u in _context.User on r.CreateUserId equals u.Id
                       join h in _context.Hospital on r.HospitalId equals h.Id
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
-
+                      join rp in _context.HospitalDepartment on r.ParentId equals rp.Id into rp_def
+                      from rp_def_t in rp_def.DefaultIfEmpty()
                       select new HospitalDepartmentListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -38,10 +39,7 @@ namespace respository.hospital
                           },
                           CreateUserName = u.Username,
                           DepartmentType = d,
-                          Parent = new IdNameValueModel
-                          {
-                              Id = r.ParentId
-                          }
+                          Parent = rp_def_t != null ? new IdNameValueModel { Id = rp_def_t.Id, Name = rp_def_t.Name } : null,
                       };
             return new PagerResult<HospitalDepartmentListApiModel>(query.Index, query.Size, sql);
         }

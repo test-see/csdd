@@ -1,4 +1,5 @@
-﻿using System;
+﻿using foundation.config;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace foundation.ef5.poco
@@ -20,5 +21,6 @@ namespace foundation.ef5.poco
         public int DepartmentTypeId { get; set; }
         [Column("parent_id")]
         public int ParentId { get; set; }
+
     }
 }
