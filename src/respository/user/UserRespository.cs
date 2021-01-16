@@ -17,7 +17,7 @@ namespace respository.user
         {
             _context = context;
         }
-        public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
+        public async Task<User> AddAsync(UserCreateApiModel created, int userId)
         {
             var user = new User
             {

@@ -13,7 +13,7 @@ namespace iservice.user
         UserIndexApiModel GetIndex(int userId);
         int Update(int id, UserUpdateApiModel updated);
         User UpdateIsActive(int userId, bool isActive);
-        Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId);
+        Task<User> AddAsync(UserCreateApiModel created, int userId);
         IEnumerable<DataAuthorizeRole> GetDataAuthorizeList();
     }
 }

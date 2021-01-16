@@ -36,9 +36,9 @@ namespace service.user
         {
             return _userContext.UpdateIsActive(userId, isActive);
         }
-        public async Task<User> AddActiveUserAsync(UserCreateApiModel created, int userId)
+        public async Task<User> AddAsync(UserCreateApiModel created, int userId)
         {
-            return await _userContext.AddActiveUserAsync(created, userId);
+            return await _userContext.AddAsync(created, userId);
         }
         public IEnumerable<DataAuthorizeRole> GetDataAuthorizeList()
         {
