@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.client
@@ -89,6 +90,34 @@ namespace respository.client
             }
             _context.SaveChanges();
             return client.Id;
+        }
+
+
+        public ClientIndexApiModel GetIndex(int id)
+        {
+            var role = _context.Client.Where(x => x.Id == id).Select(x => new ClientIndexApiModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+            }).First();
+
+            var sql = from p in _context.ClientMapping
+                      where p.ClientId == id
+                      select p.HospitalClientId;
+            role.HospitalClientIds = sql.ToList();
+            return role;
+        }
+
+
+        public IList<IdNameValueModel> GetHospitalClientList()
+        {
+            var menus = from m in _context.HospitalClient
+                        select new IdNameValueModel
+                        {
+                            Id = m.Id,
+                            Name = m.Name,
+                        };
+            return menus.ToList();
         }
     }
 }
