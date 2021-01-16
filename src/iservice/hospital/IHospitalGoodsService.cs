@@ -12,5 +12,6 @@ namespace iservice.hospital
         int Delete(int id);
         int Update(int id, HospitalGoodsUpdateApiModel updated, int userId);
         HospitalGoodsIndexApiModel GetIndex(int id);
+        HospitalGoods UpdateIsActive(int id, bool isActive);
     }
 }

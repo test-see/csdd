@@ -37,5 +37,10 @@ namespace service.hospital
         {
             return _hospitalGoodsContext.GetIndex(id);
         }
+
+        public HospitalGoods UpdateIsActive(int id, bool isActive)
+        {
+            return _hospitalGoodsContext.UpdateIsActive(id, isActive);
+        }
     }
 }

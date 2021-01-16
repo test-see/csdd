@@ -116,5 +116,14 @@ namespace respository.hospital
                       };
             return sql.FirstOrDefault();
         }
+
+        public HospitalGoods UpdateIsActive(int id, bool isActive)
+        {
+            var goods = _context.HospitalGoods.Where(x => x.Id == id).FirstOrDefault();
+            goods.IsActive = isActive ? 1 : 0;
+            _context.HospitalGoods.Update(goods);
+            _context.SaveChanges();
+            return goods;
+        }
     }
 }

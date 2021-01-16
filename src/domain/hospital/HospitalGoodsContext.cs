@@ -47,5 +47,10 @@ namespace domain.hospital
             goods.Logs = _eventlogHospitalGoodsContext.GetList(id);
             return goods;
         }
+
+        public HospitalGoods UpdateIsActive(int id, bool isActive)
+        {
+            return _hospitalGoodsRespository.UpdateIsActive(id, isActive);
+        }
     }
 }

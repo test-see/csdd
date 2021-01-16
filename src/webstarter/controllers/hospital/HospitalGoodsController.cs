@@ -58,5 +58,21 @@ namespace csdd.Controllers.Sys
             var data = _hospitalGoodsService.GetIndex(id);
             return Json(data);
         }
+
+        [HttpGet]
+        [Route("{id}/inactive")]
+        public JsonResult UpdateInActive(int id)
+        {
+            var data = _hospitalGoodsService.UpdateIsActive(id, false);
+            return Json(data);
+        }
+
+        [HttpGet]
+        [Route("{id}/active")]
+        public JsonResult UpdateActive(int id)
+        {
+            var data = _hospitalGoodsService.UpdateIsActive(id, true);
+            return Json(data);
+        }
     }
 }
