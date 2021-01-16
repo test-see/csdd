@@ -113,10 +113,10 @@ namespace respository.user
 
             user.Roles = (from m in _context.SysRole
                           join p in _context.UserRole on new { RoleId = m.Id, UserId = userId } equals new { p.RoleId, p.UserId } 
-                          select new UserRoleIndexApiModel
+                          select new IdNameValueModel
                           {
-                              RoleName = m.Name,
-                              RoleId = m.Id,
+                              Name = m.Name,
+                              Id = m.Id,
                           }).ToList();
             return user;
         }

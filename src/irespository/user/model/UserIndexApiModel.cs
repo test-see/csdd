@@ -1,4 +1,4 @@
-﻿using irespository.user.model;
+﻿using foundation.config;
 using System.Collections.Generic;
 
 namespace irespository.sys.model
@@ -7,6 +7,6 @@ namespace irespository.sys.model
     {
         public int UserId { get; set; }
         public string Username { get; set; }
-        public IList<UserRoleIndexApiModel> Roles { get; set; }
+        public IList<IdNameValueModel> Roles { get; set; }
     }
 }
