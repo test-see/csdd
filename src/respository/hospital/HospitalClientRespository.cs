@@ -35,9 +35,9 @@ namespace respository.hospital
                           },
                           CreateUserName = u.Username,
                       };
-            if (query.Query.HospitalId.HasValue)
+            if (query.Query?.HospitalId != null)
             {
-                sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId);
+                sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId.Value);
             }
             return new PagerResult<HospitalClientListApiModel>(query.Index, query.Size, sql);
         }
