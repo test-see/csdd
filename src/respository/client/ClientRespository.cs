@@ -58,6 +58,9 @@ namespace respository.client
 
         public int Delete(int id)
         {
+            var mappings = _context.ClientMapping.Where(x => x.ClientId == id);
+            _context.ClientMapping.RemoveRange(mappings);
+
             var Client = _context.Client.Find(id);
             _context.Client.Remove(Client);
             _context.SaveChanges();

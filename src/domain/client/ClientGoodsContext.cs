@@ -28,7 +28,7 @@ namespace domain.client
         }
         public int Update(int id, ClientGoodsUpdateApiModel updated, int userId)
         {
-            _clientGoodsRespository.Update(id, updated);
+            _clientGoodsRespository.Update(id, updated, userId);
             return id;
         }
 

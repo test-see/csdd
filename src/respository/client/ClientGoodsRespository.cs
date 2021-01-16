@@ -75,13 +75,16 @@ namespace respository.client
 
         public int Delete(int id)
         {
+            var mappings = _context.ClientMappingGoods.Where(x => x.ClientGoodsId == id);
+            _context.ClientMappingGoods.RemoveRange(mappings);
+
             var goods = _context.ClientGoods.Find(id);
             _context.ClientGoods.Remove(goods);
             _context.SaveChanges();
             return id;
         }
 
-        public int Update(int id, ClientGoodsUpdateApiModel updated)
+        public int Update(int id, ClientGoodsUpdateApiModel updated, int userId)
         {
             var goods = _context.ClientGoods.First(x => x.Id == id);
 
@@ -93,6 +96,25 @@ namespace respository.client
 
             _context.ClientGoods.Update(goods);
             _context.SaveChanges();
+
+
+            var mappings = _context.ClientMappingGoods.Where(x => x.ClientGoodsId == id);
+            _context.ClientMappingGoods.RemoveRange(mappings);
+
+            if (updated.Mappings != null && updated.Mappings.Any())
+            {
+                _context.ClientMappingGoods.AddRange(updated.Mappings.Select(x => new ClientMappingGoods
+                {
+                    ClientGoodsId = x.ClientGoodsId,
+                    ClientQty = x.ClientQty,
+                    HospitalGoodsId = x.HospitalGoodsId,
+                    HospitalQty = x.HospitalQty,
+                    CreateUserId = userId,
+                }));
+            }
+            _context.SaveChanges();
+
+
             return goods.Id;
         }
 

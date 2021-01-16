@@ -10,7 +10,7 @@ namespace irespository.client
         PagerResult<ClientGoodsListApiModel> GetPagerList(PagerQuery<ClientGoodsListQueryModel> query);
         ClientGoods Create(ClientGoodsCreateApiModel created, int userId);
         int Delete(int id);
-        int Update(int id, ClientGoodsUpdateApiModel updated);
+        int Update(int id, ClientGoodsUpdateApiModel updated, int userId);
         ClientGoodsIndexApiModel GetIndex(int id);
     }
 }
