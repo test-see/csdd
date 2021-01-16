@@ -8,28 +8,28 @@ namespace service.hospital
 {
     public class HospitalClientService : IHospitalClientService
     {
-        private readonly HospitalClientContext _HospitalClientContext;
-        public HospitalClientService(HospitalClientContext HospitalClientContext)
+        private readonly HospitalClientContext _hospitalClientContext;
+        public HospitalClientService(HospitalClientContext hospitalClientContext)
         {
-            _HospitalClientContext = HospitalClientContext;
+            _hospitalClientContext = hospitalClientContext;
         }
         public PagerResult<HospitalClientListApiModel> GetPagerList(PagerQuery<HospitalClientListQueryModel> query)
         {
-            return _HospitalClientContext.GetPagerList(query);
+            return _hospitalClientContext.GetPagerList(query);
         }
         public HospitalClient Create(HospitalClientCreateApiModel created, int userId)
         {
-            return _HospitalClientContext.Create(created, userId);
+            return _hospitalClientContext.Create(created, userId);
         }
 
         public int Delete(int id)
         {
-            return _HospitalClientContext.Delete(id);
+            return _hospitalClientContext.Delete(id);
         }
 
         public int Update(int id, HospitalClientUpdateApiModel updated, int userId)
         {
-            return _HospitalClientContext.Update(id, updated);
+            return _hospitalClientContext.Update(id, updated);
         }
     }
 }

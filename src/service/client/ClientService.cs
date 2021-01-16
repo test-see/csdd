@@ -3,7 +3,6 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.client.model;
 using iservice.client;
-using System.Collections.Generic;
 
 namespace service.client
 {
