@@ -33,6 +33,7 @@ namespace apitest.hospital
                 {
                     Name = "q",
                     HospitalId = 1,
+                    DepartmentTypeId = 1,
                 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.HospitalDepartment>>();
             var message = await _rootpath
@@ -51,6 +52,8 @@ namespace apitest.hospital
                 .PostJsonAsync(new HospitalDepartmentUpdateApiModel
                 {
                     Name = "q",
+                    DepartmentTypeId = 1,
+                    ParentId = 0,
                 })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
