@@ -4,7 +4,6 @@ using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.client
@@ -106,18 +105,6 @@ namespace respository.client
                       select p.HospitalClientId;
             role.HospitalClientIds = sql.ToList();
             return role;
-        }
-
-
-        public IList<IdNameValueModel> GetHospitalClientList()
-        {
-            var menus = from m in _context.HospitalClient
-                        select new IdNameValueModel
-                        {
-                            Id = m.Id,
-                            Name = m.Name,
-                        };
-            return menus.ToList();
         }
     }
 }

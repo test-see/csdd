@@ -12,6 +12,5 @@ namespace iservice.client
         int Delete(int id);
         int Update(int id, ClientUpdateApiModel updated, int userId);
         ClientIndexApiModel GetIndex(int id);
-        IList<IdNameValueModel> GetHospitalClientList();
     }
 }

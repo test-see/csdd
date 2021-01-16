@@ -37,10 +37,5 @@ namespace service.client
         {
             return _clientContext.GetIndex(id);
         }
-
-        public IList<IdNameValueModel> GetHospitalClientList()
-        {
-            return _clientContext.GetHospitalClientList();
-        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.client.model;
-using System.Collections.Generic;
 
 namespace irespository.client
 {
@@ -12,6 +11,5 @@ namespace irespository.client
         int Delete(int id);
         int Update(int id, ClientUpdateApiModel updated, int userId);
         ClientIndexApiModel GetIndex(int id);
-        IList<IdNameValueModel> GetHospitalClientList();
     }
 }

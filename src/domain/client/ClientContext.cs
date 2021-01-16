@@ -2,7 +2,6 @@
 using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.model;
-using System.Collections.Generic;
 
 namespace domain.client
 {
@@ -36,9 +35,5 @@ namespace domain.client
             return _clientRespository.GetIndex(id);
         }
 
-        public IList<IdNameValueModel> GetHospitalClientList()
-        {
-            return _clientRespository.GetHospitalClientList();
-        }
     }
 }
