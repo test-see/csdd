@@ -3,6 +3,8 @@ using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.model;
+using irespository.hospital.client.model;
+using irespository.hospital.profile.model;
 using System;
 using System.Linq;
 
@@ -101,9 +103,21 @@ namespace respository.client
             }).First();
 
             var sql = from p in _context.ClientMapping
+                      join c in _context.HospitalClient on p.HospitalClientId equals c.Id
+                      join h in _context.Hospital on c.HospitalId equals h.Id
                       where p.ClientId == id
-                      select p.HospitalClientId;
-            role.HospitalClientIds = sql.ToList();
+                      select new HospitalClientValueModel
+                      {
+                          Id = c.Id,
+                          Name = c.Name,
+                          Hospital = new HospitalValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                              Remark = h.Remark,
+                          }
+                      };
+            role.HospitalClients = sql.ToList();
             return role;
         }
     }

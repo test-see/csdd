@@ -42,6 +42,7 @@ namespace respository.hospital
             return new PagerResult<HospitalClientListApiModel>(query.Index, query.Size, sql);
         }
 
+
         public HospitalClient Create(HospitalClientCreateApiModel created, int userId)
         {
             var goods = new HospitalClient
