@@ -84,14 +84,5 @@ namespace apitest.sys
             Assert.AreEqual(200, message.Code);
         }
         
-        [TestMethod]
-        public async Task UserAuthorizeRole_Get_ReturnListAsync()
-        {
-            var message = await _rootpath
-                .AppendPathSegment("/api/User/data/authorize")
-                .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<IEnumerable<DataAuthorizeRole>>>();
-            Assert.AreEqual(200, message.Code);
-        }
     }
 }

@@ -12,12 +12,9 @@ namespace domain.user
     public class UserContext
     {
         private readonly IUserRespository _userRespository;
-        private readonly IAuthorizeRoleRespository _authorizeRoleRespository;
-        public UserContext(IUserRespository userRespository,
-            IAuthorizeRoleRespository authorizeRoleRespository)
+        public UserContext(IUserRespository userRespository)
         {
             _userRespository = userRespository;
-            _authorizeRoleRespository = authorizeRoleRespository;
         }
         public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
@@ -39,10 +36,6 @@ namespace domain.user
         public async Task<User> AddAsync(UserCreateApiModel created, int userId)
         {
             return await _userRespository.AddAsync(created, userId);
-        }
-        public IEnumerable<DataAuthorizeRole> GetDataAuthorizeList()
-        {
-            return _authorizeRoleRespository.GetList();
         }
     }
 }
