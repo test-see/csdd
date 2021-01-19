@@ -10,6 +10,6 @@ namespace irespository.client.model
         public string Name { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
-        public IList<HospitalClientValueModel> HospitalClients { get; set; }
+        public IList<KeyValuePair<int, HospitalClientValueModel>> HospitalClients { get; set; }
     }
 }

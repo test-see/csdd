@@ -5,6 +5,7 @@ using irespository.client;
 using irespository.client.model;
 using irespository.hospital.client.model;
 using irespository.hospital.profile.model;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.client
@@ -81,17 +82,20 @@ namespace respository.client
                       join c in _context.HospitalClient on p.HospitalClientId equals c.Id
                       join h in _context.Hospital on c.HospitalId equals h.Id
                       where p.ClientId == id
-                      select new HospitalClientValueModel
-                      {
-                          Id = c.Id,
-                          Name = c.Name,
-                          Hospital = new HospitalValueModel
+                      select new KeyValuePair<int, HospitalClientValueModel>(
+
+                          p.Id,
+                          new HospitalClientValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              Remark = h.Remark,
-                          }
-                      };
+                              Id = c.Id,
+                              Name = c.Name,
+                              Hospital = new HospitalValueModel
+                              {
+                                  Id = h.Id,
+                                  Name = h.Name,
+                                  Remark = h.Remark,
+                              }
+                          });
             role.HospitalClients = sql.ToList();
             return role;
         }
