@@ -8,6 +8,7 @@ using irespository.client.profile.model;
 using irespository.hospital.goods.model;
 using irespository.hospital.profile.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.client
@@ -120,8 +121,9 @@ namespace respository.client
             profile.Mappings = (from m in _context.ClientMappingGoods
                                 join g in _context.HospitalGoods on m.HospitalGoodsId equals g.Id
                                 join h in _context.Hospital on g.HospitalId equals h.Id
-                                select new ClientMappingGoodsListApiModel
+                                select new KeyValuePair<int, ClientMappingGoodsListApiModel>(m.Id, new ClientMappingGoodsListApiModel
                                 {
+
                                     ClientQty = m.ClientQty,
                                     HospitalQty = m.HospitalQty,
                                     HospitalGoods = new HospitalGoodsValueModel
@@ -138,7 +140,7 @@ namespace respository.client
                                             Remark = h.Remark,
                                         },
                                     }
-                                }).ToList();
+                                })).ToList();
             return profile;
         }
     }
