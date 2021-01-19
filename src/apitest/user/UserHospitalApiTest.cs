@@ -15,7 +15,7 @@ namespace apitest.user
         public async Task UserHospital_Post_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/UserHospital/list")
+                .AppendPathSegment("/api/User/hospital/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<UserHospitalListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<UserHospitalListApiModel>>>();
@@ -25,12 +25,12 @@ namespace apitest.user
         public async Task UserHospital_AddAndDelete_ReturnIntAsync()
         {
             var UserHospital = await _rootpath
-                .AppendPathSegment("/api/UserHospital/add")
+                .AppendPathSegment("/api/User/hospital/add")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new UserHospitalCreateApiModel { Name = "q", HospitalDepartmentId = 1, UserId = 1 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.UserHospital>>();
             var message = await _rootpath
-                .AppendPathSegment($"/api/UserHospital/{UserHospital.Data.Id}/delete")
+                .AppendPathSegment($"/api/User/hospital/{UserHospital.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
