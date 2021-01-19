@@ -9,7 +9,5 @@ namespace irespository.client.goods.model
         public string UnitPurchase { get; set; }
         public string Producer { get; set; }
         public int IsActive { get; set; }
-
-        public IList<ClientMappingGoodsCreateApiModel> Mappings { get; set; }
     }
 }

@@ -60,17 +60,6 @@ namespace respository.client
             _context.SaveChanges();
 
 
-            if (created.Mappings != null && created.Mappings.Any())
-            {
-                _context.ClientMappingGoods.AddRange(created.Mappings.Select(x => new ClientMappingGoods
-                {
-                    ClientGoodsId = x.ClientGoodsId,
-                    ClientQty = x.ClientQty,
-                    HospitalGoodsId = x.HospitalGoodsId,
-                    HospitalQty = x.HospitalQty,
-                    CreateUserId = userId,
-                }));
-            }
             _context.SaveChanges();
             return goods;
         }
@@ -97,23 +86,6 @@ namespace respository.client
             goods.IsActive = updated.IsActive;
 
             _context.ClientGoods.Update(goods);
-            _context.SaveChanges();
-
-
-            var mappings = _context.ClientMappingGoods.Where(x => x.ClientGoodsId == id);
-            _context.ClientMappingGoods.RemoveRange(mappings);
-
-            if (updated.Mappings != null && updated.Mappings.Any())
-            {
-                _context.ClientMappingGoods.AddRange(updated.Mappings.Select(x => new ClientMappingGoods
-                {
-                    ClientGoodsId = x.ClientGoodsId,
-                    ClientQty = x.ClientQty,
-                    HospitalGoodsId = x.HospitalGoodsId,
-                    HospitalQty = x.HospitalQty,
-                    CreateUserId = userId,
-                }));
-            }
             _context.SaveChanges();
 
 
