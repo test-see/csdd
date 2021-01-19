@@ -24,5 +24,7 @@ namespace foundation.ef5.poco
         public int CreateUserId { get; set; }
         [Column("is_active")]
         public int IsActive { get; set; }
+        [Column("pinshou")]
+        public string PinShou { get; set; }
     }
 }

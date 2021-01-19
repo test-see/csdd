@@ -38,10 +38,15 @@ namespace respository.hospital
                           UnitPurchase = r.UnitPurchase,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
+                          PinShou = r.PinShou,
                       };
             if (query.Query?.HospitalId != null)
             {
                 sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId.Value);
+            }
+            if (!string.IsNullOrEmpty(query.Query?.PinShou ))
+            {
+                sql = sql.Where(x => x.PinShou.Contains(query.Query.PinShou));
             }
             return new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
         }
@@ -57,6 +62,7 @@ namespace respository.hospital
                 UnitPurchase = created.UnitPurchase,
                 CreateUserId = userId,
                 IsActive = 1,
+                PinShou = created.PinShou,
             };
 
             _context.HospitalGoods.Add(goods);
@@ -88,6 +94,7 @@ namespace respository.hospital
             goods.Spec = updated.Spec;
             goods.UnitPurchase = updated.UnitPurchase;
             goods.IsActive = updated.IsActive;
+            goods.PinShou = updated.PinShou;
 
             _context.HospitalGoods.Update(goods);
             _context.SaveChanges();
@@ -116,6 +123,7 @@ namespace respository.hospital
                           UnitPurchase = r.UnitPurchase,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
+                          PinShou = r.PinShou,
                       };
             return sql.FirstOrDefault();
         }

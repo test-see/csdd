@@ -14,5 +14,6 @@ namespace irespository.hospital.model
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
         public int IsActive { get; set; }
+        public string PinShou { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace irespository.hospital.goods.model
         public string Spec { get; set; }
         public string UnitPurchase { get; set; }
         public string Producer { get; set; }
+        public string PinShou { get; set; }
         public HospitalValueModel Hospital { get; set; }
     }
 }
