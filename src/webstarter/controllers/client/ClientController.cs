@@ -58,5 +58,6 @@ namespace csdd.Controllers.Info
             var data = _clientService.GetIndex(id);
             return Json(data);
         }
+
     }
 }

@@ -5,7 +5,6 @@ using irespository.client;
 using irespository.client.model;
 using irespository.hospital.client.model;
 using irespository.hospital.profile.model;
-using System;
 using System.Linq;
 
 namespace respository.client
@@ -43,18 +42,6 @@ namespace respository.client
             _context.SaveChanges();
 
 
-            if (created.HospitalClientIds != null && created.HospitalClientIds.Any())
-            {
-                _context.ClientMapping.AddRange(created.HospitalClientIds.Select(x => new ClientMapping
-                {
-                    HospitalClientId = x,
-                    ClientId = client.Id,
-                    CreateUserId = userId,
-                }));
-            }
-            _context.SaveChanges();
-
-
             return client;
         }
 
@@ -77,21 +64,9 @@ namespace respository.client
             _context.Client.Update(client);
             _context.SaveChanges();
 
-            var mappings = _context.ClientMapping.Where(x => x.ClientId == id);
-            _context.ClientMapping.RemoveRange(mappings);
-
-            if (updated.HospitalClientIds != null && updated.HospitalClientIds.Any())
-            {
-                _context.ClientMapping.AddRange(updated.HospitalClientIds.Select(x => new ClientMapping
-                {
-                    HospitalClientId = x,
-                    ClientId = id,
-                    CreateUserId = userId,
-                }));
-            }
-            _context.SaveChanges();
             return client.Id;
         }
+
 
 
         public ClientIndexApiModel GetIndex(int id)
@@ -120,5 +95,7 @@ namespace respository.client
             role.HospitalClients = sql.ToList();
             return role;
         }
+    
+    
     }
 }
