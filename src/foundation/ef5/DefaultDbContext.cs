@@ -19,6 +19,7 @@ namespace foundation.ef5
         public DbSet<User> User { get; set; }
         public DbSet<UserVerificationCode> UserVerificationCode { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<UserHospital> UserHospital { get; set; }
         #endregion
 
         #region data
