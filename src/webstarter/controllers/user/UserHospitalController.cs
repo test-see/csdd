@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace csdd.Controllers.Info
 {
     [Authorize(Policy = "RequireAdministratorRole")]
+    [Route("User/hospital")]
     public class UserHospitalController : DefaultControllerBase
     {
         private readonly IUserHospitalService _UserHospitalService;
