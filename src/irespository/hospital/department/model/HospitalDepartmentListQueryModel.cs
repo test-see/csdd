@@ -2,5 +2,6 @@
 {
     public class HospitalDepartmentListQueryModel
     {
+        public int? HospitalId { get; set; }
     }
 }

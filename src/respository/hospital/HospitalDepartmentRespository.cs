@@ -41,6 +41,10 @@ namespace respository.hospital
                           DepartmentType = d,
                           Parent = rp_def_t != null ? new IdNameValueModel { Id = rp_def_t.Id, Name = rp_def_t.Name } : null,
                       };
+            if (query.Query?.HospitalId != null)
+            {
+                sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId.Value);
+            }
             return new PagerResult<HospitalDepartmentListApiModel>(query.Index, query.Size, sql);
         }
 
