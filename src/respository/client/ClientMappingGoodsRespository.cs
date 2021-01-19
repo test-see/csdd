@@ -32,6 +32,7 @@ namespace respository.client
         {
             var mapping = _context.ClientMappingGoods.Find(id);
             _context.ClientMappingGoods.Remove(mapping);
+            _context.SaveChanges();
             return id;
         }
     }
