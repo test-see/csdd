@@ -26,6 +26,7 @@ namespace apitest.hospital
                 })
                 .ReceiveJson<OkMessage<PagerResult<HospitalClientListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
         public async Task HospitalClient_AddAndDelete_ReturnIntAsync()

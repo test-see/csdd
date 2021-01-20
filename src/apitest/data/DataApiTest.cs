@@ -5,6 +5,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace apitest.data
@@ -20,6 +21,7 @@ namespace apitest.data
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<IEnumerable<DataAuthorizeRole>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Any());
         }
     }
 }

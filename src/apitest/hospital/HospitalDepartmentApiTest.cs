@@ -6,6 +6,7 @@ using foundation.ef5.poco;
 using irespository.hospital.department.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace apitest.hospital
@@ -22,6 +23,7 @@ namespace apitest.hospital
                 .PostJsonAsync(new PagerQuery<HospitalDepartmentListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<HospitalDepartmentListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
         public async Task HospitalDepartment_AddAndDelete_ReturnIntAsync()
@@ -68,6 +70,7 @@ namespace apitest.hospital
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<IEnumerable<DataDepartmentType>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Any());
         }
 
         [TestMethod]
@@ -78,6 +81,7 @@ namespace apitest.hospital
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<IEnumerable<IdNameValueModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Any());
         }
     }
 }

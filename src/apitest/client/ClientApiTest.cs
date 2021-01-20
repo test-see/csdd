@@ -20,6 +20,7 @@ namespace apitest.client
                 .PostJsonAsync(new PagerQuery<ClientListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<ClientListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
         public async Task Client_AddAndDelete_ReturnIntAsync()
@@ -57,6 +58,7 @@ namespace apitest.client
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<ClientIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
         }
 
     }

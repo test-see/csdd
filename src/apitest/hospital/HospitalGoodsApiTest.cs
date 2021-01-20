@@ -21,6 +21,7 @@ namespace apitest.hospital
                 .PostJsonAsync(new PagerQuery<HospitalGoodsListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<HospitalGoodsListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
         public async Task HospitalGoods_AddAndDelete_ReturnIntAsync()
@@ -74,6 +75,7 @@ namespace apitest.hospital
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<HospitalGoodsIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
         }
 
         [TestMethod]

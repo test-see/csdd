@@ -18,6 +18,7 @@ namespace apitest.shared
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<UserIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
         }
 
     }
