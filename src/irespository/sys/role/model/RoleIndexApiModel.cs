@@ -4,8 +4,8 @@ namespace irespository.sys.model
 {
     public class RoleIndexApiModel
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
 
         public IList<int> MenuIds { get; set; }
     }

@@ -42,7 +42,7 @@ namespace apitest.sys
             var role = await _rootpath
                 .AppendPathSegment("/api/Role/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new RoleCreateApiModel { RoleName = "1" , MenuIds=new List<int> { 2,3} })
+                .PostJsonAsync(new RoleCreateApiModel { Name = "1" , MenuIds=new List<int> { 2,3} })
                 .ReceiveJson<OkMessage<SysRole>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/Role/{role.Data.Id}/delete")
@@ -70,7 +70,7 @@ namespace apitest.sys
             var message = await _rootpath
                 .AppendPathSegment("/api/Role/2/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new RoleIndexUpdateModel {  RoleName = "Test", MenuIds = new List<int> { 1 } })
+                .PostJsonAsync(new RoleIndexUpdateModel {  Name = "Test", MenuIds = new List<int> { 1 } })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }

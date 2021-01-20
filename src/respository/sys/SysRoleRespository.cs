@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using irespository.data.model;
 using irespository.sys.model;
 using irespository.user;
 using System;
@@ -18,7 +19,7 @@ namespace respository.sys
         }
         public SysRole Create(RoleCreateApiModel created, int userId)
         {
-            var role = new SysRole { Name = created.RoleName, CreateUserId = userId, CreateTime = DateTime.UtcNow };
+            var role = new SysRole { Name = created.Name, CreateUserId = userId, CreateTime = DateTime.UtcNow };
             using (var tran = _context.Database.BeginTransaction())
             {
                 _context.SysRole.Add(role);
@@ -70,8 +71,8 @@ namespace respository.sys
         {
             var role = _context.SysRole.Where(x => x.Id == roleId).Select(x => new RoleIndexApiModel
             {
-                RoleId = roleId,
-                RoleName = x.Name,
+                Id = roleId,
+                Name = x.Name,
             }).First();
 
             role.MenuIds = (from p in _context.SysPrivilege
@@ -86,10 +87,13 @@ namespace respository.sys
                         orderby m.Rank
                         select new RoleMenuApiModel
                         {
-                            MenuName = m.Name,
-                            MenuPath = m.Path,
-                            ParentMenuId = m.ParentId,
-                            MenuId = m.Id,
+                            Menu = new MenuValueModel
+                            {
+                                Name = m.Name,
+                                Path = m.Path,
+                                ParentId = m.ParentId,
+                                Id = m.Id,
+                            },
                             IsCheck = false,
                         };
             return menus.ToList();
@@ -101,7 +105,7 @@ namespace respository.sys
             var role = _context.SysRole.First(x => x.Id == id);
             using (var tran = _context.Database.BeginTransaction())
             {
-                role.Name = updated.RoleName;
+                role.Name = updated.Name;
                 _context.SysRole.Update(role);
 
                 var privileges = _context.SysPrivilege.Where(x => x.RoleId == id);
