@@ -57,6 +57,7 @@ namespace respository.hospital
                 DepartmentTypeId = created.DepartmentTypeId,
                 CreateUserId = userId,
                 ParentId = created.ParentId,
+                CreateTime = DateTime.Now,
             };
 
             _context.HospitalDepartment.Add(goods);

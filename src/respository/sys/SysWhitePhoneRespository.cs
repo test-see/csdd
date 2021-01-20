@@ -36,7 +36,12 @@ namespace respository.user
 
         public SysWhitePhone Create(WhitePhoneCreateApiModel created, int userId)
         {
-            var phone = new SysWhitePhone { Phone = created.Phone, CreateUserId = userId, CreateTime = DateTime.UtcNow };
+            var phone = new SysWhitePhone
+            {
+                Phone = created.Phone,
+                CreateUserId = userId,
+                CreateTime = DateTime.Now,
+            };
 
             _context.SysWhitePhone.Add(phone);
             _context.SaveChanges();

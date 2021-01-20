@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.client.goods.model;
 using irespository.client.maping;
+using System;
 
 namespace respository.client
 {
@@ -21,6 +22,7 @@ namespace respository.client
                 HospitalGoodsId = created.HospitalGoodsId,
                 HospitalQty = created.HospitalQty,
                 CreateUserId = userId,
+                CreateTime = DateTime.Now,
             };
             _context.ClientMappingGoods.Add(mapping);
             _context.SaveChanges();

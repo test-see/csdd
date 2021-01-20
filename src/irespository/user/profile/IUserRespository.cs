@@ -9,7 +9,7 @@ namespace irespository.user
 {
     public interface IUserRespository
     {
-        Task<User> AddAsync(UserCreateApiModel created, int userId);
+        Task<User> CreateAsync(UserCreateApiModel created, int userId);
         User GetByPhone(string phone);
         PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query);
         User UpdateIsActive(int userId, bool isActive);

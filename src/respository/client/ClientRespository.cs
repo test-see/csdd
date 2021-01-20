@@ -5,6 +5,7 @@ using irespository.client;
 using irespository.client.model;
 using irespository.hospital.client.model;
 using irespository.hospital.profile.model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,6 +38,7 @@ namespace respository.client
             {
                 Name = created.Name,
                 CreateUserId = userId,
+                CreateTime = DateTime.Now,
             };
 
             _context.Client.Add(client);

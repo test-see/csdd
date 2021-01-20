@@ -63,6 +63,7 @@ namespace respository.hospital
                 CreateUserId = userId,
                 IsActive = 1,
                 PinShou = created.PinShou,
+                CreateTime = DateTime.Now,
             };
 
             _context.HospitalGoods.Add(goods);

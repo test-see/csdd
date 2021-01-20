@@ -55,6 +55,7 @@ namespace respository.client
                 UnitPurchase = created.UnitPurchase,
                 CreateUserId = userId,
                 IsActive = 1,
+                CreateTime = DateTime.Now,
             };
 
             _context.ClientGoods.Add(goods);

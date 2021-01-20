@@ -6,6 +6,7 @@ using irespository.hospital.profile.model;
 using irespository.user.hospital;
 using irespository.user.hospital.model;
 using irespository.user.profile.model;
+using System;
 using System.Linq;
 
 namespace respository.user
@@ -25,6 +26,7 @@ namespace respository.user
                 CreateUserId = userId,
                 HospitalDepartmentId = created.HospitalDepartmentId,
                 UserId = created.UserId,
+                CreateTime = DateTime.Now,
             };
 
             _context.UserHospital.Add(user);

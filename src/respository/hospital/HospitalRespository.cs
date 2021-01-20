@@ -37,6 +37,7 @@ namespace respository.hospital
                 Name = created.Name,
                 Remark = created.Remark,
                 CreateUserId = userId,
+                CreateTime = DateTime.Now,
             };
 
             _context.Hospital.Add(hospital);

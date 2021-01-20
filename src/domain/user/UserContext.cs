@@ -33,9 +33,9 @@ namespace domain.user
         {
             return _userRespository.Update(id, updated);
         }
-        public async Task<User> AddAsync(UserCreateApiModel created, int userId)
+        public async Task<User> CreateAsync(UserCreateApiModel created, int userId)
         {
-            return await _userRespository.AddAsync(created, userId);
+            return await _userRespository.CreateAsync(created, userId);
         }
     }
 }

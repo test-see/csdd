@@ -17,7 +17,7 @@ namespace respository.user
         }
         public bool CheckVerificationCode(LoginApiModel login)
         {
-            var verification = _context.UserVerificationCode.Where(x => x.Expiration > DateTime.UtcNow && x.IsActive == 1
+            var verification = _context.UserVerificationCode.Where(x => x.Expiration > DateTime.Now && x.IsActive == 1
                 && x.VerificationCode == login.Code && x.Phone == login.Phone).FirstOrDefault();
             return verification != null;
         }
@@ -27,7 +27,7 @@ namespace respository.user
         }
         public int GetCountVerificationCodeInMinuteOne(string phone, bool isTest = false)
         {
-            var limittime = isTest ? DateTime.UtcNow.AddMinutes(-1) : DateTime.UtcNow;
+            var limittime = isTest ? DateTime.Now.AddMinutes(-1) : DateTime.Now;
             var count = _context.UserVerificationCode.Where(x => x.CreateTime > limittime && x.IsActive == 1 && x.Phone == phone).Count();
             return count;
         }
@@ -47,9 +47,9 @@ namespace respository.user
             {
                 IsActive = 1,
                 Phone = phone,
-                CreateTime = DateTime.UtcNow,
+                CreateTime = DateTime.Now,
                 VerificationCode = randomcode,
-                Expiration = DateTime.UtcNow.AddMinutes(5),
+                Expiration = DateTime.Now.AddMinutes(5),
             });
             await _context.SaveChangesAsync();
             return randomcode;

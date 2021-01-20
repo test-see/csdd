@@ -50,6 +50,7 @@ namespace respository.hospital
                 Name = created.Name,
                 HospitalId = created.HospitalId,
                 CreateUserId = userId,
+                CreateTime = DateTime.Now,
             };
 
             _context.HospitalClient.Add(goods);

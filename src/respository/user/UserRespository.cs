@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user;
 using irespository.user.model;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace respository.user
         {
             _context = context;
         }
-        public async Task<User> AddAsync(UserCreateApiModel created, int userId)
+        public async Task<User> CreateAsync(UserCreateApiModel created, int userId)
         {
             var user = new User
             {
@@ -25,6 +26,7 @@ namespace respository.user
                 Phone = created.Phone,
                 CreateUserId = userId,
                 AuthorizeRoleId = created.AuthorizeRoleId,
+                CreateTime = DateTime.Now,
             };
             using (var tran = await _context.Database.BeginTransactionAsync())
             {
