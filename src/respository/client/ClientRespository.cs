@@ -74,11 +74,15 @@ namespace respository.client
 
         public ClientIndexApiModel GetIndex(int id)
         {
-            var role = _context.Client.Where(x => x.Id == id).Select(x => new ClientIndexApiModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-            }).First();
+            var client = (from r in _context.Client
+                          join u in _context.User on r.CreateUserId equals u.Id
+                          select new ClientIndexApiModel
+                          {
+                              CreateTime = r.CreateTime,
+                              Id = r.Id,
+                              Name = r.Name,
+                              CreateUserName = u.Username,
+                          }).First();
 
             var sql = from p in _context.ClientMapping
                       join c in _context.HospitalClient on p.HospitalClientId equals c.Id
@@ -98,8 +102,8 @@ namespace respository.client
                                   Remark = h.Remark,
                               }
                           });
-            role.HospitalClients = sql.ToList();
-            return role;
+            client.HospitalClients = sql.ToList();
+            return client;
         }
     
     
