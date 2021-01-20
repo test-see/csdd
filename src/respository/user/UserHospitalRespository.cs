@@ -48,7 +48,7 @@ namespace respository.user
                       join s in _context.User on r.UserId equals s.Id
                       join h in _context.HospitalDepartment on r.HospitalDepartmentId equals h.Id
                       join d in _context.DataDepartmentType on h.DepartmentTypeId equals d.Id
-                      join o in _context.Hospital on h.Id equals o.Id
+                      join o in _context.Hospital on h.HospitalId equals o.Id
                       select new UserHospitalListApiModel
                       {
                           CreateTime = r.CreateTime,
