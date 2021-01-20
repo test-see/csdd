@@ -107,7 +107,7 @@ namespace respository.user
         {
             var user = _context.User.Where(x => x.Id == userId).Select(x => new UserIndexApiModel
             {
-                UserId = userId,
+                Id = userId,
                 Username = x.Username,
             }).First();
 
