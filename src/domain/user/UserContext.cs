@@ -1,5 +1,6 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
+using foundation.exception;
 using irespository.data;
 using irespository.sys.model;
 using irespository.user;
@@ -35,6 +36,9 @@ namespace domain.user
         }
         public async Task<User> CreateAsync(UserCreateApiModel created, int userId)
         {
+            var user = _userRespository.GetByPhone(created.Phone);
+            if (user != null)
+                throw new DefaultException("电话号码已经被占用.");
             return await _userRespository.CreateAsync(created, userId);
         }
     }
