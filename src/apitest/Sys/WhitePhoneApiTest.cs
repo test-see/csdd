@@ -21,6 +21,7 @@ namespace apitest.sys
                 .PostJsonAsync(new PagerQuery<WhitePhoneListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<WhitePhoneListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
         public async Task WhitePhone_AddAndDelete_ReturnIntAsync()

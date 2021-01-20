@@ -20,6 +20,7 @@ namespace apitest.sys
                 .PostJsonAsync(new PagerQuery<EventlogListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<EventlogListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
     }
 }

@@ -6,6 +6,7 @@ using foundation.ef5.poco;
 using irespository.sys.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace apitest.sys
@@ -21,6 +22,7 @@ namespace apitest.sys
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<IList<RoleMenuApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Any());
         }
 
         [TestMethod]
@@ -32,6 +34,7 @@ namespace apitest.sys
                 .PostJsonAsync(new PagerQuery<RoleListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<RoleListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
         public async Task Role_AddAndDelete_ReturnIntAsync()
@@ -57,6 +60,7 @@ namespace apitest.sys
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<RoleIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
         }
 
 

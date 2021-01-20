@@ -21,6 +21,7 @@ namespace apitest.sys
                 .PostJsonAsync(new PagerQuery<ConfigListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<ConfigListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
         public async Task Config_AddAndDelete_ReturnIntAsync()

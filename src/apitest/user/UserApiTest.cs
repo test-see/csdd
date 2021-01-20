@@ -25,6 +25,7 @@ namespace apitest.sys
                 .PostJsonAsync(new PagerQuery<UserListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<UserListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
 
         [TestMethod]
@@ -66,6 +67,7 @@ namespace apitest.sys
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<UserIndexApiModel>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
         }
 
         [TestMethod]

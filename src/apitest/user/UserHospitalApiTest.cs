@@ -20,6 +20,7 @@ namespace apitest.user
                 .PostJsonAsync(new PagerQuery<UserHospitalListQueryModel> { })
                 .ReceiveJson<OkMessage<PagerResult<UserHospitalListApiModel>>>();
             Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
         public async Task UserHospital_AddAndDelete_ReturnIntAsync()
