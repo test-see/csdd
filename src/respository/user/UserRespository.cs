@@ -85,9 +85,11 @@ namespace respository.user
                 user.Username = updated.Username;
                 user.AuthorizeRoleId = updated.AuthorizeRoleId;
                 _context.User.Update(user);
+                _context.SaveChanges();
 
                 var roles = _context.UserRole.Where(x => x.UserId == id);
                 _context.UserRole.RemoveRange(roles);
+                _context.SaveChanges();
 
                 if (updated.RoleIds != null && updated.RoleIds.Any())
                 {
@@ -96,8 +98,8 @@ namespace respository.user
                         RoleId = x,
                         UserId = id,
                     }));
+                    _context.SaveChanges();
                 }
-                _context.SaveChanges();
                 tran.Commit();
             }
             return user.Id;
