@@ -60,8 +60,6 @@ namespace respository.client
             _context.ClientGoods.Add(goods);
             _context.SaveChanges();
 
-
-            _context.SaveChanges();
             return goods;
         }
 
