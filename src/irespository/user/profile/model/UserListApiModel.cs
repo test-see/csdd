@@ -1,5 +1,7 @@
-﻿using foundation.ef5.poco;
+﻿using foundation.config;
+using foundation.ef5.poco;
 using System;
+using System.Collections.Generic;
 
 namespace irespository.user.model
 {
@@ -12,5 +14,6 @@ namespace irespository.user.model
         public int IsActive { get; set; }
         public string CreateUsername { get; set; }
         public DataAuthorizeRole AuthorizeRole { get; set; }
+        public IList<IdNameValueModel> Roles { get; set; }
     }
 }

@@ -65,7 +65,18 @@ namespace respository.user
                           CreateUsername = p_tt.Username,
                           AuthorizeRole = a,
                       };
-            return new PagerResult<UserListApiModel>(query.Index, query.Size, sql);
+            var data =  new PagerResult<UserListApiModel>(query.Index, query.Size, sql);
+            foreach(var user in data.Result)
+            {
+                user.Roles = (from m in _context.SysRole
+                              join p in _context.UserRole on new { RoleId = m.Id, UserId = user.Id } equals new { p.RoleId, p.UserId }
+                              select new IdNameValueModel
+                              {
+                                  Name = m.Name,
+                                  Id = m.Id,
+                              }).ToList();
+            }
+            return data;
         }
 
         public User UpdateIsActive(int userId, bool isActive)
