@@ -39,7 +39,13 @@ namespace domain.sys
 
         public IList<RoleMenuApiModel> GetMenuList()
         {
-            return _sysRoleRespository.GetMenuList();
+            var menus =  _sysRoleRespository.GetMenuList();
+            var tops = menus.Where(x => x.Menu.ParentId == 0).ToList();
+            foreach (var menu in tops)
+            {
+                menu.FindChildren(menus);
+            }
+            return tops;
         }
     }
 }
