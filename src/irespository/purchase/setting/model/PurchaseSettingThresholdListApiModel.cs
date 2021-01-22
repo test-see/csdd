@@ -1,4 +1,5 @@
 ﻿using irespository.hospital.department.model;
+using irespository.hospital.goods.model;
 using System;
 
 namespace irespository.purchase.model
@@ -7,6 +8,7 @@ namespace irespository.purchase.model
     {
         public int Id { get; set; }
         public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public HospitalGoodsValueModel HospitalGoods { get; set; }
         public int UpQty { get; set; }
         public int DownQty { get; set; }
         public DateTime CreateTime { get; set; }
