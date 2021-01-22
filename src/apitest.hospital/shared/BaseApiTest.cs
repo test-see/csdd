@@ -16,13 +16,13 @@ namespace apitest.shared
             {
                 var code = await _rootpath
                     .AppendPathSegment("/api/Token/verification/generate")
-                    .SetQueryParam("phone", "+8617775776208")
+                    .SetQueryParam("phone", "Test1")
                     .GetJsonAsync<OkMessage<string>>();
                 if (code.Code != 200)
                     throw new Exception(code.Msg);
                 var token = await _rootpath
                     .AppendPathSegment("/api/Token")
-                    .PostJsonAsync(new { phone = "+8617775776208", code = code.Data })
+                    .PostJsonAsync(new { phone = "Test1", code = code.Data })
                     .ReceiveJson<OkMessage<string>>();
                 if (token.Code != 200)
                     throw new Exception(token.Msg);
