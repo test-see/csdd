@@ -46,5 +46,9 @@ namespace foundation.ef5
         public DbSet<Eventlog> Eventlog { get; set; }
         public DbSet<EventlogHospitalGoods> EventlogHospitalGoods { get; set; }
         #endregion
+
+        #region purchase
+        public DbSet<PurchaseSettingThreshold> PurchaseSettingThreshold { get; set; }
+        #endregion
     }
 }

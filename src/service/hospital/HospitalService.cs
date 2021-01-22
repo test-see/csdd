@@ -9,9 +9,9 @@ namespace service.hospital
     public class HospitalService : IHospitalService
     {
         private readonly HospitalContext _hospitalContext;
-        public HospitalService(HospitalContext HospitalContext)
+        public HospitalService(HospitalContext hospitalContext)
         {
-            _hospitalContext = HospitalContext;
+            _hospitalContext = hospitalContext;
         }
         public PagerResult<HospitalListApiModel> GetPagerList(PagerQuery<HospitalListQueryModel> query)
         {
