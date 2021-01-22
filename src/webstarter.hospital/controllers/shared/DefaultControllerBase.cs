@@ -12,7 +12,8 @@ namespace csdd.Controllers.Shared
     public class DefaultControllerBase : ControllerBase
     {
         protected int UserId => int.Parse(HttpContext.User.Identity.Name);
-        //protected int DepartmentId => int.Parse(HttpContext.User.Identity.);
+        protected int DepartmentId => 0;
+        protected int HospitalId => 0;
         protected JsonResult Json<T>(T d)
         {
             return new JsonResult(new OkMessage<T>(d));

@@ -17,9 +17,9 @@ namespace domain.purchase
         {
             return _purchaseSettingThresholdRespository.GetPagerList(query);
         }
-        public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)
+        public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int departmentId, int userId)
         {
-            return _purchaseSettingThresholdRespository.Create(created, userId);
+            return _purchaseSettingThresholdRespository.Create(created, departmentId, userId);
         }
         public int Delete(int id)
         {

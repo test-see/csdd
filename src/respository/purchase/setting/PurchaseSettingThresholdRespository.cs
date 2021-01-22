@@ -64,11 +64,11 @@ namespace respository.purchase
             return new PagerResult<PurchaseSettingThresholdListApiModel>(query.Index, query.Size, sql);
         }
 
-        public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)
+        public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int departmentId, int userId)
         {
             var setting = new PurchaseSettingThreshold
             {
-                HospitalDepartmentId = created.HospitalDepartmentId,
+                HospitalDepartmentId = departmentId,
                 HospitalGoodsId = created.HospitalGoodsId,
                 DownQty = created.DownQty,
                 UpQty = created.UpQty,

@@ -28,7 +28,7 @@ namespace apitest.purchase
             var hospital = await _rootpath
                 .AppendPathSegment("/api/PurchaseSettingThreshold/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PurchaseSettingThresholdCreateApiModel { DownQty = 1, UpQty = 1, HospitalDepartmentId = 1 })
+                .PostJsonAsync(new PurchaseSettingThresholdCreateApiModel { DownQty = 1, UpQty = 1, HospitalGoodsId = 1 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Hospital>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/PurchaseSettingThreshold/{hospital.Data.Id}/delete")
