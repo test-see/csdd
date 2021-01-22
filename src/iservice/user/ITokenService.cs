@@ -1,5 +1,7 @@
-﻿using foundation.ef5.poco;
+﻿using domain.user.valuemodel;
+using foundation.ef5.poco;
 using irespository.user;
+using irespository.user.hospital.model;
 using System.Threading.Tasks;
 
 namespace iservice.user
@@ -8,5 +10,6 @@ namespace iservice.user
     {
         User Login(LoginApiModel login);
         Task<string> GenerateVerificationCodeAsync(string phone);
+        LoginHospitalValueModel LoginByHospital(LoginApiModel login);
     }
 }

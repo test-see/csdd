@@ -25,5 +25,9 @@ namespace domain.user
         {
             return _userHospitalRespository.Delete(id);
         }
+        public UserHospitalIndexApiModel GetIndexByUserId(int userId)
+        {
+            return _userHospitalRespository.GetIndexByUserId(userId);
+        }
     }
 }

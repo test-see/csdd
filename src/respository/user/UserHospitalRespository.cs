@@ -78,5 +78,43 @@ namespace respository.user
                       };
             return new PagerResult<UserHospitalListApiModel>(query.Index, query.Size, sql);
         }
+
+
+        public UserHospitalIndexApiModel GetIndexByUserId(int userId)
+        {
+            var sql = from r in _context.UserHospital
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join s in _context.User on r.UserId equals s.Id
+                      join h in _context.HospitalDepartment on r.HospitalDepartmentId equals h.Id
+                      join d in _context.DataDepartmentType on h.DepartmentTypeId equals d.Id
+                      where r.UserId == userId
+                      join o in _context.Hospital on h.HospitalId equals o.Id
+                      select new UserHospitalIndexApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Name = r.Name,
+                          CreateUserName = u.Username,
+                          User = new UserValueModel
+                          {
+                              Id = s.Id,
+                              Phone = s.Phone,
+                              Username = s.Username,
+                          },
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                              DepartmentType = d,
+                              Hospital = new HospitalValueModel
+                              {
+                                  Id = o.Id,
+                                  Name = o.Name,
+                                  Remark = o.Remark,
+                              }
+                          }
+                      };
+            return sql.FirstOrDefault();
+        }
     }
 }

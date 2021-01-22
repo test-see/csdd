@@ -26,11 +26,15 @@ namespace csdd.Controllers.Shared
         [AllowAnonymous]
         public JsonResult Post(LoginApiModel login)
         {
-            var user = _userService.Login(login);
+            var user = _userService.LoginByHospital(login);
+
             var identity = new ClaimsIdentity();
             var key = Encoding.UTF8.GetBytes(_appConfig.Authentication.IssuerSigningKey);
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Id.ToString()));
             identity.AddClaim(new Claim(ClaimTypes.Role, user.AuthorizeRoleId.ToString()));
+            identity.AddClaim(new Claim("HospitalId", user.HospitalId.ToString()));
+            identity.AddClaim(new Claim("HospitalDepartmentId", user.HospitalDepartmentId.ToString()));
+
             var descriptor = new SecurityTokenDescriptor
             {
                 Subject = identity,
