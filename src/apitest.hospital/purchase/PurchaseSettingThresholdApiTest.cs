@@ -2,8 +2,13 @@
 using Flurl;
 using Flurl.Http;
 using foundation.config;
+using foundation.ef5.poco;
+using irespository.hospital.goods.model;
+using irespository.hospital.model;
 using irespository.purchase.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace apitest.purchase
@@ -54,6 +59,30 @@ namespace apitest.purchase
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
+        }
+
+
+        [TestMethod]
+        public async Task PurchaseSettingThreshold_HospitalGoods_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/PurchaseSettingThreshold/goods")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new PagerQuery<HospitalGoodsListQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<HospitalGoodsListApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
+        }
+
+        [TestMethod]
+        public async Task PurchaseSettingThreshold_ThresholdType_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/PurchaseSettingThreshold/thresholdtype")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<IEnumerable<DataPurchaseThresholdType>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Any());
         }
     }
 }

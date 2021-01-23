@@ -55,16 +55,16 @@ namespace webstarter.hospital.controllers.purchase
             return Json(data);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("goods")]
-        public JsonResult GetList(PagerQuery<HospitalGoodsListQueryModel> query)
+        public JsonResult GetHospitalGoodsList(PagerQuery<HospitalGoodsListQueryModel> query)
         {
             query.Query.HospitalId = HospitalDepartment.Hospital.Id;
             var data = _hospitalGoodsService.GetPagerList(query);
             return Json(data);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("thresholdtype")]
         public JsonResult GetThresholdTypeList()
         {
