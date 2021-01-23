@@ -34,9 +34,10 @@ namespace service.user
             return new LoginHospitalValueModel
             {
                 AuthorizeRoleId = user.AuthorizeRoleId,
-                HospitalDepartmentId = extend.HospitalDepartment.Id,
-                HospitalId = extend.HospitalDepartment.Hospital.Id,
+                HospitalDepartment = extend.HospitalDepartment,
                 Id = user.Id,
+                User = extend.User,
+                Name = extend.Name,
             };
         }
     }

@@ -4,6 +4,7 @@ using iservice.user;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -26,14 +27,13 @@ namespace csdd.Controllers.Shared
         [AllowAnonymous]
         public JsonResult Post(LoginApiModel login)
         {
-            var user = _userService.LoginByHospital(login);
+            var profile = _userService.LoginByHospital(login);
 
             var identity = new ClaimsIdentity();
             var key = Encoding.UTF8.GetBytes(_appConfig.Authentication.IssuerSigningKey);
-            identity.AddClaim(new Claim(ClaimTypes.Name, user.Id.ToString()));
-            identity.AddClaim(new Claim(ClaimTypes.Role, user.AuthorizeRoleId.ToString()));
-            identity.AddClaim(new Claim("HospitalId", user.HospitalId.ToString()));
-            identity.AddClaim(new Claim("HospitalDepartmentId", user.HospitalDepartmentId.ToString()));
+            identity.AddClaim(new Claim(ClaimTypes.Name, JsonConvert.SerializeObject(profile.User)));
+            identity.AddClaim(new Claim(ClaimTypes.Role, profile.AuthorizeRoleId.ToString()));
+            identity.AddClaim(new Claim("HospitalDepartment", JsonConvert.SerializeObject(profile.HospitalDepartment)));
 
             var descriptor = new SecurityTokenDescriptor
             {

@@ -38,7 +38,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("add")]
         public JsonResult Post(PurchaseSettingCreateApiModel created)
         {
-            var data = _purchaseSettingService.Create(created, HospitalDepartmentId, UserId);
+            var data = _purchaseSettingService.Create(created, HospitalDepartment.Id, Profile.Id);
             return Json(data);
         }
 
