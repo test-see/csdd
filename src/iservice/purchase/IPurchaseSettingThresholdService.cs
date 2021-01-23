@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
+using System.Collections.Generic;
 
 namespace iservice.purchase
 {
@@ -10,5 +11,6 @@ namespace iservice.purchase
         PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseSettingThresholdUpdateApiModel updated);
+        IEnumerable<DataPurchaseThresholdType> GetThresholdTypeList();
     }
 }

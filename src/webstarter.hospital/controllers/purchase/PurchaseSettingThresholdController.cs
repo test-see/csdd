@@ -64,7 +64,12 @@ namespace webstarter.hospital.controllers.purchase
             return Json(data);
         }
 
-
-
+        [HttpPost]
+        [Route("thresholdtype")]
+        public JsonResult GetThresholdTypeList()
+        {
+            var data = _purchaseSettingThresholdService.GetThresholdTypeList();
+            return Json(data);
+        }
     }
 }

@@ -1,16 +1,21 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
+using irespository.data;
 using irespository.purchase;
 using irespository.purchase.model;
+using System.Collections.Generic;
 
 namespace domain.purchase
 {
     public class PurchaseSettingThresholdContext
     {
         private readonly IPurchaseSettingThresholdRespository _purchaseSettingThresholdRespository;
-        public PurchaseSettingThresholdContext(IPurchaseSettingThresholdRespository purchaseSettingThresholdRespository)
+        private readonly IPurchaseThresholdTypeRespository _purchaseThresholdTypeRespository;
+        public PurchaseSettingThresholdContext(IPurchaseSettingThresholdRespository purchaseSettingThresholdRespository,
+            IPurchaseThresholdTypeRespository purchaseThresholdTypeRespository)
         {
             _purchaseSettingThresholdRespository = purchaseSettingThresholdRespository;
+            _purchaseThresholdTypeRespository = purchaseThresholdTypeRespository;
         }
 
         public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
@@ -28,6 +33,10 @@ namespace domain.purchase
         public int Update(int id, PurchaseSettingThresholdUpdateApiModel updated)
         {
             return _purchaseSettingThresholdRespository.Update(id, updated);
+        }
+        public IEnumerable<DataPurchaseThresholdType> GetThresholdTypeList()
+        {
+            return _purchaseThresholdTypeRespository.GetList();
         }
     }
 }

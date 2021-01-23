@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
 using iservice.purchase;
+using System.Collections.Generic;
 
 namespace service.purchase
 {
@@ -30,6 +31,11 @@ namespace service.purchase
         public int Update(int id, PurchaseSettingThresholdUpdateApiModel updated)
         {
             return _purchaseSettingThresholdContext.Update(id, updated);
+        }
+
+        public IEnumerable<DataPurchaseThresholdType> GetThresholdTypeList()
+        {
+            return _purchaseSettingThresholdContext.GetThresholdTypeList();
         }
     }
 }
