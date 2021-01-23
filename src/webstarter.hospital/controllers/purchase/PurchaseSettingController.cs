@@ -49,5 +49,14 @@ namespace webstarter.hospital.controllers.purchase
             var data = _purchaseSettingService.Update(id, updated);
             return Json(data);
         }
+
+
+        [HttpGet]
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
+        {
+            var data = _purchaseSettingService.GetIndex(id);
+            return Json(data);
+        }
     }
 }

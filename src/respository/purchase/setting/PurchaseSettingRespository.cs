@@ -87,5 +87,36 @@ namespace respository.purchase
             _context.SaveChanges();
             return setting.Id;
         }
+
+        public PurchaseSettingIndexApiModel GetIndex(int id)
+        {
+            var sql = from r in _context.PurchaseSetting
+                      join d in _context.HospitalDepartment on r.HospitalDepartmentId equals d.Id
+                      join dt in _context.DataDepartmentType on d.DepartmentTypeId equals dt.Id
+                      join h in _context.Hospital on d.HospitalId equals h.Id
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      select new PurchaseSettingIndexApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          CreateUserName = u.Username,
+                          Name = r.Name,
+                          Remark = r.Remark,
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = d.Id,
+                              Name = d.Name,
+                              DepartmentType = dt,
+                              Hospital = new HospitalValueModel
+                              {
+                                  Id = h.Id,
+                                  Name = h.Name,
+                                  Remark = h.Remark,
+                              }
+                          }
+                      };
+            return sql.FirstOrDefault();
+        }
+
     }
 }

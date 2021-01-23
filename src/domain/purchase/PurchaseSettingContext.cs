@@ -29,5 +29,10 @@ namespace domain.purchase
         {
             return _purchaseSettingRespository.Update(id, updated);
         }
+        public PurchaseSettingIndexApiModel GetIndex(int id)
+        {
+            var goods = _purchaseSettingRespository.GetIndex(id);
+            return goods;
+        }
     }
 }

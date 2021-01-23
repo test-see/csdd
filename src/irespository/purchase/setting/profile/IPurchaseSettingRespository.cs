@@ -10,5 +10,6 @@ namespace irespository.purchase
         PurchaseSetting Create(PurchaseSettingCreateApiModel created, int departmentId, int userId);
         int Delete(int id);
         int Update(int id, PurchaseSettingUpdateApiModel updated);
+        PurchaseSettingIndexApiModel GetIndex(int id);
     }
 }

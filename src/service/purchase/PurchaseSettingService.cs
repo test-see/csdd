@@ -31,5 +31,10 @@ namespace service.purchase
         {
             return _purchaseSettingContext.Update(id, updated);
         }
+
+        public PurchaseSettingIndexApiModel GetIndex(int id)
+        {
+            return _purchaseSettingContext.GetIndex(id);
+        }
     }
 }
