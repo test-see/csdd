@@ -1,4 +1,6 @@
-﻿using irespository.hospital.goods.model;
+﻿using foundation.config;
+using foundation.ef5.poco;
+using irespository.hospital.goods.model;
 using System;
 
 namespace irespository.purchase.model
@@ -11,5 +13,6 @@ namespace irespository.purchase.model
         public int DownQty { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
+        public DataPurchaseThresholdType ThresholdType { get; set; }
     }
 }

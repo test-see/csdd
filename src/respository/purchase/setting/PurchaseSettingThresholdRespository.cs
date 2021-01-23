@@ -24,6 +24,7 @@ namespace respository.purchase
                       join g in _context.HospitalGoods on r.HospitalGoodsId equals g.Id
                       join h in _context.Hospital on g.HospitalId equals h.Id
                       join u in _context.User on r.CreateUserId equals u.Id
+                      join t in _context.DataPurchaseThresholdType on r.ThresholdTypeId equals t.Id
                       select new PurchaseSettingThresholdListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -46,6 +47,7 @@ namespace respository.purchase
                                   Remark = h.Remark,
                               }
                           },
+                          ThresholdType = t,
                       };
             return new PagerResult<PurchaseSettingThresholdListApiModel>(query.Index, query.Size, sql);
         }
@@ -60,6 +62,7 @@ namespace respository.purchase
                 UpQty = created.UpQty,
                 CreateUserId = userId,
                 CreateTime = DateTime.Now,
+                ThresholdTypeId = created.ThresholdTypeId,
             };
 
             _context.PurchaseSettingThreshold.Add(setting);
@@ -81,6 +84,7 @@ namespace respository.purchase
             var setting = _context.PurchaseSettingThreshold.First(x => x.Id == id);
             setting.DownQty = updated.DownQty;
             setting.UpQty = updated.UpQty;
+            setting.ThresholdTypeId = updated.ThresholdTypeId;
 
             _context.PurchaseSettingThreshold.Update(setting);
             _context.SaveChanges();
