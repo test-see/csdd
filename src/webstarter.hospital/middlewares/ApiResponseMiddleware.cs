@@ -32,7 +32,7 @@ namespace csdd.Middlewares
             {
                 _logger.LogError(ex, $"Path: {context.Request.Path}. Message: {ex.Message}");
                 var code = (ex as DefaultException)?.StatusCode ?? (int)HttpStatusCode.BadRequest;
-                var response = new OkMessage<string>(code, ex.Message, ex.StackTrace);
+                var response = new OkMessage<string>(code, ex.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                 var data = JsonConvert.SerializeObject(response, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
                 await context.Response.WriteAsync(data);
