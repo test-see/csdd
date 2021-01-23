@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace foundation.ef5.poco
 {
-    [Table("hospital")]
-    public class Hospital
+    [Table("purchase_setting")]
+    public class PurchaseSetting
     {
         [Column("id")]
         public int Id { get; set; }
+        [Column("hospital_department_id")]
+        public int HospitalDepartmentId { get; set; }
         [Column("name")]
         public string Name { get; set; }
         [Column("remark")]
@@ -15,6 +17,6 @@ namespace foundation.ef5.poco
         [Column("createtime")]
         public DateTime CreateTime { get; set; }
         [Column("createuser_id")]
-        public int? CreateUserId { get; set; }
+        public int CreateUserId { get; set; }
     }
 }

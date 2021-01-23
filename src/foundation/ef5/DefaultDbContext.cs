@@ -26,6 +26,7 @@ namespace foundation.ef5
         public DbSet<DataMenu> DataMenu { get; set; }
         public DbSet<DataAuthorizeRole> DataAuthorizeRole { get; set; }
         public DbSet<DataDepartmentType> DataDepartmentType { get; set; }
+        public DbSet<DataPurchaseThresholdType> DataPurchaseThresholdType { get; set; }
         #endregion
 
         #region sys
@@ -48,6 +49,7 @@ namespace foundation.ef5
         #endregion
 
         #region purchase
+        public DbSet<PurchaseSetting> PurchaseSetting { get; set; }
         public DbSet<PurchaseSettingThreshold> PurchaseSettingThreshold { get; set; }
         #endregion
     }

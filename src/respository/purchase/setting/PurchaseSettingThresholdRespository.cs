@@ -21,10 +21,8 @@ namespace respository.purchase
         public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
         {
             var sql = from r in _context.PurchaseSettingThreshold
-                      join d in _context.HospitalDepartment on r.HospitalDepartmentId equals d.Id
-                      join dt in _context.DataDepartmentType on d.DepartmentTypeId equals dt.Id
                       join g in _context.HospitalGoods on r.HospitalGoodsId equals g.Id
-                      join h in _context.Hospital on d.HospitalId equals h.Id
+                      join h in _context.Hospital on g.HospitalId equals h.Id
                       join u in _context.User on r.CreateUserId equals u.Id
                       select new PurchaseSettingThresholdListApiModel
                       {
@@ -33,18 +31,6 @@ namespace respository.purchase
                           CreateUserName = u.Username,
                           DownQty = r.DownQty,
                           UpQty = r.UpQty,
-                          HospitalDepartment = new HospitalDepartmentValueModel
-                          {
-                              Id = d.Id,
-                              Name = d.Name,
-                              DepartmentType = dt,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = h.Id,
-                                  Name = h.Name,
-                                  Remark = h.Remark,
-                              }
-                          },
                           HospitalGoods = new HospitalGoodsValueModel
                           {
                               Id = g.Id,
@@ -64,11 +50,11 @@ namespace respository.purchase
             return new PagerResult<PurchaseSettingThresholdListApiModel>(query.Index, query.Size, sql);
         }
 
-        public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int departmentId, int userId)
+        public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)
         {
             var setting = new PurchaseSettingThreshold
             {
-                HospitalDepartmentId = departmentId,
+                PurchaseSettingId = created.PurchaseSettingId,
                 HospitalGoodsId = created.HospitalGoodsId,
                 DownQty = created.DownQty,
                 UpQty = created.UpQty,

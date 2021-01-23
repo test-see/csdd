@@ -13,9 +13,12 @@ namespace domain.user
     public class UserContext
     {
         private readonly IUserRespository _userRespository;
-        public UserContext(IUserRespository userRespository)
+        private readonly IAuthorizeRoleRespository _authorizeRoleRespository;
+        public UserContext(IUserRespository userRespository, 
+            IAuthorizeRoleRespository authorizeRoleRespository)
         {
             _userRespository = userRespository;
+            _authorizeRoleRespository = authorizeRoleRespository;
         }
         public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
@@ -40,6 +43,10 @@ namespace domain.user
             if (user != null)
                 throw new DefaultException("电话号码已经被占用.");
             return await _userRespository.CreateAsync(created, userId);
+        }
+        public IEnumerable<DataAuthorizeRole> GetAuthorizeList()
+        {
+            return _authorizeRoleRespository.GetList();
         }
     }
 }

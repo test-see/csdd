@@ -38,7 +38,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("add")]
         public JsonResult Post(PurchaseSettingThresholdCreateApiModel created)
         {
-            var data = _purchaseSettingThresholdService.Create(created, HospitalDepartmentId, UserId);
+            var data = _purchaseSettingThresholdService.Create(created, UserId);
             return Json(data);
         }
 

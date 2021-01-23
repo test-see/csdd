@@ -1,16 +1,14 @@
 ﻿using irespository.hospital.department.model;
-using irespository.hospital.goods.model;
 using System;
 
 namespace irespository.purchase.model
 {
-    public class PurchaseSettingThresholdListApiModel
+    public class PurchaseSettingListApiModel
     {
         public int Id { get; set; }
         public HospitalDepartmentValueModel HospitalDepartment { get; set; }
-        public HospitalGoodsValueModel HospitalGoods { get; set; }
-        public int UpQty { get; set; }
-        public int DownQty { get; set; }
+        public string Name { get; set; }
+        public string Remark { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
     }

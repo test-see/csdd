@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.sys.model;
 using irespository.user.model;
 using iservice.user;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace service.user
@@ -38,6 +39,10 @@ namespace service.user
         public async Task<User> CreateAsync(UserCreateApiModel created, int userId)
         {
             return await _userContext.CreateAsync(created, userId);
+        }
+        public IEnumerable<DataAuthorizeRole> GetAuthorizeList()
+        {
+            return _userContext.GetAuthorizeList();
         }
     }
 }

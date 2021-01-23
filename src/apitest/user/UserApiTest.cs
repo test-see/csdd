@@ -9,6 +9,7 @@ using irespository.user.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace apitest.sys
@@ -86,6 +87,17 @@ namespace apitest.sys
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }
-        
+
+        [TestMethod]
+        public async Task User_GetAuthorizeRole_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/User/authorize")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<IEnumerable<DataAuthorizeRole>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Any());
+        }
+
     }
 }

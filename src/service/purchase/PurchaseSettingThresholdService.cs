@@ -17,9 +17,9 @@ namespace service.purchase
         {
             return _purchaseSettingThresholdContext.GetPagerList(query);
         }
-        public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int departmentId, int userId)
+        public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)
         {
-            return _purchaseSettingThresholdContext.Create(created, departmentId, userId);
+            return _purchaseSettingThresholdContext.Create(created, userId);
         }
 
         public int Delete(int id)

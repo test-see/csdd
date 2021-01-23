@@ -66,5 +66,12 @@ namespace csdd.Controllers.User
             return Json(data);
         }
 
+        [HttpGet]
+        [Route("authorize")]
+        public JsonResult GetAuthorizeList()
+        {
+            var data = _userService.GetAuthorizeList();
+            return Json(data);
+        }
     }
 }
