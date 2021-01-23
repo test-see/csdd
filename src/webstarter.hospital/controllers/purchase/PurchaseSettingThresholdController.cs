@@ -55,7 +55,7 @@ namespace webstarter.hospital.controllers.purchase
             return Json(data);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("goods")]
         public JsonResult GetHospitalGoodsList(PagerQuery<HospitalGoodsListQueryModel> query)
         {

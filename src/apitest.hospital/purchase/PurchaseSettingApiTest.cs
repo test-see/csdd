@@ -29,7 +29,7 @@ namespace apitest.purchase
                 .AppendPathSegment("/api/PurchaseSetting/add")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PurchaseSettingCreateApiModel { Name = "1", Remark = "2" })
-                .ReceiveJson<OkMessage<foundation.ef5.poco.Hospital>>();
+                .ReceiveJson<OkMessage<foundation.ef5.poco.PurchaseSetting>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/PurchaseSetting/{hospital.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())
