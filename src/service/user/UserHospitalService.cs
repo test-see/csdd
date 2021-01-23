@@ -26,5 +26,10 @@ namespace service.user
         {
             return _userHospitalContext.Delete(id);
         }
+
+        public UserHospitalIndexApiModel GetIndexByUserId(int userId)
+        {
+            return _userHospitalContext.GetIndexByUserId(userId);
+        }
     }
 }
