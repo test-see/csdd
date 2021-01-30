@@ -32,13 +32,14 @@ namespace domain.store
             lock (balance)
             {
                 var store = _storeRespository.GetIndexByGoods(department, created.HospitalGoodsId);
-                if (store.Qty + changetype.Operator * created.ChangeQty < 0)
+                var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.ChangeQty;
+                if (afterqty < 0)
                     throw new DefaultException("库存不足!");
                 var updated = new StoreUpdateApiModel
                 {
                     ChangeTypeId = changetype.Id,
-                    Qty = store.Qty + changetype.Operator * created.ChangeQty,
-                    HospitalGoodsId = store.HospitalGoodsId,
+                    Qty = afterqty,
+                    HospitalGoodsId = created.HospitalGoodsId,
                 };
                 return _storeRespository.CreateOrUpdate(updated, department, userId);
             }

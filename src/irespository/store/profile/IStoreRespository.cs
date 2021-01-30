@@ -1,7 +1,6 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
-using irespository.store.model;
 using irespository.store.profile.model;
 
 namespace irespository.store
