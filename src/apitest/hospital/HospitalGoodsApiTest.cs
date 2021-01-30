@@ -37,6 +37,7 @@ namespace apitest.hospital
                     UnitPurchase = "x",
                     Spec = "x",
                     PinShou = "x",
+                    Price = new decimal(1.11),
                 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.HospitalGoods>>();
             var message = await _rootpath
@@ -60,6 +61,7 @@ namespace apitest.hospital
                     Spec = "x",
                     IsActive = 1,
                     PinShou = "x",
+                    Price = new decimal(1.11),
                 })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
