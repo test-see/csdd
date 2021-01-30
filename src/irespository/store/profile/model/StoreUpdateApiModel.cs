@@ -1,10 +1,10 @@
-﻿namespace irespository.store.model
+﻿namespace irespository.purchase.model
 {
-    public class CustomizeStoreCreateApiModel
+    public class StoreUpdateApiModel
     {
-        public int HospitalDepartmentId { get; set; }
         public int HospitalGoodsId { get; set; }
         public int Qty { get; set; }
         public int ChangeTypeId { get; set; }
+
     }
 }
