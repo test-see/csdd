@@ -27,6 +27,7 @@ namespace foundation.ef5
         public DbSet<DataAuthorizeRole> DataAuthorizeRole { get; set; }
         public DbSet<DataDepartmentType> DataDepartmentType { get; set; }
         public DbSet<DataPurchaseThresholdType> DataPurchaseThresholdType { get; set; }
+        public DbSet<DataStoreChangeType> DataStoreChangeType { get; set; }
         #endregion
 
         #region sys
@@ -51,6 +52,11 @@ namespace foundation.ef5
         #region purchase
         public DbSet<PurchaseSetting> PurchaseSetting { get; set; }
         public DbSet<PurchaseSettingThreshold> PurchaseSettingThreshold { get; set; }
+        #endregion
+
+        #region store
+        public DbSet<Store> Store { get; set; }
+        public DbSet<StoreRecord> StoreRecord { get; set; }
         #endregion
     }
 }
