@@ -17,6 +17,7 @@ namespace irespository.hospital.goods.model
         public string CreateUserName { get; set; }
         public int IsActive { get; set; }
         public string PinShou { get; set; }
+        public decimal Price { get; set; }
 
         public IList<EventlogListApiModel> Logs { get; set; }
     }

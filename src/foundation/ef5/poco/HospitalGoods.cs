@@ -18,13 +18,15 @@ namespace foundation.ef5.poco
         public string UnitPurchase { get; set; }
         [Column("producer")]
         public string Producer { get; set; }
-        [Column("createtime")]
-        public DateTime CreateTime { get; set; }
-        [Column("createuser_id")]
-        public int CreateUserId { get; set; }
-        [Column("is_active")]
-        public int IsActive { get; set; }
         [Column("pinshou")]
         public string PinShou { get; set; }
+        [Column("price")]
+        public decimal Price { get; set; }
+        [Column("is_active")]
+        public int IsActive { get; set; }
+        [Column("createuser_id")]
+        public int CreateUserId { get; set; }
+        [Column("createtime")]
+        public DateTime CreateTime { get; set; }
     }
 }

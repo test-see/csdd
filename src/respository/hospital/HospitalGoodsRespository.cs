@@ -39,6 +39,7 @@ namespace respository.hospital
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                           PinShou = r.PinShou,
+                          Price = r.Price,
                       };
             if (query.Query?.HospitalId != null)
             {
@@ -63,6 +64,7 @@ namespace respository.hospital
                 CreateUserId = userId,
                 IsActive = 1,
                 PinShou = created.PinShou,
+                Price = created.Price,
                 CreateTime = DateTime.Now,
             };
 
@@ -96,6 +98,7 @@ namespace respository.hospital
             goods.UnitPurchase = updated.UnitPurchase;
             goods.IsActive = updated.IsActive;
             goods.PinShou = updated.PinShou;
+            goods.Price = updated.Price;
 
             _context.HospitalGoods.Update(goods);
             _context.SaveChanges();
@@ -125,6 +128,7 @@ namespace respository.hospital
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                           PinShou = r.PinShou,
+                          Price = r.Price,
                       };
             return sql.FirstOrDefault();
         }

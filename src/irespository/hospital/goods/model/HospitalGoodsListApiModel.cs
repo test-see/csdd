@@ -15,5 +15,6 @@ namespace irespository.hospital.model
         public string CreateUserName { get; set; }
         public int IsActive { get; set; }
         public string PinShou { get; set; }
+        public decimal Price { get; set; }
     }
 }
