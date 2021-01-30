@@ -76,7 +76,7 @@ namespace respository.store
 
         public Store GetIndexByGoods(int department, int goods)
         {
-            return _context.Store.First(x => x.HospitalDepartmentId == department && x.HospitalGoodsId == goods);
+            return _context.Store.FirstOrDefault(x => x.HospitalDepartmentId == department && x.HospitalGoodsId == goods);
         }
 
         public PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query)
