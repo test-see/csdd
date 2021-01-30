@@ -12,7 +12,7 @@ namespace foundation.ef5.poco
         public int HospitalDepartmentId { get; set; }
         [Column("hospital_goods_id")]
         public int HospitalGoodsId { get; set; }
-        [Column("qty")]
+        [Column("before_qty")]
         public int BeforeQty { get; set; }
         [Column("changetype_id")]
         public int ChangeTypeId { get; set; }
