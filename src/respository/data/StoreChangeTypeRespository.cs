@@ -1,6 +1,7 @@
 ﻿using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.data;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.data
@@ -16,5 +17,11 @@ namespace respository.data
         {
             return _context.DataStoreChangeType.Find(id);
         }
+
+        public IEnumerable<DataStoreChangeType> GetCustomizeList()
+        {
+            return _context.DataStoreChangeType.Where(x => x.IsCustomize > 0);
+        }
+
     }
 }

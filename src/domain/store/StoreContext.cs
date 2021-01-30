@@ -6,6 +6,7 @@ using irespository.purchase.model;
 using irespository.store;
 using irespository.store.model;
 using irespository.store.profile.model;
+using System.Collections.Generic;
 
 namespace domain.store
 {
@@ -45,6 +46,9 @@ namespace domain.store
             }
         }
 
-
+        public IEnumerable<DataStoreChangeType> GetCustomizeChangeTypeList()
+        {
+            return _storeChangeTypeRespository.GetCustomizeList();
+        }
     }
 }

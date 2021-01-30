@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.store.model;
 using irespository.store.profile.model;
 using iservice.store;
+using System.Collections.Generic;
 
 namespace service.store
 {
@@ -22,6 +23,12 @@ namespace service.store
         public PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query)
         {
             return _storeContext.GetPagerList(query);
+        }
+
+
+        public IEnumerable<DataStoreChangeType> GetCustomizeChangeTypeList()
+        {
+            return _storeContext.GetCustomizeChangeTypeList();
         }
     }
 }
