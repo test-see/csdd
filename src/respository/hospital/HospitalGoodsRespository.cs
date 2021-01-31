@@ -40,14 +40,19 @@ namespace respository.hospital
                           IsActive = r.IsActive,
                           PinShou = r.PinShou,
                           Price = r.Price,
+                          Barcode = r.Barcode,
                       };
             if (query.Query?.HospitalId != null)
             {
                 sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId.Value);
             }
-            if (!string.IsNullOrEmpty(query.Query?.PinShou ))
+            if (!string.IsNullOrEmpty(query.Query?.PinShou))
             {
                 sql = sql.Where(x => x.PinShou.Contains(query.Query.PinShou));
+            }
+            if (!string.IsNullOrEmpty(query.Query?.Barcode))
+            {
+                sql = sql.Where(x => x.Barcode.Contains(query.Query.Barcode));
             }
             return new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
         }
@@ -64,6 +69,7 @@ namespace respository.hospital
                 CreateUserId = userId,
                 IsActive = 1,
                 PinShou = created.PinShou,
+                Barcode = created.Barcode,
                 Price = created.Price,
                 CreateTime = DateTime.Now,
             };
@@ -99,6 +105,7 @@ namespace respository.hospital
             goods.IsActive = updated.IsActive;
             goods.PinShou = updated.PinShou;
             goods.Price = updated.Price;
+            goods.Barcode = updated.Barcode;
 
             _context.HospitalGoods.Update(goods);
             _context.SaveChanges();
@@ -140,6 +147,32 @@ namespace respository.hospital
             _context.HospitalGoods.Update(goods);
             _context.SaveChanges();
             return goods;
+        }
+
+
+        public HospitalGoodsValueModel GetValue(int id)
+        {
+            var sql = from r in _context.HospitalGoods
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join h in _context.Hospital on r.HospitalId equals h.Id
+                      where r.Id == id
+                      select new HospitalGoodsValueModel
+                      {
+                          Id = r.Id,
+                          Name = r.Name,
+                          Hospital = new HospitalValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                              Remark = h.Remark,
+                          },
+                          Producer = r.Producer,
+                          Spec = r.Spec,
+                          UnitPurchase = r.UnitPurchase,
+                          PinShou = r.PinShou,
+                          Price = r.Price,
+                      };
+            return sql.FirstOrDefault();
         }
     }
 }

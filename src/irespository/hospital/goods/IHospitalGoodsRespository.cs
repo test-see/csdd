@@ -14,5 +14,6 @@ namespace irespository.hospital
         HospitalGoods Get(int id);
         HospitalGoodsIndexApiModel GetIndex(int id);
         HospitalGoods UpdateIsActive(int id, bool isActive);
+        HospitalGoodsValueModel GetValue(int id);
     }
 }

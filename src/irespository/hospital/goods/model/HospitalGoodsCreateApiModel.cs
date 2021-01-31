@@ -9,5 +9,6 @@
         public string UnitPurchase { get; set; }
         public string Producer { get; set; }
         public decimal Price { get; set; }
+        public string Barcode { get; set; }
     }
 }

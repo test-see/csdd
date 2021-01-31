@@ -28,5 +28,7 @@ namespace foundation.ef5.poco
         public int CreateUserId { get; set; }
         [Column("createtime")]
         public DateTime CreateTime { get; set; }
+        [Column("barcode")]
+        public string Barcode { get; set; }
     }
 }
