@@ -171,6 +171,7 @@ namespace respository.hospital
                           UnitPurchase = r.UnitPurchase,
                           PinShou = r.PinShou,
                           Price = r.Price,
+                          Barcode = r.Barcode,
                       };
             return sql.FirstOrDefault();
         }

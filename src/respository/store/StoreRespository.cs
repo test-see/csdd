@@ -1,10 +1,10 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
 using irespository.hospital.profile.model;
-using irespository.purchase.model;
 using irespository.store;
 using irespository.store.model;
 using irespository.store.profile.model;
@@ -16,9 +16,12 @@ namespace respository.store
     public class StoreRespository : IStoreRespository
     {
         private readonly DefaultDbContext _context;
-        public StoreRespository(DefaultDbContext context)
+        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
+        public StoreRespository(DefaultDbContext context,
+            IHospitalGoodsRespository hospitalGoodsRespository)
         {
             _context = context;
+            _hospitalGoodsRespository = hospitalGoodsRespository;
         }
         public Store CreateOrUpdate(CustomizeStoreChangeApiModel created, int department, int userId)
         {
@@ -86,7 +89,6 @@ namespace respository.store
                       join hd in _context.HospitalDepartment on r.HospitalDepartmentId equals hd.Id
                       join hdt in _context.DataDepartmentType on hd.DepartmentTypeId equals hdt.Id
                       join h in _context.Hospital on hd.HospitalId equals h.Id
-                      join hg in _context.HospitalGoods on r.HospitalGoodsId equals hg.Id
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join uu in _context.User on r.UpdateUserId equals uu.Id
                       select new StoreListApiModel
@@ -111,21 +113,18 @@ namespace respository.store
                           },
                           HospitalGoods = new HospitalGoodsValueModel
                           {
-                              Id = hg.Id,
-                              Name = hg.Name,
-                              PinShou = hg.PinShou,
-                              Producer = hg.Producer,
-                              UnitPurchase = hg.UnitPurchase,
-                              Spec = hg.Spec,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = h.Id,
-                                  Name = h.Name,
-                                  Remark = h.Remark,
-                              },
+                              Id = r.HospitalGoodsId,
                           },
                       };
-            return new PagerResult<StoreListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<StoreListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                }
+            }
+            return data;
         }
     }
 }

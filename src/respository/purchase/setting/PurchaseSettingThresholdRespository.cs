@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
 using irespository.hospital.profile.model;
@@ -14,15 +15,16 @@ namespace respository.purchase
     public class PurchaseSettingThresholdRespository : IPurchaseSettingThresholdRespository
     {
         private readonly DefaultDbContext _context;
-        public PurchaseSettingThresholdRespository(DefaultDbContext context)
+        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
+        public PurchaseSettingThresholdRespository(DefaultDbContext context,
+            IHospitalGoodsRespository hospitalGoodsRespository)
         {
             _context = context;
+            _hospitalGoodsRespository = hospitalGoodsRespository;
         }
         public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
         {
             var sql = from r in _context.PurchaseSettingThreshold
-                      join g in _context.HospitalGoods on r.HospitalGoodsId equals g.Id
-                      join h in _context.Hospital on g.HospitalId equals h.Id
                       join u in _context.User on r.CreateUserId equals u.Id
                       join t in _context.DataPurchaseThresholdType on r.ThresholdTypeId equals t.Id
                       select new PurchaseSettingThresholdListApiModel
@@ -34,22 +36,19 @@ namespace respository.purchase
                           UpQty = r.UpQty,
                           HospitalGoods = new HospitalGoodsValueModel
                           {
-                              Id = g.Id,
-                              Name = g.Name,
-                              PinShou = g.PinShou,
-                              Producer = g.Producer,
-                              Spec = g.Spec,
-                              UnitPurchase = g.UnitPurchase,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = h.Id,
-                                  Name = h.Name,
-                                  Remark = h.Remark,
-                              }
+                              Id = r.HospitalGoodsId,
                           },
                           ThresholdType = t,
                       };
-            return new PagerResult<PurchaseSettingThresholdListApiModel>(query.Index, query.Size, sql);
+            var data =  new PagerResult<PurchaseSettingThresholdListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach(var m in data.Result)
+                {
+                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                }
+            }
+            return data;
         }
 
         public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)

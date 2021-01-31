@@ -7,7 +7,6 @@ using irespository.client.model;
 using irespository.client.profile.model;
 using irespository.hospital;
 using irespository.hospital.goods.model;
-using irespository.hospital.profile.model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,8 +123,6 @@ namespace respository.client
             if (profile != null)
             {
                 var mappings = (from m in _context.ClientMappingGoods
-                                join g in _context.HospitalGoods on m.HospitalGoodsId equals g.Id
-                                join h in _context.Hospital on g.HospitalId equals h.Id
                                 select new KeyValuePair<int, ClientMappingGoodsListApiModel>(m.Id, new ClientMappingGoodsListApiModel
                                 {
 
@@ -133,7 +130,7 @@ namespace respository.client
                                     HospitalQty = m.HospitalQty,
                                     HospitalGoods = new HospitalGoodsValueModel
                                     {
-                                        Id = g.Id,
+                                        Id = m.HospitalGoodsId,
                                     }
                                 })).ToList();
                 foreach (var m in mappings)

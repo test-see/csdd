@@ -1,5 +1,6 @@
 ﻿using foundation.config;
 using foundation.ef5;
+using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
 using irespository.hospital.profile.model;
@@ -12,9 +13,12 @@ namespace respository.store
     public class StoreRecordRespository : IStoreRecordRespository
     {
         private readonly DefaultDbContext _context;
-        public StoreRecordRespository(DefaultDbContext context)
+        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
+        public StoreRecordRespository(DefaultDbContext context,
+            IHospitalGoodsRespository hospitalGoodsRespository)
         {
             _context = context;
+            _hospitalGoodsRespository = hospitalGoodsRespository;
         }
 
         public PagerResult<StoreRecordListApiModel> GetPagerList(PagerQuery<StoreRecordListQueryModel> query)
@@ -50,20 +54,17 @@ namespace respository.store
                           HospitalGoods = new HospitalGoodsValueModel
                           {
                               Id = hg.Id,
-                              Name = hg.Name,
-                              PinShou = hg.PinShou,
-                              Producer = hg.Producer,
-                              UnitPurchase = hg.UnitPurchase,
-                              Spec = hg.Spec,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = h.Id,
-                                  Name = h.Name,
-                                  Remark = h.Remark,
-                              },
                           },
                       };
-            return new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                }
+            }
+            return data;
         }
     }
 }
