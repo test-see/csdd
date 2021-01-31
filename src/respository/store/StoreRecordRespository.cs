@@ -31,7 +31,7 @@ namespace respository.store
                           Id = r.Id,
                           CreateTime = r.CreateTime,
                           CreateUserName = uc.Username,
-                          AfterQty = r.AfterQty,
+                          ChangeQty = r.ChangeQty,
                           BeforeQty = r.BeforeQty,
                           Price = r.Price,
                           ChangeType = ct,

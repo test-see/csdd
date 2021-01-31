@@ -12,7 +12,7 @@ namespace irespository.store.profile.model
         public HospitalGoodsValueModel HospitalGoods { get; set; }
         public int BeforeQty { get; set; }
         public DataStoreChangeType ChangeType { get; set; }
-        public int AfterQty { get; set; }
+        public int ChangeQty { get; set; }
         public decimal Price { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }

@@ -36,13 +36,7 @@ namespace domain.store
                 var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.ChangeQty;
                 if (afterqty < 0)
                     throw new DefaultException("库存不足!");
-                var updated = new StoreUpdateApiModel
-                {
-                    ChangeTypeId = changetype.Id,
-                    Qty = afterqty,
-                    HospitalGoodsId = created.HospitalGoodsId,
-                };
-                return _storeRespository.CreateOrUpdate(updated, department, userId);
+                return _storeRespository.CreateOrUpdate(created, department, userId);
             }
         }
 

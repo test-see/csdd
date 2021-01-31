@@ -6,6 +6,7 @@ using irespository.hospital.goods.model;
 using irespository.hospital.profile.model;
 using irespository.purchase.model;
 using irespository.store;
+using irespository.store.model;
 using irespository.store.profile.model;
 using System;
 using System.Linq;
@@ -19,26 +20,26 @@ namespace respository.store
         {
             _context = context;
         }
-        public Store CreateOrUpdate(StoreUpdateApiModel updated, int department, int userId)
+        public Store CreateOrUpdate(CustomizeStoreChangeApiModel created, int department, int userId)
         {
-            var store = GetIndexByGoods(department, updated.HospitalGoodsId);
-            var goods = _context.HospitalGoods.Find(updated.HospitalGoodsId);
+            var store = GetIndexByGoods(department, created.HospitalGoodsId);
+            var goods = _context.HospitalGoods.Find(created.HospitalGoodsId);
             var record = new StoreRecord
             {
                 BeforeQty = store?.Qty ?? 0,
-                ChangeTypeId = updated.ChangeTypeId,
+                ChangeTypeId = created.ChangeTypeId,
                 CreateTime = DateTime.Now,
                 CreateUserId = userId,
                 HospitalDepartmentId = department,
-                HospitalGoodsId = updated.HospitalGoodsId,
+                HospitalGoodsId = created.HospitalGoodsId,
                 Price = goods.Price,
+                ChangeQty = created.ChangeQty,
             };
             using (var tran = _context.Database.BeginTransaction())
             {
-                if (store == null) store = Create(updated, department, userId);
-                else store = Update(store.Id, updated, userId);
+                if (store == null) store = Create(created, department, userId);
+                else store = Update(store.Id, created, userId);
 
-                record.AfterQty = store.Qty;
                 _context.StoreRecord.Add(record);
                 _context.SaveChanges();
                 tran.Commit();
@@ -46,15 +47,15 @@ namespace respository.store
             return store;
         }
 
-        private Store Create(StoreUpdateApiModel updated, int department, int userId)
+        private Store Create(CustomizeStoreChangeApiModel created, int department, int userId)
         {
             var store = new Store
             {
                 CreateTime = DateTime.Now,
                 CreateUserId = userId,
                 HospitalDepartmentId = department,
-                HospitalGoodsId = updated.HospitalGoodsId,
-                Qty = updated.Qty,
+                HospitalGoodsId = created.HospitalGoodsId,
+                Qty = created.ChangeQty,
                 UpdateTime = DateTime.Now,
                 UpdateUserId = userId,
             };
@@ -63,10 +64,10 @@ namespace respository.store
             return store;
         }
 
-        private Store Update(int id, StoreUpdateApiModel updated, int userId)
+        private Store Update(int id, CustomizeStoreChangeApiModel created, int userId)
         {
             var store = _context.Store.Find(id);
-            store.Qty = updated.Qty;
+            store.Qty = created.ChangeQty + store.Qty;
             store.UpdateTime = DateTime.Now;
             store.UpdateUserId = userId;
             _context.Store.Update(store);
