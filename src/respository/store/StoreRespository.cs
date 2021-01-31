@@ -87,7 +87,7 @@ namespace respository.store
                       join h in _context.Hospital on hd.HospitalId equals h.Id
                       join hg in _context.HospitalGoods on r.HospitalGoodsId equals hg.Id
                       join uc in _context.User on r.CreateUserId equals uc.Id
-                      join uu in _context.User on r.CreateUserId equals uu.Id
+                      join uu in _context.User on r.UpdateUserId equals uu.Id
                       select new StoreListApiModel
                       {
                           Id = r.Id,
