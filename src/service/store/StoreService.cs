@@ -30,5 +30,11 @@ namespace service.store
         {
             return _storeContext.GetCustomizeChangeTypeList();
         }
+
+
+        public Store GetIndexByGoods(int department, int goods)
+        {
+            return _storeContext.GetIndexByGoods(department, goods);
+        }
     }
 }

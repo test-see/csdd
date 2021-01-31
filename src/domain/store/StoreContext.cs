@@ -50,5 +50,11 @@ namespace domain.store
         {
             return _storeChangeTypeRespository.GetCustomizeList();
         }
+
+
+        public Store GetIndexByGoods(int department, int goods)
+        {
+            return _storeRespository.GetIndexByGoods(department, goods);
+        }
     }
 }

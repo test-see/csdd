@@ -11,5 +11,6 @@ namespace iservice.store
         PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query);
         Store CustomizeCreate(CustomizeStoreChangeApiModel created, int department, int userId);
         IEnumerable<DataStoreChangeType> GetCustomizeChangeTypeList();
+        Store GetIndexByGoods(int department, int goods);
     }
 }

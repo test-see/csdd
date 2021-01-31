@@ -53,5 +53,19 @@ namespace apitest.hospital.store
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Any());
         }
+
+
+        [TestMethod]
+        public async Task HospitalGoods_Get_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Store/index")
+                .SetQueryParam("goodid","1")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<Store>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
+        }
+
     }
 }

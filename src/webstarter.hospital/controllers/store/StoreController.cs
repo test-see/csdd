@@ -41,5 +41,14 @@ namespace webstarter.hospital.controllers.store
             var data = _storeService.GetCustomizeChangeTypeList();
             return Json(data);
         }
+
+
+        [HttpGet]
+        [Route("index")]
+        public JsonResult GetIndexByGoods(int goodid)
+        {
+            var data = _storeService.GetIndexByGoods(HospitalDepartment.Id, goodid);
+            return Json(data);
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace irespository.store
         PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query);
         Store CreateOrUpdate(StoreUpdateApiModel updated, int department, int userId);
         Store GetIndexByGoods(int department, int goods);
+    
     }
 }
