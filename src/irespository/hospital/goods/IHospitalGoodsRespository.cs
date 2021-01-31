@@ -15,6 +15,6 @@ namespace irespository.hospital
         HospitalGoods Get(int id);
         HospitalGoodsIndexApiModel GetIndex(int id);
         HospitalGoods UpdateIsActive(int id, bool isActive);
-        IQueryable<HospitalGoodsValueModel> GetValue(int id);
+        HospitalGoodsValueModel GetValue(int id);
     }
 }

@@ -123,29 +123,24 @@ namespace respository.client
             var profile = sql.FirstOrDefault();
             if (profile != null)
             {
-                profile.Mappings = (from m in _context.ClientMappingGoods
-                                    join g in _context.HospitalGoods on m.HospitalGoodsId equals g.Id
-                                    join h in _context.Hospital on g.HospitalId equals h.Id
-                                    select new KeyValuePair<int, ClientMappingGoodsListApiModel>(m.Id, new ClientMappingGoodsListApiModel
-                                    {
+                var mappings = (from m in _context.ClientMappingGoods
+                                join g in _context.HospitalGoods on m.HospitalGoodsId equals g.Id
+                                join h in _context.Hospital on g.HospitalId equals h.Id
+                                select new KeyValuePair<int, ClientMappingGoodsListApiModel>(m.Id, new ClientMappingGoodsListApiModel
+                                {
 
-                                        ClientQty = m.ClientQty,
-                                        HospitalQty = m.HospitalQty,
-                                        HospitalGoods = new HospitalGoodsValueModel
-                                        {
-                                            Id = g.Id,
-                                            Name = g.Name,
-                                            Producer = g.Producer,
-                                            Spec = g.Spec,
-                                            UnitPurchase = g.UnitPurchase,
-                                            Hospital = new HospitalValueModel
-                                            {
-                                                Id = h.Id,
-                                                Name = h.Name,
-                                                Remark = h.Remark,
-                                            },
-                                        }
-                                    })).ToList();
+                                    ClientQty = m.ClientQty,
+                                    HospitalQty = m.HospitalQty,
+                                    HospitalGoods = new HospitalGoodsValueModel
+                                    {
+                                        Id = g.Id,
+                                    }
+                                })).ToList();
+                foreach (var m in mappings)
+                {
+                    m.Value.HospitalGoods = _hospitalGoodsRespository.GetValue(m.Value.HospitalGoods.Id);
+                }
+                profile.Mappings = mappings;
             }
             return profile;
         }
