@@ -14,8 +14,8 @@ namespace foundation.ef5.poco
         public int HospitalId { get; set; }
         [Column("spec")]
         public string Spec { get; set; }
-        [Column("unit_purchase")]
-        public string UnitPurchase { get; set; }
+        [Column("unit")]
+        public string Unit { get; set; }
         [Column("producer")]
         public string Producer { get; set; }
         [Column("pinshou")]

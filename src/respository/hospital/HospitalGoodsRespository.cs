@@ -35,7 +35,7 @@ namespace respository.hospital
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
-                          UnitPurchase = r.UnitPurchase,
+                          UnitPurchase = r.Unit,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                           PinShou = r.PinShou,
@@ -65,7 +65,7 @@ namespace respository.hospital
                 HospitalId = created.HospitalId,
                 Producer = created.Producer,
                 Spec = created.Spec,
-                UnitPurchase = created.UnitPurchase,
+                Unit = created.UnitPurchase,
                 CreateUserId = userId,
                 IsActive = 1,
                 PinShou = created.PinShou,
@@ -101,7 +101,7 @@ namespace respository.hospital
             goods.Name = updated.Name;
             goods.Producer = updated.Producer;
             goods.Spec = updated.Spec;
-            goods.UnitPurchase = updated.UnitPurchase;
+            goods.Unit = updated.UnitPurchase;
             goods.IsActive = updated.IsActive;
             goods.PinShou = updated.PinShou;
             goods.Price = updated.Price;
@@ -131,7 +131,7 @@ namespace respository.hospital
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
-                          UnitPurchase = r.UnitPurchase,
+                          UnitPurchase = r.Unit,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                           PinShou = r.PinShou,
@@ -168,7 +168,7 @@ namespace respository.hospital
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
-                          UnitPurchase = r.UnitPurchase,
+                          Unit = r.Unit,
                           PinShou = r.PinShou,
                           Price = r.Price,
                           Barcode = r.Barcode,
