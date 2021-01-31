@@ -150,7 +150,7 @@ namespace respository.hospital
         }
 
 
-        public HospitalGoodsValueModel GetValue(int id)
+        public IQueryable<HospitalGoodsValueModel> GetValue(int id)
         {
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -172,7 +172,7 @@ namespace respository.hospital
                           PinShou = r.PinShou,
                           Price = r.Price,
                       };
-            return sql.FirstOrDefault();
+            return sql;
         }
     }
 }

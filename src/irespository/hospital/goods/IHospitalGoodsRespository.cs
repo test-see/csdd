@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.hospital.goods.model;
 using irespository.hospital.model;
+using System.Linq;
 
 namespace irespository.hospital
 {
@@ -14,6 +15,6 @@ namespace irespository.hospital
         HospitalGoods Get(int id);
         HospitalGoodsIndexApiModel GetIndex(int id);
         HospitalGoods UpdateIsActive(int id, bool isActive);
-        HospitalGoodsValueModel GetValue(int id);
+        IQueryable<HospitalGoodsValueModel> GetValue(int id);
     }
 }

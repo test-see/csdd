@@ -5,6 +5,7 @@ using irespository.client;
 using irespository.client.goods.model;
 using irespository.client.model;
 using irespository.client.profile.model;
+using irespository.hospital;
 using irespository.hospital.goods.model;
 using irespository.hospital.profile.model;
 using System;
@@ -16,9 +17,12 @@ namespace respository.client
     public class ClientGoodsRespository : IClientGoodsRespository
     {
         private readonly DefaultDbContext _context;
-        public ClientGoodsRespository(DefaultDbContext context)
+        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
+        public ClientGoodsRespository(DefaultDbContext context,
+            IHospitalGoodsRespository hospitalGoodsRespository)
         {
             _context = context;
+            _hospitalGoodsRespository = hospitalGoodsRespository;
         }
         public PagerResult<ClientGoodsListApiModel> GetPagerList(PagerQuery<ClientGoodsListQueryModel> query)
         {
@@ -127,20 +131,7 @@ namespace respository.client
 
                                         ClientQty = m.ClientQty,
                                         HospitalQty = m.HospitalQty,
-                                        HospitalGoods = new HospitalGoodsValueModel
-                                        {
-                                            Id = g.Id,
-                                            Name = g.Name,
-                                            Producer = g.Producer,
-                                            Spec = g.Spec,
-                                            UnitPurchase = g.UnitPurchase,
-                                            Hospital = new HospitalValueModel
-                                            {
-                                                Id = h.Id,
-                                                Name = h.Name,
-                                                Remark = h.Remark,
-                                            },
-                                        }
+                                        HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoodsId).FirstOrDefault(),
                                     })).ToList();
             }
             return profile;
