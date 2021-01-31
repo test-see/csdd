@@ -131,7 +131,20 @@ namespace respository.client
 
                                         ClientQty = m.ClientQty,
                                         HospitalQty = m.HospitalQty,
-                                        HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoodsId).FirstOrDefault(),
+                                        HospitalGoods = new HospitalGoodsValueModel
+                                        {
+                                            Id = g.Id,
+                                            Name = g.Name,
+                                            Producer = g.Producer,
+                                            Spec = g.Spec,
+                                            UnitPurchase = g.UnitPurchase,
+                                            Hospital = new HospitalValueModel
+                                            {
+                                                Id = h.Id,
+                                                Name = h.Name,
+                                                Remark = h.Remark,
+                                            },
+                                        }
                                     })).ToList();
             }
             return profile;
