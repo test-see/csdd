@@ -32,9 +32,9 @@ namespace respository.sys
                         MenuId = x,
                         RoleId = role.Id,
                     }));
+                    _context.SaveChanges();
                 }
 
-                _context.SaveChanges();
                 tran.Commit();
             }
             return role;

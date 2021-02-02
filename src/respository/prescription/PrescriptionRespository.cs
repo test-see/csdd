@@ -1,8 +1,11 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using irespository.hospital;
+using irespository.hospital.department.model;
 using irespository.prescription;
 using irespository.prescription.model;
+using System;
 using System.Linq;
 
 namespace respository.prescription
@@ -10,45 +13,63 @@ namespace respository.prescription
     public class PrescriptionRespository : IPrescriptionRespository
     {
         private readonly DefaultDbContext _context;
-        public PrescriptionRespository(DefaultDbContext context)
+        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
+        public PrescriptionRespository(DefaultDbContext context,
+            IHospitalDepartmentRespository hospitalDepartmentRespository)
         {
             _context = context;
+            _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
 
         public Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId)
         {
-            throw new System.NotImplementedException();
+            var prescription = new Prescription
+            {
+                HospitalDepartmentId = departmentId,
+                CreateUserId = userId,
+                CreateTime = DateTime.UtcNow,
+                Cardno = created.Cardno,
+                Status = 1
+            };
+            _context.Prescription.Add(prescription);
+            _context.SaveChanges();
+
+            if (created.HospitalGoods != null && created.HospitalGoods.Any())
+            {
+                _context.PrescriptionGoods.AddRange(created.HospitalGoods.Select(x => new PrescriptionGoods
+                {
+                    HospitalGoodsId = x.Key,
+                    PrescriptionId = prescription.Id,
+                    Qty = x.Value,
+                }));
+                _context.SaveChanges();
+            }
+
+            return prescription;
         }
 
         public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query)
         {
             var sql = from p in _context.Prescription
-                      //join d in _context.HospitalDepartment on p.HospitalDepartmentId equals d.Id
-                      //join pg in _context.PrescriptionGoods on p.Id equals pg.PrescriptionId
-                      //join dt in _context.DataDepartmentType on d.DepartmentTypeId equals dt.Id
-                      //join h in _context.Hospital on d.HospitalId equals h.Id
                       join u in _context.User on p.CreateUserId equals u.Id
                       select new PrescriptionListApiModel
                       {
-                          //CreateTime = r.CreateTime,
-                          //Id = r.Id,
-                          //CreateUserName = u.Username,
-                          //Name = r.Name,
-                          //Remark = r.Remark,
-                          //HospitalDepartment = new HospitalDepartmentValueModel
-                          //{
-                          //    Id = d.Id,
-                          //    Name = d.Name,
-                          //    DepartmentType = dt,
-                          //    Hospital = new HospitalValueModel
-                          //    {
-                          //        Id = h.Id,
-                          //        Name = h.Name,
-                          //        Remark = h.Remark,
-                          //    }
-                          //}
+                          Cardno = p.Cardno,
+                          CreateTime = p.CreateTime,
+                          CreateUserName = u.Username,
+                          Id = p.Id,
+                          Status = p.Status,
+                          HospitalDepartment = new HospitalDepartmentValueModel { Id = p.HospitalDepartmentId },
                       };
-            return new PagerResult<PrescriptionListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<PrescriptionListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
+                }
+            }
+            return data;
         }
     }
 }
