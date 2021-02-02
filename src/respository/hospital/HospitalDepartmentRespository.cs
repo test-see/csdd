@@ -86,11 +86,31 @@ namespace respository.hospital
             _context.SaveChanges();
             return department.Id;
         }
-   
+
         public IList<IdNameValueModel> GetParentList()
         {
             return _context.HospitalDepartment.Select(x => new IdNameValueModel { Id = x.Id, Name = x.Name }).ToList();
         }
-    
+
+        public HospitalDepartmentValueModel GetValue(int id)
+        {
+            var sql = from r in _context.HospitalDepartment
+                      join h in _context.Hospital on r.HospitalId equals h.Id
+                      join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
+                      where r.Id == id
+                      select new HospitalDepartmentValueModel
+                      {
+                          Id = r.Id,
+                          Name = r.Name,
+                          Hospital = new HospitalValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                              Remark = h.Remark,
+                          },
+                          DepartmentType = d,
+                      };
+            return sql.FirstOrDefault();
+        }
     }
 }

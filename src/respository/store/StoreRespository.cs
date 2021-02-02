@@ -17,11 +17,14 @@ namespace respository.store
     {
         private readonly DefaultDbContext _context;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
+        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
         public StoreRespository(DefaultDbContext context,
-            IHospitalGoodsRespository hospitalGoodsRespository)
+            IHospitalGoodsRespository hospitalGoodsRespository,
+            IHospitalDepartmentRespository hospitalDepartmentRespository)
         {
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
+            _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
         public Store CreateOrUpdate(CustomizeStoreChangeApiModel created, int department, int userId)
         {
@@ -86,9 +89,6 @@ namespace respository.store
         public PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query)
         {
             var sql = from r in _context.Store
-                      join hd in _context.HospitalDepartment on r.HospitalDepartmentId equals hd.Id
-                      join hdt in _context.DataDepartmentType on hd.DepartmentTypeId equals hdt.Id
-                      join h in _context.Hospital on hd.HospitalId equals h.Id
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join uu in _context.User on r.UpdateUserId equals uu.Id
                       select new StoreListApiModel
@@ -101,15 +101,7 @@ namespace respository.store
                           Qty = r.Qty,
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
-                              Id = hd.Id,
-                              Name = hd.Name,
-                              DepartmentType = hdt,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = h.Id,
-                                  Name = h.Name,
-                                  Remark = h.Remark,
-                              },
+                              Id = r.HospitalDepartmentId,
                           },
                           HospitalGoods = new HospitalGoodsValueModel
                           {
@@ -122,6 +114,7 @@ namespace respository.store
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
                 }
             }
             return data;

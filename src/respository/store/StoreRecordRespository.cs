@@ -3,7 +3,6 @@ using foundation.ef5;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
-using irespository.hospital.profile.model;
 using irespository.store;
 using irespository.store.profile.model;
 using System.Linq;
@@ -14,20 +13,19 @@ namespace respository.store
     {
         private readonly DefaultDbContext _context;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
+        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
         public StoreRecordRespository(DefaultDbContext context,
-            IHospitalGoodsRespository hospitalGoodsRespository)
+            IHospitalGoodsRespository hospitalGoodsRespository,
+            IHospitalDepartmentRespository hospitalDepartmentRespository)
         {
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
+            _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
 
         public PagerResult<StoreRecordListApiModel> GetPagerList(PagerQuery<StoreRecordListQueryModel> query)
         {
             var sql = from r in _context.StoreRecord
-                      join hd in _context.HospitalDepartment on r.HospitalDepartmentId equals hd.Id
-                      join hdt in _context.DataDepartmentType on hd.DepartmentTypeId equals hdt.Id
-                      join h in _context.Hospital on hd.HospitalId equals h.Id
-                      join hg in _context.HospitalGoods on r.HospitalGoodsId equals hg.Id
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
                       select new StoreRecordListApiModel
@@ -41,19 +39,11 @@ namespace respository.store
                           ChangeType = ct,
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
-                              Id = hd.Id,
-                              Name = hd.Name,
-                              DepartmentType = hdt,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = h.Id,
-                                  Name = h.Name,
-                                  Remark = h.Remark,
-                              },
+                              Id = r.HospitalDepartmentId,
                           },
                           HospitalGoods = new HospitalGoodsValueModel
                           {
-                              Id = hg.Id,
+                              Id = r.HospitalGoodsId,
                           },
                       };
             var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
@@ -62,6 +52,7 @@ namespace respository.store
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
                 }
             }
             return data;

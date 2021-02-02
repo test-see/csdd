@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.profile.model;
 using irespository.user.hospital;
@@ -14,9 +15,12 @@ namespace respository.user
     public class UserHospitalRespository : IUserHospitalRespository
     {
         private readonly DefaultDbContext _context;
-        public UserHospitalRespository(DefaultDbContext context)
+        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
+        public UserHospitalRespository(DefaultDbContext context,
+            IHospitalDepartmentRespository hospitalDepartmentRespository)
         {
             _context = context;
+            _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
         public UserHospital Create(UserHospitalCreateApiModel created, int userId)
         {
@@ -48,9 +52,6 @@ namespace respository.user
             var sql = from r in _context.UserHospital
                       join u in _context.User on r.CreateUserId equals u.Id
                       join s in _context.User on r.UserId equals s.Id
-                      join h in _context.HospitalDepartment on r.HospitalDepartmentId equals h.Id
-                      join d in _context.DataDepartmentType on h.DepartmentTypeId equals d.Id
-                      join o in _context.Hospital on h.HospitalId equals o.Id
                       select new UserHospitalListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -65,18 +66,18 @@ namespace respository.user
                           },
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              DepartmentType = d,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = o.Id,
-                                  Name = o.Name,
-                                  Remark = o.Remark,
-                              }
+                              Id = r.HospitalDepartmentId,
                           }
                       };
-            return new PagerResult<UserHospitalListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<UserHospitalListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
+                }
+            }
+            return data;
         }
 
 
@@ -85,9 +86,6 @@ namespace respository.user
             var sql = from r in _context.UserHospital
                       join u in _context.User on r.CreateUserId equals u.Id
                       join s in _context.User on r.UserId equals s.Id
-                      join h in _context.HospitalDepartment on r.HospitalDepartmentId equals h.Id
-                      join d in _context.DataDepartmentType on h.DepartmentTypeId equals d.Id
-                      join o in _context.Hospital on h.HospitalId equals o.Id
                       where r.UserId == userId
                       select new UserHospitalIndexApiModel
                       {
@@ -103,18 +101,15 @@ namespace respository.user
                           },
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              DepartmentType = d,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = o.Id,
-                                  Name = o.Name,
-                                  Remark = o.Remark,
-                              }
+                              Id = r.HospitalDepartmentId,
                           }
                       };
-            return sql.FirstOrDefault();
+            var user = sql.FirstOrDefault();
+            if (user != null)
+            {
+                user.HospitalDepartment = _hospitalDepartmentRespository.GetValue(user.HospitalDepartment.Id);
+            }
+            return user;
         }
     }
 }
