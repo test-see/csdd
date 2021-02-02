@@ -8,6 +8,8 @@ namespace foundation.ef5.poco
     {
         [Column("id")]
         public int Id { get; set; }
+        [Column("hospital_department_id")]
+        public int HospitalDepartmentId { get; set; }
         [Column("cardno")]
         public string Cardno { get; set; }
         [Column("status")]
