@@ -58,5 +58,10 @@ namespace foundation.ef5
         public DbSet<Store> Store { get; set; }
         public DbSet<StoreRecord> StoreRecord { get; set; }
         #endregion
+
+        #region prescription
+        public DbSet<Prescription> Prescription { get; set; }
+        public DbSet<PrescriptionGoods> PrescriptionGoods { get; set; }
+        #endregion
     }
 }
