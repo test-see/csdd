@@ -17,6 +17,7 @@ namespace respository.hospital
         {
             _context = context;
         }
+
         public PagerResult<HospitalGoodsListApiModel> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query)
         {
             var sql = from r in _context.HospitalGoods
@@ -85,7 +86,6 @@ namespace respository.hospital
             return _context.HospitalGoods.Find(id);
         }
 
-
         public int Delete(int id)
         {
             var goods = _context.HospitalGoods.Find(id);
@@ -149,13 +149,38 @@ namespace respository.hospital
             return goods;
         }
 
-
         public HospitalGoodsValueModel GetValue(int id)
         {
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
                       join h in _context.Hospital on r.HospitalId equals h.Id
                       where r.Id == id
+                      select new HospitalGoodsValueModel
+                      {
+                          Id = r.Id,
+                          Name = r.Name,
+                          Hospital = new HospitalValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                              Remark = h.Remark,
+                          },
+                          Producer = r.Producer,
+                          Spec = r.Spec,
+                          Unit = r.Unit,
+                          PinShou = r.PinShou,
+                          Price = r.Price,
+                          Barcode = r.Barcode,
+                      };
+            return sql.FirstOrDefault();
+        }
+
+        public HospitalGoodsValueModel GetValueByBarcode(string barcode)
+        {
+            var sql = from r in _context.HospitalGoods
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join h in _context.Hospital on r.HospitalId equals h.Id
+                      where r.Barcode == barcode.Trim()
                       select new HospitalGoodsValueModel
                       {
                           Id = r.Id,

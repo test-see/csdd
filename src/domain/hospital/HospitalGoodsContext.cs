@@ -41,6 +41,7 @@ namespace domain.hospital
             }, userId);
             return id;
         }
+
         public HospitalGoodsIndexApiModel GetIndex(int id)
         {
             var goods = _hospitalGoodsRespository.GetIndex(id);
@@ -51,6 +52,11 @@ namespace domain.hospital
         public HospitalGoods UpdateIsActive(int id, bool isActive)
         {
             return _hospitalGoodsRespository.UpdateIsActive(id, isActive);
+        }
+
+        public HospitalGoodsValueModel GetValueByBarcode(string barcode)
+        {
+            return _hospitalGoodsRespository.GetValueByBarcode(barcode);
         }
     }
 }

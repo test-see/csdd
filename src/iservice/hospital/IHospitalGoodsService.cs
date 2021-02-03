@@ -13,5 +13,6 @@ namespace iservice.hospital
         int Update(int id, HospitalGoodsUpdateApiModel updated, int userId);
         HospitalGoodsIndexApiModel GetIndex(int id);
         HospitalGoods UpdateIsActive(int id, bool isActive);
+        HospitalGoodsValueModel GetValueByBarcode(string barcode);
     }
 }

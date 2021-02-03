@@ -42,5 +42,10 @@ namespace service.hospital
         {
             return _hospitalGoodsContext.UpdateIsActive(id, isActive);
         }
+
+        public HospitalGoodsValueModel GetValueByBarcode(string barcode)
+        {
+            return _hospitalGoodsContext.GetValueByBarcode(barcode);
+        }
     }
 }

@@ -16,5 +16,6 @@ namespace irespository.hospital
         HospitalGoodsIndexApiModel GetIndex(int id);
         HospitalGoods UpdateIsActive(int id, bool isActive);
         HospitalGoodsValueModel GetValue(int id);
+        HospitalGoodsValueModel GetValueByBarcode(string barcode);
     }
 }
