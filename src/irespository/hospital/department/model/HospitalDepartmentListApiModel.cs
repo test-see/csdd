@@ -14,6 +14,6 @@ namespace irespository.hospital.department.model
         public string CreateUserName { get; set; }
         public DataDepartmentType DepartmentType { get; set; }
         public IdNameValueModel Parent { get; set; }
-        public int IsCheck { get; set; }
+        public int IsPurchaseCheck { get; set; }
     }
 }

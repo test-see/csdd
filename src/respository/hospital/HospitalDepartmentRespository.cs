@@ -39,7 +39,7 @@ namespace respository.hospital
                           },
                           CreateUserName = u.Username,
                           DepartmentType = d,
-                          IsCheck = r.IsCheck,
+                          IsPurchaseCheck = r.IsPurchaseCheck,
                           Parent = rp_def_t != null ? new IdNameValueModel { Id = rp_def_t.Id, Name = rp_def_t.Name } : null,
                       };
             if (query.Query?.HospitalId != null)
@@ -59,7 +59,7 @@ namespace respository.hospital
                 CreateUserId = userId,
                 ParentId = created.ParentId,
                 CreateTime = DateTime.Now,
-                IsCheck = created.IsCheck,
+                IsPurchaseCheck = created.IsPurchaseCheck,
             };
 
             _context.HospitalDepartment.Add(goods);
@@ -83,7 +83,7 @@ namespace respository.hospital
             department.Name = updated.Name;
             department.DepartmentTypeId = updated.DepartmentTypeId;
             department.ParentId = updated.ParentId;
-            department.IsCheck = updated.IsCheck;
+            department.IsPurchaseCheck = updated.IsPurchaseCheck;
 
             _context.HospitalDepartment.Update(department);
             _context.SaveChanges();
