@@ -21,6 +21,8 @@ namespace foundation.ef5.poco
         public int DepartmentTypeId { get; set; }
         [Column("parent_id")]
         public int ParentId { get; set; }
+        [Column("is_check")]
+        public int IsCheck { get; set; }
 
     }
 }
