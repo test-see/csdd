@@ -5,6 +5,7 @@ using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.purchase;
 using irespository.purchase.model;
+using irespository.purchase.profile.enums;
 using System;
 using System.Linq;
 
@@ -79,6 +80,16 @@ namespace respository.purchase
             var setting = _context.Purchase.First(x => x.Id == id);
             setting.Name = updated.Name;
             setting.Remark = updated.Remark;
+
+            _context.Purchase.Update(setting);
+            _context.SaveChanges();
+            return setting.Id;
+        }
+
+        public int UpdateStatus(int id, PurchaseStatus status)
+        {
+            var setting = _context.Purchase.First(x => x.Id == id);
+            setting.Status = (int)status;
 
             _context.Purchase.Update(setting);
             _context.SaveChanges();

@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.model;
+using irespository.purchase.profile.enums;
 
 namespace domain.purchase
 {
@@ -33,6 +34,10 @@ namespace domain.purchase
         {
             var goods = _purchaseRespository.GetIndex(id);
             return goods;
+        }
+        public int Submit(int id)
+        {
+            return _purchaseRespository.UpdateStatus(id, PurchaseStatus.Submited);
         }
     }
 }

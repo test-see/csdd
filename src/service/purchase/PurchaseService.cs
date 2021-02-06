@@ -36,5 +36,10 @@ namespace service.purchase
         {
             return _purchaseContext.GetIndex(id);
         }
+
+        public int Submit(int id)
+        {
+            return _purchaseContext.Submit(id);
+        }
     }
 }
