@@ -34,7 +34,7 @@ namespace apitest.client
                     Name = "q",
                     ClientId = 1,
                     Producer = "x",
-                    UnitPurchase = "x",
+                    Unit = "x",
                     Spec = "x"
                 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.ClientGoods>>();
@@ -55,7 +55,7 @@ namespace apitest.client
                 {
                     Name = "q",
                     Producer = "x",
-                    UnitPurchase = "x",
+                    Unit = "x",
                     Spec = "x",
                     IsActive = 1,
                 })

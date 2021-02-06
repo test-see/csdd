@@ -40,7 +40,7 @@ namespace respository.client
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
-                          UnitPurchase = r.UnitPurchase,
+                          Unit = r.Unit,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                       };
@@ -55,7 +55,7 @@ namespace respository.client
                 ClientId = created.ClientId,
                 Producer = created.Producer,
                 Spec = created.Spec,
-                UnitPurchase = created.UnitPurchase,
+                Unit = created.Unit,
                 CreateUserId = userId,
                 IsActive = 1,
                 CreateTime = DateTime.Now,
@@ -85,7 +85,7 @@ namespace respository.client
             goods.Name = updated.Name;
             goods.Producer = updated.Producer;
             goods.Spec = updated.Spec;
-            goods.UnitPurchase = updated.UnitPurchase;
+            goods.Unit = updated.Unit;
             goods.IsActive = updated.IsActive;
 
             _context.ClientGoods.Update(goods);
@@ -113,7 +113,7 @@ namespace respository.client
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
-                          UnitPurchase = r.UnitPurchase,
+                          Unit = r.Unit,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
 

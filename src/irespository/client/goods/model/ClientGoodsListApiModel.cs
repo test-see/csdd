@@ -9,7 +9,7 @@ namespace irespository.client.model
         public string Name { get; set; }
         public ClientValueModel Client { get; set; }
         public string Spec { get; set; }
-        public string UnitPurchase { get; set; }
+        public string Unit { get; set; }
         public string Producer { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }

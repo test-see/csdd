@@ -66,7 +66,7 @@ namespace respository.hospital
                 HospitalId = created.HospitalId,
                 Producer = created.Producer,
                 Spec = created.Spec,
-                Unit = created.UnitPurchase,
+                Unit = created.Unit,
                 CreateUserId = userId,
                 IsActive = 1,
                 PinShou = created.PinShou,
@@ -101,7 +101,7 @@ namespace respository.hospital
             goods.Name = updated.Name;
             goods.Producer = updated.Producer;
             goods.Spec = updated.Spec;
-            goods.Unit = updated.UnitPurchase;
+            goods.Unit = updated.Unit;
             goods.IsActive = updated.IsActive;
             goods.PinShou = updated.PinShou;
             goods.Price = updated.Price;
@@ -131,7 +131,7 @@ namespace respository.hospital
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
-                          UnitPurchase = r.Unit,
+                          Unit = r.Unit,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                           PinShou = r.PinShou,

@@ -34,7 +34,7 @@ namespace apitest.hospital
                     Name = "q",
                     HospitalId = 1,
                     Producer = "x",
-                    UnitPurchase = "x",
+                    Unit = "x",
                     Spec = "x",
                     PinShou = "x",
                     Price = new decimal(1.11),
@@ -57,7 +57,7 @@ namespace apitest.hospital
                 {
                     Name = "q",
                     Producer = "x",
-                    UnitPurchase = "x",
+                    Unit = "x",
                     Spec = "x",
                     IsActive = 1,
                     PinShou = "x",
