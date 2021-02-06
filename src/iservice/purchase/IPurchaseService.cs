@@ -12,5 +12,6 @@ namespace iservice.purchase
         int Update(int id, PurchaseUpdateApiModel updated);
         PurchaseIndexApiModel GetIndex(int id);
         int Submit(int id);
+        int Comfirm(int id);
     }
 }

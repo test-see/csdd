@@ -41,5 +41,9 @@ namespace service.purchase
         {
             return _purchaseContext.Submit(id);
         }
+        public int Comfirm(int id)
+        {
+            return _purchaseContext.Comfirm(id);
+        }
     }
 }

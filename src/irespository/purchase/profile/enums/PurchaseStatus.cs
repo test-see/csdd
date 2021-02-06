@@ -2,7 +2,8 @@
 {
     public enum PurchaseStatus
     {
-        Pendding = 0,
-        Submited = 1,
+        Pendding = 1,
+        Submited = 2,
+        Comfirmed = 3,
     }
 }

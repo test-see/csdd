@@ -39,5 +39,9 @@ namespace domain.purchase
         {
             return _purchaseRespository.UpdateStatus(id, PurchaseStatus.Submited);
         }
+        public int Comfirm(int id)
+        {
+            return _purchaseRespository.UpdateStatus(id, PurchaseStatus.Comfirmed);
+        }
     }
 }

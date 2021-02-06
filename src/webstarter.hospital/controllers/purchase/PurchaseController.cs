@@ -66,5 +66,13 @@ namespace webstarter.hospital.controllers.purchase
             var data = _PurchaseService.Submit(id);
             return Json(data);
         }
+
+        [HttpGet]
+        [Route("{id}/comfirm")]
+        public JsonResult Comfirm(int id)
+        {
+            var data = _PurchaseService.Comfirm(id);
+            return Json(data);
+        }
     }
 }
