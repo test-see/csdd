@@ -51,6 +51,8 @@ namespace foundation.ef5
         #endregion
 
         #region purchase
+        public DbSet<Purchase> Purchase { get; set; }
+        public DbSet<PurchaseGoods> PurchaseGoods { get; set; }
         public DbSet<PurchaseSetting> PurchaseSetting { get; set; }
         public DbSet<PurchaseSettingThreshold> PurchaseSettingThreshold { get; set; }
         #endregion

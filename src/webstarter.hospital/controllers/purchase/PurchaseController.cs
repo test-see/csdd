@@ -1,15 +1,62 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using csdd.Controllers.Shared;
+using foundation.config;
+using irespository.purchase.model;
+using iservice.purchase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.purchase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PurchaseController : ControllerBase
+    [Authorize(Policy = "RequireHospitalRole")]
+    public class PurchaseController : DefaultControllerBase
     {
+        private readonly IPurchaseService _PurchaseService;
+        public PurchaseController(IPurchaseService PurchaseService)
+        {
+            _PurchaseService = PurchaseService;
+        }
+
+        [HttpPost]
+        [Route("list")]
+        public JsonResult GetList(PagerQuery<PurchaseListQueryModel> query)
+        {
+            var data = _PurchaseService.GetPagerList(query);
+            return Json(data);
+        }
+
+
+        [HttpGet]
+        [Route("{id}/delete")]
+        public JsonResult Delete(int id)
+        {
+            var data = _PurchaseService.Delete(id);
+            return Json(data);
+        }
+
+
+        [HttpPost]
+        [Route("add")]
+        public JsonResult Post(PurchaseCreateApiModel created)
+        {
+            var data = _PurchaseService.Create(created, HospitalDepartment.Id, Profile.Id);
+            return Json(data);
+        }
+
+        [HttpPost]
+        [Route("{id}/update")]
+        public JsonResult Update(int id, PurchaseUpdateApiModel updated)
+        {
+            var data = _PurchaseService.Update(id, updated);
+            return Json(data);
+        }
+
+
+        [HttpGet]
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
+        {
+            var data = _PurchaseService.GetIndex(id);
+            return Json(data);
+        }
     }
 }
