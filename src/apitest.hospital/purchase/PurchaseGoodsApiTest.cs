@@ -3,6 +3,7 @@ using Flurl;
 using Flurl.Http;
 using foundation.config;
 using foundation.ef5.poco;
+using irespository.hospital.client.model;
 using irespository.hospital.goods.model;
 using irespository.hospital.model;
 using irespository.purchase.model;
@@ -14,48 +15,47 @@ using System.Threading.Tasks;
 namespace apitest.purchase
 {
     [TestClass]
-    public class PurchaseSettingThresholdTest : BaseApiTest
+    public class PurchaseGoodsTest : BaseApiTest
     {
         [TestMethod]
-        public async Task PurchaseSettingThreshold_Post_ReturnListAsync()
+        public async Task PurchaseGoods_Post_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/PurchaseSettingThreshold/list")
+                .AppendPathSegment("/api/PurchaseGoods/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<PurchaseSettingThresholdListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<PurchaseSettingThresholdListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<PurchaseGoodsListQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<PurchaseGoodsListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
-        public async Task PurchaseSettingThreshold_AddAndDelete_ReturnIntAsync()
+        public async Task PurchaseGoods_AddAndDelete_ReturnIntAsync()
         {
             var hospital = await _rootpath
-                .AppendPathSegment("/api/PurchaseSettingThreshold/add")
+                .AppendPathSegment("/api/PurchaseGoods/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PurchaseSettingThresholdCreateApiModel
+                .PostJsonAsync(new PurchaseGoodsCreateApiModel
                 {
-                    DownQty = 1,
-                    UpQty = 1,
+                    Qty = 1,
                     HospitalGoodsId = 1,
-                    PurchaseSettingId = 1,
-                    ThresholdTypeId = 1,
+                    PurchaseId = 1,
+                    HospitalClientId = 1,
                 })
-                .ReceiveJson<OkMessage<foundation.ef5.poco.PurchaseSettingThreshold>>();
+                .ReceiveJson<OkMessage<foundation.ef5.poco.PurchaseGoods>>();
             var message = await _rootpath
-                .AppendPathSegment($"/api/PurchaseSettingThreshold/{hospital.Data.Id}/delete")
+                .AppendPathSegment($"/api/PurchaseGoods/{hospital.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
         }
         [TestMethod]
-        public async Task PurchaseSettingThreshold_Update_ReturnIntAsync()
+        public async Task PurchaseGoods_Update_ReturnIntAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/PurchaseSettingThreshold/1/update")
+                .AppendPathSegment("/api/PurchaseGoods/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PurchaseSettingThresholdUpdateApiModel { DownQty = 1, UpQty = 1, ThresholdTypeId = 1 })
+                .PostJsonAsync(new PurchaseGoodsUpdateApiModel { Qty = 1,  HospitalClientId = 1 })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
@@ -63,10 +63,10 @@ namespace apitest.purchase
 
 
         [TestMethod]
-        public async Task PurchaseSettingThreshold_HospitalGoods_ReturnListAsync()
+        public async Task PurchaseGoods_HospitalGoods_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/PurchaseSettingThreshold/goods")
+                .AppendPathSegment("/api/PurchaseGoods/goods")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<HospitalGoodsListQueryModel> {  })
                 .ReceiveJson<OkMessage<PagerResult<HospitalGoodsListApiModel>>>();
@@ -75,14 +75,15 @@ namespace apitest.purchase
         }
 
         [TestMethod]
-        public async Task PurchaseSettingThreshold_ThresholdType_ReturnListAsync()
+        public async Task PurchaseGoods_ThresholdType_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/PurchaseSettingThreshold/thresholdtype")
+                .AppendPathSegment("/api/PurchaseGoods/client")
                 .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<IEnumerable<DataPurchaseThresholdType>>>();
+                .PostJsonAsync(new PagerQuery<HospitalClientListQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<HospitalClientListApiModel>>>();
             Assert.AreEqual(200, message.Code);
-            Assert.IsTrue(message.Data.Any());
+            Assert.IsTrue(message.Data.Total > 0);
         }
     }
 }
