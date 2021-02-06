@@ -36,7 +36,7 @@ namespace respository.hospital
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
-                          UnitPurchase = r.Unit,
+                          Unit = r.Unit,
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                           PinShou = r.PinShou,
