@@ -61,9 +61,10 @@ namespace webstarter.hospital.controllers.purchase
 
         [HttpGet]
         [Route("{id}/submit")]
-        public int Submit(int id)
+        public JsonResult Submit(int id)
         {
-            return _PurchaseService.Submit(id);
+            var data = _PurchaseService.Submit(id);
+            return Json(data);
         }
     }
 }

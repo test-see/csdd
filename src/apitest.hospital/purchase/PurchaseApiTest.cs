@@ -51,7 +51,7 @@ namespace apitest.purchase
 
 
         [TestMethod]
-        public async Task HospitalGoods_Get_ReturnListAsync()
+        public async Task Purchase_Index_ReturnListAsync()
         {
             var message = await _rootpath
                 .AppendPathSegment("/api/Purchase/1/index")
@@ -61,5 +61,14 @@ namespace apitest.purchase
             Assert.IsTrue(message.Data != null);
         }
 
+        [TestMethod]
+        public async Task Purchase_Submit_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Purchase/1/submit")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+        }
     }
 }
