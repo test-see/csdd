@@ -18,7 +18,5 @@ namespace foundation.ef5.poco
         public int HospitalClientId { get; set; }
         [Column("createtime")]
         public DateTime CreateTime { get; set; }
-        [Column("createuser_id")]
-        public int CreateUserId { get; set; }
     }
 }
