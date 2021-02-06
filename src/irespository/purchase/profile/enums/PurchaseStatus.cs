@@ -3,6 +3,6 @@
     public enum PurchaseStatus
     {
         Pendding = 0,
-        Submited = 2,
+        Submited = 1,
     }
 }
