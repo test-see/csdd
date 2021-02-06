@@ -53,6 +53,7 @@ namespace respository.purchase
                 CreateTime = DateTime.Now,
                 Name = created.Name,
                 Remark = created.Remark,
+                Status = 0,
             };
 
             _context.Purchase.Add(setting);
