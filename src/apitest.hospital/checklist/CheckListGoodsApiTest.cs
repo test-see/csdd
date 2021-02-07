@@ -6,7 +6,7 @@ using irespository.checklist.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace apitest.CheckList
+namespace apitest.checklist
 {
     [TestClass]
     public class CheckListGoodsTest : BaseApiTest
