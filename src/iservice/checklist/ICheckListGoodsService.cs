@@ -2,7 +2,7 @@
 using foundation.ef5.poco;
 using irespository.checklist.model;
 
-namespace iservice.purchase
+namespace iservice.checklist
 {
     public interface ICheckListGoodsService
     {
