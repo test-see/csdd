@@ -6,7 +6,7 @@ using irespository.store.profile.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace apitest.hospital.store
+namespace apitest.store
 {
     [TestClass]
     public class StoreRecordApiTest : BaseApiTest
