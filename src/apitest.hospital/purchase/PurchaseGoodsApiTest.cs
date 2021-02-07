@@ -61,19 +61,6 @@ namespace apitest.purchase
             Assert.IsTrue(message.Data > 0);
         }
 
-
-        [TestMethod]
-        public async Task PurchaseGoods_HospitalGoods_ReturnListAsync()
-        {
-            var message = await _rootpath
-                .AppendPathSegment("/api/PurchaseGoods/goods")
-                .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<HospitalGoodsListQueryModel> {  })
-                .ReceiveJson<OkMessage<PagerResult<HospitalGoodsListApiModel>>>();
-            Assert.AreEqual(200, message.Code);
-            Assert.IsTrue(message.Data.Total > 0);
-        }
-
         [TestMethod]
         public async Task PurchaseGoods_ThresholdType_ReturnListAsync()
         {

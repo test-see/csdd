@@ -1,7 +1,6 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
 using irespository.hospital.client.model;
-using irespository.hospital.goods.model;
 using irespository.purchase.model;
 using iservice.hospital;
 using iservice.purchase;
@@ -14,14 +13,11 @@ namespace webstarter.hospital.controllers.purchase
     public class PurchaseGoodsController : DefaultControllerBase
     {
         private readonly IPurchaseGoodsService _PurchaseGoodsService;
-        private readonly IHospitalGoodsService _hospitalGoodsService;
         private readonly IHospitalClientService _hospitalClientService; 
         public PurchaseGoodsController(IPurchaseGoodsService PurchaseGoodsService,
-            IHospitalGoodsService hospitalGoodsService,
             IHospitalClientService hospitalClientService)
         {
             _PurchaseGoodsService = PurchaseGoodsService;
-            _hospitalGoodsService = hospitalGoodsService;
             _hospitalClientService = hospitalClientService;
         }
 
@@ -58,17 +54,6 @@ namespace webstarter.hospital.controllers.purchase
             var data = _PurchaseGoodsService.Update(id, updated);
             return Json(data);
         }
-
-        [HttpPost]
-        [Route("goods")]
-        public JsonResult GetHospitalGoodsList(PagerQuery<HospitalGoodsListQueryModel> query)
-        {
-            query.Query = query.Query ?? new HospitalGoodsListQueryModel { };
-            query.Query.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = _hospitalGoodsService.GetPagerList(query);
-            return Json(data);
-        }
-
 
         [HttpPost]
         [Route("client")]
