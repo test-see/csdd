@@ -27,24 +27,22 @@ namespace domain.store
             return _storeRespository.GetPagerList(query);
         }
 
-        public Store CustomizeCreate(CustomizeStoreChangeApiModel created, int department, int userId)
+        public int CreateOrUpdate(StoreChangeApiModel created, int department, int userId)
         {
             var changetype = _storeChangeTypeRespository.GetIndex(created.ChangeTypeId);
             lock (balance)
             {
-                var store = _storeRespository.GetIndexByGoods(department, created.HospitalGoodsId);
-                var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.ChangeQty;
-                if (afterqty < 0)
-                    throw new DefaultException("库存不足!");
-                return _storeRespository.CreateOrUpdate(created, department, userId);
+                foreach (var item in created.HospitalGoods)
+                {
+                    var store = _storeRespository.GetIndexByGoods(department, item.Key);
+                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.Value;
+                    if (afterqty < 0)
+                        throw new DefaultException("库存不足!");
+                }
+                _storeRespository.CreateOrUpdate(created, department, userId);
             }
+            return created.HospitalGoods.Count;
         }
-
-        public IEnumerable<DataStoreChangeType> GetCustomizeChangeTypeList()
-        {
-            return _storeChangeTypeRespository.GetCustomizeList();
-        }
-
 
         public Store GetIndexByGoods(int department, int goods)
         {

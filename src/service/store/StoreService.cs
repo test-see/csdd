@@ -15,23 +15,10 @@ namespace service.store
         {
             _storeContext = storeContext;
         }
-        public Store CustomizeCreate(CustomizeStoreChangeApiModel created, int department, int userId)
-        {
-            return _storeContext.CustomizeCreate(created, department, userId);
-        }
-
         public PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query)
         {
             return _storeContext.GetPagerList(query);
         }
-
-
-        public IEnumerable<DataStoreChangeType> GetCustomizeChangeTypeList()
-        {
-            return _storeContext.GetCustomizeChangeTypeList();
-        }
-
-
         public Store GetIndexByGoods(int department, int goods)
         {
             return _storeContext.GetIndexByGoods(department, goods);

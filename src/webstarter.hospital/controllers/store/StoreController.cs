@@ -25,24 +25,6 @@ namespace webstarter.hospital.controllers.store
             return Json(data);
         }
 
-        [HttpPost]
-        [Route("add")]
-        public JsonResult Post(CustomizeStoreChangeApiModel created)
-        {
-            var data = _storeService.CustomizeCreate(created, HospitalDepartment.Id, Profile.Id);
-            return Json(data);
-        }
-
-
-        [HttpGet]
-        [Route("changetype")]
-        public JsonResult GetCustomizeChangeTypeList()
-        {
-            var data = _storeService.GetCustomizeChangeTypeList();
-            return Json(data);
-        }
-
-
         [HttpGet]
         [Route("index")]
         public JsonResult GetIndexByGoods(int goodid)

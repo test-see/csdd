@@ -8,7 +8,7 @@ namespace irespository.store
     public interface IStoreRespository
     {
         PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query);
-        Store CreateOrUpdate(CustomizeStoreChangeApiModel created, int department, int userId);
+        int CreateOrUpdate(StoreChangeApiModel created, int departmentId, int userId);
         Store GetIndexByGoods(int department, int goods);
     
     }

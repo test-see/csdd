@@ -1,10 +1,13 @@
 ﻿using foundation.config;
 using foundation.ef5;
+using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
 using irespository.store;
 using irespository.store.profile.model;
+using irespository.store.record.model;
+using System;
 using System.Linq;
 
 namespace respository.store
@@ -56,6 +59,27 @@ namespace respository.store
                 }
             }
             return data;
+        }
+
+        public StoreRecord Create(StoreRecordCreateApiModel created, int userId)
+        {
+            var goods = _hospitalGoodsRespository.GetValue(created.HospitalGoodsId);
+            var record = new StoreRecord
+            {
+                BeforeQty = created.BeforeQty,
+                ChangeTypeId = created.ChangeTypeId,
+                CreateTime = DateTime.Now,
+                CreateUserId = userId,
+                HospitalDepartmentId = created.HospitalDepartmentId,
+                HospitalGoodsId = created.HospitalGoodsId,
+                Price = goods.Price,
+                ChangeQty = created.ChangeQty,
+            };
+
+            _context.StoreRecord.Add(record);
+            _context.SaveChanges();
+
+            return record;
         }
     }
 }

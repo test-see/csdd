@@ -8,7 +8,9 @@ using irespository.hospital.profile.model;
 using irespository.store;
 using irespository.store.model;
 using irespository.store.profile.model;
+using irespository.store.record.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.store
@@ -18,67 +20,65 @@ namespace respository.store
         private readonly DefaultDbContext _context;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
         private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
+        private readonly IStoreRecordRespository _storeRecordRespository;
         public StoreRespository(DefaultDbContext context,
             IHospitalGoodsRespository hospitalGoodsRespository,
-            IHospitalDepartmentRespository hospitalDepartmentRespository)
+            IHospitalDepartmentRespository hospitalDepartmentRespository,
+            IStoreRecordRespository storeRecordRespository)
         {
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _storeRecordRespository = storeRecordRespository;
         }
-        public Store CreateOrUpdate(CustomizeStoreChangeApiModel created, int department, int userId)
+        public int CreateOrUpdate(StoreChangeApiModel created, int departmentId, int userId)
         {
-            var store = GetIndexByGoods(department, created.HospitalGoodsId);
-            var goods = _context.HospitalGoods.Find(created.HospitalGoodsId);
-            var record = new StoreRecord
-            {
-                BeforeQty = store?.Qty ?? 0,
-                ChangeTypeId = created.ChangeTypeId,
-                CreateTime = DateTime.Now,
-                CreateUserId = userId,
-                HospitalDepartmentId = department,
-                HospitalGoodsId = created.HospitalGoodsId,
-                Price = goods.Price,
-                ChangeQty = created.ChangeQty,
-            };
             using (var tran = _context.Database.BeginTransaction())
             {
-                if (store == null) store = Create(created, department, userId);
-                else store = Update(store.Id, created, userId);
+                foreach (var pair in created.HospitalGoods)
+                {
+                    var beforeStore = GetIndexByGoods(departmentId, pair.Key);
+                    if (beforeStore == null) Create(pair, departmentId, userId);
+                    else Update(pair, userId);
 
-                _context.StoreRecord.Add(record);
-                _context.SaveChanges();
+                    _storeRecordRespository.Create(new StoreRecordCreateApiModel
+                    {
+                        BeforeQty = beforeStore?.Qty ?? 0,
+                        ChangeQty = pair.Value,
+                        ChangeTypeId = created.ChangeTypeId,
+                        HospitalDepartmentId = departmentId,
+                        HospitalGoodsId = pair.Key,
+                    }, userId);
+                }
                 tran.Commit();
             }
-            return store;
+            return created.HospitalGoods.Count;
         }
 
-        private Store Create(CustomizeStoreChangeApiModel created, int department, int userId)
+        private void Create(KeyValuePair<int,int> pair, int department, int userId)
         {
             var store = new Store
             {
                 CreateTime = DateTime.Now,
                 CreateUserId = userId,
                 HospitalDepartmentId = department,
-                HospitalGoodsId = created.HospitalGoodsId,
-                Qty = created.ChangeQty,
+                HospitalGoodsId = pair.Key,
+                Qty = pair.Value,
                 UpdateTime = DateTime.Now,
                 UpdateUserId = userId,
             };
             _context.Store.Add(store);
             _context.SaveChanges();
-            return store;
         }
 
-        private Store Update(int id, CustomizeStoreChangeApiModel created, int userId)
+        private void Update(KeyValuePair<int, int> pair, int userId)
         {
-            var store = _context.Store.Find(id);
-            store.Qty = created.ChangeQty + store.Qty;
+            var store = _context.Store.First(x => x.HospitalGoodsId == pair.Key);
+            store.Qty = +pair.Value;
             store.UpdateTime = DateTime.Now;
             store.UpdateUserId = userId;
             _context.Store.Update(store);
             _context.SaveChanges();
-            return store;
         }
 
         public Store GetIndexByGoods(int department, int goods)
