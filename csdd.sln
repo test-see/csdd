@@ -31,11 +31,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apitest", "src\apitest\apit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "unittest", "src\unittest\unittest.csproj", "{ECCFD92F-11E6-4D05-A646-FBFF6BB52680}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webstarter.hospital", "src\webstarter.hospital\webstarter.hospital.csproj", "{288EB704-885C-4B54-B98D-1FE62B7F4508}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webstarter.hospital", "src\webstarter.hospital\webstarter.hospital.csproj", "{288EB704-885C-4B54-B98D-1FE62B7F4508}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.api.hospital", "6.api.hospital", "{38DFF7F0-A9E0-46A4-9560-B340AA05E9B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apitest.hospital", "src\apitest.hospital\apitest.hospital.csproj", "{DCF8C6C9-55F9-4844-9D48-400F5929CCF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apitest.hospital", "src\apitest.hospital\apitest.hospital.csproj", "{DCF8C6C9-55F9-4844-9D48-400F5929CCF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.api.client", "7.api.client", "{7779F22E-2DA0-48BC-9482-B8486FF5763D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
