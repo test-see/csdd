@@ -6,7 +6,7 @@ using irespository.storeinout.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace apitest.StoreInout
+namespace apitest.storeinout
 {
     [TestClass]
     public class StoreInoutTest : BaseApiTest
