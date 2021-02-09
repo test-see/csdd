@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
+using irespository.hospital.profile.model;
 using irespository.store;
 using irespository.store.model;
 using irespository.store.profile.model;
@@ -32,20 +33,24 @@ namespace respository.store
         }
         public int CreateOrUpdate(StoreChangeApiModel created, int departmentId, int userId)
         {
-            foreach (var pair in created.HospitalGoods)
+            using (var tran = _context.Database.BeginTransaction())
             {
-                var beforeStore = GetIndexByGoods(departmentId, pair.Key);
-                if (beforeStore == null) Create(pair, departmentId, userId);
-                else Update(pair, userId);
-
-                _storeRecordRespository.Create(new StoreRecordCreateApiModel
+                foreach (var pair in created.HospitalGoods)
                 {
-                    BeforeQty = beforeStore?.Qty ?? 0,
-                    ChangeQty = pair.Value,
-                    ChangeTypeId = created.ChangeTypeId,
-                    HospitalDepartmentId = departmentId,
-                    HospitalGoodsId = pair.Key,
-                }, userId);
+                    var beforeStore = GetIndexByGoods(departmentId, pair.Key);
+                    if (beforeStore == null) Create(pair, departmentId, userId);
+                    else Update(pair, userId);
+
+                    _storeRecordRespository.Create(new StoreRecordCreateApiModel
+                    {
+                        BeforeQty = beforeStore?.Qty ?? 0,
+                        ChangeQty = pair.Value,
+                        ChangeTypeId = created.ChangeTypeId,
+                        HospitalDepartmentId = departmentId,
+                        HospitalGoodsId = pair.Key,
+                    }, userId);
+                }
+                tran.Commit();
             }
             return created.HospitalGoods.Count;
         }

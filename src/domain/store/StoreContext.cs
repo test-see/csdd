@@ -1,4 +1,5 @@
 ﻿using foundation.config;
+using foundation.ef5;
 using foundation.ef5.poco;
 using foundation.exception;
 using irespository.data;
@@ -15,11 +16,14 @@ namespace domain.store
         private readonly object balance = new object();
         private readonly IStoreRespository _storeRespository;
         private readonly IStoreChangeTypeRespository _storeChangeTypeRespository;
+        private readonly DefaultDbTransaction _defaultDbTransaction;
         public StoreContext(IStoreRespository storeRespository,
-            IStoreChangeTypeRespository storeChangeTypeRespository)
+            IStoreChangeTypeRespository storeChangeTypeRespository,
+            DefaultDbTransaction defaultDbTransaction)
         {
             _storeRespository = storeRespository;
             _storeChangeTypeRespository = storeChangeTypeRespository;
+            _defaultDbTransaction = defaultDbTransaction;
         }
 
         public PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query)
@@ -32,14 +36,18 @@ namespace domain.store
             var changetype = _storeChangeTypeRespository.GetIndex(created.ChangeTypeId);
             lock (balance)
             {
-                foreach (var item in created.HospitalGoods)
+                using (var trans = _defaultDbTransaction.Begin())
                 {
-                    var store = _storeRespository.GetIndexByGoods(department, item.Key);
-                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.Value;
-                    if (afterqty < 0)
-                        throw new DefaultException("库存不足!");
+                    foreach (var item in created.HospitalGoods)
+                    {
+                        var store = _storeRespository.GetIndexByGoods(department, item.Key);
+                        var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.Value;
+                        if (afterqty < 0)
+                            throw new DefaultException("库存不足!");
+                    }
+                    _storeRespository.CreateOrUpdate(created, department, userId);
+                    trans.Commit();
                 }
-                _storeRespository.CreateOrUpdate(created, department, userId);
             }
             return created.HospitalGoods.Count;
         }

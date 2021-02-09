@@ -59,6 +59,7 @@ namespace csdd
                 .AsSelfWithInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
+            services.AddSingleton<DefaultDbTransaction>();
 
             var config = new MapperConfiguration(cfg =>
             {
