@@ -8,8 +8,4 @@
     <ProjectReference Include="..\foundation\foundation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="store\inout\goods\" />
-  </ItemGroup>
-
 </Project>
