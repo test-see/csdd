@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="store\inout\goods\" />
-    <Folder Include="store\inout\profile\model\" />
   </ItemGroup>
 
 </Project>
