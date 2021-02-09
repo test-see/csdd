@@ -62,6 +62,7 @@ namespace apitest.hospital
                     IsActive = 1,
                     PinShou = "x",
                     Price = new decimal(1.11),
+                    Barcode = "1",
                 })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
