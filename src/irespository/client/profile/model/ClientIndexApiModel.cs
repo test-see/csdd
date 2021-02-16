@@ -1,4 +1,5 @@
-﻿using irespository.hospital.client.model;
+﻿using irespository.client.maping.model;
+using irespository.hospital.client.model;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +11,6 @@ namespace irespository.client.model
         public string Name { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
-        public IList<KeyValuePair<int, HospitalClientValueModel>> HospitalClients { get; set; }
+        public IList<ClientMappingListApiModel> HospitalClients { get; set; }
     }
 }

@@ -9,4 +9,8 @@
     <ProjectReference Include="..\irespository\irespository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="invoice\changetype\" />
+  </ItemGroup>
+
 </Project>

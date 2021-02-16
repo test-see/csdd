@@ -2,7 +2,9 @@
 using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.client;
+using irespository.client.maping.model;
 using irespository.client.model;
+using irespository.hospital;
 using irespository.hospital.client.model;
 using irespository.hospital.profile.model;
 using System;
@@ -14,9 +16,12 @@ namespace respository.client
     public class ClientRespository : IClientRespository
     {
         private readonly DefaultDbContext _context;
-        public ClientRespository(DefaultDbContext context)
+        private readonly IHospitalClientRespository _hospitalClientRespository;
+        public ClientRespository(DefaultDbContext context,
+            IHospitalClientRespository hospitalClientRespository)
         {
             _context = context;
+            _hospitalClientRespository = hospitalClientRespository;
         }
         public PagerResult<ClientListApiModel> GetPagerList(PagerQuery<ClientListQueryModel> query)
         {
@@ -70,8 +75,6 @@ namespace respository.client
             return client.Id;
         }
 
-
-
         public ClientIndexApiModel GetIndex(int id)
         {
             var client = (from r in _context.Client
@@ -88,24 +91,23 @@ namespace respository.client
                       join c in _context.HospitalClient on p.HospitalClientId equals c.Id
                       join h in _context.Hospital on c.HospitalId equals h.Id
                       where p.ClientId == id
-                      select new KeyValuePair<int, HospitalClientValueModel>(
+                      select new ClientMappingListApiModel
+                      {
 
-                          p.Id,
-                          new HospitalClientValueModel
+                          ClientMappingId = p.Id,
+                          HospitalClient = new HospitalClientValueModel
                           {
                               Id = c.Id,
-                              Name = c.Name,
-                              Hospital = new HospitalValueModel
-                              {
-                                  Id = h.Id,
-                                  Name = h.Name,
-                                  Remark = h.Remark,
-                              }
-                          });
+                          },
+                      };
             client.HospitalClients = sql.ToList();
+            foreach (var m in client.HospitalClients)
+            {
+                m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
+            }
+
             return client;
         }
-    
     
     }
 }

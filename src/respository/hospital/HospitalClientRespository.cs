@@ -79,5 +79,25 @@ namespace respository.hospital
             _context.SaveChanges();
             return goods.Id;
         }
+        public HospitalClientValueModel GetValue(int id)
+        {
+
+            var sql = from r in _context.HospitalClient
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join h in _context.Hospital on r.HospitalId equals h.Id
+                      where r.Id == id
+                      select new HospitalClientValueModel
+                      { 
+                          Id = r.Id,
+                          Name = r.Name,
+                          Hospital = new HospitalValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                              Remark = h.Remark,
+                          },   
+                      };
+            return sql.FirstOrDefault();
+        }
     }
 }
