@@ -73,5 +73,13 @@ namespace foundation.ef5
         public DbSet<CheckList> CheckList { get; set; }
         public DbSet<CheckListGoods> CheckListGoods { get; set; }
         #endregion
+
+        #region invoice
+        public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<InvoiceChangeType> InvoiceChangeType { get; set; }
+        public DbSet<InvoiceChangeTypeRecord> InvoiceChangeTypeRecord { get; set; }
+        public DbSet<InvoiceClient> InvoiceClient { get; set; }
+        public DbSet<InvoiceClientRecord> InvoiceClientRecord { get; set; }
+        #endregion
     }
 }
