@@ -34,8 +34,13 @@ namespace respository.invoice
                           Remark = r.Remark,
                           EndDate = r.EndDate,
                           StartDate = r.StartDate,
+                          Type = r.Type,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
+            if (query.Query?.Type != null)
+            {
+                sql = sql.Where(x => x.Type == (int)query.Query.Type.Value);
+            }
             var data = new PagerResult<InvoiceListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {

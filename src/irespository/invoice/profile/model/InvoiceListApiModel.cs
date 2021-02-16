@@ -7,6 +7,7 @@ namespace irespository.invoice.model
     {
         public int Id { get; set; }
         public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public int Type { get; set; }
         public string Name { get; set; }
         public string Remark { get; set; }
         public DateTime CreateTime { get; set; }
