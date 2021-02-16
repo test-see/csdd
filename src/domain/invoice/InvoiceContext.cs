@@ -18,9 +18,9 @@ namespace domain.invoice
         {
             return _InvoiceRespository.GetPagerList(query);
         }
-        public Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId)
+        public Invoice Create(InvoiceCreateApiModel created, InvoiceType type, int departmentId, int userId)
         {
-            return _InvoiceRespository.Create(created, departmentId, userId);
+            return _InvoiceRespository.Create(created, type, departmentId, userId);
         }
         public int Delete(int id)
         {

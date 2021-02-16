@@ -1,6 +1,7 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
 using irespository.invoice.model;
+using irespository.invoice.profile.enums;
 using iservice.invoice;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,10 +36,18 @@ namespace webstarter.hospital.controllers.invoice
 
 
         [HttpPost]
-        [Route("add")]
-        public JsonResult Post(InvoiceCreateApiModel created)
+        [Route("add/client")]
+        public JsonResult PostClient(InvoiceCreateApiModel created)
         {
-            var data = _InvoiceService.Create(created, HospitalDepartment.Id, Profile.Id);
+            var data = _InvoiceService.Create(created, InvoiceType.Client, HospitalDepartment.Id, Profile.Id);
+            return Json(data);
+        }
+
+        [HttpPost]
+        [Route("add/changetype")]
+        public JsonResult PostChangeType(InvoiceCreateApiModel created)
+        {
+            var data = _InvoiceService.Create(created, InvoiceType.ChangeType, HospitalDepartment.Id, Profile.Id);
             return Json(data);
         }
 

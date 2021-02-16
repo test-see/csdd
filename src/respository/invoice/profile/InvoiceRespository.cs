@@ -47,7 +47,7 @@ namespace respository.invoice
             return data;
         }
 
-        public Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId)
+        public Invoice Create(InvoiceCreateApiModel created, InvoiceType type, int departmentId, int userId)
         {
             var setting = new Invoice
             {
@@ -59,6 +59,7 @@ namespace respository.invoice
                 Status = 0,
                 EndDate = created.EndDate,
                 StartDate = created.StartDate,
+                Type = (int)type,
             };
 
             _context.Invoice.Add(setting);

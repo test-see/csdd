@@ -10,6 +10,8 @@ namespace foundation.ef5.poco
         public int Id { get; set; }
         [Column("hospital_department_id")]
         public int HospitalDepartmentId { get; set; }
+        [Column("type")]
+        public int Type { get; set; }
         [Column("name")]
         public string Name { get; set; }
         [Column("remark")]

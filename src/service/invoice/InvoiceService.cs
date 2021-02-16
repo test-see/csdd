@@ -2,6 +2,7 @@
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.invoice.model;
+using irespository.invoice.profile.enums;
 using iservice.invoice;
 
 namespace service.invoice
@@ -17,9 +18,9 @@ namespace service.invoice
         {
             return _InvoiceContext.GetPagerList(query);
         }
-        public Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId)
+        public Invoice Create(InvoiceCreateApiModel created, InvoiceType type, int departmentId, int userId)
         {
-            return _InvoiceContext.Create(created, departmentId, userId);
+            return _InvoiceContext.Create(created, type, departmentId, userId);
         }
 
         public int Delete(int id)

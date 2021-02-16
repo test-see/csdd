@@ -3,6 +3,7 @@ using Flurl;
 using Flurl.Http;
 using foundation.config;
 using irespository.invoice.model;
+using irespository.invoice.profile.enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
@@ -24,10 +25,31 @@ namespace apitest.Invoice
             Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
-        public async Task Invoice_AddAndDelete_ReturnIntAsync()
+        public async Task Invoice_ChangeType_AddAndDelete_ReturnIntAsync()
         {
             var hospital = await _rootpath
-                .AppendPathSegment("/api/Invoice/add")
+                .AppendPathSegment("/api/Invoice/add/changetype")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new InvoiceCreateApiModel
+                {
+                    Name = "1",
+                    Remark = "2",
+                    EndDate = DateTime.Now,
+                    StartDate = DateTime.Now,
+                })
+                .ReceiveJson<OkMessage<foundation.ef5.poco.Invoice>>();
+            var message = await _rootpath
+                .AppendPathSegment($"/api/Invoice/{hospital.Data.Id}/delete")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data > 0);
+        }
+        [TestMethod]
+        public async Task Invoice_Client_AddAndDelete_ReturnIntAsync()
+        {
+            var hospital = await _rootpath
+                .AppendPathSegment("/api/Invoice/add/client")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new InvoiceCreateApiModel
                 {
