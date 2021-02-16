@@ -11,5 +11,7 @@ namespace irespository.invoice.model
         public string Remark { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
