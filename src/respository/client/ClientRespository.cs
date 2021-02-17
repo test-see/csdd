@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.maping.model;
 using irespository.client.model;
+using irespository.client.profile.model;
 using irespository.hospital;
 using irespository.hospital.client.model;
 using irespository.hospital.profile.model;
@@ -79,6 +80,7 @@ namespace respository.client
         {
             var client = (from r in _context.Client
                           join u in _context.User on r.CreateUserId equals u.Id
+                          where r.Id == id
                           select new ClientIndexApiModel
                           {
                               CreateTime = r.CreateTime,
@@ -108,6 +110,21 @@ namespace respository.client
 
             return client;
         }
-    
+
+        public ClientValueModel GetValue(int id)
+        {
+            var client = (from r in _context.Client
+                          join u in _context.User on r.CreateUserId equals u.Id
+                          where r.Id == id
+                          select new ClientValueModel
+                          {
+                              Id = r.Id,
+                              Name = r.Name,
+                          }).First();
+
+            return client;
+        }
+
+
     }
 }
