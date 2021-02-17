@@ -5,16 +5,16 @@ namespace csdd.Controllers.Shared
 {
     public class ProfileController : DefaultControllerBase
     {
-        private readonly IUserHospitalService _userHospitalService;
-        public ProfileController(IUserHospitalService userHospitalService)
+        private readonly IUserClientService _userClientService;
+        public ProfileController(IUserClientService userClientService)
         {
-            _userHospitalService = userHospitalService;
+            _userClientService = userClientService;
         }
         [HttpGet]
         [Route("index")]
         public JsonResult GetProfile()
         {
-            var data = _userHospitalService.GetIndexByUserId(Profile.Id);
+            var data = _userClientService.GetIndexByUserId(Profile.Id);
             return Json(data);
         }
     }

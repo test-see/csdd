@@ -11,11 +11,14 @@ namespace service.user
     {
         private readonly TokenContext _tokenContext;
         private readonly UserHospitalContext _userHospitalContext;
+        private readonly UserClientContext _userClientContext;
         public TokenService(TokenContext tokenContext,
-            UserHospitalContext userHospitalContext)
+            UserHospitalContext userHospitalContext,
+            UserClientContext userClientContext)
         {
             _tokenContext = tokenContext;
             _userHospitalContext = userHospitalContext;
+            _userClientContext = userClientContext;
         }
         public async Task<string> GenerateVerificationCodeAsync(string phone)
         {
@@ -40,5 +43,20 @@ namespace service.user
                 Name = extend.Name,
             };
         }
+
+        public LoginClientValueModel LoginByClient(LoginApiModel login)
+        {
+            var user = _tokenContext.Login(login);
+            var extend = _userClientContext.GetIndexByUserId(user.Id);
+            return new LoginClientValueModel
+            {
+                AuthorizeRoleId = user.AuthorizeRoleId,
+                Client = extend.Client,
+                Id = user.Id,
+                User = extend.User,
+                Name = extend.Name,
+            };
+        }
+
     }
 }
