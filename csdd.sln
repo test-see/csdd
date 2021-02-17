@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apitest.hospital", "src\api
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.api.client", "7.api.client", "{7779F22E-2DA0-48BC-9482-B8486FF5763D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webstarter.client", "src\webstarter.client\webstarter.client.csproj", "{EE3681EF-AE79-4599-A4D9-E364784FDE3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{DCF8C6C9-55F9-4844-9D48-400F5929CCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCF8C6C9-55F9-4844-9D48-400F5929CCF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCF8C6C9-55F9-4844-9D48-400F5929CCF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE3681EF-AE79-4599-A4D9-E364784FDE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE3681EF-AE79-4599-A4D9-E364784FDE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE3681EF-AE79-4599-A4D9-E364784FDE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE3681EF-AE79-4599-A4D9-E364784FDE3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +111,7 @@ Global
 		{ECCFD92F-11E6-4D05-A646-FBFF6BB52680} = {04C28EDC-6EF4-4AAA-8D92-AF797EE53A6A}
 		{288EB704-885C-4B54-B98D-1FE62B7F4508} = {38DFF7F0-A9E0-46A4-9560-B340AA05E9B2}
 		{DCF8C6C9-55F9-4844-9D48-400F5929CCF4} = {38DFF7F0-A9E0-46A4-9560-B340AA05E9B2}
+		{EE3681EF-AE79-4599-A4D9-E364784FDE3F} = {7779F22E-2DA0-48BC-9482-B8486FF5763D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6653060-E55E-44F1-8F66-F383F05E792D}
