@@ -1,7 +1,9 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using irespository.client;
 using irespository.hospital;
+using irespository.hospital.client.model;
 using irespository.hospital.goods.model;
 using irespository.purchase;
 using irespository.purchase.model;
@@ -14,33 +16,43 @@ namespace respository.purchase
     {
         private readonly DefaultDbContext _context;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
+        private readonly IHospitalClientRespository _hospitalClientRespository;
+        private readonly IClientRespository _clientRespository;
         public PurchaseGoodsRespository(DefaultDbContext context,
-            IHospitalGoodsRespository hospitalGoodsRespository)
+            IHospitalGoodsRespository hospitalGoodsRespository,
+            IHospitalClientRespository hospitalClientRespository,
+            IClientRespository clientRespository)
         {
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
+            _hospitalClientRespository = hospitalClientRespository;
+            _clientRespository = clientRespository;
         }
+
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
             var sql = from r in _context.PurchaseGoods
-                      join t in _context.HospitalClient on r.HospitalClientId equals t.Id
                       select new PurchaseGoodsListApiModel
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
-                          HospitalGoods = new HospitalGoodsValueModel
-                          {
-                              Id = r.HospitalGoodsId,
-                          },
-                          HospitalClient = new IdNameValueModel { Id = t.Id, Name = t.Name, },
+                          HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
+                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
+            if (query.Query?.ClientId != null)
+            {
+                var client = _clientRespository.GetIndex(query.Query.ClientId.Value);
+                sql = sql.Where(x => client.HospitalClients.Any(t => t.HospitalClient.Id == x.HospitalClient.Id));
+            }
+
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
                 }
             }
             return data;

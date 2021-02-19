@@ -2,5 +2,6 @@
 {
     public class PurchaseGoodsListQueryModel
     {
+        public int? ClientId { get; set; }
     }
 }
