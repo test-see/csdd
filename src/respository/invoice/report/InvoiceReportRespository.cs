@@ -47,34 +47,26 @@ namespace respository.invoice
 
         }
 
-        public PagerResult<InvoiceReportListApiModel> GetPagerList(PagerQuery<int> query)
+        public PagerResult<InvoiceReportListApiModel> GetPagerList(PagerQuery<InvoiceReportQueryApiModel> query)
         {
             var sql = from r in _context.InvoiceReport
-                      where r.InvoiceId == query.Query
+                      where r.InvoiceId == query.Query.InvoiceId
                       select new InvoiceReportListApiModel
                       {
                           Id = r.Id,
                           Amount = r.Amount,
-                          //HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId, }
                       };
             var data = new PagerResult<InvoiceReportListApiModel>(query.Index, query.Size, sql);
-            if (data.Total > 0)
-            {
-                foreach (var m in data.Result)
-                {
-                   // m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
-                }
-            }
             return data;
         }
 
-        public PagerResult<StoreRecordListApiModel> GetPagerRecordList(PagerQuery<int> query)
+        public PagerResult<StoreRecordListApiModel> GetPagerRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
         {
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
                       join rts in _context.InvoiceReportRecord on r.Id equals rts.StoreRecordId
-                      where rts.InvoiceReportId == query.Query
+                      where rts.InvoiceReportId == query.Query.InvoiceReportId
                       select new StoreRecordListApiModel
                       {
                           Id = r.Id,

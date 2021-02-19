@@ -29,7 +29,6 @@ namespace foundation.ef5
         public DbSet<DataDepartmentType> DataDepartmentType { get; set; }
         public DbSet<DataPurchaseThresholdType> DataPurchaseThresholdType { get; set; }
         public DbSet<DataStoreChangeType> DataStoreChangeType { get; set; }
-        public DbSet<DataPrescriptionStatus> DataPrescriptionStatus { get; set; }
         #endregion
 
         #region sys

@@ -6,8 +6,8 @@ namespace irespository.invoice
 {
     public interface IInvoiceReportRespository
     {
-        PagerResult<InvoiceReportListApiModel> GetPagerList(PagerQuery<int> query);
-        PagerResult<StoreRecordListApiModel> GetPagerRecordList(PagerQuery<int> query);
+        PagerResult<InvoiceReportListApiModel> GetPagerList(PagerQuery<InvoiceReportQueryApiModel> query);
+        PagerResult<StoreRecordListApiModel> GetPagerRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query);
         int Generate(int invoiceId);
     }
 }
