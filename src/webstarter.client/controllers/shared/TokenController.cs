@@ -23,6 +23,7 @@ namespace csdd.Controllers.Shared
             _userService = userService;
             _appConfig = appConfig;
         }
+
         [HttpPost]
         [AllowAnonymous]
         public JsonResult Post(LoginApiModel login)
