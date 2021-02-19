@@ -13,7 +13,6 @@ namespace respository.hospital
     public class HospitalClientRespository : IHospitalClientRespository
     {
         private readonly DefaultDbContext _context;
-        //private readonly IClientRespository clientRespository;
         public HospitalClientRespository(DefaultDbContext context)
         {
             _context = context;
