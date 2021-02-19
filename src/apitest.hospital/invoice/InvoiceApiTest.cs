@@ -40,7 +40,7 @@ namespace apitest.Invoice
                     Remark = "2",
                     EndDate = DateTime.Now,
                     StartDate = DateTime.Now,
-                     InvoiceTypeId = 1,
+                    InvoiceTypeId = 1,
                 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Invoice>>();
             var message = await _rootpath
@@ -99,7 +99,7 @@ namespace apitest.Invoice
             var message = await _rootpath
                 .AppendPathSegment("/api/Invoice/list/report")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<InvoiceReportQueryApiModel> { })
+                .PostJsonAsync(new PagerQuery<InvoiceReportQueryApiModel> { Query = new InvoiceReportQueryApiModel { InvoiceId = 1 } })
                 .ReceiveJson<OkMessage<PagerResult<InvoiceReportListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
@@ -110,7 +110,7 @@ namespace apitest.Invoice
             var message = await _rootpath
                 .AppendPathSegment("/api/Invoice/list/record")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<InvoiceReportRecordQueryApiModel> { })
+                .PostJsonAsync(new PagerQuery<InvoiceReportRecordQueryApiModel> { Query = new InvoiceReportRecordQueryApiModel { InvoiceReportId = 1 } })
                 .ReceiveJson<OkMessage<PagerResult<StoreRecordListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
