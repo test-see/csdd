@@ -5,6 +5,7 @@ using irespository.invoice.model;
 using irespository.invoice.profile.enums;
 using irespository.store.profile.model;
 using iservice.invoice;
+using System.Collections.Generic;
 
 namespace service.invoice
 {
@@ -58,6 +59,10 @@ namespace service.invoice
         public PagerResult<StoreRecordListApiModel> GetPagerStoreRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
         {
             return _InvoiceContext.GetPagerStoreRecordList(query);
+        }
+        public IEnumerable<DataInvoiceType> GetInvoiceTypeList()
+        {
+            return _InvoiceContext.GetInvoiceTypeList();
         }
     }
 }

@@ -92,5 +92,12 @@ namespace webstarter.hospital.controllers.invoice
             return Json(data);
         }
 
+        [HttpGet]
+        [Route("type")]
+        public JsonResult GetInvoiceTypeList()
+        {
+            var data = _InvoiceService.GetInvoiceTypeList();
+            return Json(data);
+        }
     }
 }

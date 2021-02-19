@@ -3,6 +3,7 @@ using foundation.ef5.poco;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
 using irespository.store.profile.model;
+using System.Collections.Generic;
 
 namespace iservice.invoice
 {
@@ -17,5 +18,6 @@ namespace iservice.invoice
         int Generate(int invoiceId);
         PagerResult<InvoiceReportListApiModel> GetPagerReportList(PagerQuery<InvoiceReportQueryApiModel> query);
         PagerResult<StoreRecordListApiModel> GetPagerStoreRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query);
+        IEnumerable<DataInvoiceType> GetInvoiceTypeList();
     }
 }

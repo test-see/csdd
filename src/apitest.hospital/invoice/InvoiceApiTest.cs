@@ -2,11 +2,14 @@
 using Flurl;
 using Flurl.Http;
 using foundation.config;
+using foundation.ef5.poco;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
 using irespository.store.profile.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace apitest.Invoice
@@ -111,6 +114,18 @@ namespace apitest.Invoice
                 .ReceiveJson<OkMessage<PagerResult<StoreRecordListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
+        }
+
+
+        [TestMethod]
+        public async Task User_InvoiceType_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Invoice/type")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<IEnumerable<DataInvoiceType>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Any());
         }
     }
 }

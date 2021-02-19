@@ -1,9 +1,11 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
+using irespository.data;
 using irespository.invoice;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
 using irespository.store.profile.model;
+using System.Collections.Generic;
 
 namespace domain.invoice
 {
@@ -11,11 +13,14 @@ namespace domain.invoice
     {
         private readonly IInvoiceRespository _InvoiceRespository;
         private readonly IInvoiceReportRespository _invoiceReportRespository;
+        private readonly IInvoiceTypeRespository _invoiceTypeRespository;
         public InvoiceContext(IInvoiceRespository InvoiceRespository,
-            IInvoiceReportRespository invoiceReportRespository)
+            IInvoiceReportRespository invoiceReportRespository,
+            IInvoiceTypeRespository invoiceTypeRespository)
         {
             _InvoiceRespository = InvoiceRespository;
             _invoiceReportRespository = invoiceReportRespository;
+            _invoiceTypeRespository = invoiceTypeRespository;
         }
 
         public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query)
@@ -59,5 +64,9 @@ namespace domain.invoice
             return _invoiceReportRespository.GetPagerRecordList(query);
         }
 
+        public IEnumerable<DataInvoiceType> GetInvoiceTypeList()
+        {
+            return _invoiceTypeRespository.GetList();
+        }
     }
 }
