@@ -7,5 +7,6 @@ namespace irespository.client.maping
     {
         int Delete(int id);
         ClientMappingGoods Create(ClientMappingGoodsCreateApiModel created, int userId);
+        ClientMappingGoodsIndexApiModel GetIndexByHospitalGoodsId(int hospitalGoodsId);
     }
 }

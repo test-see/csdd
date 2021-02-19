@@ -22,7 +22,7 @@ namespace webstarter.hospital.controllers.purchase
         {
             query.Query = query.Query ?? new PurchaseGoodsListQueryModel { };
             query.Query.ClientId = Client.Id;
-            var data = _PurchaseGoodsService.GetPagerList(query);
+            var data = _PurchaseGoodsService.GetPagerMappingList(query);
             return Json(data);
         }
 

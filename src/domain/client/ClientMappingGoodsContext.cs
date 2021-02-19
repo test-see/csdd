@@ -20,5 +20,10 @@ namespace domain.client
         {
             return _clientMappingGoodsRespository.Delete(id);
         }
+
+        public ClientMappingGoodsIndexApiModel GetIndexByHospitalGoodsId(int hospitalGoodsId)
+        {
+            return _clientMappingGoodsRespository.GetIndexByHospitalGoodsId(hospitalGoodsId);
+        }
     }
 }

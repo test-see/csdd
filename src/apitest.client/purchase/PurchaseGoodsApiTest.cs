@@ -1,4 +1,5 @@
 ﻿using apitest.shared;
+using domain.purchase.valuemodel;
 using Flurl;
 using Flurl.Http;
 using foundation.config;
@@ -18,7 +19,7 @@ namespace apitest.purchase
                 .AppendPathSegment("/api/PurchaseGoods/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<PurchaseGoodsListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<PurchaseGoodsListApiModel>>>();
+                .ReceiveJson<OkMessage<PagerResult<PurchaseGoodsMappingListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }

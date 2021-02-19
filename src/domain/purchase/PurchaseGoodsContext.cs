@@ -1,22 +1,46 @@
-﻿using foundation.config;
+﻿using domain.client;
+using domain.purchase.valuemodel;
+using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.model;
+using System.Linq;
 
 namespace domain.purchase
 {
     public class PurchaseGoodsContext
     {
         private readonly IPurchaseGoodsRespository _PurchaseGoodsRespository;
-        public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy)
+        private readonly ClientMappingGoodsContext _clientMappingGoodsContext;
+        public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy,
+            ClientMappingGoodsContext clientMappingGoodsContext)
         {
             _PurchaseGoodsRespository = purchaseGoodsRespositoryy;
+            _clientMappingGoodsContext = clientMappingGoodsContext;
         }
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
             return _PurchaseGoodsRespository.GetPagerList(query);
         }
+
+        public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query)
+        {
+            var data = GetPagerList(query);
+            var result = data.Result.Select(x => new PurchaseGoodsMappingListApiModel
+            {
+                PurchaseGoods = x,
+                ClientMappingGoods = _clientMappingGoodsContext.GetIndexByHospitalGoodsId(x.HospitalGoods.Id),
+            });
+            return new PagerResult<PurchaseGoodsMappingListApiModel>
+            {
+                Index = data.Index,
+                Size = data.Size,
+                Total = data.Total,
+                Result = result
+            };
+        }
+
         public PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId)
         {
             return _PurchaseGoodsRespository.Create(created, userId);

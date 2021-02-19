@@ -15,6 +15,6 @@ namespace irespository.client.goods.model
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
         public int IsActive { get; set; }
-        public IList<KeyValuePair<int, ClientMappingGoodsListApiModel>> Mappings { get; set; }
+        public IList<ClientMappingGoodsListApiModel> Mappings { get; set; }
     }
 }

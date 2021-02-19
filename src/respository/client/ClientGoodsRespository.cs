@@ -123,23 +123,49 @@ namespace respository.client
             if (profile != null)
             {
                 var mappings = (from m in _context.ClientMappingGoods
-                                select new KeyValuePair<int, ClientMappingGoodsListApiModel>(m.Id, new ClientMappingGoodsListApiModel
+                                select new ClientMappingGoodsListApiModel
                                 {
-
+                                    Id = m.Id,
                                     ClientQty = m.ClientQty,
                                     HospitalQty = m.HospitalQty,
                                     HospitalGoods = new HospitalGoodsValueModel
                                     {
                                         Id = m.HospitalGoodsId,
                                     }
-                                })).ToList();
+                                }).ToList();
                 foreach (var m in mappings)
                 {
-                    m.Value.HospitalGoods = _hospitalGoodsRespository.GetValue(m.Value.HospitalGoods.Id);
+                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
                 }
                 profile.Mappings = mappings;
             }
             return profile;
         }
+
+        public ClientGoodsValueModel GetValue(int id)
+        {
+            var sql = from r in _context.ClientGoods
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join h in _context.Client on r.ClientId equals h.Id
+                      where r.Id == id
+                      select new ClientGoodsValueModel
+                      {
+                          Id = r.Id,
+                          Name = r.Name,
+                          Client = new ClientValueModel
+                          {
+                              Id = h.Id,
+                              Name = h.Name,
+                          },
+                          Producer = r.Producer,
+                          Spec = r.Spec,
+                          Unit = r.Unit,
+
+                      };
+
+            var profile = sql.FirstOrDefault();
+            return profile;
+        }
+
     }
 }

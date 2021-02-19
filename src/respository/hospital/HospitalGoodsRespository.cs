@@ -175,6 +175,7 @@ namespace respository.hospital
             return sql.FirstOrDefault();
         }
 
+
         public HospitalGoodsValueModel GetValueByBarcode(string barcode)
         {
             var sql = from r in _context.HospitalGoods
