@@ -5,7 +5,9 @@ using irespository.hospital;
 using irespository.hospital.goods.model;
 using irespository.purchase;
 using irespository.purchase.model;
+using irespository.purchase.profile.enums;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.purchase
@@ -63,6 +65,7 @@ namespace respository.purchase
                 Enddate = created.Enddate,
                 CreateUserId = userId,
                 PurchaseGoodsId = created.PurchaseGoodsId,
+                Status = (int)BillStatus.Pendding,
             };
 
             _context.PurchaseGoodsBillno.Add(setting);
@@ -89,6 +92,20 @@ namespace respository.purchase
             _context.PurchaseGoodsBillno.Update(setting);
             _context.SaveChanges();
             return setting.Id;
+        }
+
+
+        public int UpdateStatus(IList<int> ids, BillStatus status)
+        {
+            foreach (var id in ids)
+            {
+                var setting = _context.PurchaseGoodsBillno.First(x => x.Id == id);
+                setting.Status = (int)status;
+
+                _context.PurchaseGoodsBillno.Update(setting);
+                _context.SaveChanges();
+            }
+            return ids.Count;
         }
     }
 }

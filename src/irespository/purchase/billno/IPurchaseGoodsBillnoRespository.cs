@@ -1,6 +1,8 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
+using irespository.purchase.profile.enums;
+using System.Collections.Generic;
 
 namespace irespository.purchase
 {
@@ -10,5 +12,6 @@ namespace irespository.purchase
         PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseGoodsBillnoUpdateApiModel updated);
+        int UpdateStatus(IList<int> ids, BillStatus status);
     }
 }

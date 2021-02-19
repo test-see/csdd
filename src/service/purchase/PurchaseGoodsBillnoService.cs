@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
 using iservice.purchase;
+using System.Collections.Generic;
 
 namespace service.purchase
 {
@@ -31,6 +32,11 @@ namespace service.purchase
         public int Update(int id, PurchaseGoodsBillnoUpdateApiModel updated)
         {
             return _PurchaseGoodsBillnoContext.Update(id, updated);
+        }
+
+        public int Comfirm(IList<int> ids)
+        {
+            return _PurchaseGoodsBillnoContext.Comfirm(ids);
         }
     }
 }

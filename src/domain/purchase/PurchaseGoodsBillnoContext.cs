@@ -2,6 +2,8 @@
 using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.model;
+using irespository.purchase.profile.enums;
+using System.Collections.Generic;
 
 namespace domain.purchase
 {
@@ -30,6 +32,11 @@ namespace domain.purchase
         public int Update(int id, PurchaseGoodsBillnoUpdateApiModel updated)
         {
             return _PurchaseGoodsBillnoRespository.Update(id, updated);
+        }
+
+        public int Comfirm(IList<int> ids)
+        {
+            return _PurchaseGoodsBillnoRespository.UpdateStatus(ids, BillStatus.Comfirmed);
         }
     }
 }
