@@ -99,5 +99,15 @@ namespace apitest.Invoice
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }
+
+        [TestMethod]
+        public async Task Invoice_Generate_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Invoice/1/generate")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+        }
     }
 }
