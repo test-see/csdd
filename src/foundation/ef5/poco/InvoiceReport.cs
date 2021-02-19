@@ -7,6 +7,8 @@ namespace foundation.ef5.poco
     {
         [Column("id")]
         public int Id { get; set; }
+        [Column("name")]
+        public string Name { get; set; }
         [Column("invoice_id")]
         public int InvoiceId { get; set; }
         [Column("invoice_type_id")]
