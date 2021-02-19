@@ -94,6 +94,10 @@ namespace respository.purchase
             return setting.Id;
         }
 
+        public PurchaseGoodsBillno Get(int id)
+        {
+            return _context.PurchaseGoodsBillno.FirstOrDefault(x=>x.Id == id);
+        }
 
         public int UpdateStatus(int id, BillStatus status)
         {

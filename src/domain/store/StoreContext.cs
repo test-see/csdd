@@ -45,13 +45,30 @@ namespace domain.store
                         if (afterqty < 0)
                             throw new DefaultException("库存不足!");
                     }
-                    _storeRespository.CreateOrUpdate(created, department, userId);
+                    _storeRespository.BatchCreateOrUpdate(created, department, userId);
                     trans.Commit();
                 }
             }
             return created.HospitalGoods.Count;
         }
 
+        public int CreateOrUpdate(StoreChangeApiModel created, int department, int userId)
+        {
+            var changetype = _storeChangeTypeRespository.GetIndex(created.ChangeTypeId);
+            lock (balance)
+            {
+                using (var trans = _defaultDbTransaction.Begin())
+                {
+                    var store = _storeRespository.GetIndexByGoods(department, created.HospitalGoodId);
+                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.Qty;
+                    if (afterqty < 0)
+                        throw new DefaultException("库存不足!");
+                    _storeRespository.CreateOrUpdate(created, department, userId);
+                    trans.Commit();
+                }
+            }
+            return created.Qty;
+        }
 
         public Store GetIndexByGoods(int department, int goods)
         {

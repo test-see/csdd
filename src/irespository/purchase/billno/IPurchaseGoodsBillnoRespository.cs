@@ -13,5 +13,6 @@ namespace irespository.purchase
         int Delete(int id);
         int Update(int id, PurchaseGoodsBillnoUpdateApiModel updated);
         int UpdateStatus(int id, BillStatus status);
+        PurchaseGoodsBillno Get(int id);
     }
 }

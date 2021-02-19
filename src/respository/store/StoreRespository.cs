@@ -31,7 +31,28 @@ namespace respository.store
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
             _storeRecordRespository = storeRecordRespository;
         }
-        public int CreateOrUpdate(BatchStoreChangeApiModel created, int departmentId, int userId)
+        public int CreateOrUpdate(StoreChangeApiModel created, int departmentId, int userId)
+        {
+            using (var tran = _context.Database.BeginTransaction())
+            {
+                var beforeStore = GetIndexByGoods(departmentId, created.HospitalGoodId);
+                if (beforeStore == null) Create(created.HospitalGoodId, created.Qty, departmentId, userId);
+                else Update(created.HospitalGoodId, created.Qty, userId);
+
+                _storeRecordRespository.Create(new StoreRecordCreateApiModel
+                {
+                    BeforeQty = beforeStore?.Qty ?? 0,
+                    ChangeQty = created.Qty,
+                    ChangeTypeId = created.ChangeTypeId,
+                    HospitalDepartmentId = departmentId,
+                    HospitalGoodsId = created.HospitalGoodId,
+                }, userId);
+                tran.Commit();
+            }
+            return created.Qty;
+        }
+
+        public int BatchCreateOrUpdate(BatchStoreChangeApiModel created, int departmentId, int userId)
         {
             using (var tran = _context.Database.BeginTransaction())
             {
@@ -55,15 +76,15 @@ namespace respository.store
             return created.HospitalGoods.Count;
         }
 
-        private void Create(KeyValuePair<int,int> pair, int department, int userId)
+        private void Create(int hospitalGoodId, int changeQty, int department, int userId)
         {
             var store = new Store
             {
                 CreateTime = DateTime.Now,
                 CreateUserId = userId,
                 HospitalDepartmentId = department,
-                HospitalGoodsId = pair.Key,
-                Qty = pair.Value,
+                HospitalGoodsId = hospitalGoodId,
+                Qty = changeQty,
                 UpdateTime = DateTime.Now,
                 UpdateUserId = userId,
             };
@@ -71,10 +92,10 @@ namespace respository.store
             _context.SaveChanges();
         }
 
-        private void Update(KeyValuePair<int, int> pair, int userId)
+        private void Update(int hospitalGoodId, int changeQty, int userId)
         {
-            var store = _context.Store.First(x => x.HospitalGoodsId == pair.Key);
-            store.Qty = +pair.Value;
+            var store = _context.Store.First(x => x.HospitalGoodsId == hospitalGoodId);
+            store.Qty = +changeQty;
             store.UpdateTime = DateTime.Now;
             store.UpdateUserId = userId;
             _context.Store.Update(store);

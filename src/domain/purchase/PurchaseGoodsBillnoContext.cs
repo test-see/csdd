@@ -1,4 +1,5 @@
 ﻿using domain.store;
+using domain.store.enums;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase;
@@ -43,10 +44,11 @@ namespace domain.purchase
         {
             foreach (var id in ids)
             {
-                _storeContext.BatchCreateOrUpdate(new BatchStoreChangeApiModel
+                var goods = _PurchaseGoodsBillnoRespository.Get(id);
+                _storeContext.CreateOrUpdate(new StoreChangeApiModel
                 {
-                    ChangeTypeId = (int)2,
-                    HospitalGoods = new List<KeyValuePair<int, int>> { },
+                    ChangeTypeId = (int)StoreChangeType.Purchase,
+                    //HospitalGoodId = goods.
                 }, 1, 1);
                 _PurchaseGoodsBillnoRespository.UpdateStatus(id, BillStatus.Comfirmed);
             }
