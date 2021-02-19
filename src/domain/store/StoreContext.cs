@@ -31,7 +31,7 @@ namespace domain.store
             return _storeRespository.GetPagerList(query);
         }
 
-        public int BatchCreateOrUpdate(BatchStoreChangeApiModel created, int department, int userId)
+        public bool BatchCreateOrUpdate(BatchStoreChangeApiModel created, int department, int userId)
         {
             lock (balance)
             {
@@ -49,10 +49,10 @@ namespace domain.store
                     trans.Commit();
                 }
             }
-            return created.HospitalChangeGoods.Count;
+            return true;
         }
 
-        public int CreateOrUpdate(StoreChangeApiModel created, int department, int userId)
+        public bool CreateOrUpdate(StoreChangeApiModel created, int department, int userId)
         {
             var changetype = _storeChangeTypeRespository.GetIndex(created.ChangeTypeId);
             lock (balance)
@@ -63,9 +63,9 @@ namespace domain.store
                     var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.HospitalChangeGoods.Qty;
                     if (afterqty < 0)
                         throw new DefaultException("库存不足!");
-                    var id = _storeRespository.CreateOrUpdate(created.HospitalChangeGoods, created.ChangeTypeId, department, userId);
+                    _storeRespository.CreateOrUpdate(created.HospitalChangeGoods, created.ChangeTypeId, department, userId);
                     trans.Commit();
-                    return id;
+                    return true;
                 }
             }
         }

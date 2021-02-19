@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.storeinout;
 using irespository.storeinout.model;
+using System.Collections.Generic;
 
 namespace domain.storeinout
 {
@@ -16,6 +17,10 @@ namespace domain.storeinout
         public PagerResult<StoreInoutGoodsListApiModel> GetPagerList(PagerQuery<StoreInoutGoodsListQueryModel> query)
         {
             return _StoreInoutGoodsRespository.GetPagerList(query);
+        }
+        public IList<StoreInoutGoodsListApiModel> GetListByStoreInout(int storeInoutId)
+        {
+            return _StoreInoutGoodsRespository.GetListByStoreInout(storeInoutId);
         }
         public StoreInoutGoods Create(StoreInoutGoodsCreateApiModel created, int userId)
         {

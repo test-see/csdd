@@ -6,6 +6,7 @@ using irespository.hospital.goods.model;
 using irespository.storeinout;
 using irespository.storeinout.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.store
@@ -40,6 +41,26 @@ namespace respository.store
                 {
                     m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
                 }
+            }
+            return data;
+        }
+        public IList<StoreInoutGoodsListApiModel> GetListByStoreInout(int storeInoutId)
+        {
+            var sql = from r in _context.StoreInoutGoods
+                      select new StoreInoutGoodsListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Qty = r.Qty,
+                          HospitalGoods = new HospitalGoodsValueModel
+                          {
+                              Id = r.HospitalGoodsId,
+                          },
+                      };
+            var data = sql.ToList();
+            foreach (var m in data)
+            {
+                m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
             }
             return data;
         }

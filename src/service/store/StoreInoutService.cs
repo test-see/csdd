@@ -31,5 +31,10 @@ namespace service.store
         {
             return _StoreInoutContext.Update(id, updated);
         }
+
+        public int Submit(int id, int userId)
+        {
+            return _StoreInoutContext.Submit(id, userId);
+        }
     }
 }

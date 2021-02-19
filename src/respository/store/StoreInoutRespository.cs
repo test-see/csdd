@@ -86,6 +86,10 @@ namespace respository.store
             return setting.Id;
         }
 
+        public StoreInout Get(int id)
+        {
+            return _context.StoreInout.FirstOrDefault(x => x.Id == id);
+        }
 
         public int UpdateStatus(int id, StoreInoutStatus status)
         {

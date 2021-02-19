@@ -50,6 +50,13 @@ namespace webstarter.hospital.controllers.StoreInout
             return Json(data);
         }
 
+        [HttpGet]
+        [Route("{id}/submit")]
+        public JsonResult Submit(int id)
+        {
+            var data = _storeInoutService.Submit(id, Profile.Id);
+            return Json(data);
+        }
 
     }
 }

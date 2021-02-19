@@ -12,5 +12,6 @@ namespace irespository.storeinout
         int Delete(int id);
         int Update(int id, StoreInoutUpdateApiModel updated);
         int UpdateStatus(int id, StoreInoutStatus status);
+        StoreInout Get(int id);
     }
 }
