@@ -1,4 +1,5 @@
-﻿using irespository.hospital.department.model;
+﻿using foundation.ef5.poco;
+using irespository.hospital.department.model;
 using System;
 
 namespace irespository.invoice.model
@@ -7,7 +8,7 @@ namespace irespository.invoice.model
     {
         public int Id { get; set; }
         public HospitalDepartmentValueModel HospitalDepartment { get; set; }
-        public int Type { get; set; }
+        public DataInvoiceType InvoiceType { get; set; }
         public string Name { get; set; }
         public string Remark { get; set; }
         public DateTime CreateTime { get; set; }

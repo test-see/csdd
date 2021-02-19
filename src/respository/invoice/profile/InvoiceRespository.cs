@@ -25,6 +25,7 @@ namespace respository.invoice
         {
             var sql = from r in _context.Invoice
                       join u in _context.User on r.CreateUserId equals u.Id
+                      join t in _context.DataInvoiceType on r.InvoiceTypeId equals t.Id
                       select new InvoiceListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -34,12 +35,12 @@ namespace respository.invoice
                           Remark = r.Remark,
                           EndDate = r.EndDate,
                           StartDate = r.StartDate,
-                          Type = r.Type,
+                          InvoiceType = t,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
             if (query.Query?.Type != null)
             {
-                sql = sql.Where(x => x.Type == (int)query.Query.Type.Value);
+                sql = sql.Where(x => x.InvoiceType.Id == (int)query.Query.Type.Value);
             }
             var data = new PagerResult<InvoiceListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
@@ -64,7 +65,7 @@ namespace respository.invoice
                 Status = 0,
                 EndDate = created.EndDate,
                 StartDate = created.StartDate,
-                Type = (int)type,
+                InvoiceTypeId = (int)type,
             };
 
             _context.Invoice.Add(setting);
@@ -116,6 +117,7 @@ namespace respository.invoice
         {
             var sql = from r in _context.Invoice
                       join u in _context.User on r.CreateUserId equals u.Id
+                      join t in _context.DataInvoiceType on r.InvoiceTypeId equals t.Id
                       select new InvoiceIndexApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -125,6 +127,7 @@ namespace respository.invoice
                           Remark = r.Remark,
                           EndDate = r.EndDate,
                           StartDate = r.StartDate,
+                          InvoiceType = t,
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
                               Id = r.HospitalDepartmentId,
