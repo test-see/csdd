@@ -55,7 +55,7 @@ namespace respository.invoice
                       {
                           Id = r.Id,
                           Amount = r.Amount,
-                          //Name = 
+                          Name = r.Name,
                       };
             var data = new PagerResult<InvoiceReportListApiModel>(query.Index, query.Size, sql);
             return data;
