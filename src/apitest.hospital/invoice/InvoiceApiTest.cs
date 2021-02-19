@@ -25,10 +25,10 @@ namespace apitest.Invoice
             Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
-        public async Task Invoice_ChangeType_AddAndDelete_ReturnIntAsync()
+        public async Task Invoice_AddAndDelete_ReturnIntAsync()
         {
             var hospital = await _rootpath
-                .AppendPathSegment("/api/Invoice/add/changetype")
+                .AppendPathSegment("/api/Invoice/add")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new InvoiceCreateApiModel
                 {
@@ -36,27 +36,7 @@ namespace apitest.Invoice
                     Remark = "2",
                     EndDate = DateTime.Now,
                     StartDate = DateTime.Now,
-                })
-                .ReceiveJson<OkMessage<foundation.ef5.poco.Invoice>>();
-            var message = await _rootpath
-                .AppendPathSegment($"/api/Invoice/{hospital.Data.Id}/delete")
-                .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<int>>();
-            Assert.AreEqual(200, message.Code);
-            Assert.IsTrue(message.Data > 0);
-        }
-        [TestMethod]
-        public async Task Invoice_Client_AddAndDelete_ReturnIntAsync()
-        {
-            var hospital = await _rootpath
-                .AppendPathSegment("/api/Invoice/add/client")
-                .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new InvoiceCreateApiModel
-                {
-                    Name = "1",
-                    Remark = "2",
-                    EndDate = DateTime.Now,
-                    StartDate = DateTime.Now,
+                     InvoiceTypeId = 1,
                 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Invoice>>();
             var message = await _rootpath
