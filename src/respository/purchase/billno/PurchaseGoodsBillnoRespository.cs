@@ -94,9 +94,31 @@ namespace respository.purchase
             return setting.Id;
         }
 
-        public PurchaseGoodsBillno Get(int id)
+        public PurchaseGoodsBillnoListApiModel GetIndex(int id)
         {
-            return _context.PurchaseGoodsBillno.FirstOrDefault(x=>x.Id == id);
+            var sql = from r in _context.PurchaseGoodsBillno
+                      join p in _context.PurchaseGoods on r.PurchaseGoodsId equals p.Id
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      select new PurchaseGoodsBillnoListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Qty = r.Qty,
+                          HospitalGoods = new HospitalGoodsValueModel { Id = p.HospitalGoodsId, },
+                          Billno = r.Billno,
+                          Enddate = r.Enddate,
+                          CreateUserName = u.Username,
+                          Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
+                      };
+            var profile = sql.FirstOrDefault();
+
+            if (profile != null)
+            {
+                profile.HospitalGoods = _hospitalGoodsRespository.GetValue(profile.HospitalGoods.Id);
+                profile.Purchase = _purchaseRespository.GetIndex(profile.Purchase.Id);
+            }
+
+            return profile;
         }
 
         public int UpdateStatus(int id, BillStatus status)

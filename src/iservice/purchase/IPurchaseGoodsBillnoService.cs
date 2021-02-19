@@ -11,6 +11,6 @@ namespace iservice.purchase
         PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseGoodsBillnoUpdateApiModel updated);
-        int Comfirm(IList<int> ids);
+        int Comfirm(IList<int> ids, int userId);
     }
 }

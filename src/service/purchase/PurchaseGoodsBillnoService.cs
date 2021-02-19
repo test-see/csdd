@@ -34,9 +34,9 @@ namespace service.purchase
             return _PurchaseGoodsBillnoContext.Update(id, updated);
         }
 
-        public int Comfirm(IList<int> ids)
+        public int Comfirm(IList<int> ids, int userId)
         {
-            return _PurchaseGoodsBillnoContext.Comfirm(ids);
+            return _PurchaseGoodsBillnoContext.Comfirm(ids, userId);
         }
     }
 }

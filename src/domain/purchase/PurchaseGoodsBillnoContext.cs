@@ -40,16 +40,17 @@ namespace domain.purchase
             return _PurchaseGoodsBillnoRespository.Update(id, updated);
         }
 
-        public int Comfirm(IList<int> ids)
+        public int Comfirm(IList<int> ids, int userId)
         {
             foreach (var id in ids)
             {
-                var goods = _PurchaseGoodsBillnoRespository.Get(id);
+                var goods = _PurchaseGoodsBillnoRespository.GetIndex(id);
                 _storeContext.CreateOrUpdate(new StoreChangeApiModel
                 {
                     ChangeTypeId = (int)StoreChangeType.Purchase,
-                    //HospitalGoodId = goods.
-                }, 1, 1);
+                    HospitalGoodId = goods.HospitalGoods.Id,
+                    Qty = goods.Qty,
+                }, goods.Purchase.HospitalDepartment.Id, userId);
                 _PurchaseGoodsBillnoRespository.UpdateStatus(id, BillStatus.Comfirmed);
             }
             return ids.Count;

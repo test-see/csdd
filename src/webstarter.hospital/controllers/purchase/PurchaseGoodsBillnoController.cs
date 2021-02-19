@@ -29,7 +29,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("comfirm")]
         public JsonResult Comfirm(IList<int> ids)
         {
-            var data = _PurchaseGoodsBillnoService.Comfirm(ids);
+            var data = _PurchaseGoodsBillnoService.Comfirm(ids, Profile.Id);
             return Json(data);
         }
     }
