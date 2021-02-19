@@ -8,8 +8,10 @@ using irespository.hospital.goods.model;
 using irespository.invoice;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
+using irespository.invoice.report.model;
 using irespository.store.profile.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.invoice
@@ -17,16 +19,13 @@ namespace respository.invoice
     public class InvoiceReportRespository : IInvoiceReportRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalClientRespository _hospitalClientRespository;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
         private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
         public InvoiceReportRespository(DefaultDbContext context,
-            IHospitalClientRespository hospitalClientRespository,
             IHospitalGoodsRespository hospitalGoodsRespository,
             IHospitalDepartmentRespository hospitalDepartmentRespository)
         {
             _context = context;
-            _hospitalClientRespository = hospitalClientRespository;
             _hospitalGoodsRespository = hospitalGoodsRespository;
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
@@ -34,17 +33,72 @@ namespace respository.invoice
         public int Generate(int invoiceId)
         {
             var invoice = _context.Invoice.First(x => x.Id == invoiceId);
+            var reports = new List<InvoiceReportValueModel>();
+            if (invoice.InvoiceTypeId == (int)InvoiceType.Client)
+            {
+                reports = GetInvoiceListByClient(invoice);
+            }
+            if (invoice.InvoiceTypeId == (int)InvoiceType.ChangeType)
+            {
+                reports = GetInvoiceListByChangeType(invoice);
+            }
+
+            if (reports.Any())
+            {
+                foreach (var report in reports)
+                {
+                    var d = new InvoiceReport
+                    {
+                        Amount = report.Amount,
+                        InvoiceId = invoiceId,
+                        Name = report.Name,
+                    };
+                    _context.InvoiceReport.Add(d);
+                    _context.SaveChanges();
+
+                    var records = report.StoreRecordIds.Select(x => new InvoiceReportRecord
+                    {
+                        InvoiceReportId = d.Id,
+                        StoreRecordId = x
+                    });
+                    _context.InvoiceReportRecord.AddRange(records);
+                    _context.SaveChanges();
+                }
+            }
+            return reports.Count;
+        }
+
+        private List<InvoiceReportValueModel> GetInvoiceListByClient(Invoice invoice)
+        {
             //var sql = from r in _context.StoreRecord
-            //          where r.CreateTime > invoice.StartDate && r.CreateTime < invoice.EndDate.Date.AddDays(1);
+
+            //          where r.CreateTime > invoice.StartDate
+            //          && r.CreateTime < invoice.EndDate.Date.AddDays(1)
+            //          && r.HospitalDepartmentId == invoice.HospitalDepartmentId ;
+            //        // group ;
 
 
             //var records = sql.ToList();
 
 
+            return new List<InvoiceReportValueModel>();
+        }
 
-
-            return 0;
-
+        private List<InvoiceReportValueModel> GetInvoiceListByChangeType(Invoice invoice)
+        {
+            var sql = from r in _context.StoreRecord
+                      join t in _context.DataInvoiceType on r.ChangeTypeId equals t.Id
+                      where r.CreateTime > invoice.StartDate
+                      && r.CreateTime < invoice.EndDate.Date.AddDays(1)
+                      && r.HospitalDepartmentId == invoice.HospitalDepartmentId
+                      group new { r.Price, r.Id } by t.Name into gt
+                      select new InvoiceReportValueModel
+                      {
+                          Name = gt.Key,
+                          Amount = gt.Sum(x => x.Price),
+                          StoreRecordIds = gt.Select(x => x.Id).ToList(),
+                      };
+            return sql.ToList();
         }
 
         public PagerResult<InvoiceReportListApiModel> GetPagerList(PagerQuery<InvoiceReportQueryApiModel> query)
