@@ -1,8 +1,10 @@
-﻿using foundation.config;
+﻿using domain.store;
+using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
+using irespository.store.model;
 using System.Collections.Generic;
 
 namespace domain.purchase
@@ -10,9 +12,12 @@ namespace domain.purchase
     public class PurchaseGoodsBillnoContext
     {
         private readonly IPurchaseGoodsBillnoRespository _PurchaseGoodsBillnoRespository;
-        public PurchaseGoodsBillnoContext(IPurchaseGoodsBillnoRespository purchaseGoodsBillnoRespositoryy)
+        private readonly StoreContext _storeContext;
+        public PurchaseGoodsBillnoContext(IPurchaseGoodsBillnoRespository purchaseGoodsBillnoRespositoryy,
+            StoreContext storeContext)
         {
             _PurchaseGoodsBillnoRespository = purchaseGoodsBillnoRespositoryy;
+            _storeContext = storeContext;
         }
 
         public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerList(PagerQuery<PurchaseGoodsBillnoListQueryModel> query)
@@ -36,7 +41,16 @@ namespace domain.purchase
 
         public int Comfirm(IList<int> ids)
         {
-            return _PurchaseGoodsBillnoRespository.UpdateStatus(ids, BillStatus.Comfirmed);
+            foreach (var id in ids)
+            {
+                _storeContext.BatchCreateOrUpdate(new BatchStoreChangeApiModel
+                {
+                    ChangeTypeId = (int)2,
+                    HospitalGoods = new List<KeyValuePair<int, int>> { },
+                }, 1, 1);
+                _PurchaseGoodsBillnoRespository.UpdateStatus(id, BillStatus.Comfirmed);
+            }
+            return ids.Count;
         }
     }
 }

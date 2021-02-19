@@ -12,6 +12,6 @@ namespace irespository.purchase
         PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseGoodsBillnoUpdateApiModel updated);
-        int UpdateStatus(IList<int> ids, BillStatus status);
+        int UpdateStatus(int id, BillStatus status);
     }
 }

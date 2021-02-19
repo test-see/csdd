@@ -31,7 +31,7 @@ namespace domain.store
             return _storeRespository.GetPagerList(query);
         }
 
-        public int CreateOrUpdate(StoreChangeApiModel created, int department, int userId)
+        public int BatchCreateOrUpdate(BatchStoreChangeApiModel created, int department, int userId)
         {
             var changetype = _storeChangeTypeRespository.GetIndex(created.ChangeTypeId);
             lock (balance)
@@ -51,6 +51,7 @@ namespace domain.store
             }
             return created.HospitalGoods.Count;
         }
+
 
         public Store GetIndexByGoods(int department, int goods)
         {

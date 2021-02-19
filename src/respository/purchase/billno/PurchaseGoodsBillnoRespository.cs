@@ -95,17 +95,14 @@ namespace respository.purchase
         }
 
 
-        public int UpdateStatus(IList<int> ids, BillStatus status)
+        public int UpdateStatus(int id, BillStatus status)
         {
-            foreach (var id in ids)
-            {
-                var setting = _context.PurchaseGoodsBillno.First(x => x.Id == id);
-                setting.Status = (int)status;
+            var setting = _context.PurchaseGoodsBillno.First(x => x.Id == id);
+            setting.Status = (int)status;
 
-                _context.PurchaseGoodsBillno.Update(setting);
-                _context.SaveChanges();
-            }
-            return ids.Count;
+            _context.PurchaseGoodsBillno.Update(setting);
+            _context.SaveChanges();
+            return setting.Id;
         }
     }
 }

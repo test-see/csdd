@@ -31,7 +31,7 @@ namespace respository.store
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
             _storeRecordRespository = storeRecordRespository;
         }
-        public int CreateOrUpdate(StoreChangeApiModel created, int departmentId, int userId)
+        public int CreateOrUpdate(BatchStoreChangeApiModel created, int departmentId, int userId)
         {
             using (var tran = _context.Database.BeginTransaction())
             {
