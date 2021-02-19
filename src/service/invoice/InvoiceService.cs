@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
+using irespository.store.profile.model;
 using iservice.invoice;
 
 namespace service.invoice
@@ -47,6 +48,16 @@ namespace service.invoice
         public int Generate(int invoiceId)
         {
             return _InvoiceContext.Generate(invoiceId);
+        }
+
+
+        public PagerResult<InvoiceReportListApiModel> GetPagerReportList(PagerQuery<InvoiceReportQueryApiModel> query)
+        {
+            return _InvoiceContext.GetPagerReportList(query);
+        }
+        public PagerResult<StoreRecordListApiModel> GetPagerReportRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
+        {
+            return _InvoiceContext.GetPagerReportRecordList(query);
         }
     }
 }

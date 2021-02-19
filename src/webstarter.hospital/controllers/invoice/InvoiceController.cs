@@ -37,7 +37,7 @@ namespace webstarter.hospital.controllers.invoice
 
         [HttpPost]
         [Route("add")]
-        public JsonResult PostClient(InvoiceCreateApiModel created)
+        public JsonResult Post(InvoiceCreateApiModel created)
         {
             var data = _InvoiceService.Create(created, HospitalDepartment.Id, Profile.Id);
             return Json(data);
@@ -75,5 +75,22 @@ namespace webstarter.hospital.controllers.invoice
             var data = _InvoiceService.Generate(id);
             return Json(data);
         }
+
+        [HttpPost]
+        [Route("list/report")]
+        public JsonResult GetPagerReportList(PagerQuery<InvoiceReportQueryApiModel> query)
+        {
+            var data = _InvoiceService.GetPagerReportList(query);
+            return Json(data);
+        }
+
+        [HttpPost]
+        [Route("list/record")]
+        public JsonResult GetPagerReportRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
+        {
+            var data = _InvoiceService.GetPagerReportRecordList(query);
+            return Json(data);
+        }
+
     }
 }

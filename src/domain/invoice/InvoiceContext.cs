@@ -3,6 +3,7 @@ using foundation.ef5.poco;
 using irespository.invoice;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
+using irespository.store.profile.model;
 
 namespace domain.invoice
 {
@@ -48,5 +49,15 @@ namespace domain.invoice
         {
             return _InvoiceRespository.UpdateStatus(id, InvoiceStatus.Submited);
         }
+
+        public PagerResult<InvoiceReportListApiModel> GetPagerReportList(PagerQuery<InvoiceReportQueryApiModel> query)
+        {
+            return _invoiceReportRespository.GetPagerList(query);
+        }
+        public PagerResult<StoreRecordListApiModel> GetPagerReportRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
+        {
+            return _invoiceReportRespository.GetPagerRecordList(query);
+        }
+
     }
 }

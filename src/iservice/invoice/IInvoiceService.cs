@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
+using irespository.store.profile.model;
 
 namespace iservice.invoice
 {
@@ -14,5 +15,7 @@ namespace iservice.invoice
         InvoiceIndexApiModel GetIndex(int id);
         int Submit(int id);
         int Generate(int invoiceId);
+        PagerResult<InvoiceReportListApiModel> GetPagerReportList(PagerQuery<InvoiceReportQueryApiModel> query);
+        PagerResult<StoreRecordListApiModel> GetPagerReportRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query);
     }
 }
