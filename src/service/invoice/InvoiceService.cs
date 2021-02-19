@@ -18,9 +18,9 @@ namespace service.invoice
         {
             return _InvoiceContext.GetPagerList(query);
         }
-        public Invoice Create(InvoiceCreateApiModel created, InvoiceType type, int departmentId, int userId)
+        public Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId)
         {
-            return _InvoiceContext.Create(created, type, departmentId, userId);
+            return _InvoiceContext.Create(created, departmentId, userId);
         }
 
         public int Delete(int id)
@@ -41,6 +41,12 @@ namespace service.invoice
         public int Submit(int id)
         {
             return _InvoiceContext.Submit(id);
+        }
+
+
+        public int Generate(int invoiceId)
+        {
+            return _InvoiceContext.Generate(invoiceId);
         }
     }
 }

@@ -9,19 +9,28 @@ namespace domain.invoice
     public class InvoiceContext
     {
         private readonly IInvoiceRespository _InvoiceRespository;
-        public InvoiceContext(IInvoiceRespository InvoiceRespository)
+        private readonly IInvoiceReportRespository _invoiceReportRespository;
+        public InvoiceContext(IInvoiceRespository InvoiceRespository,
+            IInvoiceReportRespository invoiceReportRespository)
         {
             _InvoiceRespository = InvoiceRespository;
+            _invoiceReportRespository = invoiceReportRespository;
         }
 
         public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query)
         {
             return _InvoiceRespository.GetPagerList(query);
         }
-        public Invoice Create(InvoiceCreateApiModel created, InvoiceType type, int departmentId, int userId)
+        public Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId)
         {
-            return _InvoiceRespository.Create(created, type, departmentId, userId);
+            return _InvoiceRespository.Create(created, departmentId, userId);
         }
+
+        public int Generate(int invoiceId)
+        {
+            return _invoiceReportRespository.Generate(invoiceId);
+        }
+
         public int Delete(int id)
         {
             return _InvoiceRespository.Delete(id);

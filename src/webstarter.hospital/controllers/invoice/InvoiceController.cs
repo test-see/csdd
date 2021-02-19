@@ -36,18 +36,10 @@ namespace webstarter.hospital.controllers.invoice
 
 
         [HttpPost]
-        [Route("add/client")]
+        [Route("add")]
         public JsonResult PostClient(InvoiceCreateApiModel created)
         {
-            var data = _InvoiceService.Create(created, InvoiceType.Client, HospitalDepartment.Id, Profile.Id);
-            return Json(data);
-        }
-
-        [HttpPost]
-        [Route("add/changetype")]
-        public JsonResult PostChangeType(InvoiceCreateApiModel created)
-        {
-            var data = _InvoiceService.Create(created, InvoiceType.ChangeType, HospitalDepartment.Id, Profile.Id);
+            var data = _InvoiceService.Create(created, HospitalDepartment.Id, Profile.Id);
             return Json(data);
         }
 
@@ -73,6 +65,14 @@ namespace webstarter.hospital.controllers.invoice
         public JsonResult Submit(int id)
         {
             var data = _InvoiceService.Submit(id);
+            return Json(data);
+        }
+
+        [HttpGet]
+        [Route("{id}/generate")]
+        public JsonResult Generate(int id)
+        {
+            var data = _InvoiceService.Generate(id);
             return Json(data);
         }
     }
