@@ -26,9 +26,7 @@ namespace domain.purchase
 
         public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
-            query.Query = query.Query ?? new PurchaseGoodsListQueryModel { };
-            query.Query.ClientId = clientId;
-            var data = GetPagerList(query);
+            var data = _PurchaseGoodsRespository.GetPagerListByClient(query, clientId);
             var result = data.Result.Select(x => new PurchaseGoodsMappingListApiModel
             {
                 PurchaseGoods = x,

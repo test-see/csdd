@@ -7,6 +7,7 @@ namespace irespository.purchase
     public interface IPurchaseGoodsRespository
     {
         PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query);
+        PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId);
         PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseGoodsUpdateApiModel updated);
