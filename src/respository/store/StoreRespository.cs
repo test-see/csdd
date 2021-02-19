@@ -54,24 +54,20 @@ namespace respository.store
 
         public int BatchCreateOrUpdate(BatchStoreChangeApiModel created, int departmentId, int userId)
         {
-            using (var tran = _context.Database.BeginTransaction())
+            foreach (var pair in created.HospitalGoods)
             {
-                foreach (var pair in created.HospitalGoods)
-                {
-                    var beforeStore = GetIndexByGoods(departmentId, pair.Key);
-                    if (beforeStore == null) Create(pair, departmentId, userId);
-                    else Update(pair, userId);
+                var beforeStore = GetIndexByGoods(departmentId, pair.Key);
+                if (beforeStore == null) Create(pair.Key, pair.Value, departmentId, userId);
+                else Update(pair.Key, pair.Value, userId);
 
-                    _storeRecordRespository.Create(new StoreRecordCreateApiModel
-                    {
-                        BeforeQty = beforeStore?.Qty ?? 0,
-                        ChangeQty = pair.Value,
-                        ChangeTypeId = created.ChangeTypeId,
-                        HospitalDepartmentId = departmentId,
-                        HospitalGoodsId = pair.Key,
-                    }, userId);
-                }
-                tran.Commit();
+                _storeRecordRespository.Create(new StoreRecordCreateApiModel
+                {
+                    BeforeQty = beforeStore?.Qty ?? 0,
+                    ChangeQty = pair.Value,
+                    ChangeTypeId = created.ChangeTypeId,
+                    HospitalDepartmentId = departmentId,
+                    HospitalGoodsId = pair.Key,
+                }, userId);
             }
             return created.HospitalGoods.Count;
         }

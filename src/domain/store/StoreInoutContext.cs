@@ -1,5 +1,6 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
+using irespository.store.inout.profile.enums;
 using irespository.storeinout;
 using irespository.storeinout.model;
 
@@ -28,6 +29,10 @@ namespace domain.store
         public int Update(int id, StoreInoutUpdateApiModel updated)
         {
             return _StoreInoutRespository.Update(id, updated);
+        }
+        public int Submit(int id)
+        {
+            return _StoreInoutRespository.UpdateStatus(id, StoreInoutStatus.Submited);
         }
     }
 }

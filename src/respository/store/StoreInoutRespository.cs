@@ -3,6 +3,7 @@ using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.department.model;
+using irespository.store.inout.profile.enums;
 using irespository.storeinout;
 using irespository.storeinout.model;
 using System;
@@ -53,7 +54,7 @@ namespace respository.store
                 CreateTime = DateTime.Now,
                 Name = created.Name,
                 Remark = created.Remark,
-                Status = 0,
+                Status = (int)StoreInoutStatus.Pendding,
             };
 
             _context.StoreInout.Add(setting);
@@ -85,5 +86,15 @@ namespace respository.store
             return setting.Id;
         }
 
+
+        public int UpdateStatus(int id, StoreInoutStatus status)
+        {
+            var setting = _context.StoreInout.First(x => x.Id == id);
+            setting.Status = (int)status;
+
+            _context.StoreInout.Update(setting);
+            _context.SaveChanges();
+            return setting.Id;
+        }
     }
 }

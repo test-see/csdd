@@ -94,6 +94,16 @@ namespace respository.purchase
             return setting.Id;
         }
 
+        public int UpdateStatus(int id, BillStatus status)
+        {
+            var setting = _context.PurchaseGoodsBillno.First(x => x.Id == id);
+            setting.Status = (int)status;
+
+            _context.PurchaseGoodsBillno.Update(setting);
+            _context.SaveChanges();
+            return setting.Id;
+        }
+
         public PurchaseGoodsBillnoListApiModel GetIndex(int id)
         {
             var sql = from r in _context.PurchaseGoodsBillno
@@ -119,16 +129,6 @@ namespace respository.purchase
             }
 
             return profile;
-        }
-
-        public int UpdateStatus(int id, BillStatus status)
-        {
-            var setting = _context.PurchaseGoodsBillno.First(x => x.Id == id);
-            setting.Status = (int)status;
-
-            _context.PurchaseGoodsBillno.Update(setting);
-            _context.SaveChanges();
-            return setting.Id;
         }
     }
 }

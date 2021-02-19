@@ -49,5 +49,7 @@ namespace webstarter.hospital.controllers.StoreInout
             var data = _storeInoutService.Update(id, updated);
             return Json(data);
         }
+
+
     }
 }
