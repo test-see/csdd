@@ -36,9 +36,6 @@ namespace respository.store
             using (var tran = _context.Database.BeginTransaction())
             {
                 var beforeStore = GetIndexByGoods(departmentId, created.HospitalGoodId);
-                if (beforeStore == null) Create(created.HospitalGoodId, created.Qty, departmentId, userId);
-                else Update(created.HospitalGoodId, created.Qty, userId);
-
                 var record = _storeRecordRespository.Create(new StoreRecordCreateApiModel
                 {
                     BeforeQty = beforeStore?.Qty ?? 0,
@@ -47,6 +44,10 @@ namespace respository.store
                     HospitalDepartmentId = departmentId,
                     HospitalGoodsId = created.HospitalGoodId,
                 }, userId);
+
+                if (beforeStore == null) Create(created.HospitalGoodId, created.Qty, departmentId, userId);
+                else Update(beforeStore, created.Qty, userId);
+
                 tran.Commit();
                 return record.Id;
             }
@@ -68,9 +69,8 @@ namespace respository.store
             _context.SaveChanges();
         }
 
-        private void Update(int hospitalGoodId, int changeQty, int userId)
+        private void Update(Store store, int changeQty, int userId)
         {
-            var store = _context.Store.First(x => x.HospitalGoodsId == hospitalGoodId);
             store.Qty = +changeQty;
             store.UpdateTime = DateTime.Now;
             store.UpdateUserId = userId;
