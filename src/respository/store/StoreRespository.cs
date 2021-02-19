@@ -31,7 +31,7 @@ namespace respository.store
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
             _storeRecordRespository = storeRecordRespository;
         }
-        public int CreateOrUpdate(StoreChangeApiModel created, int departmentId, int userId)
+        public int CreateOrUpdate(StoreChangeGoodsValueModel created, int changeTypeId, int departmentId, int userId)
         {
             using (var tran = _context.Database.BeginTransaction())
             {
@@ -39,37 +39,17 @@ namespace respository.store
                 if (beforeStore == null) Create(created.HospitalGoodId, created.Qty, departmentId, userId);
                 else Update(created.HospitalGoodId, created.Qty, userId);
 
-                _storeRecordRespository.Create(new StoreRecordCreateApiModel
+                var record = _storeRecordRespository.Create(new StoreRecordCreateApiModel
                 {
                     BeforeQty = beforeStore?.Qty ?? 0,
                     ChangeQty = created.Qty,
-                    ChangeTypeId = created.ChangeTypeId,
+                    ChangeTypeId = changeTypeId,
                     HospitalDepartmentId = departmentId,
                     HospitalGoodsId = created.HospitalGoodId,
                 }, userId);
                 tran.Commit();
+                return record.Id;
             }
-            return created.Qty;
-        }
-
-        public int BatchCreateOrUpdate(BatchStoreChangeApiModel created, int departmentId, int userId)
-        {
-            foreach (var pair in created.HospitalGoods)
-            {
-                var beforeStore = GetIndexByGoods(departmentId, pair.Key);
-                if (beforeStore == null) Create(pair.Key, pair.Value, departmentId, userId);
-                else Update(pair.Key, pair.Value, userId);
-
-                _storeRecordRespository.Create(new StoreRecordCreateApiModel
-                {
-                    BeforeQty = beforeStore?.Qty ?? 0,
-                    ChangeQty = pair.Value,
-                    ChangeTypeId = created.ChangeTypeId,
-                    HospitalDepartmentId = departmentId,
-                    HospitalGoodsId = pair.Key,
-                }, userId);
-            }
-            return created.HospitalGoods.Count;
         }
 
         private void Create(int hospitalGoodId, int changeQty, int department, int userId)

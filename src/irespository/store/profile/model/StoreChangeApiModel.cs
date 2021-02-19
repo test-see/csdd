@@ -1,9 +1,10 @@
-﻿namespace irespository.store.model
+﻿using irespository.store.profile.model;
+
+namespace irespository.store.model
 {
     public class StoreChangeApiModel
     {
-        public int HospitalGoodId { get; set; }
+        public StoreChangeGoodsValueModel HospitalChangeGoods { get; set; }
         public int ChangeTypeId { get; set; }
-        public int Qty { get; set; }
     }
 }

@@ -33,23 +33,23 @@ namespace domain.store
 
         public int BatchCreateOrUpdate(BatchStoreChangeApiModel created, int department, int userId)
         {
-            var changetype = _storeChangeTypeRespository.GetIndex(created.ChangeTypeId);
             lock (balance)
             {
                 using (var trans = _defaultDbTransaction.Begin())
                 {
-                    foreach (var item in created.HospitalGoods)
-                    {
-                        var store = _storeRespository.GetIndexByGoods(department, item.Key);
-                        var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.Value;
+                    var changetype = _storeChangeTypeRespository.GetIndex(created.ChangeTypeId);
+                    foreach (var item in created.HospitalChangeGoods)
+                    {;
+                        var store = _storeRespository.GetIndexByGoods(department, item.HospitalGoodId);
+                        var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.Qty;
                         if (afterqty < 0)
                             throw new DefaultException("库存不足!");
+                        _storeRespository.CreateOrUpdate(item, department, userId);
                     }
-                    _storeRespository.BatchCreateOrUpdate(created, department, userId);
                     trans.Commit();
                 }
             }
-            return created.HospitalGoods.Count;
+            return created.Count;
         }
 
         public int CreateOrUpdate(StoreChangeApiModel created, int department, int userId)
@@ -59,15 +59,15 @@ namespace domain.store
             {
                 using (var trans = _defaultDbTransaction.Begin())
                 {
-                    var store = _storeRespository.GetIndexByGoods(department, created.HospitalGoodId);
-                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.Qty;
+                    var store = _storeRespository.GetIndexByGoods(department, created.HospitalChangeGoods.HospitalGoodId);
+                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.HospitalChangeGoods.Qty;
                     if (afterqty < 0)
                         throw new DefaultException("库存不足!");
-                    _storeRespository.CreateOrUpdate(created, department, userId);
+                    var id = _storeRespository.CreateOrUpdate(created.HospitalChangeGoods.HospitalGoodId, created.HospitalChangeGoods.Qty, created.ChangeTypeId, department, userId);
                     trans.Commit();
+                    return id;
                 }
             }
-            return created.Qty;
         }
 
         public Store GetIndexByGoods(int department, int goods)
