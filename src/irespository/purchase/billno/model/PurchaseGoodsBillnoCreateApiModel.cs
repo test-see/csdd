@@ -1,9 +1,13 @@
-﻿namespace irespository.purchase.model
+﻿using System;
+
+namespace irespository.purchase.model
 {
     public class PurchaseGoodsBillnoCreateApiModel
     {
-        public int PurchaseId { get; set; }
-        public int HospitalGoodsId { get; set; }
+        public int PurchaseGoodsId { get; set; }
         public int Qty { get; set; }
+        public string Billno { get; set; }
+        public DateTime Enddate { get; set; }
+
     }
 }
