@@ -4,9 +4,9 @@ using irespository.store.profile.model;
 
 namespace irespository.invoice
 {
-    public interface IInvoiceClientRespository
+    public interface IInvoiceReportRespository
     {
-        PagerResult<InvoiceClientListApiModel> GetPagerList(PagerQuery<int> query);
+        PagerResult<InvoiceReportListApiModel> GetPagerList(PagerQuery<int> query);
         PagerResult<StoreRecordListApiModel> GetPagerRecordList(PagerQuery<int> query);
         int Generate(int invoiceId);
     }

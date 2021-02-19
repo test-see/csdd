@@ -5,12 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\foundation\foundation.csproj" />
-    <ProjectReference Include="..\irespository\irespository.csproj" />
+    <Compile Remove="invoice\changetype\**" />
+    <EmbeddedResource Remove="invoice\changetype\**" />
+    <None Remove="invoice\changetype\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="invoice\changetype\" />
+    <ProjectReference Include="..\foundation\foundation.csproj" />
+    <ProjectReference Include="..\irespository\irespository.csproj" />
   </ItemGroup>
 
 </Project>

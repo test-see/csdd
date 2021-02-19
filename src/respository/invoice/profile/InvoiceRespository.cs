@@ -75,23 +75,13 @@ namespace respository.invoice
 
         public int Delete(int id)
         {
-            var changetypes = _context.InvoiceChangeType.Where(x => x.InvoiceId == id);
-            _context.InvoiceChangeType.RemoveRange(changetypes);
+            var changetypes = _context.InvoiceReport.Where(x => x.InvoiceId == id);
+            _context.InvoiceReport.RemoveRange(changetypes);
             _context.SaveChanges();
             foreach (var item in changetypes)
             {
-                var records = _context.InvoiceChangeTypeRecord.Where(x => x.InvoiceChangeTypeId == item.Id);
-                _context.InvoiceChangeTypeRecord.RemoveRange(records);
-                _context.SaveChanges();
-            }
-
-            var clients = _context.InvoiceClient.Where(x => x.InvoiceId == id);
-            _context.InvoiceClient.RemoveRange(clients);
-            _context.SaveChanges();
-            foreach (var item in clients)
-            {
-                var records = _context.InvoiceClientRecord.Where(x => x.InvoiceClientId == item.Id);
-                _context.InvoiceClientRecord.RemoveRange(records);
+                var records = _context.InvoiceReportRecord.Where(x => x.InvoiceReportId == item.Id);
+                _context.InvoiceReportRecord.RemoveRange(records);
                 _context.SaveChanges();
             }
 

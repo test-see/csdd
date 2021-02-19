@@ -14,13 +14,13 @@ using System.Linq;
 
 namespace respository.invoice
 {
-    public class InvoiceClientRespository : IInvoiceClientRespository
+    public class InvoiceReportRespository : IInvoiceReportRespository
     {
         private readonly DefaultDbContext _context;
         private readonly IHospitalClientRespository _hospitalClientRespository;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
         private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
-        public InvoiceClientRespository(DefaultDbContext context,
+        public InvoiceReportRespository(DefaultDbContext context,
             IHospitalClientRespository hospitalClientRespository,
             IHospitalGoodsRespository hospitalGoodsRespository,
             IHospitalDepartmentRespository hospitalDepartmentRespository)
@@ -47,22 +47,22 @@ namespace respository.invoice
 
         }
 
-        public PagerResult<InvoiceClientListApiModel> GetPagerList(PagerQuery<int> query)
+        public PagerResult<InvoiceReportListApiModel> GetPagerList(PagerQuery<int> query)
         {
-            var sql = from r in _context.InvoiceClient
+            var sql = from r in _context.InvoiceReport
                       where r.InvoiceId == query.Query
-                      select new InvoiceClientListApiModel
+                      select new InvoiceReportListApiModel
                       {
                           Id = r.Id,
                           Amount = r.Amount,
-                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId, }
+                          //HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId, }
                       };
-            var data = new PagerResult<InvoiceClientListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<InvoiceReportListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
                 foreach (var m in data.Result)
                 {
-                    m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
+                   // m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
                 }
             }
             return data;
@@ -73,8 +73,8 @@ namespace respository.invoice
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
-                      join rts in _context.InvoiceClientRecord on r.Id equals rts.StoreRecordId
-                      where rts.InvoiceClientId == query.Query
+                      join rts in _context.InvoiceReportRecord on r.Id equals rts.StoreRecordId
+                      where rts.InvoiceReportId == query.Query
                       select new StoreRecordListApiModel
                       {
                           Id = r.Id,
