@@ -54,7 +54,7 @@ namespace domain.invoice
         {
             return _invoiceReportRespository.GetPagerList(query);
         }
-        public PagerResult<StoreRecordListApiModel> GetPagerReportRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
+        public PagerResult<StoreRecordListApiModel> GetPagerStoreRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
         {
             return _invoiceReportRespository.GetPagerRecordList(query);
         }

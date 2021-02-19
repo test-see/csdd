@@ -4,6 +4,7 @@ using Flurl.Http;
 using foundation.config;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
+using irespository.store.profile.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
@@ -88,6 +89,28 @@ namespace apitest.Invoice
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
+        }
+        [TestMethod]
+        public async Task Invoice_Report_Post_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Invoice/list/report")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new PagerQuery<InvoiceReportQueryApiModel> { })
+                .ReceiveJson<OkMessage<PagerResult<InvoiceReportListApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
+        }
+        [TestMethod]
+        public async Task Invoice_Record_Post_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Invoice/list/record")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new PagerQuery<InvoiceReportRecordQueryApiModel> { })
+                .ReceiveJson<OkMessage<PagerResult<StoreRecordListApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
     }
 }

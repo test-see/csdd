@@ -88,7 +88,7 @@ namespace webstarter.hospital.controllers.invoice
         [Route("list/record")]
         public JsonResult GetPagerReportRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
         {
-            var data = _InvoiceService.GetPagerReportRecordList(query);
+            var data = _InvoiceService.GetPagerStoreRecordList(query);
             return Json(data);
         }
 

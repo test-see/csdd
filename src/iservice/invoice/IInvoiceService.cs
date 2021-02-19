@@ -16,6 +16,6 @@ namespace iservice.invoice
         int Submit(int id);
         int Generate(int invoiceId);
         PagerResult<InvoiceReportListApiModel> GetPagerReportList(PagerQuery<InvoiceReportQueryApiModel> query);
-        PagerResult<StoreRecordListApiModel> GetPagerReportRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query);
+        PagerResult<StoreRecordListApiModel> GetPagerStoreRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query);
     }
 }
