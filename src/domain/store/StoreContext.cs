@@ -39,17 +39,17 @@ namespace domain.store
                 {
                     var changetype = _storeChangeTypeRespository.GetIndex(created.ChangeTypeId);
                     foreach (var item in created.HospitalChangeGoods)
-                    {;
+                    {
                         var store = _storeRespository.GetIndexByGoods(department, item.HospitalGoodId);
                         var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.Qty;
                         if (afterqty < 0)
                             throw new DefaultException("库存不足!");
-                        _storeRespository.CreateOrUpdate(item, department, userId);
+                        _storeRespository.CreateOrUpdate(item, created.ChangeTypeId, department, userId);
                     }
                     trans.Commit();
                 }
             }
-            return created.Count;
+            return created.HospitalChangeGoods.Count;
         }
 
         public int CreateOrUpdate(StoreChangeApiModel created, int department, int userId)
@@ -63,7 +63,7 @@ namespace domain.store
                     var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.HospitalChangeGoods.Qty;
                     if (afterqty < 0)
                         throw new DefaultException("库存不足!");
-                    var id = _storeRespository.CreateOrUpdate(created.HospitalChangeGoods.HospitalGoodId, created.HospitalChangeGoods.Qty, created.ChangeTypeId, department, userId);
+                    var id = _storeRespository.CreateOrUpdate(created.HospitalChangeGoods, created.ChangeTypeId, department, userId);
                     trans.Commit();
                     return id;
                 }

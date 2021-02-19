@@ -6,6 +6,7 @@ using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
 using irespository.store.model;
+using irespository.store.profile.model;
 using System.Collections.Generic;
 
 namespace domain.purchase
@@ -48,8 +49,11 @@ namespace domain.purchase
                 _storeContext.CreateOrUpdate(new StoreChangeApiModel
                 {
                     ChangeTypeId = (int)StoreChangeType.Purchase,
-                    HospitalGoodId = goods.HospitalGoods.Id,
-                    Qty = goods.Qty,
+                    HospitalChangeGoods = new StoreChangeGoodsValueModel
+                    {
+                        HospitalGoodId = goods.HospitalGoods.Id,
+                        Qty = goods.Qty,
+                    },
                 }, goods.Purchase.HospitalDepartment.Id, userId);
                 _PurchaseGoodsBillnoRespository.UpdateStatus(id, BillStatus.Comfirmed);
             }
