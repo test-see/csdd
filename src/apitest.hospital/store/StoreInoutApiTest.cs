@@ -48,5 +48,16 @@ namespace apitest.storeinout
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
         }
+
+        //[TestMethod]
+        //public async Task StoreInout_Comfirm_ReturnListAsync()
+        //{
+        //    var message = await _rootpath
+        //        .AppendPathSegment("/api/StoreInout/comfirm")
+        //        .WithOAuthBearerToken(await getToken())
+        //        .PostJsonAsync(new List<int> { 1 })
+        //        .ReceiveJson<OkMessage<int>>();
+        //    Assert.AreEqual(200, message.Code);
+        //}
     }
 }
