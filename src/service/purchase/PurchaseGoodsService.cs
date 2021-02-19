@@ -34,9 +34,9 @@ namespace service.purchase
             return _PurchaseGoodsContext.Update(id, updated);
         }
 
-        public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query)
+        public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
-            return _PurchaseGoodsContext.GetPagerMappingList(query);
+            return _PurchaseGoodsContext.GetPagerMappingList(query, clientId);
         }
     }
 }

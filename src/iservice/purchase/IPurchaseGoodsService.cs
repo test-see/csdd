@@ -11,6 +11,6 @@ namespace iservice.purchase
         PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseGoodsUpdateApiModel updated);
-        PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query);
+        PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId);
     }
 }

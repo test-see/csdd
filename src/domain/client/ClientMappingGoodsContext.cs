@@ -21,9 +21,9 @@ namespace domain.client
             return _clientMappingGoodsRespository.Delete(id);
         }
 
-        public ClientMappingGoodsIndexApiModel GetIndexByHospitalGoodsId(int hospitalGoodsId)
+        public ClientMappingGoodsIndexApiModel GetIndexByHospitalGoodsId(int hospitalGoodsId, int clientId)
         {
-            return _clientMappingGoodsRespository.GetIndexByHospitalGoodsId(hospitalGoodsId);
+            return _clientMappingGoodsRespository.GetIndexByHospitalGoodsId(hospitalGoodsId, clientId);
         }
     }
 }

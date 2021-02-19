@@ -48,10 +48,11 @@ namespace respository.client
             return id;
         }
 
-        public ClientMappingGoodsIndexApiModel GetIndexByHospitalGoodsId(int hospitalGoodsId)
+        public ClientMappingGoodsIndexApiModel GetIndexByHospitalGoodsId(int hospitalGoodsId, int clientId)
         {
             var sql = from r in _context.ClientMappingGoods
-                      where r.HospitalGoodsId == hospitalGoodsId
+                      join c in _context.ClientGoods on r.ClientGoodsId equals c.Id
+                      where r.HospitalGoodsId == hospitalGoodsId && c.ClientId == clientId
                       select new ClientMappingGoodsIndexApiModel
                       {
                           Id = r.Id,

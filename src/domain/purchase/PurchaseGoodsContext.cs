@@ -24,13 +24,15 @@ namespace domain.purchase
             return _PurchaseGoodsRespository.GetPagerList(query);
         }
 
-        public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query)
+        public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
+            query.Query = query.Query ?? new PurchaseGoodsListQueryModel { };
+            query.Query.ClientId = clientId;
             var data = GetPagerList(query);
             var result = data.Result.Select(x => new PurchaseGoodsMappingListApiModel
             {
                 PurchaseGoods = x,
-                ClientMappingGoods = _clientMappingGoodsContext.GetIndexByHospitalGoodsId(x.HospitalGoods.Id),
+                ClientMappingGoods = _clientMappingGoodsContext.GetIndexByHospitalGoodsId(x.HospitalGoods.Id, clientId),
             });
             return new PagerResult<PurchaseGoodsMappingListApiModel>
             {
