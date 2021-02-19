@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace webstarter.hospital.controllers.purchase
 {
-    [Authorize(Policy = "RequireClientRole")]
+    [Authorize(Policy = "RequireHospitalRole")]
     public class PurchaseGoodsBillnoController : DefaultControllerBase
     {
         private readonly IPurchaseGoodsBillnoService _PurchaseGoodsBillnoService;
@@ -21,7 +21,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("list")]
         public JsonResult GetList(PagerQuery<PurchaseGoodsBillnoListQueryModel> query)
         {
-            var data = _PurchaseGoodsBillnoService.GetPagerList(query);
+            var data = _PurchaseGoodsBillnoService.GetPagerListByHospitalDepartment(query, HospitalDepartment.Id);
             return Json(data);
         }
 

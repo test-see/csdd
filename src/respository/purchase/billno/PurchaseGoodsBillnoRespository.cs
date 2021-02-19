@@ -26,11 +26,13 @@ namespace respository.purchase
             _purchaseRespository = purchaseRespository;
         }
 
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerList(PagerQuery<PurchaseGoodsBillnoListQueryModel> query)
+        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospitalDepartment(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId)
         {
             var sql = from r in _context.PurchaseGoodsBillno
                       join p in _context.PurchaseGoods on r.PurchaseGoodsId equals p.Id
+                      join x in _context.Purchase on p.PurchaseId equals x.Id
                       join u in _context.User on r.CreateUserId equals u.Id
+                      where x.HospitalDepartmentId == hospitalDepartmentId
                       select new PurchaseGoodsBillnoListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -54,6 +56,38 @@ namespace respository.purchase
             }
             return data;
         }
+
+        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
+        {
+            var sql = from r in _context.PurchaseGoodsBillno
+                      join p in _context.PurchaseGoods on r.PurchaseGoodsId equals p.Id
+                      join m in _context.ClientMapping on p.HospitalClientId equals m.HospitalClientId
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      where m.ClientId == clientId
+                      select new PurchaseGoodsBillnoListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Qty = r.Qty,
+                          HospitalGoods = new HospitalGoodsValueModel { Id = p.HospitalGoodsId, },
+                          Billno = r.Billno,
+                          Enddate = r.Enddate,
+                          CreateUserName = u.Username,
+                          Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
+                      };
+
+            var data = new PagerResult<PurchaseGoodsBillnoListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.Purchase = _purchaseRespository.GetIndex(m.Purchase.Id);
+                }
+            }
+            return data;
+        }
+
 
         public PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId)
         {

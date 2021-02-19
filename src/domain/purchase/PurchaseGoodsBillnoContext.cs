@@ -22,11 +22,14 @@ namespace domain.purchase
             _storeContext = storeContext;
         }
 
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerList(PagerQuery<PurchaseGoodsBillnoListQueryModel> query)
+        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospitalDepartment(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId)
         {
-            return _PurchaseGoodsBillnoRespository.GetPagerList(query);
+            return _PurchaseGoodsBillnoRespository.GetPagerListByHospitalDepartment(query, hospitalDepartmentId);
         }
-
+        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
+        {
+            return _PurchaseGoodsBillnoRespository.GetPagerListByClient(query, clientId);
+        }
 
         public PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId)
         {

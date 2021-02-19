@@ -7,7 +7,8 @@ namespace iservice.purchase
 {
     public interface IPurchaseGoodsBillnoService
     {
-        PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerList(PagerQuery<PurchaseGoodsBillnoListQueryModel> query);
+        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospitalDepartment(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId);
+        PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId);
         PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseGoodsBillnoUpdateApiModel updated);
