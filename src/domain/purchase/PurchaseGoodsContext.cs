@@ -3,7 +3,9 @@ using domain.purchase.valuemodel;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase;
+using irespository.purchase.goods.model;
 using irespository.purchase.model;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace domain.purchase
@@ -27,11 +29,20 @@ namespace domain.purchase
         public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
             var data = _PurchaseGoodsRespository.GetPagerListByClient(query, clientId);
-            var result = data.Result.Select(x => new PurchaseGoodsMappingListApiModel
+            var result = new List<PurchaseGoodsMappingListApiModel>();
+            foreach (var x in data.Result)
             {
-                PurchaseGoods = x,
-                ClientMappingGoods = _clientMappingGoodsContext.GetIndexByHospitalGoodsId(x.HospitalGoods.Id, clientId),
-            });
+                var mapping = _clientMappingGoodsContext.GetIndexByHospitalGoodsId(x.HospitalGoods.Id, clientId);
+                result.Add(new PurchaseGoodsMappingListApiModel
+                {
+                    PurchaseGoods = x,
+                    MappingClientGoods = new MappingClientGoodsValueModel
+                    {
+                        ClientGoods = mapping.ClientGoods,
+                        Qty = x.Qty * mapping.ClientQty / mapping.HospitalQty,
+                    },
+                });
+            }
             return new PagerResult<PurchaseGoodsMappingListApiModel>
             {
                 Index = data.Index,
