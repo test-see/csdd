@@ -33,24 +33,20 @@ namespace respository.store
         }
         public int CreateOrUpdate(StoreChangeGoodsValueModel created, int changeTypeId, int departmentId, int userId)
         {
-            using (var tran = _context.Database.BeginTransaction())
+            var beforeStore = GetIndexByGoods(departmentId, created.HospitalGoodId);
+            var record = _storeRecordRespository.Create(new StoreRecordCreateApiModel
             {
-                var beforeStore = GetIndexByGoods(departmentId, created.HospitalGoodId);
-                var record = _storeRecordRespository.Create(new StoreRecordCreateApiModel
-                {
-                    BeforeQty = beforeStore?.Qty ?? 0,
-                    ChangeQty = created.Qty,
-                    ChangeTypeId = changeTypeId,
-                    HospitalDepartmentId = departmentId,
-                    HospitalGoodsId = created.HospitalGoodId,
-                }, userId);
+                BeforeQty = beforeStore?.Qty ?? 0,
+                ChangeQty = created.Qty,
+                ChangeTypeId = changeTypeId,
+                HospitalDepartmentId = departmentId,
+                HospitalGoodsId = created.HospitalGoodId,
+            }, userId);
 
-                if (beforeStore == null) Create(created.HospitalGoodId, created.Qty, departmentId, userId);
-                else Update(beforeStore, created.Qty, userId);
+            if (beforeStore == null) Create(created.HospitalGoodId, created.Qty, departmentId, userId);
+            else Update(beforeStore, created.Qty, userId);
 
-                tran.Commit();
-                return record.Id;
-            }
+            return record.Id;
         }
 
         private void Create(int hospitalGoodId, int changeQty, int department, int userId)
