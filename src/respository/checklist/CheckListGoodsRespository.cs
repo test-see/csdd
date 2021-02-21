@@ -78,9 +78,11 @@ namespace respository.checklist
 
         public decimal GetPreviewListAmount(int checkListId)
         {
-            //var sql =  _context.CheckListGoods .Where(x=>x.CheckListId == checkListId)
-            //          .Sum(x=>x.)
-            return 0;
+            var sql = from r in _context.CheckListGoods
+                      join g in _context.HospitalGoods on r.HospitalGoodsId equals g.Id
+                      where r.CheckListId == checkListId
+                      select (r.CheckQty - r.StoreQty) * g.Price;
+            return sql.Sum();
         }
 
         public CheckListGoods Create(CheckListGoodsCreateApiModel created, int userId)
