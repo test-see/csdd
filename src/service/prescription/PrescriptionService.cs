@@ -22,5 +22,9 @@ namespace service.prescription
         {
             return _prescriptionContext.GetPagerList(query);
         }
+        public int Submit(int id)
+        {
+            return _prescriptionContext.Submit(id);
+        }
     }
 }

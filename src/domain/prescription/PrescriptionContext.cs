@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.prescription;
 using irespository.prescription.model;
+using irespository.prescription.profile.enums;
 
 namespace domain.prescription
 {
@@ -20,6 +21,10 @@ namespace domain.prescription
         public Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId)
         {
             return _prescriptionRespository.Create(created, departmentId, userId);
+        }
+        public int Submit(int id)
+        {
+            return _prescriptionRespository.UpdateStatus(id, PrescriptionStatus.Submited);
         }
     }
 }

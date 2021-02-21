@@ -31,5 +31,12 @@ namespace webstarter.hospital.controllers.prescription
             var data = _prescriptionService.Create(created, HospitalDepartment.Id, Profile.Id);
             return Json(data);
         }
+        [HttpGet]
+        [Route("{id}/submit")]
+        public JsonResult Submit(int id)
+        {
+            var data = _prescriptionService.Submit(id);
+            return Json(data);
+        }
     }
 }

@@ -5,6 +5,7 @@ using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.prescription;
 using irespository.prescription.model;
+using irespository.prescription.profile.enums;
 using System;
 using System.Linq;
 
@@ -70,6 +71,16 @@ namespace respository.prescription
                 }
             }
             return data;
+        }
+
+        public int UpdateStatus(int id, PrescriptionStatus status)
+        {
+            var setting = _context.Prescription.First(x => x.Id == id);
+            setting.Status = (int)status;
+
+            _context.Prescription.Update(setting);
+            _context.SaveChanges();
+            return setting.Id;
         }
     }
 }
