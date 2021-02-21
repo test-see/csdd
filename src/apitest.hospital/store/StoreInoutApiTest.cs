@@ -31,7 +31,7 @@ namespace apitest.storeinout
             var hospital = await _rootpath
                 .AppendPathSegment("/api/StoreInout/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new StoreInoutCreateApiModel { Name = "1", Remark = "2" })
+                .PostJsonAsync(new StoreInoutCreateApiModel { Name = "1", Remark = "2", ChangeTypeId=2, })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.StoreInout>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/StoreInout/{hospital.Data.Id}/delete")
