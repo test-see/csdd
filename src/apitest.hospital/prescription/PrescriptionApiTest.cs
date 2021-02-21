@@ -40,5 +40,15 @@ namespace apitest.prescription
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Prescription>>();
             Assert.AreEqual(200, message.Code);
         }
+        [TestMethod]
+        public async Task Prescription_Submit_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Prescription/1/submit")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+        }
+
     }
 }

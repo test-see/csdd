@@ -10,5 +10,6 @@ namespace irespository.prescription
         PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query);
         Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId);
         int UpdateStatus(int id, PrescriptionStatus status);
+        Prescription Get(int id);
     }
 }

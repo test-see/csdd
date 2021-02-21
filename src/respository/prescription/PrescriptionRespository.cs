@@ -82,5 +82,10 @@ namespace respository.prescription
             _context.SaveChanges();
             return setting.Id;
         }
+
+        public Prescription Get(int id)
+        {
+            return _context.Prescription.FirstOrDefault(x => x.Id == id);
+        }
     }
 }

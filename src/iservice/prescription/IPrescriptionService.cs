@@ -8,6 +8,6 @@ namespace iservice.prescription
     {
         PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query);
         Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId);
-        int Submit(int id);
+        int Submit(int id, int userId);
     }
 }
