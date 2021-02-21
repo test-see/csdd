@@ -58,5 +58,12 @@ namespace webstarter.hospital.controllers.StoreInout
             return Json(data);
         }
 
+        [HttpGet]
+        [Route("changetype")]
+        public JsonResult GetCustomizeChangeTypeList()
+        {
+            var data = _storeInoutService.GetCustomizeChangeTypeList();
+            return Json(data);
+        }
     }
 }

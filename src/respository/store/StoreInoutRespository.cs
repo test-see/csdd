@@ -25,6 +25,7 @@ namespace respository.store
         {
             var sql = from r in _context.StoreInout
                       join u in _context.User on r.CreateUserId equals u.Id
+                      join d in _context.DataStoreChangeType on r.ChangeTypeId equals d.Id
                       select new StoreInoutListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -32,6 +33,7 @@ namespace respository.store
                           CreateUserName = u.Username,
                           Name = r.Name,
                           Remark = r.Remark,
+                          ChangeType = d,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
             var data = new PagerResult<StoreInoutListApiModel>(query.Index, query.Size, sql);
@@ -54,6 +56,7 @@ namespace respository.store
                 CreateTime = DateTime.Now,
                 Name = created.Name,
                 Remark = created.Remark,
+                ChangeTypeId = created.ChangeTypeId,
                 Status = (int)StoreInoutStatus.Pendding,
             };
 

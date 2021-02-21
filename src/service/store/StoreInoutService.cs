@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.storeinout.model;
 using iservice.store;
+using System.Collections.Generic;
 
 namespace service.store
 {
@@ -35,6 +36,11 @@ namespace service.store
         public int Submit(int id, int userId)
         {
             return _StoreInoutContext.Submit(id, userId);
+        }
+
+        public IEnumerable<DataStoreChangeType> GetCustomizeChangeTypeList()
+        {
+            return _StoreInoutContext.GetCustomizeChangeTypeList();
         }
     }
 }

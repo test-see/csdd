@@ -2,8 +2,11 @@
 using Flurl;
 using Flurl.Http;
 using foundation.config;
+using foundation.ef5.poco;
 using irespository.storeinout.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace apitest.storeinout
@@ -57,6 +60,16 @@ namespace apitest.storeinout
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
+        }
+        [TestMethod]
+        public async Task StoreInout_Type_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/StoreInout/changetype")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<IEnumerable<DataStoreChangeType>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Any());
         }
     }
 }

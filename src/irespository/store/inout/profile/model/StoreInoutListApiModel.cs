@@ -1,4 +1,5 @@
-﻿using irespository.hospital.department.model;
+﻿using foundation.ef5.poco;
+using irespository.hospital.department.model;
 using System;
 
 namespace irespository.storeinout.model
@@ -11,5 +12,6 @@ namespace irespository.storeinout.model
         public string Remark { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
+        public DataStoreChangeType ChangeType { get; set; }
     }
 }
