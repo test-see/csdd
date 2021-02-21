@@ -7,6 +7,7 @@ using irespository.checklist;
 using irespository.checklist.model;
 using System;
 using System.Linq;
+using irespository.checklist.goods.model;
 
 namespace respository.checklist
 {
@@ -20,11 +21,11 @@ namespace respository.checklist
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
         }
-        public PagerResult<CheckListGoodsApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
+        public PagerResult<CheckListGoodsListApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
         {
             var sql = from r in _context.CheckListGoods
                       join u in _context.User on r.CreateUserId equals u.Id
-                      select new CheckListGoodsApiModel
+                      select new CheckListGoodsListApiModel
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
@@ -36,7 +37,35 @@ namespace respository.checklist
                           CreateUsername = u.Username,
                           StoreQty = r.StoreQty,
                       };
-            var data = new PagerResult<CheckListGoodsApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<CheckListGoodsListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                }
+            }
+            return data;
+        }
+
+        public PagerResult<CheckListGoodsPreviewListApiModel> GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        {
+            var sql = from r in _context.CheckListGoods
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      where r.CheckListId == checkListId
+                      select new CheckListGoodsPreviewListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          CheckQty = r.CheckQty,
+                          HospitalGoods = new HospitalGoodsValueModel
+                          {
+                              Id = r.HospitalGoodsId,
+                          },
+                          CreateUsername = u.Username,
+                          StoreQty = r.StoreQty,
+                      };
+            var data = new PagerResult<CheckListGoodsPreviewListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
                 foreach (var m in data.Result)

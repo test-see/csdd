@@ -2,6 +2,7 @@
 using Flurl;
 using Flurl.Http;
 using foundation.config;
+using irespository.checklist.goods.model;
 using irespository.checklist.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
@@ -79,6 +80,17 @@ namespace apitest.checklist
                 .WithOAuthBearerToken(await getToken())
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
+        }
+        [TestMethod]
+        public async Task CheckList_Preview_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/CheckList/1/preview")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new PagerQuery<CheckListGoodsPreviewQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<CheckListGoodsPreviewListApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
     }
 }

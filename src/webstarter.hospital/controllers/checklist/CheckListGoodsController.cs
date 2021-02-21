@@ -24,7 +24,6 @@ namespace webstarter.hospital.controllers.CheckList
             return Json(data);
         }
 
-
         [HttpGet]
         [Route("{id}/delete")]
         public JsonResult Delete(int id)

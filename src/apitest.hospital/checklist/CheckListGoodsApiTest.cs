@@ -18,7 +18,7 @@ namespace apitest.checklist
                 .AppendPathSegment("/api/CheckListGoods/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<CheckListGoodsQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<CheckListGoodsApiModel>>>();
+                .ReceiveJson<OkMessage<PagerResult<CheckListGoodsListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }

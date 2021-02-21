@@ -1,6 +1,7 @@
 ﻿using domain.checklist;
 using foundation.config;
 using foundation.ef5.poco;
+using irespository.checklist.goods.model;
 using irespository.checklist.model;
 using iservice.checklist;
 
@@ -13,7 +14,7 @@ namespace service.checklist
         {
             _CheckListGoodsContext = CheckListGoodsContext;
         }
-        public PagerResult<CheckListGoodsApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
+        public PagerResult<CheckListGoodsListApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
         {
             return _CheckListGoodsContext.GetPagerList(query);
         }

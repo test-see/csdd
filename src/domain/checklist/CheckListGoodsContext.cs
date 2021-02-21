@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.checklist;
+using irespository.checklist.goods.model;
 using irespository.checklist.model;
 
 namespace domain.checklist
@@ -13,9 +14,13 @@ namespace domain.checklist
             _CheckListGoodsRespository = CheckListGoodsRespositoryy;
         }
 
-        public PagerResult<CheckListGoodsApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
+        public PagerResult<CheckListGoodsListApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
         {
             return _CheckListGoodsRespository.GetPagerList(query);
+        }
+        public PagerResult<CheckListGoodsPreviewListApiModel> GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        {
+            return _CheckListGoodsRespository.GetPagerPreviewList(checkListId, query);
         }
         public CheckListGoods Create(CheckListGoodsCreateApiModel created, int userId)
         {

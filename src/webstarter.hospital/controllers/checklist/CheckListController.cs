@@ -67,6 +67,14 @@ namespace webstarter.hospital.controllers.CheckList
             return Json(data);
         }
 
+        [HttpPost]
+        [Route("{id}/preview")]
+        public JsonResult GetPreviewList(int id, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        {
+            var data = _CheckListService.GetPagerPreviewList(id, query);
+            return Json(data);
+        }
+
         [HttpGet]
         [Route("{id}/bill")]
         public JsonResult Bill(int id)

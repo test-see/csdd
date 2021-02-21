@@ -1,6 +1,7 @@
 ﻿using domain.checklist;
 using foundation.config;
 using foundation.ef5.poco;
+using irespository.checklist.goods.model;
 using irespository.checklist.model;
 using iservice.checklist;
 
@@ -9,13 +10,20 @@ namespace service.checklist
     public class CheckListService : ICheckListService
     {
         private readonly CheckListContext _CheckListContext;
-        public CheckListService(CheckListContext CheckListContext)
+        private readonly CheckListGoodsContext _CheckListGoodsContext;
+        public CheckListService(CheckListContext CheckListContext,
+            CheckListGoodsContext CheckListGoodsContext)
         {
             _CheckListContext = CheckListContext;
+            _CheckListGoodsContext = CheckListGoodsContext;
         }
         public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query)
         {
             return _CheckListContext.GetPagerList(query);
+        }
+        public PagerResult<CheckListGoodsPreviewListApiModel> GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        {
+            return _CheckListGoodsContext.GetPagerPreviewList(checkListId, query);
         }
         public CheckList Create(CheckListCreateApiModel created, int departmentId, int userId)
         {
