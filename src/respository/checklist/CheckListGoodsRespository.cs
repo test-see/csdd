@@ -76,6 +76,13 @@ namespace respository.checklist
             return data;
         }
 
+        public decimal GetPreviewListAmount(int checkListId)
+        {
+            //var sql =  _context.CheckListGoods .Where(x=>x.CheckListId == checkListId)
+            //          .Sum(x=>x.)
+            return 0;
+        }
+
         public CheckListGoods Create(CheckListGoodsCreateApiModel created, int userId)
         {
             var setting = new CheckListGoods

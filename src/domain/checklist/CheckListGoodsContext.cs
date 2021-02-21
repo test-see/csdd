@@ -18,10 +18,6 @@ namespace domain.checklist
         {
             return _CheckListGoodsRespository.GetPagerList(query);
         }
-        public PagerResult<CheckListGoodsPreviewListApiModel> GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
-        {
-            return _CheckListGoodsRespository.GetPagerPreviewList(checkListId, query);
-        }
         public CheckListGoods Create(CheckListGoodsCreateApiModel created, int userId)
         {
             return _CheckListGoodsRespository.Create(created, userId);
@@ -33,6 +29,14 @@ namespace domain.checklist
         public int Update(int id, CheckListGoodsUpdateApiModel updated)
         {
             return _CheckListGoodsRespository.Update(id, updated);
+        }
+        public PagerResult<CheckListGoodsPreviewListApiModel> GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        {
+            return _CheckListGoodsRespository.GetPagerPreviewList(checkListId, query);
+        }
+        public decimal GetPreviewListAmount(int checkListId)
+        {
+            return _CheckListGoodsRespository.GetPreviewListAmount(checkListId);
         }
     }
 }

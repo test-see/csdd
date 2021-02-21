@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
         public string Remark { get; set; }
-        //public bool IsAuto { get; set; }
+        public int? PurchaseSettingId { get; set; }
     }
 }

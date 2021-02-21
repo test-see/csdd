@@ -4,6 +4,7 @@ using Flurl.Http;
 using foundation.config;
 using irespository.checklist.goods.model;
 using irespository.checklist.model;
+using irespository.checklist.profile.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
@@ -88,9 +89,8 @@ namespace apitest.checklist
                 .AppendPathSegment("/api/CheckList/1/preview")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<CheckListGoodsPreviewQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<CheckListGoodsPreviewListApiModel>>>();
+                .ReceiveJson<OkMessage<CheckListPreviewApiModel>>();
             Assert.AreEqual(200, message.Code);
-            Assert.IsTrue(message.Data.Total > 0);
         }
     }
 }

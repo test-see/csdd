@@ -9,6 +9,7 @@ namespace irespository.checklist
     {
         PagerResult<CheckListGoodsListApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query);
         PagerResult<CheckListGoodsPreviewListApiModel> GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query);
+        decimal GetPreviewListAmount(int checkListId);
         CheckListGoods Create(CheckListGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, CheckListGoodsUpdateApiModel updated);
