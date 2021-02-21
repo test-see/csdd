@@ -9,9 +9,12 @@ namespace domain.purchase
     public class PurchaseContext
     {
         private readonly IPurchaseRespository _purchaseRespository;
-        public PurchaseContext(IPurchaseRespository purchaseRespository)
+        private readonly PurchaseSettingContext _purchaseSettingContext;
+        public PurchaseContext(IPurchaseRespository purchaseRespository,
+            PurchaseSettingContext purchaseSettingContext)
         {
             _purchaseRespository = purchaseRespository;
+            _purchaseSettingContext = purchaseSettingContext;
         }
 
         public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
@@ -20,7 +23,13 @@ namespace domain.purchase
         }
         public Purchase Create(PurchaseCreateApiModel created, int departmentId, int userId)
         {
-            return _purchaseRespository.Create(created, departmentId, userId);
+            var purchase = _purchaseRespository.Create(created, departmentId, userId);
+            if (created.PurchaseSettingId != null)
+            {
+                var setting = _purchaseSettingContext.GetIndex(created.PurchaseSettingId.Value);
+                //foreach(var item in setting.)
+            }
+            return purchase;
         }
         public int Delete(int id)
         {
