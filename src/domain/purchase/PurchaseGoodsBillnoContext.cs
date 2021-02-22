@@ -15,11 +15,14 @@ namespace domain.purchase
     {
         private readonly IPurchaseGoodsBillnoRespository _PurchaseGoodsBillnoRespository;
         private readonly StoreContext _storeContext;
+        private readonly StoreRecordBillnoContext _storeRecordBillnoContext;
         public PurchaseGoodsBillnoContext(IPurchaseGoodsBillnoRespository purchaseGoodsBillnoRespositoryy,
-            StoreContext storeContext)
+            StoreContext storeContext,
+            StoreRecordBillnoContext storeRecordBillnoContext)
         {
             _PurchaseGoodsBillnoRespository = purchaseGoodsBillnoRespositoryy;
             _storeContext = storeContext;
+            _storeRecordBillnoContext = storeRecordBillnoContext;
         }
 
         public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospitalDepartment(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId)
@@ -59,7 +62,7 @@ namespace domain.purchase
                     },
                 };
                 var recordId = _storeContext.CreateOrUpdate(changed, goods.Purchase.HospitalDepartment.Id, userId);
-
+                _storeRecordBillnoContext.Create(id, recordId);
                 _PurchaseGoodsBillnoRespository.UpdateStatus(id, BillStatus.Comfirmed);
             }
             return ids.Count;
