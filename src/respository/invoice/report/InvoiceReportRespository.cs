@@ -97,12 +97,13 @@ namespace respository.invoice
                       where r.CreateTime > invoice.StartDate
                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
                       && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
-                      group r by t into gt
+                      group new { r.Id, r.Price } by new { t.Id, t.Name } into gt
                       select new InvoiceReportValueModel
                       {
                           Key = gt.Key.Id,
                           Name = gt.Key.Name,
                           Amount = gt.Sum(x => x.Price),
+
                       };
             var reports = sql.ToList();
             foreach (var item in reports)
