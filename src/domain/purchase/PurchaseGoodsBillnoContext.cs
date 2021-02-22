@@ -49,7 +49,7 @@ namespace domain.purchase
             foreach (var id in ids)
             {
                 var goods = _PurchaseGoodsBillnoRespository.GetIndex(id);
-                _storeContext.CreateOrUpdate(new StoreChangeApiModel
+                var changed = new StoreChangeApiModel
                 {
                     ChangeTypeId = (int)StoreChangeType.Purchase,
                     HospitalChangeGoods = new StoreChangeGoodsValueModel
@@ -57,7 +57,9 @@ namespace domain.purchase
                         HospitalGoodId = goods.HospitalGoods.Id,
                         Qty = goods.Qty,
                     },
-                }, goods.Purchase.HospitalDepartment.Id, userId);
+                };
+                var recordId = _storeContext.CreateOrUpdate(changed, goods.Purchase.HospitalDepartment.Id, userId);
+
                 _PurchaseGoodsBillnoRespository.UpdateStatus(id, BillStatus.Comfirmed);
             }
             return ids.Count;
