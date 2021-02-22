@@ -67,7 +67,7 @@ namespace respository.invoice
                       where r.CreateTime > invoice.StartDate
                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
                       && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
-                      group new { p.Price, r.Id } by new { ht.Id, ht.Name } into gt
+                      group p by ht into gt
                       select new InvoiceReportValueModel
                       {
                           Key = gt.Key.Id,
