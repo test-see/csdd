@@ -70,11 +70,24 @@ namespace respository.invoice
                       group new { p.Price, r.Id } by new { ht.Id, ht.Name } into gt
                       select new InvoiceReportValueModel
                       {
+                          Key = gt.Key.Id,
                           Name = gt.Key.Name,
                           Amount = gt.Sum(x => x.Price),
-                          StoreRecordIds = gt.Select(x => x.Id).ToList(),
                       };
-            return sql.ToList();
+            var reports = sql.ToList();
+            foreach(var item in reports)
+            {
+                item.StoreRecordIds = (from r in _context.StoreRecord
+                                       join b in _context.StoreRecordBillno on r.Id equals b.StoreRecordId
+                                       join p in _context.PurchaseGoodsBillno on b.PurchaseGoodsBillnoId equals p.Id
+                                       join c in _context.PurchaseGoods on p.PurchaseGoodsId equals c.Id
+                                       where r.CreateTime > invoice.StartDate
+                                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
+                                       && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
+                                       && c.HospitalClientId == item.Key
+                                       select r.Id).ToList();
+            }
+            return reports;
         }
 
         public List<InvoiceReportValueModel> GetInvoiceListByChangeType(InvoiceIndexApiModel invoice)
@@ -84,14 +97,24 @@ namespace respository.invoice
                       where r.CreateTime > invoice.StartDate
                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
                       && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
-                      group new { r.Price, r.Id } by t.Name into gt
+                      group r by t into gt
                       select new InvoiceReportValueModel
                       {
-                          Name = gt.Key,
+                          Key = gt.Key.Id,
+                          Name = gt.Key.Name,
                           Amount = gt.Sum(x => x.Price),
-                          StoreRecordIds = gt.Select(x => x.Id).ToList(),
                       };
-            return sql.ToList();
+            var reports = sql.ToList();
+            foreach (var item in reports)
+            {
+                item.StoreRecordIds = (from r in _context.StoreRecord
+                                       where r.CreateTime > invoice.StartDate
+                                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
+                                       && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
+                                       && r.ChangeTypeId == item.Key
+                                       select r.Id).ToList();
+            }
+            return reports;
         }
 
         public PagerResult<InvoiceReportListApiModel> GetPagerList(PagerQuery<InvoiceReportQueryApiModel> query)
