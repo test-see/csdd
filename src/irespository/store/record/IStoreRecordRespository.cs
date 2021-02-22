@@ -9,5 +9,6 @@ namespace irespository.store
     {
         PagerResult<StoreRecordListApiModel> GetPagerList(PagerQuery<StoreRecordListQueryModel> query);
         StoreRecord Create(StoreRecordCreateApiModel created, int userId);
+        int GetConsumeAmount(int deparmentId, int goodsId, int days);
     }
 }

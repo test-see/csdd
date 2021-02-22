@@ -43,6 +43,9 @@ namespace domain.hospital
         {
             return _hospitalDepartmentRespository.GetParentList();
         }
-
+        public HospitalDepartmentValueModel GetValue(int id)
+        {
+            return _hospitalDepartmentRespository.GetValue(id);
+        }
     }
 }

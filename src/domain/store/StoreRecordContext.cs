@@ -17,9 +17,9 @@ namespace domain.store
             return _storeRecordRespository.GetPagerList(query);
         }
 
-        public int GetAA()
+        public int GetConsumeAmount(int deparmentId, int goodsId, int days)
         {
-            return 0;
+            return _storeRecordRespository.GetConsumeAmount(deparmentId, goodsId, days);
         }
     }
 }

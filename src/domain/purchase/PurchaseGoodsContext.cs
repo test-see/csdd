@@ -19,15 +19,21 @@ namespace domain.purchase
         private readonly ClientMappingGoodsContext _clientMappingGoodsContext;
         private readonly StoreContext _storeContext;
         private readonly HospitalGoodsClientContext _hospitalGoodsClientContext;
+        private readonly StoreRecordContext _storeRecordContext;
+        private readonly HospitalDepartmentContext _hospitalDepartmentContext;
         public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy,
             ClientMappingGoodsContext clientMappingGoodsContext,
             StoreContext storeContext,
-            HospitalGoodsClientContext hospitalGoodsClientContext)
+            HospitalGoodsClientContext hospitalGoodsClientContext,
+            StoreRecordContext storeRecordContext,
+            HospitalDepartmentContext hospitalDepartmentContext)
         {
             _PurchaseGoodsRespository = purchaseGoodsRespositoryy;
             _clientMappingGoodsContext = clientMappingGoodsContext;
             _storeContext = storeContext;
             _hospitalGoodsClientContext = hospitalGoodsClientContext;
+            _storeRecordContext = storeRecordContext;
+            _hospitalDepartmentContext = hospitalDepartmentContext;
         }
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
@@ -80,18 +86,10 @@ namespace domain.purchase
         {
             var clients = _hospitalGoodsClientContext.GeListByGoodsId(threshold.HospitalGoodsId);
             if (!clients.Any()) return;
-            var qty = 0;
-            switch (threshold.ThresholdTypeId)
-            {
-                case (int)PurchaseSettingThresholdType.ByQty:
-                    qty = GenerateByQty(threshold, departmentId);
-                    break;
-                case (int)PurchaseSettingThresholdType.ByPercent:
-                    qty = GenerateByPercent(threshold, departmentId);
-                    break;
-            }
 
+            var qty = GetPurchaseGoodsQty(threshold, departmentId);
             if (qty <= 0) return;
+
             Create(new PurchaseGoodsCreateApiModel
             {
                 HospitalClientId = clients.First().HospitalClient.Id,
@@ -101,19 +99,31 @@ namespace domain.purchase
             }, userId);
         }
 
-        private int GenerateByQty(PurchaseSettingThreshold threshold, int departmentId)
+        private int GetPurchaseGoodsQty(PurchaseSettingThreshold threshold, int departmentId)
         {
             var store = _storeContext.GetIndexByGoods(departmentId, threshold.HospitalGoodsId);
-            if (store.Qty < threshold.DownQty)
+            var storeQty = store?.Qty ?? 0;
+            var qty = 0;
+            switch (threshold.ThresholdTypeId)
             {
-                return threshold.UpQty - store.Qty;
+                case (int)PurchaseSettingThresholdType.ByQty:
+                    if (storeQty < threshold.DownQty)
+                        qty = threshold.UpQty - storeQty;
+                    break;
+                case (int)PurchaseSettingThresholdType.ByPercent:
+                    qty = GetPurchaseGoodsQtyByPercent(threshold, storeQty, departmentId);
+                    break;
             }
-            return 0;
+            return qty;
         }
 
-        private int GenerateByPercent(PurchaseSettingThreshold threshold, int departmentId)
+        private int GetPurchaseGoodsQtyByPercent(PurchaseSettingThreshold threshold, int storeQty, int departmentId)
         {
-
+            var department = _hospitalDepartmentContext.GetValue(departmentId);
+            var total = _storeRecordContext.GetConsumeAmount(departmentId, threshold.HospitalGoodsId, department.Hospital.ConsumeDays);
+            var average = total / department.Hospital.ConsumeDays;
+            if (storeQty < average * threshold.DownQty)
+                return average * threshold.UpQty - storeQty;
             return 0;
         }
     }

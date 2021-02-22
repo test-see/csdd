@@ -81,5 +81,10 @@ namespace respository.store
 
             return record;
         }
+
+        public int GetConsumeAmount(int deparmentId, int goodsId, int days)
+        {
+            return 0;
+        }
     }
 }

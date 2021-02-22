@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.model;
+using irespository.hospital.profile.model;
 
 namespace domain.hospital
 {
@@ -28,6 +29,10 @@ namespace domain.hospital
         public int Update(int id, HospitalUpdateApiModel updated)
         {
             return _hospitalRespository.Update(id, updated);
+        }
+        public HospitalValueModel GetValue(int id)
+        {
+            return _hospitalRespository.GetValue(id);
         }
     }
 }
