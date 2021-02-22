@@ -42,6 +42,7 @@ namespace respository.purchase
                           Billno = r.Billno,
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
+                          Price = r.Price,
                           Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
                       };
 
@@ -73,6 +74,7 @@ namespace respository.purchase
                           Billno = r.Billno,
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
+                          Price = r.Price,
                           Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
                       };
 
@@ -100,6 +102,7 @@ namespace respository.purchase
                 CreateUserId = userId,
                 PurchaseGoodsId = created.PurchaseGoodsId,
                 Status = (int)BillStatus.Pendding,
+                Price = created.Price,
             };
 
             _context.PurchaseGoodsBillno.Add(setting);
@@ -122,6 +125,7 @@ namespace respository.purchase
             setting.Qty = updated.Qty;
             setting.Billno = updated.Billno;
             setting.Enddate = updated.Enddate;
+            setting.Price = updated.Price;
 
             _context.PurchaseGoodsBillno.Update(setting);
             _context.SaveChanges();
@@ -152,6 +156,7 @@ namespace respository.purchase
                           Billno = r.Billno,
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
+                          Price = r.Price,
                           Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
                       };
             var profile = sql.FirstOrDefault();

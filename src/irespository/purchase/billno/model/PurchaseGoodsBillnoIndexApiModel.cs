@@ -12,6 +12,7 @@ namespace irespository.purchase.model
         public string CreateUserName { get; set; }
         public string Billno { get; set; }
         public int Qty { get; set; }
+        public decimal Price { get; set; }
         public DateTime Enddate { get; set; }
     }
 }

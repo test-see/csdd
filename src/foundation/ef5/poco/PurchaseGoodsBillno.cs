@@ -16,6 +16,8 @@ namespace foundation.ef5.poco
         public int Qty { get; set; }
         [Column("enddate")]
         public DateTime Enddate { get; set; }
+        [Column("price")]
+        public decimal Price { get; set; }
         [Column("status")]
         public int Status { get; set; }
         [Column("createtime")]

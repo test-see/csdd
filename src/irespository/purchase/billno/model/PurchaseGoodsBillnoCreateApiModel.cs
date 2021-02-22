@@ -8,6 +8,7 @@ namespace irespository.purchase.model
         public int Qty { get; set; }
         public string Billno { get; set; }
         public DateTime Enddate { get; set; }
+        public decimal Price { get; set; }
 
     }
 }
