@@ -36,6 +36,7 @@ namespace apitest.purchase
                     PurchaseGoodsId = 1,
                     Billno = "1",
                     Enddate = DateTime.Now,
+                    Price = 1,
                 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.PurchaseGoodsBillno>>();
             var message = await _rootpath
