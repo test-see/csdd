@@ -2,12 +2,11 @@
 using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.hospital;
-using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
-using irespository.hospital.profile.model;
 using irespository.purchase;
 using irespository.purchase.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.purchase
@@ -88,6 +87,11 @@ namespace respository.purchase
             _context.PurchaseSettingThreshold.Update(setting);
             _context.SaveChanges();
             return setting.Id;
+        }
+
+        public IList<PurchaseSettingThreshold> GetListBySettingId(int settingId)
+        {
+            return _context.PurchaseSettingThreshold.Where(x => x.PurchaseSettingId == settingId).ToList();
         }
     }
 }

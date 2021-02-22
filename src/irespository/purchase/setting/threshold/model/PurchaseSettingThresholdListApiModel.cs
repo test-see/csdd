@@ -1,5 +1,6 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
+using irespository.hospital.client.model;
 using irespository.hospital.goods.model;
 using System;
 

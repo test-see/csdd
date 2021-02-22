@@ -38,5 +38,9 @@ namespace domain.purchase
         {
             return _purchaseThresholdTypeRespository.GetList();
         }
+        public IList<PurchaseSettingThreshold> GetListBySettingId(int settingId)
+        {
+            return _purchaseSettingThresholdRespository.GetListBySettingId(settingId);
+        }
     }
 }

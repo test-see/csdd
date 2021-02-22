@@ -1,10 +1,12 @@
 ﻿using domain.client;
 using domain.purchase.valuemodel;
+using domain.store;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.goods.model;
 using irespository.purchase.model;
+using irespository.purchase.setting.threshold.enums;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,11 +16,14 @@ namespace domain.purchase
     {
         private readonly IPurchaseGoodsRespository _PurchaseGoodsRespository;
         private readonly ClientMappingGoodsContext _clientMappingGoodsContext;
+        private readonly StoreContext _storeContext;
         public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy,
-            ClientMappingGoodsContext clientMappingGoodsContext)
+            ClientMappingGoodsContext clientMappingGoodsContext,
+            StoreContext storeContext)
         {
             _PurchaseGoodsRespository = purchaseGoodsRespositoryy;
             _clientMappingGoodsContext = clientMappingGoodsContext;
+            _storeContext = storeContext;
         }
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
@@ -64,5 +69,33 @@ namespace domain.purchase
         {
             return _PurchaseGoodsRespository.Update(id, updated);
         }
+
+        public void Generate(int purchaseId, PurchaseSettingThreshold threshold, int departmentId, int userId)
+        {
+            switch (threshold.ThresholdTypeId)
+            {
+                case (int)PurchaseSettingThresholdType.ByQty:
+                    GenerateByQty(purchaseId, threshold, departmentId, userId);
+                    break;
+                case (int)PurchaseSettingThresholdType.ByPercent:
+                    break;
+            }
+        }
+
+        private void GenerateByQty(int purchaseId, PurchaseSettingThreshold threshold, int departmentId, int userId)
+        {
+            var store = _storeContext.GetIndexByGoods(departmentId, threshold.HospitalGoodsId);
+            if (store.Qty < threshold.DownQty)
+            {
+                Create(new PurchaseGoodsCreateApiModel
+                {
+                    HospitalClientId = 0,
+                    HospitalGoodsId = threshold.HospitalGoodsId,
+                    Qty = threshold.UpQty - store.Qty,
+                    PurchaseId = purchaseId,
+                }, userId);
+            }
+        }
+
     }
 }
