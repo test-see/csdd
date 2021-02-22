@@ -97,23 +97,22 @@ namespace respository.invoice
                       where r.CreateTime > invoice.StartDate
                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
                       && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
-                      group new { r.Id, r.Price } by new { t.Id, t.Name } into gt
-                      select new InvoiceReportValueModel
+                      select new
                       {
-                          Key = gt.Key.Id,
-                          Name = gt.Key.Name,
-                          Amount = gt.Sum(x => x.Price),
-
+                          r.ChangeTypeId,
+                          ChangeTypeName = t.Name,
+                          RecordId = r.Id,
+                          r.Price
                       };
-            var reports = sql.ToList();
+            var reports = sql.Select(x => new InvoiceReportValueModel
+            {
+                Id = x.ChangeTypeId,
+                Name = x.ChangeTypeName
+            }).Distinct().ToList();
             foreach (var item in reports)
             {
-                item.StoreRecordIds = (from r in _context.StoreRecord
-                                       where r.CreateTime > invoice.StartDate
-                                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
-                                       && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
-                                       && r.ChangeTypeId == item.Key
-                                       select r.Id).ToList();
+                item.Amount = sql.Where(x => x.ChangeTypeId == item.Id).Sum(x => x.Price);
+                item.StoreRecordIds = sql.Select(x => x.RecordId).ToList();
             }
             return reports;
         }
