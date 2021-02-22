@@ -3,6 +3,7 @@ using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.model;
+using irespository.hospital.profile.model;
 using System;
 using System.Linq;
 
@@ -26,6 +27,7 @@ namespace respository.hospital
                           Name = r.Name,
                           Remark = r.Remark,
                           CreateUserName = u.Username,
+                          ConsumeDays = r.ConsumeDays,
                       };
             return new PagerResult<HospitalListApiModel>(query.Index, query.Size, sql);
         }
@@ -36,6 +38,7 @@ namespace respository.hospital
             {
                 Name = created.Name,
                 Remark = created.Remark,
+                ConsumeDays = created.ConsumeDays,
                 CreateUserId = userId,
                 CreateTime = DateTime.Now,
             };
@@ -59,10 +62,22 @@ namespace respository.hospital
             var hospital = _context.Hospital.First(x => x.Id ==id);
             hospital.Name = updated.Name;
             hospital.Remark = updated.Remark;
+            hospital.ConsumeDays = updated.ConsumeDays;
 
             _context.Hospital.Update(hospital);
             _context.SaveChanges();
             return hospital.Id;
+        }
+
+        public HospitalValueModel GetValue(int id)
+        {
+            return _context.Hospital.Select(x => new HospitalValueModel
+            {
+                ConsumeDays = x.ConsumeDays,
+                Id = x.Id,
+                Name = x.Name,
+                Remark = x.Remark,
+            }).FirstOrDefault();
         }
     }
 }

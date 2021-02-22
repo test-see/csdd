@@ -13,16 +13,18 @@ namespace respository.hospital
     public class HospitalDepartmentRespository : IHospitalDepartmentRespository
     {
         private readonly DefaultDbContext _context;
-        public HospitalDepartmentRespository(DefaultDbContext context)
+        private readonly IHospitalRespository _hospitalRespository;
+        public HospitalDepartmentRespository(DefaultDbContext context,
+            IHospitalRespository hospitalRespository)
         {
             _context = context;
+            _hospitalRespository = hospitalRespository;
         }
 
         public PagerResult<HospitalDepartmentListApiModel> GetPagerList(PagerQuery<HospitalDepartmentListQueryModel> query)
         {
             var sql = from r in _context.HospitalDepartment
                       join u in _context.User on r.CreateUserId equals u.Id
-                      join h in _context.Hospital on r.HospitalId equals h.Id
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
                       join rp in _context.HospitalDepartment on r.ParentId equals rp.Id into rp_def
                       from rp_def_t in rp_def.DefaultIfEmpty()
@@ -33,9 +35,7 @@ namespace respository.hospital
                           Name = r.Name,
                           Hospital = new HospitalValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              Remark = h.Remark,
+                              Id = r.HospitalId
                           },
                           CreateUserName = u.Username,
                           DepartmentType = d,
@@ -46,7 +46,15 @@ namespace respository.hospital
             {
                 sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId.Value);
             }
-            return new PagerResult<HospitalDepartmentListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<HospitalDepartmentListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.Hospital = _hospitalRespository.GetValue(m.Hospital.Id);
+                }
+            }
+            return data;
         }
 
         public HospitalDepartment Create(HospitalDepartmentCreateApiModel created, int userId)
@@ -98,7 +106,6 @@ namespace respository.hospital
         public HospitalDepartmentValueModel GetValue(int id)
         {
             var sql = from r in _context.HospitalDepartment
-                      join h in _context.Hospital on r.HospitalId equals h.Id
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
                       where r.Id == id
                       select new HospitalDepartmentValueModel
@@ -107,13 +114,17 @@ namespace respository.hospital
                           Name = r.Name,
                           Hospital = new HospitalValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              Remark = h.Remark,
+                              Id = r.HospitalId,
                           },
                           DepartmentType = d,
                       };
-            return sql.FirstOrDefault();
+            var profile = sql.FirstOrDefault();
+            if (profile != null)
+            {
+                profile.Hospital = _hospitalRespository.GetValue(profile.Hospital.Id);
+            }
+
+            return profile;
         }
     }
 }

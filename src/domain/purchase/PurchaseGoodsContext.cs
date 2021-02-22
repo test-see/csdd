@@ -65,6 +65,7 @@ namespace domain.purchase
         {
             return _PurchaseGoodsRespository.Create(created, userId);
         }
+        
         public int Delete(int id)
         {
             return _PurchaseGoodsRespository.Delete(id);

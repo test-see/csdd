@@ -16,5 +16,10 @@ namespace domain.store
         {
             return _storeRecordRespository.GetPagerList(query);
         }
+
+        public int GetAA()
+        {
+            return 0;
+        }
     }
 }

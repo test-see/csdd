@@ -13,16 +13,18 @@ namespace respository.hospital
     public class HospitalGoodsRespository : IHospitalGoodsRespository
     {
         private readonly DefaultDbContext _context;
-        public HospitalGoodsRespository(DefaultDbContext context)
+        private readonly IHospitalRespository _hospitalRespository;
+        public HospitalGoodsRespository(DefaultDbContext context,
+            IHospitalRespository hospitalRespository)
         {
             _context = context;
+            _hospitalRespository = hospitalRespository;
         }
 
         public PagerResult<HospitalGoodsListApiModel> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query)
         {
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
-                      join h in _context.Hospital on r.HospitalId equals h.Id
                       select new HospitalGoodsListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -30,9 +32,7 @@ namespace respository.hospital
                           Name = r.Name,
                           Hospital = new HospitalValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              Remark = h.Remark,
+                              Id = r.HospitalId,
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
@@ -55,7 +55,15 @@ namespace respository.hospital
             {
                 sql = sql.Where(x => x.Barcode.Contains(query.Query.Barcode));
             }
-            return new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.Hospital = _hospitalRespository.GetValue(m.Hospital.Id);
+                }
+            }
+            return data;
         }
 
         public HospitalGoods Create(HospitalGoodsCreateApiModel created, int userId)
@@ -116,7 +124,6 @@ namespace respository.hospital
         {
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
-                      join h in _context.Hospital on r.HospitalId equals h.Id
                       where r.Id == id
                       select new HospitalGoodsIndexApiModel
                       {
@@ -125,9 +132,7 @@ namespace respository.hospital
                           Name = r.Name,
                           Hospital = new HospitalValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              Remark = h.Remark,
+                              Id = r.HospitalId,
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
@@ -137,7 +142,13 @@ namespace respository.hospital
                           PinShou = r.PinShou,
                           Price = r.Price,
                       };
-            return sql.FirstOrDefault();
+            var profile = sql.FirstOrDefault();
+            if (profile != null)
+            {
+                profile.Hospital = _hospitalRespository.GetValue(profile.Hospital.Id);
+            }
+
+            return profile;
         }
 
         public HospitalGoods UpdateIsActive(int id, bool isActive)
@@ -153,7 +164,6 @@ namespace respository.hospital
         {
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
-                      join h in _context.Hospital on r.HospitalId equals h.Id
                       where r.Id == id
                       select new HospitalGoodsValueModel
                       {
@@ -161,9 +171,7 @@ namespace respository.hospital
                           Name = r.Name,
                           Hospital = new HospitalValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              Remark = h.Remark,
+                              Id = r.HospitalId,
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
@@ -172,7 +180,13 @@ namespace respository.hospital
                           Price = r.Price,
                           Barcode = r.Barcode,
                       };
-            return sql.FirstOrDefault();
+            var profile = sql.FirstOrDefault();
+            if (profile != null)
+            {
+                profile.Hospital = _hospitalRespository.GetValue(profile.Hospital.Id);
+            }
+
+            return profile;
         }
 
 
@@ -180,7 +194,6 @@ namespace respository.hospital
         {
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
-                      join h in _context.Hospital on r.HospitalId equals h.Id
                       where r.Barcode == barcode.Trim()
                       select new HospitalGoodsValueModel
                       {
@@ -188,9 +201,7 @@ namespace respository.hospital
                           Name = r.Name,
                           Hospital = new HospitalValueModel
                           {
-                              Id = h.Id,
-                              Name = h.Name,
-                              Remark = h.Remark,
+                              Id = r.HospitalId,
                           },
                           Producer = r.Producer,
                           Spec = r.Spec,
@@ -199,7 +210,13 @@ namespace respository.hospital
                           Price = r.Price,
                           Barcode = r.Barcode,
                       };
-            return sql.FirstOrDefault();
+            var profile = sql.FirstOrDefault();
+            if (profile != null)
+            {
+                profile.Hospital = _hospitalRespository.GetValue(profile.Hospital.Id);
+            }
+
+            return profile;
         }
     }
 }

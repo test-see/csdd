@@ -10,6 +10,8 @@ namespace foundation.ef5.poco
         public int Id { get; set; }
         [Column("name")]
         public string Name { get; set; }
+        [Column("consume_days")]
+        public int ConsumeDays { get; set; }
         [Column("remark")]
         public string Remark { get; set; }
         [Column("createtime")]
