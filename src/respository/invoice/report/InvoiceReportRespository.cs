@@ -30,19 +30,8 @@ namespace respository.invoice
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
 
-        public int Generate(int invoiceId)
+        public int Generate(int invoiceId, IList<InvoiceReportValueModel> reports)
         {
-            var invoice = _context.Invoice.First(x => x.Id == invoiceId);
-            var reports = new List<InvoiceReportValueModel>();
-            if (invoice.InvoiceTypeId == (int)InvoiceType.Client)
-            {
-                reports = GetInvoiceListByClient(invoice);
-            }
-            if (invoice.InvoiceTypeId == (int)InvoiceType.ChangeType)
-            {
-                reports = GetInvoiceListByChangeType(invoice);
-            }
-
             if (reports.Any())
             {
                 foreach (var report in reports)
@@ -68,7 +57,7 @@ namespace respository.invoice
             return reports.Count;
         }
 
-        private List<InvoiceReportValueModel> GetInvoiceListByClient(Invoice invoice)
+        public List<InvoiceReportValueModel> GetInvoiceListByClient(InvoiceIndexApiModel invoice)
         {
             //var sql = from r in _context.StoreRecord
 
@@ -84,13 +73,13 @@ namespace respository.invoice
             return new List<InvoiceReportValueModel>();
         }
 
-        private List<InvoiceReportValueModel> GetInvoiceListByChangeType(Invoice invoice)
+        public List<InvoiceReportValueModel> GetInvoiceListByChangeType(InvoiceIndexApiModel invoice)
         {
             var sql = from r in _context.StoreRecord
                       join t in _context.DataInvoiceType on r.ChangeTypeId equals t.Id
                       where r.CreateTime > invoice.StartDate
                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
-                      && r.HospitalDepartmentId == invoice.HospitalDepartmentId
+                      && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
                       group new { r.Price, r.Id } by t.Name into gt
                       select new InvoiceReportValueModel
                       {
@@ -152,6 +141,5 @@ namespace respository.invoice
             return data;
         }
     
-        
     }
 }

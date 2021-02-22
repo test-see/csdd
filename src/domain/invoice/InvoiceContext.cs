@@ -4,6 +4,7 @@ using irespository.data;
 using irespository.invoice;
 using irespository.invoice.model;
 using irespository.invoice.profile.enums;
+using irespository.invoice.report.model;
 using irespository.store.profile.model;
 using System.Collections.Generic;
 
@@ -34,7 +35,18 @@ namespace domain.invoice
 
         public int Generate(int invoiceId)
         {
-            return _invoiceReportRespository.Generate(invoiceId);
+            var invoice = _InvoiceRespository.GetIndex(invoiceId);
+            var reports = new List<InvoiceReportValueModel>();
+            if (invoice.InvoiceType.Id == (int)InvoiceType.Client)
+            {
+                reports = _invoiceReportRespository.GetInvoiceListByClient(invoice);
+            }
+            if (invoice.InvoiceType.Id == (int)InvoiceType.ChangeType)
+            {
+                reports = _invoiceReportRespository.GetInvoiceListByChangeType(invoice);
+            }
+
+            return _invoiceReportRespository.Generate(invoiceId, reports);
         }
 
         public int Delete(int id)
