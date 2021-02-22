@@ -1,4 +1,5 @@
 ﻿using domain.client;
+using domain.hospital;
 using domain.purchase.valuemodel;
 using domain.store;
 using foundation.config;
@@ -17,13 +18,16 @@ namespace domain.purchase
         private readonly IPurchaseGoodsRespository _PurchaseGoodsRespository;
         private readonly ClientMappingGoodsContext _clientMappingGoodsContext;
         private readonly StoreContext _storeContext;
+        private readonly HospitalGoodsClientContext _hospitalGoodsClientContext;
         public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy,
             ClientMappingGoodsContext clientMappingGoodsContext,
-            StoreContext storeContext)
+            StoreContext storeContext,
+            HospitalGoodsClientContext hospitalGoodsClientContext)
         {
             _PurchaseGoodsRespository = purchaseGoodsRespositoryy;
             _clientMappingGoodsContext = clientMappingGoodsContext;
             _storeContext = storeContext;
+            _hospitalGoodsClientContext = hospitalGoodsClientContext;
         }
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
@@ -85,11 +89,12 @@ namespace domain.purchase
         private void GenerateByQty(int purchaseId, PurchaseSettingThreshold threshold, int departmentId, int userId)
         {
             var store = _storeContext.GetIndexByGoods(departmentId, threshold.HospitalGoodsId);
-            if (store.Qty < threshold.DownQty)
+            var clients = _hospitalGoodsClientContext.GeListByGoodsId(threshold.HospitalGoodsId);
+            if (clients.Any() && store.Qty < threshold.DownQty)
             {
                 Create(new PurchaseGoodsCreateApiModel
                 {
-                    HospitalClientId = 0,
+                    HospitalClientId = clients.FirstOrDefault().HospitalClient.Id,
                     HospitalGoodsId = threshold.HospitalGoodsId,
                     Qty = threshold.UpQty - store.Qty,
                     PurchaseId = purchaseId,

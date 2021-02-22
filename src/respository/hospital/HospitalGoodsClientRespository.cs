@@ -2,17 +2,23 @@
 using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.hospital;
+using irespository.hospital.model;
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using irespository.hospital.client.model;
 
 namespace respository.hospital
 {
     public class HospitalGoodsClientRespository : IHospitalGoodsClientRespository
     {
         private readonly DefaultDbContext _context;
-        public HospitalGoodsClientRespository(DefaultDbContext context)
+        private readonly IHospitalClientRespository _hospitalClientRespository;
+        public HospitalGoodsClientRespository(DefaultDbContext context,
+            IHospitalClientRespository hospitalClientRespository)
         {
             _context = context;
+            _hospitalClientRespository = hospitalClientRespository;
         }
         public HospitalGoodsClient Create(int goodsId, int clientId, int userId)
         {
@@ -38,9 +44,24 @@ namespace respository.hospital
             return id;
         }
 
-        public IList<IdNameValueModel> GeClientList(int goodsId)
+        public IList<HospitalGoodsClientListApiModel> GeListByGoodsId(int goodsId)
         {
-            throw new NotImplementedException();
+            var sql = from r in _context.HospitalGoodsClient
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      where r.HospitalGoodsId == goodsId
+                      select new HospitalGoodsClientListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          CreateUserName = u.Username,
+                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
+                      };
+            var result = sql.ToList();
+            foreach (var m in result)
+            {
+                m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
+            }
+            return result;
         }
     }
 }
