@@ -42,6 +42,7 @@ namespace foundation.ef5
         #region hospital
         public DbSet<Hospital> Hospital { get; set; }
         public DbSet<HospitalGoods> HospitalGoods { get; set; }
+        public DbSet<HospitalGoodsClient> HospitalGoodsClient { get; set; }
         public DbSet<HospitalDepartment> HospitalDepartment { get; set; }
         public DbSet<HospitalClient> HospitalClient { get; set; }
         #endregion
