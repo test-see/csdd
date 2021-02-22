@@ -59,18 +59,22 @@ namespace respository.invoice
 
         public List<InvoiceReportValueModel> GetInvoiceListByClient(InvoiceIndexApiModel invoice)
         {
-            //var sql = from r in _context.StoreRecord
-
-            //          where r.CreateTime > invoice.StartDate
-            //          && r.CreateTime < invoice.EndDate.Date.AddDays(1)
-            //          && r.HospitalDepartmentId == invoice.HospitalDepartmentId ;
-            //        // group ;
-
-
-            //var records = sql.ToList();
-
-
-            return new List<InvoiceReportValueModel>();
+            var sql = from r in _context.StoreRecord
+                      join b in _context.StoreRecordBillno on r.Id equals b.StoreRecordId
+                      join p in _context.PurchaseGoodsBillno on b.PurchaseGoodsBillnoId equals p.Id
+                      join c in _context.PurchaseGoods on p.PurchaseGoodsId equals c.Id
+                      join ht in _context.HospitalClient on c.HospitalClientId equals ht.Id
+                      where r.CreateTime > invoice.StartDate
+                      && r.CreateTime < invoice.EndDate.Date.AddDays(1)
+                      && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
+                      group new { r.Price, r.Id } by new { ht.Id, ht.Name } into gt
+                      select new InvoiceReportValueModel
+                      {
+                          Name = gt.Key.Name,
+                          Amount = gt.Sum(x => x.Price),
+                          StoreRecordIds = gt.Select(x => x.Id).ToList(),
+                      };
+            return sql.ToList();
         }
 
         public List<InvoiceReportValueModel> GetInvoiceListByChangeType(InvoiceIndexApiModel invoice)
