@@ -84,7 +84,14 @@ namespace respository.store
 
         public int GetConsumeAmount(int deparmentId, int goodsId, int days)
         {
-            return 0;
+            var sql = from r in _context.StoreRecord
+                      join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
+                      where r.HospitalDepartmentId == deparmentId && r.HospitalGoodsId == goodsId
+                      && ct.IsConsume == 1
+                      && r.CreateTime >= DateTime.Today.AddDays(-days)
+                      select r.ChangeQty;
+
+            return sql.Sum();
         }
     }
 }
