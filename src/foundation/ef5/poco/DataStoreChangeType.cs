@@ -13,5 +13,7 @@ namespace foundation.ef5.poco
         public int Operator { get; set; }
         [Column("is_customize")]
         public int IsCustomize { get; set; }
+        [Column("is_consume")]
+        public int IsConsume { get; set; }
     }
 }
