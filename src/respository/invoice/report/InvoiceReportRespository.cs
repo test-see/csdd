@@ -191,11 +191,12 @@ namespace respository.invoice
 
         private IQueryable<StoreRecordListApiModel> GetPagerRecordListForChangeTypeByInvoiceId(Invoice invoice)
         {
+            var enddate = invoice.EndDate.Date.AddDays(1);
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
                       where r.CreateTime > invoice.StartDate
-                      && r.CreateTime < invoice.EndDate.Date.AddDays(1)
+                      && r.CreateTime < enddate
                       && r.HospitalDepartmentId == invoice.HospitalDepartmentId
                       select new StoreRecordListApiModel
                       {
@@ -220,12 +221,13 @@ namespace respository.invoice
 
         private IQueryable<StoreRecordListApiModel> GetPagerRecordListForClientByInvoiceId(Invoice invoice)
         {
+            var enddate = invoice.EndDate.Date.AddDays(1);
             var sql = from r in _context.StoreRecord
                       join b in _context.StoreRecordBillno on r.Id equals b.StoreRecordId
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
                       where r.CreateTime > invoice.StartDate
-                      && r.CreateTime < invoice.EndDate.Date.AddDays(1)
+                      && r.CreateTime < enddate
                       && r.HospitalDepartmentId == invoice.HospitalDepartmentId
                       select new StoreRecordListApiModel
                       {
