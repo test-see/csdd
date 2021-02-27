@@ -167,13 +167,13 @@ namespace respository.invoice
 
         public PagerResult<StoreRecordListApiModel> GetPagerRecordListByInvoiceId(PagerQuery<int> query)
         {
+            var invoice = _context.Invoice.First(x => x.Id == query.Query);
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
-                      join i in _context.Invoice on query.Query equals i.Id
-                      where r.CreateTime > i.StartDate
-                      && r.CreateTime < i.EndDate.Date.AddDays(1)
-                      && r.HospitalDepartmentId == i.HospitalDepartmentId
+                      where r.CreateTime > invoice.StartDate
+                      && r.CreateTime < invoice.EndDate.Date.AddDays(1)
+                      && r.HospitalDepartmentId == invoice.HospitalDepartmentId
                       select new StoreRecordListApiModel
                       {
                           Id = r.Id,
