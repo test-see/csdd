@@ -105,16 +105,28 @@ namespace apitest.Invoice
             Assert.IsTrue(message.Data.Total > 0);
         }
         [TestMethod]
-        public async Task Invoice_Record_Post_ReturnListAsync()
+        public async Task Invoice_Index_Report_Post_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/Invoice/list/record")
+                .AppendPathSegment("/api/Invoice/index/report/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<InvoiceReportRecordQueryApiModel> { Query = new InvoiceReportRecordQueryApiModel { InvoiceReportId = 1 } })
+                .PostJsonAsync(new PagerQuery<int> { Query = 1 })
                 .ReceiveJson<OkMessage<PagerResult<StoreRecordListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
+        [TestMethod]
+        public async Task Invoice_Index_StorRecord_Post_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Invoice/index/storerecord/list")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new PagerQuery<int> { Query = 1 } )
+                .ReceiveJson<OkMessage<PagerResult<StoreRecordListApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
+        }
+
 
 
         [TestMethod]

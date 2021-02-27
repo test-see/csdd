@@ -84,19 +84,27 @@ namespace webstarter.hospital.controllers.invoice
             return Json(data);
         }
 
-        [HttpPost]
-        [Route("list/record")]
-        public JsonResult GetPagerReportRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
-        {
-            var data = _InvoiceService.GetPagerStoreRecordList(query);
-            return Json(data);
-        }
-
         [HttpGet]
         [Route("type")]
         public JsonResult GetInvoiceTypeList()
         {
             var data = _InvoiceService.GetInvoiceTypeList();
+            return Json(data);
+        }
+
+        [HttpPost]
+        [Route("index/report/list")]
+        public JsonResult GetPagerRecordListByReportId(PagerQuery<int> query)
+        {
+            var data = _InvoiceService.GetPagerRecordListByReportId(query);
+            return Json(data);
+        }
+
+        [HttpPost]
+        [Route("index/storerecord/list")]
+        public JsonResult GetPagerRecordListByInvoiceId(PagerQuery<int> query)
+        {
+            var data = _InvoiceService.GetPagerRecordListByInvoiceId(query);
             return Json(data);
         }
     }

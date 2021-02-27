@@ -128,13 +128,13 @@ namespace respository.invoice
             return data;
         }
 
-        public PagerResult<StoreRecordListApiModel> GetPagerRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
+        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByReportId(PagerQuery<int> query)
         {
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
                       join rts in _context.InvoiceReportRecord on r.Id equals rts.StoreRecordId
-                      where rts.InvoiceReportId == query.Query.InvoiceReportId
+                      where rts.InvoiceReportId == query.Query
                       select new StoreRecordListApiModel
                       {
                           Id = r.Id,
@@ -164,6 +164,44 @@ namespace respository.invoice
             }
             return data;
         }
-    
+
+        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByInvoiceId(PagerQuery<int> query)
+        {
+            var sql = from r in _context.StoreRecord
+                      join uc in _context.User on r.CreateUserId equals uc.Id
+                      join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
+                      join i in _context.Invoice on query.Query equals i.Id
+                      where r.CreateTime > i.StartDate
+                      && r.CreateTime < i.EndDate.Date.AddDays(1)
+                      && r.HospitalDepartmentId == i.HospitalDepartmentId
+                      select new StoreRecordListApiModel
+                      {
+                          Id = r.Id,
+                          CreateTime = r.CreateTime,
+                          CreateUserName = uc.Username,
+                          ChangeQty = r.ChangeQty,
+                          BeforeQty = r.BeforeQty,
+                          Price = r.Price,
+                          ChangeType = ct,
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = r.HospitalDepartmentId,
+                          },
+                          HospitalGoods = new HospitalGoodsValueModel
+                          {
+                              Id = r.HospitalGoodsId,
+                          },
+                      };
+            var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
+                }
+            }
+            return data;
+        }
     }
 }
