@@ -42,5 +42,9 @@ namespace service.sys
         {
             return _roleContext.GetMenuList();
         }
+        public IList<RoleMenuApiModel> GetMenuListByUserId(int userId)
+        {
+            return _roleContext.GetMenuListByUserId(userId);
+        }
     }
 }

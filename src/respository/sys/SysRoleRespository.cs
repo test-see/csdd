@@ -99,6 +99,27 @@ namespace respository.sys
             return menus.ToList();
         }
 
+        public IList<RoleMenuApiModel> GetMenuListByUserId(int userId)
+        {
+            var menus = from m in _context.DataMenu
+                        join p in _context.SysPrivilege on m.Id equals p.MenuId
+                        join u in _context.UserRole on p.RoleId equals u.RoleId
+                        where u.UserId == userId
+                        orderby m.Rank
+                        select new RoleMenuApiModel
+                        {
+                            Menu = new MenuValueModel
+                            {
+                                Name = m.Name,
+                                Path = m.Path,
+                                ParentId = m.ParentId,
+                                Id = m.Id,
+                            },
+                            IsCheck = true,
+                        };
+            return menus.Distinct().ToList();
+        }
+
 
         public int Update(int id, RoleIndexUpdateModel updated)
         {

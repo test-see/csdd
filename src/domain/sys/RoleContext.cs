@@ -47,5 +47,16 @@ namespace domain.sys
             }
             return tops;
         }
+        public IList<RoleMenuApiModel> GetMenuListByUserId(int userId)
+        {
+            var menus = _sysRoleRespository.GetMenuListByUserId(userId);
+            var tops = menus.Where(x => x.Menu.ParentId == 0).ToList();
+            foreach (var menu in tops)
+            {
+                menu.FindChildren(menus);
+            }
+            return tops;
+        }
+
     }
 }
