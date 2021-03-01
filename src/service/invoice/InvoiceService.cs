@@ -56,9 +56,13 @@ namespace service.invoice
         {
             return _InvoiceContext.GetPagerReportList(query);
         }
-        public PagerResult<StoreRecordListApiModel> GetPagerStoreRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
+        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByInvoiceId(PagerQuery<int> query)
         {
-            return _InvoiceContext.GetPagerStoreRecordList(query);
+            return _InvoiceContext.GetPagerRecordListByInvoiceId(query);
+        }
+        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByReportId(PagerQuery<int> query)
+        {
+            return _InvoiceContext.GetPagerRecordListByReportId(query);
         }
         public IEnumerable<DataInvoiceType> GetInvoiceTypeList()
         {

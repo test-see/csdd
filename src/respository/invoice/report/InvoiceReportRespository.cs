@@ -128,13 +128,13 @@ namespace respository.invoice
             return data;
         }
 
-        public PagerResult<StoreRecordListApiModel> GetPagerRecordList(PagerQuery<InvoiceReportRecordQueryApiModel> query)
+        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByReportId(PagerQuery<int> query)
         {
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
                       join rts in _context.InvoiceReportRecord on r.Id equals rts.StoreRecordId
-                      where rts.InvoiceReportId == query.Query.InvoiceReportId
+                      where rts.InvoiceReportId == query.Query
                       select new StoreRecordListApiModel
                       {
                           Id = r.Id,
@@ -164,6 +164,90 @@ namespace respository.invoice
             }
             return data;
         }
-    
+
+        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByInvoiceId(PagerQuery<int> query)
+        {
+            var invoice = _context.Invoice.First(x => x.Id == query.Query);
+            IQueryable<StoreRecordListApiModel> sql;
+            if(invoice.InvoiceTypeId == (int)InvoiceType.Client)
+            {
+                sql = GetPagerRecordListForClientByInvoiceId(invoice);
+            }
+            else
+            {
+                sql = GetPagerRecordListForChangeTypeByInvoiceId(invoice);
+            }
+            var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
+            if (data.Total > 0)
+            {
+                foreach (var m in data.Result)
+                {
+                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
+                }
+            }
+            return data;
+        }
+
+        private IQueryable<StoreRecordListApiModel> GetPagerRecordListForChangeTypeByInvoiceId(Invoice invoice)
+        {
+            var enddate = invoice.EndDate.Date.AddDays(1);
+            var sql = from r in _context.StoreRecord
+                      join uc in _context.User on r.CreateUserId equals uc.Id
+                      join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
+                      where r.CreateTime > invoice.StartDate
+                      && r.CreateTime < enddate
+                      && r.HospitalDepartmentId == invoice.HospitalDepartmentId
+                      select new StoreRecordListApiModel
+                      {
+                          Id = r.Id,
+                          CreateTime = r.CreateTime,
+                          CreateUserName = uc.Username,
+                          ChangeQty = r.ChangeQty,
+                          BeforeQty = r.BeforeQty,
+                          Price = r.Price,
+                          ChangeType = ct,
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = r.HospitalDepartmentId,
+                          },
+                          HospitalGoods = new HospitalGoodsValueModel
+                          {
+                              Id = r.HospitalGoodsId,
+                          },
+                      };
+            return sql;
+        }
+
+        private IQueryable<StoreRecordListApiModel> GetPagerRecordListForClientByInvoiceId(Invoice invoice)
+        {
+            var enddate = invoice.EndDate.Date.AddDays(1);
+            var sql = from r in _context.StoreRecord
+                      join b in _context.StoreRecordBillno on r.Id equals b.StoreRecordId
+                      join uc in _context.User on r.CreateUserId equals uc.Id
+                      join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
+                      where r.CreateTime > invoice.StartDate
+                      && r.CreateTime < enddate
+                      && r.HospitalDepartmentId == invoice.HospitalDepartmentId
+                      select new StoreRecordListApiModel
+                      {
+                          Id = r.Id,
+                          CreateTime = r.CreateTime,
+                          CreateUserName = uc.Username,
+                          ChangeQty = r.ChangeQty,
+                          BeforeQty = r.BeforeQty,
+                          Price = r.Price,
+                          ChangeType = ct,
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = r.HospitalDepartmentId,
+                          },
+                          HospitalGoods = new HospitalGoodsValueModel
+                          {
+                              Id = r.HospitalGoodsId,
+                          },
+                      };
+            return sql;
+        }
     }
 }
