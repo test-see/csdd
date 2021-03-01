@@ -37,6 +37,7 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
+                          PurchaseId= r.PurchaseId,
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
@@ -44,6 +45,10 @@ namespace respository.purchase
             {
                 var client = _clientRespository.GetIndex(query.Query.ClientId.Value);
                 sql = sql.Where(x => client.HospitalClients.Any(t => t.HospitalClient.Id == x.HospitalClient.Id));
+            }
+            if (query.Query?.PurchaseId != null)
+            {
+                sql = sql.Where(x => x.PurchaseId == query.Query.PurchaseId.Value);
             }
 
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
@@ -69,6 +74,7 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
+                          PurchaseId = r.PurchaseId,
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
