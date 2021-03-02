@@ -2,6 +2,7 @@
 using domain.user.valuemodel;
 using foundation.ef5.poco;
 using irespository.user;
+using irespository.user.enums;
 using iservice.user;
 using System.Threading.Tasks;
 
@@ -27,12 +28,12 @@ namespace service.user
         }
         public User Login(LoginApiModel login)
         {
-            return _tokenContext.Login(login);
+            return _tokenContext.Login(login, AuthorizeRole.Admin);
         }
 
         public LoginHospitalValueModel LoginByHospital(LoginApiModel login)
         {
-            var user = _tokenContext.Login(login);
+            var user = _tokenContext.Login(login, AuthorizeRole.Hospital);
             var extend = _userHospitalContext.GetIndexByUserId(user.Id);
             return new LoginHospitalValueModel
             {
@@ -46,7 +47,7 @@ namespace service.user
 
         public LoginClientValueModel LoginByClient(LoginApiModel login)
         {
-            var user = _tokenContext.Login(login);
+            var user = _tokenContext.Login(login, AuthorizeRole.Client);
             var extend = _userClientContext.GetIndexByUserId(user.Id);
             return new LoginClientValueModel
             {

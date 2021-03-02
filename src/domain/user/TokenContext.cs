@@ -1,6 +1,7 @@
 ﻿using foundation.ef5.poco;
 using foundation.exception;
 using irespository.user;
+using irespository.user.enums;
 using System.Threading.Tasks;
 
 namespace domain.user
@@ -18,12 +19,12 @@ namespace domain.user
             _userVerificationCodeRespository = userVerificationCodeRespository;
             _dataWhitePhoneRespository = dataWhitePhoneRespository;
         }
-        public User Login(LoginApiModel login)
+        public User Login(LoginApiModel login, AuthorizeRole role)
         {
             if (!_userVerificationCodeRespository.CheckVerificationCode(login))
                 throw new DefaultException("电话号码 或者 验证码不正确.");
             var user = _userRespository.GetByPhone(login.Phone);
-            if (user == null)
+            if (user == null || user.AuthorizeRoleId != (int)role)
                 throw new DefaultException("用户不存在.");
             if (user.IsActive == 0)
                 throw new DefaultException("该用户已被冻结, 请联系管理员激活.");

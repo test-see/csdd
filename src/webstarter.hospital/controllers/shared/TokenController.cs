@@ -1,5 +1,6 @@
 ﻿using foundation.config;
 using irespository.user;
+using irespository.user.enums;
 using iservice.user;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
