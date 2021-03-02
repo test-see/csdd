@@ -3,7 +3,9 @@ using irespository.user;
 using irespository.user.enums;
 using iservice.user;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
@@ -18,11 +20,14 @@ namespace csdd.Controllers.Shared
     {
         private readonly ITokenService _userService;
         private readonly AppConfig _appConfig;
+        private readonly IWebHostEnvironment _environment;
         public TokenController(ITokenService userService,
-            AppConfig appConfig)
+            AppConfig appConfig,
+            IWebHostEnvironment environment)
         {
             _userService = userService;
             _appConfig = appConfig;
+            _environment = environment;
         }
         [HttpPost]
         [AllowAnonymous]
@@ -54,6 +59,7 @@ namespace csdd.Controllers.Shared
         [AllowAnonymous]
         public async Task<JsonResult> GenerateVerificationCodeAsync(string phone)
         {
+            if (_environment.IsDevelopment()) return Json("123456");
             var data = await _userService.GenerateVerificationCodeAsync(phone);
             return Json(data);
         }

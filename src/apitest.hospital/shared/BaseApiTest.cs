@@ -22,7 +22,7 @@ namespace apitest.shared
                     throw new Exception(code.Msg);
                 var token = await _rootpath
                     .AppendPathSegment("/api/Token")
-                    .PostJsonAsync(new { phone = "12345678955", code = code.Data })
+                    .PostJsonAsync(new { phone = "12345678955", code = "123456" })
                     .ReceiveJson<OkMessage<string>>();
                 if (token.Code != 200)
                     throw new Exception(token.Msg);
