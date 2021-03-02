@@ -18,7 +18,7 @@ namespace apitest.purchase
             var message = await _rootpath
                 .AppendPathSegment("/api/PurchaseGoods/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<PurchaseGoodsListQueryModel> { })
+                .PostJsonAsync(new PagerQuery<PurchaseGoodsListQueryModel> { Query= new PurchaseGoodsListQueryModel { HospitalClientId=1 } })
                 .ReceiveJson<OkMessage<PagerResult<PurchaseGoodsMappingListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);

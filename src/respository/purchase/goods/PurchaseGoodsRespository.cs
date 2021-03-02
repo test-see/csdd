@@ -41,10 +41,9 @@ namespace respository.purchase
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
-            if (query.Query?.ClientId != null)
+            if (query.Query?.HospitalClientId != null)
             {
-                var client = _clientRespository.GetIndex(query.Query.ClientId.Value);
-                sql = sql.Where(x => client.HospitalClients.Any(t => t.HospitalClient.Id == x.HospitalClient.Id));
+                sql = sql.Where(x => query.Query.HospitalClientId.Value == x.HospitalClient.Id);
             }
             if (query.Query?.PurchaseId != null)
             {
@@ -78,10 +77,9 @@ namespace respository.purchase
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
-            if (query.Query?.ClientId != null)
+            if (query.Query?.HospitalClientId != null)
             {
-                var client = _clientRespository.GetIndex(query.Query.ClientId.Value);
-                sql = sql.Where(x => client.HospitalClients.Any(t => t.HospitalClient.Id == x.HospitalClient.Id));
+                sql = sql.Where(x => query.Query.HospitalClientId.Value == x.HospitalClient.Id);
             }
 
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
