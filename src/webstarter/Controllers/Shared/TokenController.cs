@@ -19,14 +19,11 @@ namespace csdd.Controllers.Shared
     {
         private readonly ITokenService _userService;
         private readonly AppConfig _appConfig;
-        private readonly IWebHostEnvironment _environment;
         public TokenController(ITokenService userService,
-            AppConfig appConfig,
-            IWebHostEnvironment environment)
+            AppConfig appConfig)
         {
             _userService = userService;
             _appConfig = appConfig;
-            _environment = environment;
         }
         [HttpPost]
         [AllowAnonymous]
@@ -55,7 +52,6 @@ namespace csdd.Controllers.Shared
         [AllowAnonymous]
         public async Task<JsonResult> GenerateVerificationCodeAsync(string phone)
         {
-            if (_environment.IsDevelopment()) return Json("123456");
             var data = await _userService.GenerateVerificationCodeAsync(phone);
             return Json(data);
         }
