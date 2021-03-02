@@ -4,6 +4,8 @@ using irespository.checklist.model;
 using iservice.checklist;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace webstarter.hospital.controllers.CheckList
 {
@@ -11,16 +13,20 @@ namespace webstarter.hospital.controllers.CheckList
     public class CheckListController : DefaultControllerBase
     {
         private readonly ICheckListService _CheckListService;
-        public CheckListController(ICheckListService CheckListService)
+        private readonly ILogger<CheckListController> _logger;
+        public CheckListController(ICheckListService CheckListService,ILogger<CheckListController> logger)
         {
             _CheckListService = CheckListService;
+            _logger = logger;
         }
 
         [HttpPost]
         [Route("list")]
         public JsonResult GetList(PagerQuery<CheckListQueryModel> query)
         {
+            _logger.LogInformation(DateTime.Now.ToString());
             var data = _CheckListService.GetPagerList(query);
+            _logger.LogInformation(DateTime.Now.ToString());
             return Json(data);
         }
 
