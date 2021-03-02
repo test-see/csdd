@@ -24,5 +24,6 @@ namespace webstarter.hospital.controllers.purchase
             return Json(data);
         }
 
+        //
     }
 }
