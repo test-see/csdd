@@ -52,10 +52,11 @@ namespace respository.store
             var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
                 foreach (var m in data.Result)
                 {
+                    m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
                     m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
-                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
                 }
             }
             return data;

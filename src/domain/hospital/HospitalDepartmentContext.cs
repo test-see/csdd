@@ -4,6 +4,7 @@ using irespository.data;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace domain.hospital
 {
@@ -45,7 +46,7 @@ namespace domain.hospital
         }
         public HospitalDepartmentValueModel GetValue(int id)
         {
-            return _hospitalDepartmentRespository.GetValue(id);
+            return _hospitalDepartmentRespository.GetValue(new int[] { id }).FirstOrDefault();
         }
     }
 }

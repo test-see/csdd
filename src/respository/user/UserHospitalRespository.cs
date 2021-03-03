@@ -72,9 +72,10 @@ namespace respository.user
             var data = new PagerResult<UserHospitalListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
+                    m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
                 }
             }
             return data;
@@ -107,7 +108,7 @@ namespace respository.user
             var user = sql.FirstOrDefault();
             if (user != null)
             {
-                user.HospitalDepartment = _hospitalDepartmentRespository.GetValue(user.HospitalDepartment.Id);
+                user.HospitalDepartment = _hospitalDepartmentRespository.GetValue(new int[] { user.HospitalDepartment.Id }).FirstOrDefault();
             }
             return user;
         }

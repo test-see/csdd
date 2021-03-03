@@ -45,9 +45,10 @@ namespace respository.invoice
             var data = new PagerResult<InvoiceListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.HospitalDepartment = _hospitalDepartmentRespository.GetValue(m.HospitalDepartment.Id);
+                    m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
                 }
             }
             return data;
@@ -136,7 +137,7 @@ namespace respository.invoice
             var setting = sql.FirstOrDefault();
             if (setting != null)
             {
-                setting.HospitalDepartment = _hospitalDepartmentRespository.GetValue(setting.HospitalDepartment.Id);
+                setting.HospitalDepartment = _hospitalDepartmentRespository.GetValue(new int[] { setting.HospitalDepartment.Id }).FirstOrDefault();
             }
             return setting;
         }

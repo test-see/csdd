@@ -104,11 +104,12 @@ namespace respository.hospital
             return _context.HospitalDepartment.Select(x => new IdNameValueModel { Id = x.Id, Name = x.Name }).ToList();
         }
 
-        public HospitalDepartmentValueModel GetValue(int id)
+        public IList<HospitalDepartmentValueModel> GetValue(int[] ids)
         {
+            if (ids.Length == 0) return new List<HospitalDepartmentValueModel>();
             var sql = from r in _context.HospitalDepartment
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
-                      where r.Id == id
+                      where ids.Contains(r.Id)
                       select new HospitalDepartmentValueModel
                       {
                           Id = r.Id,
@@ -119,10 +120,11 @@ namespace respository.hospital
                           },
                           DepartmentType = d,
                       };
-            var profile = sql.FirstOrDefault();
-            if (profile != null)
+            var profile = sql.ToList();
+            var hospitals = _hospitalRespository.GetValue(profile.Select(x => x.Hospital.Id).ToArray());
+            foreach (var  department in profile)
             {
-                profile.Hospital = _hospitalRespository.GetValue(new int[] { profile.Hospital.Id }).FirstOrDefault();
+                department.Hospital = hospitals.FirstOrDefault(x => x.Id == department.Hospital.Id);
             }
 
             return profile;
