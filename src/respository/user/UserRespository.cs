@@ -45,9 +45,9 @@ namespace respository.user
             }
             return user;
         }
-        public User GetByPhone(string phone)
+        public User GetByPhone(string phone, int authorizeRoleId)
         {
-            return _context.User.Where(x => x.Phone == phone).FirstOrDefault();
+            return _context.User.Where(x => x.Phone == phone && x.AuthorizeRoleId == authorizeRoleId).FirstOrDefault();
         }
         public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
