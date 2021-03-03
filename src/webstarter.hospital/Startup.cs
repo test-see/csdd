@@ -1,5 +1,6 @@
 using AutoMapper;
 using csdd.Middlewares;
+using foundation._3party;
 using foundation.config;
 using foundation.ef5;
 using irespository.user.enums;
@@ -19,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using TencentCloud.Common;
 
 namespace webstarter.hospital
 {
@@ -51,14 +53,15 @@ namespace webstarter.hospital
             });
 
             services.AddSingleton(AppConfig);
+            services.AddSingleton(new SmsSendRequest(new Credential { SecretId = AppConfig.TencentCloudSMS?.SecretId, SecretKey = AppConfig.TencentCloudSMS?.SecretKey, }));
             services.AddDbContext<DefaultDbContext>(options => options.UseMySQL(AppConfig.ConnectionString));
+            services.AddScoped<DefaultDbTransaction>();
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("respository")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("domain")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsSelfWithInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
-            services.AddSingleton<DefaultDbTransaction>();
 
             var config = new MapperConfiguration(cfg =>
             {
