@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.client.goods.model;
 using irespository.client.model;
+using System.Collections.Generic;
 
 namespace irespository.client
 {
@@ -12,6 +13,6 @@ namespace irespository.client
         int Delete(int id);
         int Update(int id, ClientGoodsUpdateApiModel updated, int userId);
         ClientGoodsIndexApiModel GetIndex(int id);
-        ClientGoodsValueModel GetValue(int id);
+        IList<ClientGoodsValueModel> GetValue(int[] ids);
     }
 }

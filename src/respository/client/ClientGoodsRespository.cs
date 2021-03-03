@@ -142,12 +142,13 @@ namespace respository.client
             return profile;
         }
 
-        public ClientGoodsValueModel GetValue(int id)
+        public IList<ClientGoodsValueModel> GetValue(int[] ids)
         {
+            if (ids.Length == 0) return new List<ClientGoodsValueModel>();
             var sql = from r in _context.ClientGoods
                       join u in _context.User on r.CreateUserId equals u.Id
                       join h in _context.Client on r.ClientId equals h.Id
-                      where r.Id == id
+                      where ids.Contains(r.Id)
                       select new ClientGoodsValueModel
                       {
                           Id = r.Id,
@@ -163,7 +164,7 @@ namespace respository.client
 
                       };
 
-            var profile = sql.FirstOrDefault();
+            var profile = sql.ToList();
             return profile;
         }
 

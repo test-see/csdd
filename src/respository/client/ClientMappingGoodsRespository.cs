@@ -66,7 +66,7 @@ namespace respository.client
             if (profile != null)
             {
                 profile.HospitalGoods = _hospitalGoodsRespository.GetValue(profile.HospitalGoods.Id);
-                profile.ClientGoods = _clientGoodsRespository.GetValue(profile.ClientGoods.Id);
+                profile.ClientGoods = _clientGoodsRespository.GetValue(new int[] { profile.ClientGoods.Id }).FirstOrDefault();
             }
             return profile;
         }

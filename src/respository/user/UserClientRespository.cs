@@ -71,9 +71,10 @@ namespace respository.user
             var data = new PagerResult<UserClientListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var clients = _ClientRespository.GetValue(data.Result.Select(x=>x.Client.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.Client = _ClientRespository.GetValue(m.Client.Id);
+                    m.Client = clients.FirstOrDefault(x => x.Id == m.Client.Id);
                 }
             }
             return data;
@@ -106,7 +107,7 @@ namespace respository.user
             var user = sql.FirstOrDefault();
             if (user != null)
             {
-                user.Client = _ClientRespository.GetValue(user.Client.Id);
+                user.Client = _ClientRespository.GetValue(new int[] { user.Client.Id }).FirstOrDefault();
             }
             return user;
         }

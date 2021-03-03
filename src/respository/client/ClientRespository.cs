@@ -111,16 +111,17 @@ namespace respository.client
             return client;
         }
 
-        public ClientValueModel GetValue(int id)
+        public IList<ClientValueModel> GetValue(int[] ids)
         {
+            if (ids.Length == 0) return new List<ClientValueModel>();
             var client = (from r in _context.Client
                           join u in _context.User on r.CreateUserId equals u.Id
-                          where r.Id == id
+                          where ids.Contains(r.Id)
                           select new ClientValueModel
                           {
                               Id = r.Id,
                               Name = r.Name,
-                          }).First();
+                          }).ToList();
 
             return client;
         }
