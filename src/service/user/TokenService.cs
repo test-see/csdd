@@ -2,6 +2,7 @@
 using domain.user.valuemodel;
 using foundation._3party;
 using foundation.ef5.poco;
+using foundation.exception;
 using irespository.user;
 using irespository.user.enums;
 using iservice.user;
@@ -40,6 +41,8 @@ namespace service.user
         {
             var user = _tokenContext.Login(login, AuthorizeRole.Hospital);
             var extend = _userHospitalContext.GetIndexByUserId(user.Id);
+            if (extend == null)
+                throw new DefaultException("该账号还在维护基础资料, 请等待.");
             return new LoginHospitalValueModel
             {
                 AuthorizeRoleId = user.AuthorizeRoleId,
@@ -54,6 +57,8 @@ namespace service.user
         {
             var user = _tokenContext.Login(login, AuthorizeRole.Client);
             var extend = _userClientContext.GetIndexByUserId(user.Id);
+            if (extend == null)
+                throw new DefaultException("该账号还在维护基础资料, 请等待.");
             return new LoginClientValueModel
             {
                 AuthorizeRoleId = user.AuthorizeRoleId,
