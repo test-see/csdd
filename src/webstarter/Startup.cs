@@ -1,5 +1,6 @@
 using AutoMapper;
 using csdd.Middlewares;
+using foundation._3party;
 using foundation.config;
 using foundation.ef5;
 using irespository.user.enums;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using TencentCloud.Common;
 
 namespace csdd
 {
@@ -60,6 +61,7 @@ namespace csdd
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
             services.AddSingleton<DefaultDbTransaction>();
+            services.AddSingleton(new SmsSendRequest(new Credential { SecretId = AppConfig.TencentCloudSMS?.SecretId, SecretKey = AppConfig.TencentCloudSMS?.SecretKey, }));
 
             var config = new MapperConfiguration(cfg =>
             {
