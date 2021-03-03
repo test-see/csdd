@@ -93,18 +93,19 @@ namespace respository.sys
                                 Path = m.Path,
                                 ParentId = m.ParentId,
                                 Id = m.Id,
+                                AuthorizeRoleId = m.AuthorizeRoleId,
                             },
                             IsCheck = false,
                         };
             return menus.ToList();
         }
 
-        public IList<RoleMenuApiModel> GetMenuListByUserId(int userId)
+        public IList<RoleMenuApiModel> GetMenuListByUserId(int authorizeRoleId, int userId)
         {
             var menus = from m in _context.DataMenu
                         join p in _context.SysPrivilege on m.Id equals p.MenuId
                         join u in _context.UserRole on p.RoleId equals u.RoleId
-                        where u.UserId == userId
+                        where u.UserId == userId && m.AuthorizeRoleId == authorizeRoleId
                         orderby m.Rank
                         select new RoleMenuApiModel
                         {
@@ -114,6 +115,7 @@ namespace respository.sys
                                 Path = m.Path,
                                 ParentId = m.ParentId,
                                 Id = m.Id,
+                                AuthorizeRoleId = m.AuthorizeRoleId,
                             },
                             IsCheck = true,
                         };

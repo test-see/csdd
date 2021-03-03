@@ -47,9 +47,9 @@ namespace domain.sys
             }
             return tops;
         }
-        public IList<RoleMenuApiModel> GetMenuListByUserId(int userId)
+        public IList<RoleMenuApiModel> GetMenuListByUserId(int authorizeRoleId, int userId)
         {
-            var menus = _sysRoleRespository.GetMenuListByUserId(userId);
+            var menus = _sysRoleRespository.GetMenuListByUserId(authorizeRoleId, userId);
             var tops = menus.Where(x => x.Menu.ParentId == 0).ToList();
             foreach (var menu in tops)
             {

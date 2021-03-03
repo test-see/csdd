@@ -13,6 +13,6 @@ namespace iservice.sys
         RoleIndexApiModel GetIndex(int roleId);
         int Update(int id, RoleIndexUpdateModel updated);
         IList<RoleMenuApiModel> GetMenuList();
-        IList<RoleMenuApiModel> GetMenuListByUserId(int userId);
+        IList<RoleMenuApiModel> GetMenuListByUserId(int authorizeRoleId, int userId);
     }
 }

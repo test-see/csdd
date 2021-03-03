@@ -8,6 +8,8 @@ namespace foundation.ef5.poco
     {
         [Column("id")]
         public int Id { get; set; }
+        [Column("authorize_role_id")]
+        public int AuthorizeRoleId { get; set; }
         [Column("name")]
         public string Name { get; set; }
         [Column("path")]

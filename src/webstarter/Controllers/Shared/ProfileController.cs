@@ -1,4 +1,5 @@
-﻿using iservice.sys;
+﻿using irespository.user.enums;
+using iservice.sys;
 using iservice.user;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,7 @@ namespace csdd.Controllers.Shared
         [Route("menu/list")]
         public JsonResult GetMenuListByUserId()
         {
-            var data = _roleService.GetMenuListByUserId(UserId);
+            var data = _roleService.GetMenuListByUserId((int)AuthorizeRole.Admin, UserId);
             return Json(data);
         }
     }
