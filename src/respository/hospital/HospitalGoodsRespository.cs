@@ -58,9 +58,10 @@ namespace respository.hospital
             var data = new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var hospitals = _hospitalRespository.GetValue(data.Result.Select(x => x.Hospital.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.Hospital = _hospitalRespository.GetValue(m.Hospital.Id);
+                    m.Hospital = hospitals.FirstOrDefault(x => x.Id == m.Hospital.Id);
                 }
             }
             return data;
@@ -145,7 +146,7 @@ namespace respository.hospital
             var profile = sql.FirstOrDefault();
             if (profile != null)
             {
-                profile.Hospital = _hospitalRespository.GetValue(profile.Hospital.Id);
+                profile.Hospital = _hospitalRespository.GetValue(new int[] { profile.Hospital.Id }).FirstOrDefault();
             }
 
             return profile;
@@ -183,7 +184,7 @@ namespace respository.hospital
             var profile = sql.FirstOrDefault();
             if (profile != null)
             {
-                profile.Hospital = _hospitalRespository.GetValue(profile.Hospital.Id);
+                profile.Hospital = _hospitalRespository.GetValue(new int[] { profile.Hospital.Id }).FirstOrDefault();
             }
 
             return profile;
@@ -213,7 +214,7 @@ namespace respository.hospital
             var profile = sql.FirstOrDefault();
             if (profile != null)
             {
-                profile.Hospital = _hospitalRespository.GetValue(profile.Hospital.Id);
+                profile.Hospital = _hospitalRespository.GetValue(new int[] { profile.Hospital.Id }).FirstOrDefault();
             }
 
             return profile;

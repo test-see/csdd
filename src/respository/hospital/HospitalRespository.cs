@@ -5,6 +5,7 @@ using irespository.hospital;
 using irespository.hospital.model;
 using irespository.hospital.profile.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.hospital
@@ -69,15 +70,16 @@ namespace respository.hospital
             return hospital.Id;
         }
 
-        public HospitalValueModel GetValue(int id)
+        public IList<HospitalValueModel> GetValue(int[] ids)
         {
-            return _context.Hospital.Select(x => new HospitalValueModel
+            if (ids.Length == 0) return new List<HospitalValueModel>();
+            return _context.Hospital.Where(x => ids.Contains(x.Id)).Select(x => new HospitalValueModel
             {
                 ConsumeDays = x.ConsumeDays,
                 Id = x.Id,
                 Name = x.Name,
                 Remark = x.Remark,
-            }).FirstOrDefault();
+            }).ToList();
         }
     }
 }

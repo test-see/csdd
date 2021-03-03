@@ -3,6 +3,7 @@ using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.model;
 using irespository.hospital.profile.model;
+using System.Linq;
 
 namespace domain.hospital
 {
@@ -32,7 +33,7 @@ namespace domain.hospital
         }
         public HospitalValueModel GetValue(int id)
         {
-            return _hospitalRespository.GetValue(id);
+            return _hospitalRespository.GetValue(new int[] { id }).FirstOrDefault();
         }
     }
 }
