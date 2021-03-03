@@ -65,6 +65,10 @@ namespace respository.user
                           CreateUsername = p_tt.Username,
                           AuthorizeRole = a,
                       };
+            if (query.Query?.IsActive!=null)
+            {
+                sql = sql.Where(x => x.IsActive == query.Query.IsActive);
+            }
             if (!string.IsNullOrEmpty(query.Query?.Phone))
             {
                 sql = sql.Where(x => x.Phone.Contains(query.Query.Phone));
