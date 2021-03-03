@@ -1,5 +1,6 @@
 ﻿using domain.user;
 using domain.user.valuemodel;
+using foundation._3party;
 using foundation.ef5.poco;
 using irespository.user;
 using irespository.user.enums;
@@ -13,18 +14,22 @@ namespace service.user
         private readonly TokenContext _tokenContext;
         private readonly UserHospitalContext _userHospitalContext;
         private readonly UserClientContext _userClientContext;
+        private readonly SmsSendRequest _smsSendRequest;
         public TokenService(TokenContext tokenContext,
             UserHospitalContext userHospitalContext,
-            UserClientContext userClientContext)
+            UserClientContext userClientContext,
+            SmsSendRequest smsSendRequest)
         {
             _tokenContext = tokenContext;
             _userHospitalContext = userHospitalContext;
             _userClientContext = userClientContext;
+            _smsSendRequest = smsSendRequest;
         }
         public async Task<string> GenerateVerificationCodeAsync(string phone)
         {
             var code = await _tokenContext.GenerateVerificationCodeAsync(phone);
-            return code;
+            await _smsSendRequest.SendVerificationCodeAsync(new string[] { phone }, code);
+            return string.Empty;
         }
         public User Login(LoginApiModel login)
         {
