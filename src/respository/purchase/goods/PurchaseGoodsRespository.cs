@@ -53,9 +53,10 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                     m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
                 }
             }
@@ -85,9 +86,10 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                     m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
                 }
             }
@@ -146,7 +148,7 @@ namespace respository.purchase
             var data = sql.FirstOrDefault();
             if (data!=null)
             {
-                data.HospitalGoods = _hospitalGoodsRespository.GetValue(data.HospitalGoods.Id);
+                data.HospitalGoods = _hospitalGoodsRespository.GetValue(new int[] { data.HospitalGoods.Id }).FirstOrDefault();
                 data.HospitalClient = _hospitalClientRespository.GetValue(data.HospitalClient.Id);
             }
             return data;

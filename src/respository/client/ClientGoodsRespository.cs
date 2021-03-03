@@ -133,9 +133,10 @@ namespace respository.client
                                         Id = m.HospitalGoodsId,
                                     }
                                 }).ToList();
+                var goods = _hospitalGoodsRespository.GetValue(mappings.Select(x => x.HospitalGoods.Id).ToArray());
                 foreach (var m in mappings)
                 {
-                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                 }
                 profile.Mappings = mappings;
             }

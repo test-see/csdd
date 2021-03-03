@@ -37,9 +37,10 @@ namespace respository.store
             var data = new PagerResult<StoreInoutGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                 }
             }
             return data;
@@ -58,9 +59,10 @@ namespace respository.store
                           },
                       };
             var data = sql.ToList();
+            var goods = _hospitalGoodsRespository.GetValue(data.Select(x => x.HospitalGoods.Id).ToArray());
             foreach (var m in data)
             {
-                m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
             }
             return data;
         }

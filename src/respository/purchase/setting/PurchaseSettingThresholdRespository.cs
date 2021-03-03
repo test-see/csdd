@@ -42,9 +42,10 @@ namespace respository.purchase
             var data =  new PagerResult<PurchaseSettingThresholdListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                foreach(var m in data.Result)
+                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                foreach (var m in data.Result)
                 {
-                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                 }
             }
             return data;

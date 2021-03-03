@@ -6,6 +6,7 @@ using irespository.hospital.goods.model;
 using irespository.hospital.model;
 using irespository.hospital.profile.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.hospital
@@ -161,11 +162,12 @@ namespace respository.hospital
             return goods;
         }
 
-        public HospitalGoodsValueModel GetValue(int id)
+        public IList<HospitalGoodsValueModel> GetValue(int[] ids)
         {
+            if (ids.Length == 0) return new List<HospitalGoodsValueModel>();
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
-                      where r.Id == id
+                      where ids.Contains(r.Id)
                       select new HospitalGoodsValueModel
                       {
                           Id = r.Id,
@@ -181,10 +183,11 @@ namespace respository.hospital
                           Price = r.Price,
                           Barcode = r.Barcode,
                       };
-            var profile = sql.FirstOrDefault();
-            if (profile != null)
+            var profile = sql.ToList();
+            var hospitals = _hospitalRespository.GetValue(profile.Select(x => x.Hospital.Id).ToArray());
+            foreach (var goods in profile)
             {
-                profile.Hospital = _hospitalRespository.GetValue(new int[] { profile.Hospital.Id }).FirstOrDefault();
+                goods.Hospital = hospitals.FirstOrDefault(x => x.Id == goods.Hospital.Id);
             }
 
             return profile;

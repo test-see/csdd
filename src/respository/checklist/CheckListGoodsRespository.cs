@@ -40,9 +40,10 @@ namespace respository.checklist
             var data = new PagerResult<CheckListGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                 }
             }
             return data;
@@ -68,9 +69,10 @@ namespace respository.checklist
             var data = new PagerResult<CheckListGoodsPreviewListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
+                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 foreach (var m in data.Result)
                 {
-                    m.HospitalGoods = _hospitalGoodsRespository.GetValue(m.HospitalGoods.Id);
+                    m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                 }
             }
             return data;
