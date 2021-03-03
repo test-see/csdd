@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using foundation.exception;
+using System.Linq;
+using System.Threading.Tasks;
 using TencentCloud.Common;
 using TencentCloud.Common.Profile;
 using TencentCloud.Sms.V20190711;
@@ -32,12 +34,14 @@ namespace foundation._3party
             req.SmsSdkAppid = _appId;
             req.TemplateParamSet = param;
             req.Sign = _sign;
-            await client.SendSms(req);
+            var result = await client.SendSms(req);
+            var message = result.SendStatusSet.Any(x => x.Code == "Ok");
+            if (!message) throw new DefaultException(result.SendStatusSet.LastOrDefault()?.Message);
         }
 
         public async Task SendVerificationCodeAsync(string[] phone, string param)
         {
-            await SendAsync(phone, _verificationCodeTemplateId, new string[] { param });
+            await SendAsync(phone.Select(x => "+86" + x).ToArray(), _verificationCodeTemplateId, new string[] { param });
         }
     }
 }
