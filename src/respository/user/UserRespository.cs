@@ -65,6 +65,14 @@ namespace respository.user
                           CreateUsername = p_tt.Username,
                           AuthorizeRole = a,
                       };
+            if (!string.IsNullOrEmpty(query.Query?.Phone))
+            {
+                sql = sql.Where(x => x.Phone.Contains(query.Query.Phone));
+            }
+            if (!string.IsNullOrEmpty(query.Query?.Username))
+            {
+                sql = sql.Where(x => x.Username.Contains(query.Query.Username));
+            }
             var data =  new PagerResult<UserListApiModel>(query.Index, query.Size, sql);
             foreach(var user in data.Result)
             {

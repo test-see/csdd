@@ -2,5 +2,6 @@
 {
     public class WhitePhoneListQueryModel
     {
+        public string Phone { get; set; }
     }
 }
