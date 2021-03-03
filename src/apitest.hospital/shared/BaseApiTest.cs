@@ -10,9 +10,10 @@ namespace apitest.shared
     {
         protected static string _rootpath = "http://121.4.51.192:9020";
         private static string _token;
+        private static string _smscode = "";
         protected Func<Task<string>> getToken = async () =>
         {
-            if (string.IsNullOrEmpty(_token))
+            if (string.IsNullOrEmpty(_smscode))
             {
                 var code = await _rootpath
                     .AppendPathSegment("/api/Token/verification/generate")
@@ -20,9 +21,13 @@ namespace apitest.shared
                     .GetJsonAsync<OkMessage<string>>();
                 if (code.Code != 200)
                     throw new Exception(code.Msg);
+                _smscode = code.Data;
+            }
+            if (string.IsNullOrEmpty(_token))
+            {
                 var token = await _rootpath
                     .AppendPathSegment("/api/Token")
-                    .PostJsonAsync(new { phone = "12345678955", code = code.Data })
+                    .PostJsonAsync(new { phone = "12345678955", code = _smscode })
                     .ReceiveJson<OkMessage<string>>();
                 if (token.Code != 200)
                     throw new Exception(token.Msg);
