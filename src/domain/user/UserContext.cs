@@ -40,7 +40,7 @@ namespace domain.user
         public async Task<User> CreateAsync(UserCreateApiModel created, int userId)
         {
             var user = _userRespository.GetByPhone(created.Phone);
-            if (user != null)
+            if (user != null && user.AuthorizeRoleId == created.AuthorizeRoleId)
                 throw new DefaultException("电话号码已经被占用.");
             return await _userRespository.CreateAsync(created, userId);
         }
