@@ -38,5 +38,9 @@ namespace service.purchase
         {
             return _PurchaseGoodsContext.GetPagerMappingList(query, clientId);
         }
+        public PurchaseGoodsListApiModel GetIndex(int id)
+        {
+            return _PurchaseGoodsContext.GetIndex(id);
+        }
     }
 }

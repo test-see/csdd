@@ -12,5 +12,6 @@ namespace iservice.purchase
         int Delete(int id);
         int Update(int id, PurchaseGoodsUpdateApiModel updated);
         PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId);
+        PurchaseGoodsListApiModel GetIndex(int id);
     }
 }

@@ -129,5 +129,27 @@ namespace respository.purchase
             _context.SaveChanges();
             return setting.Id;
         }
+
+        public PurchaseGoodsListApiModel GetIndex(int id)
+        {
+            var sql = from r in _context.PurchaseGoods
+                      where r.Id == id
+                      select new PurchaseGoodsListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Qty = r.Qty,
+                          PurchaseId = r.PurchaseId,
+                          HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
+                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
+                      };
+            var data = sql.FirstOrDefault();
+            if (data!=null)
+            {
+                data.HospitalGoods = _hospitalGoodsRespository.GetValue(data.HospitalGoods.Id);
+                data.HospitalClient = _hospitalClientRespository.GetValue(data.HospitalClient.Id);
+            }
+            return data;
+        }
     }
 }

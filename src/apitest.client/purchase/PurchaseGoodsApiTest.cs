@@ -23,5 +23,15 @@ namespace apitest.purchase
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
+        [TestMethod]
+        public async Task PurchaseGoods_Index_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/PurchaseGoods/1/index")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<PurchaseGoodsListQueryModel>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
+        }
     }
 }

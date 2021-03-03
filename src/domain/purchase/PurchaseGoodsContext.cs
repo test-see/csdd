@@ -126,5 +126,9 @@ namespace domain.purchase
                 return average * threshold.UpQty - storeQty;
             return 0;
         }
+        public PurchaseGoodsListApiModel GetIndex(int id)
+        {
+            return _PurchaseGoodsRespository.GetIndex(id);
+        }
     }
 }

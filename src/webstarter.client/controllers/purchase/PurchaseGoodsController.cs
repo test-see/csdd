@@ -23,5 +23,12 @@ namespace webstarter.hospital.controllers.purchase
             var data = _PurchaseGoodsService.GetPagerMappingList(query, Client.Id);
             return Json(data);
         }
+        [HttpGet]
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
+        {
+            var data = _PurchaseGoodsService.GetIndex(id);
+            return Json(data);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace irespository.purchase
         PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseGoodsUpdateApiModel updated);
+        PurchaseGoodsListApiModel GetIndex(int id);
     }
 }
