@@ -31,6 +31,10 @@ namespace respository.user
                           Phone = r.Phone,
                           CreateUserName = u.Username,
                       };
+            if (!string.IsNullOrEmpty(query.Query?.Phone))
+            {
+                sql = sql.Where(x => x.Phone.Contains(query.Query.Phone));
+            }
             return new PagerResult<WhitePhoneListApiModel>(query.Index, query.Size, sql);
         }
 

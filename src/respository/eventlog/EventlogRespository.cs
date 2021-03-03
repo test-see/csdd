@@ -25,6 +25,14 @@ namespace respository.sys
                           OptionUsername = u.Username,
                           Title = r.Title,
                       };
+            if (query.Query?.BeginDate != null)
+            {
+                sql=sql.Where(x => x.CreateTime >= query.Query.BeginDate.Value);
+            }
+            if (query.Query?.EndDate != null)
+            {
+                sql = sql.Where(x => x.CreateTime < query.Query.EndDate.Value.AddDays(1));
+            }
             return new PagerResult<EventlogListApiModel>(query.Index, query.Size, sql);
         }
     }
