@@ -54,10 +54,11 @@ namespace respository.purchase
             if (data.Total > 0)
             {
                 var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var clients = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());
                 foreach (var m in data.Result)
                 {
+                    m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
-                    m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
                 }
             }
             return data;
@@ -87,10 +88,11 @@ namespace respository.purchase
             if (data.Total > 0)
             {
                 var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var clients = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());
                 foreach (var m in data.Result)
                 {
+                    m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
-                    m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
                 }
             }
             return data;
@@ -149,7 +151,7 @@ namespace respository.purchase
             if (data!=null)
             {
                 data.HospitalGoods = _hospitalGoodsRespository.GetValue(new int[] { data.HospitalGoods.Id }).FirstOrDefault();
-                data.HospitalClient = _hospitalClientRespository.GetValue(data.HospitalClient.Id);
+                data.HospitalClient = _hospitalClientRespository.GetValue(new int[] { data.HospitalClient.Id }).FirstOrDefault();
             }
             return data;
         }

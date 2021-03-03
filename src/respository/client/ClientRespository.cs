@@ -103,9 +103,10 @@ namespace respository.client
                           },
                       };
             client.HospitalClients = sql.ToList();
+            var clients = _hospitalClientRespository.GetValue(client.HospitalClients.Select(x => x.HospitalClient.Id).ToArray());
             foreach (var m in client.HospitalClients)
             {
-                m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
+                m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
             }
 
             return client;

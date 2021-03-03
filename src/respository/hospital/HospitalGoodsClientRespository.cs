@@ -57,9 +57,10 @@ namespace respository.hospital
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
             var result = sql.ToList();
+            var clients =  _hospitalClientRespository.GetValue(result.Select(x => x.HospitalClient.Id).ToArray());
             foreach (var m in result)
             {
-                m.HospitalClient = _hospitalClientRespository.GetValue(m.HospitalClient.Id);
+                m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
             }
             return result;
         }

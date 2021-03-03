@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.hospital.client.model;
+using System.Collections.Generic;
 
 namespace irespository.hospital
 {
@@ -10,6 +11,6 @@ namespace irespository.hospital
         HospitalClient Create(HospitalClientCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, HospitalClientUpdateApiModel updated);
-        HospitalClientValueModel GetValue(int id);
+        IList<HospitalClientValueModel> GetValue(int[] ids);
     }
 }
