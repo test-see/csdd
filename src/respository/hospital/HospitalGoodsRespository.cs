@@ -31,6 +31,7 @@ namespace respository.hospital
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Name = r.Name,
+                          Code = r.Code,
                           Hospital = new HospitalValueModel
                           {
                               Id = r.HospitalId,
@@ -60,6 +61,10 @@ namespace respository.hospital
             {
                 sql = sql.Where(x => x.Name.Contains(query.Query.Name));
             }
+            if (!string.IsNullOrEmpty(query.Query?.Code))
+            {
+                sql = sql.Where(x => x.Code.Contains(query.Query.Code));
+            }
             var data = new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
@@ -76,6 +81,7 @@ namespace respository.hospital
         {
             var goods = new HospitalGoods
             {
+                Code = created.Code,
                 Name = created.Name,
                 HospitalId = created.HospitalId,
                 Producer = created.Producer,
@@ -112,6 +118,7 @@ namespace respository.hospital
         {
             var goods = _context.HospitalGoods.First(x => x.Id == id);
 
+            goods.Code = updated.Code;
             goods.Name = updated.Name;
             goods.Producer = updated.Producer;
             goods.Spec = updated.Spec;
@@ -135,6 +142,8 @@ namespace respository.hospital
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
+                          Code = r.Code,
+                          Barcode = r.Barcode,
                           Name = r.Name,
                           Hospital = new HospitalValueModel
                           {
@@ -176,6 +185,7 @@ namespace respository.hospital
                       {
                           Id = r.Id,
                           Name = r.Name,
+                          Code = r.Code,
                           Hospital = new HospitalValueModel
                           {
                               Id = r.HospitalId,
@@ -207,6 +217,7 @@ namespace respository.hospital
                       {
                           Id = r.Id,
                           Name = r.Name,
+                          Code = r.Code,
                           Hospital = new HospitalValueModel
                           {
                               Id = r.HospitalId,

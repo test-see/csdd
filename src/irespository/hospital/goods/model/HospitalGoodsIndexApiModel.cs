@@ -8,6 +8,7 @@ namespace irespository.hospital.goods.model
     public class HospitalGoodsIndexApiModel
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public HospitalValueModel Hospital { get; set; }
         public string Spec { get; set; }

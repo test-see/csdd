@@ -3,6 +3,7 @@
     public class HospitalGoodsCreateApiModel
     {
         public int HospitalId { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string PinShou { get; set; }
         public string Spec { get; set; }
