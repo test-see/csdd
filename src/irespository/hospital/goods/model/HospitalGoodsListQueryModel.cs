@@ -5,5 +5,6 @@
         public int? HospitalId { get; set; }
         public string PinShou { get; set; }
         public string Barcode { get; set; }
+        public string Name { get; set; }
     }
 }

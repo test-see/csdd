@@ -56,6 +56,10 @@ namespace respository.hospital
             {
                 sql = sql.Where(x => x.Barcode.Contains(query.Query.Barcode));
             }
+            if (!string.IsNullOrEmpty(query.Query?.Name))
+            {
+                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
+            }
             var data = new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
