@@ -84,6 +84,7 @@ namespace respository.sys
         public IList<RoleMenuApiModel> GetMenuList()
         {
             var menus = from m in _context.DataMenu
+                        join p in _context.DataPortal on m.PortalId equals p.Id
                         orderby m.Rank
                         select new RoleMenuApiModel
                         {
@@ -93,7 +94,7 @@ namespace respository.sys
                                 Path = m.Path,
                                 ParentId = m.ParentId,
                                 Id = m.Id,
-                                PortalId = m.PortalId,
+                                Portal = new IdNameValueModel { Id = p.Id, Name = p.Name, },
                             },
                             IsCheck = false,
                         };
@@ -103,6 +104,7 @@ namespace respository.sys
         public IList<RoleMenuApiModel> GetMenuListByUserId(int authorizeRoleId, int userId)
         {
             var menus = from m in _context.DataMenu
+                        join d in _context.DataPortal on m.PortalId equals d.Id
                         join p in _context.SysPrivilege on m.Id equals p.MenuId
                         join u in _context.UserRole on p.RoleId equals u.RoleId
                         where u.UserId == userId && m.PortalId == authorizeRoleId
@@ -115,7 +117,7 @@ namespace respository.sys
                                 Path = m.Path,
                                 ParentId = m.ParentId,
                                 Id = m.Id,
-                                PortalId = m.PortalId,
+                                Portal = new IdNameValueModel { Id = d.Id, Name = d.Name, },
                             },
                             IsCheck = true,
                         };

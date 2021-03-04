@@ -1,7 +1,9 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.sys.model;
+using irespository.sys.role.model;
 using irespository.user;
+using irespository.user.enums;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,16 +39,27 @@ namespace domain.sys
             return _sysRoleRespository.Update(id, updated);
         }
 
-        public IList<RoleMenuApiModel> GetMenuList()
+        public IList<MenuPortalListApiModel> GetMenuList()
         {
-            var menus =  _sysRoleRespository.GetMenuList();
-            var tops = menus.Where(x => x.Menu.ParentId == 0).ToList();
-            foreach (var menu in tops)
+            var menus = _sysRoleRespository.GetMenuList();
+            var result = new List<MenuPortalListApiModel>();
+            var portals = menus.Select(x => x.Menu.Portal).Distinct();
+            foreach (var portal in portals)
             {
-                menu.FindChildren(menus);
+                var tops1 = menus.Where(x => x.Menu.ParentId == 0 && x.Menu.Portal.Id == portal.Id).ToList();
+                if (tops1.Any())
+                {
+                    foreach (var menu in tops1)
+                    {
+                        menu.FindChildren(menus);
+                    }
+                    result.Add(new MenuPortalListApiModel { PortalName = portal.Name, Menus = tops1 });
+                }
             }
-            return tops;
+            return result;
         }
+
+
         public IList<RoleMenuApiModel> GetMenuListByUserId(int authorizeRoleId, int userId)
         {
             var menus = _sysRoleRespository.GetMenuListByUserId(authorizeRoleId, userId);

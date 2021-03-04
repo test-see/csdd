@@ -1,4 +1,6 @@
-﻿namespace irespository.data.model
+﻿using foundation.config;
+
+namespace irespository.data.model
 {
     public class MenuValueModel
     {
@@ -6,6 +8,6 @@
         public string Path { get; set; }
         public int ParentId { get; set; }
         public int Id { get; set; }
-        public int PortalId { get; set; }
+        public IdNameValueModel Portal { get; set; }
     }
 }
