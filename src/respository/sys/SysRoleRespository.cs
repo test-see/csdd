@@ -93,7 +93,7 @@ namespace respository.sys
                                 Path = m.Path,
                                 ParentId = m.ParentId,
                                 Id = m.Id,
-                                AuthorizeRoleId = m.AuthorizeRoleId,
+                                PortalId = m.PortalId,
                             },
                             IsCheck = false,
                         };
@@ -105,7 +105,7 @@ namespace respository.sys
             var menus = from m in _context.DataMenu
                         join p in _context.SysPrivilege on m.Id equals p.MenuId
                         join u in _context.UserRole on p.RoleId equals u.RoleId
-                        where u.UserId == userId && m.AuthorizeRoleId == authorizeRoleId
+                        where u.UserId == userId && m.PortalId == authorizeRoleId
                         orderby m.Rank
                         select new RoleMenuApiModel
                         {
@@ -115,7 +115,7 @@ namespace respository.sys
                                 Path = m.Path,
                                 ParentId = m.ParentId,
                                 Id = m.Id,
-                                AuthorizeRoleId = m.AuthorizeRoleId,
+                                PortalId = m.PortalId,
                             },
                             IsCheck = true,
                         };

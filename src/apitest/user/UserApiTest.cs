@@ -39,7 +39,6 @@ namespace apitest.sys
                 {
                     Phone = "+T" + DateTime.UtcNow.ToString("yyMMddmmHHss"),
                     Username = "Test1",
-                    AuthorizeRoleId = (int)AuthorizeRole.Admin,
                     RoleIds = new List<int> {3,6,7 }
                 })
                 .ReceiveJson<OkMessage<int>>();
@@ -81,7 +80,6 @@ namespace apitest.sys
                 .PostJsonAsync(new UserUpdateApiModel
                 {
                     Username = "Test",
-                    AuthorizeRoleId = (int)AuthorizeRole.Admin,
                     RoleIds = new List<int> { }
                 })
                 .ReceiveJson<OkMessage<int>>();
@@ -94,7 +92,7 @@ namespace apitest.sys
             var message = await _rootpath
                 .AppendPathSegment("/api/User/authorize")
                 .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<IEnumerable<DataAuthorizeRole>>>();
+                .GetJsonAsync<OkMessage<IEnumerable<DataPortal>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Any());
         }

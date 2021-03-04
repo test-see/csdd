@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace respository.data
 {
-    public class AuthorizeRoleRespository: IAuthorizeRoleRespository
+    public class PortalRespository : IPortalRespository
     {
         private readonly DefaultDbContext _context;
-        public AuthorizeRoleRespository(DefaultDbContext context)
+        public PortalRespository(DefaultDbContext context)
         {
             _context = context;
         }
-        public IEnumerable<DataAuthorizeRole> GetList()
+        public IEnumerable<DataPortal> GetList()
         {
-            return _context.DataAuthorizeRole.ToList();
+            return _context.DataPortal.ToList();
         }
     }
 }

@@ -5,6 +5,6 @@ namespace iservice.data
 {
     public interface IDataService
     {
-        IEnumerable<DataAuthorizeRole> GetDataAuthorizeList();
+        IEnumerable<DataPortal> GetDataAuthorizeList();
     }
 }

@@ -10,7 +10,7 @@ namespace irespository.user
     public interface IUserRespository
     {
         Task<User> CreateAsync(UserCreateApiModel created, int userId);
-        User GetByPhone(string phone, int authorizeRoleId);
+        User GetByPhone(string phone);
         PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query);
         User UpdateIsActive(int userId, bool isActive);
         int Update(int id, UserUpdateApiModel updated);

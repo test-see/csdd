@@ -13,9 +13,9 @@ namespace domain.user
     public class UserContext
     {
         private readonly IUserRespository _userRespository;
-        private readonly IAuthorizeRoleRespository _authorizeRoleRespository;
+        private readonly IPortalRespository _authorizeRoleRespository;
         public UserContext(IUserRespository userRespository, 
-            IAuthorizeRoleRespository authorizeRoleRespository)
+            IPortalRespository authorizeRoleRespository)
         {
             _userRespository = userRespository;
             _authorizeRoleRespository = authorizeRoleRespository;
@@ -39,12 +39,12 @@ namespace domain.user
         }
         public async Task<User> CreateAsync(UserCreateApiModel created, int userId)
         {
-            var user = _userRespository.GetByPhone(created.Phone, created.AuthorizeRoleId);
+            var user = _userRespository.GetByPhone(created.Phone);
             if (user != null)
                 throw new DefaultException("电话号码已经被占用.");
             return await _userRespository.CreateAsync(created, userId);
         }
-        public IEnumerable<DataAuthorizeRole> GetAuthorizeList()
+        public IEnumerable<DataPortal> GetAuthorizeList()
         {
             return _authorizeRoleRespository.GetList();
         }

@@ -6,7 +6,6 @@ namespace domain.user.valuemodel
     public class LoginHospitalValueModel
     {
         public int Id { get; set; }
-        public int AuthorizeRoleId { get; set; }
         public string Name { get; set; }
         public HospitalDepartmentValueModel HospitalDepartment { get; set; }
         public UserValueModel User { get; set; }

@@ -19,11 +19,11 @@ namespace domain.user
             _userVerificationCodeRespository = userVerificationCodeRespository;
             _dataWhitePhoneRespository = dataWhitePhoneRespository;
         }
-        public User Login(LoginApiModel login, AuthorizeRole role)
+        public User Login(LoginApiModel login)
         {
             if (!_userVerificationCodeRespository.CheckVerificationCode(login))
                 throw new DefaultException("电话号码 或者 验证码不正确.");
-            var user = _userRespository.GetByPhone(login.Phone, (int)role);
+            var user = _userRespository.GetByPhone(login.Phone);
             if (user == null)
                 throw new DefaultException("用户不存在.");
             if (user.IsActive == 0)

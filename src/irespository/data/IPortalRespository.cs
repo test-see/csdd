@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace irespository.data
 {
-    public interface IAuthorizeRoleRespository
+    public interface IPortalRespository
     {
-        IEnumerable<DataAuthorizeRole> GetList();
+        IEnumerable<DataPortal> GetList();
     }
 }

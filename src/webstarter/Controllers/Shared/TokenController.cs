@@ -33,7 +33,7 @@ namespace csdd.Controllers.Shared
             var identity = new ClaimsIdentity();
             var key = Encoding.UTF8.GetBytes(_appConfig.Authentication.IssuerSigningKey);
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Id.ToString()));
-            identity.AddClaim(new Claim(ClaimTypes.Role, user.AuthorizeRoleId.ToString()));
+            identity.AddClaim(new Claim(ClaimTypes.Role, ((int)Portal.Admin).ToString()));
             var descriptor = new SecurityTokenDescriptor
             {
                 Subject = identity,

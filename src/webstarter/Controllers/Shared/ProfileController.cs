@@ -26,7 +26,7 @@ namespace csdd.Controllers.Shared
         [Route("menu/list")]
         public JsonResult GetMenuListByUserId()
         {
-            var data = _roleService.GetMenuListByUserId((int)AuthorizeRole.Admin, UserId);
+            var data = _roleService.GetMenuListByUserId((int)Portal.Admin, UserId);
             return Json(data);
         }
     }

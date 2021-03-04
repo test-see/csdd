@@ -1,6 +1,6 @@
 ﻿namespace irespository.user.enums
 {
-    public enum AuthorizeRole
+    public enum Portal
     {
         Admin = 1,
         Hospital = 2,

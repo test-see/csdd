@@ -84,13 +84,13 @@ namespace webstarter.client
             {
                 options.AddPolicy("RequireDefaultRole", policy =>
                 {
-                    policy.RequireRole(((int)AuthorizeRole.Admin).ToString(),
-                       ((int)AuthorizeRole.Client).ToString(),
-                       ((int)AuthorizeRole.Hospital).ToString());
+                    policy.RequireRole(((int)Portal.Admin).ToString(),
+                       ((int)Portal.Client).ToString(),
+                       ((int)Portal.Hospital).ToString());
                 });
                 options.AddPolicy("RequireClientRole", policy =>
                 {
-                    policy.RequireRole(((int)AuthorizeRole.Client).ToString());
+                    policy.RequireRole(((int)Portal.Client).ToString());
                 });
             });
 

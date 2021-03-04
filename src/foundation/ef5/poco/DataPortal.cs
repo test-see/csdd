@@ -2,8 +2,8 @@
 
 namespace foundation.ef5.poco
 {
-    [Table("data_authorize_role")]
-    public class DataAuthorizeRole
+    [Table("data_portal")]
+    public class DataPortal
     {
         [Column("id")]
         public int Id { get; set; }

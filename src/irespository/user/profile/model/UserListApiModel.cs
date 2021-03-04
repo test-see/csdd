@@ -13,7 +13,6 @@ namespace irespository.user.model
         public DateTime CreateTime { get; set; }
         public int IsActive { get; set; }
         public string CreateUsername { get; set; }
-        public DataAuthorizeRole AuthorizeRole { get; set; }
         public IList<IdNameValueModel> Roles { get; set; }
     }
 }

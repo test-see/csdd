@@ -25,7 +25,6 @@ namespace respository.user
                 Username = created.Username,
                 Phone = created.Phone,
                 CreateUserId = userId,
-                AuthorizeRoleId = created.AuthorizeRoleId,
                 CreateTime = DateTime.Now,
             };
             using (var tran = await _context.Database.BeginTransactionAsync())
@@ -45,14 +44,13 @@ namespace respository.user
             }
             return user;
         }
-        public User GetByPhone(string phone, int authorizeRoleId)
+        public User GetByPhone(string phone)
         {
-            return _context.User.Where(x => x.Phone == phone && x.AuthorizeRoleId == authorizeRoleId).FirstOrDefault();
+            return _context.User.Where(x => x.Phone == phone).FirstOrDefault();
         }
         public PagerResult<UserListApiModel> GetPagerList(PagerQuery<UserListQueryModel> query)
         {
             var sql = from r in _context.User
-                      join a in _context.DataAuthorizeRole on r.AuthorizeRoleId equals a.Id
                       join p in _context.User on r.CreateUserId equals p.Id into p_t
                       from p_tt in p_t.DefaultIfEmpty()
                       select new UserListApiModel
@@ -63,7 +61,6 @@ namespace respository.user
                           Username = r.Username,
                           CreateTime = r.CreateTime,
                           CreateUsername = p_tt.Username,
-                          AuthorizeRole = a,
                       };
             if (query.Query?.IsActive!=null)
             {
@@ -106,7 +103,6 @@ namespace respository.user
             using (var tran = _context.Database.BeginTransaction())
             {
                 user.Username = updated.Username;
-                user.AuthorizeRoleId = updated.AuthorizeRoleId;
                 _context.User.Update(user);
                 _context.SaveChanges();
 

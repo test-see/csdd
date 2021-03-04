@@ -34,18 +34,17 @@ namespace service.user
         }
         public User Login(LoginApiModel login)
         {
-            return _tokenContext.Login(login, AuthorizeRole.Admin);
+            return _tokenContext.Login(login);
         }
 
         public LoginHospitalValueModel LoginByHospital(LoginApiModel login)
         {
-            var user = _tokenContext.Login(login, AuthorizeRole.Hospital);
+            var user = _tokenContext.Login(login);
             var extend = _userHospitalContext.GetIndexByUserId(user.Id);
             if (extend == null)
                 throw new DefaultException("该账号还在维护基础资料, 请等待.");
             return new LoginHospitalValueModel
             {
-                AuthorizeRoleId = user.AuthorizeRoleId,
                 HospitalDepartment = extend.HospitalDepartment,
                 Id = user.Id,
                 User = extend.User,
@@ -55,13 +54,12 @@ namespace service.user
 
         public LoginClientValueModel LoginByClient(LoginApiModel login)
         {
-            var user = _tokenContext.Login(login, AuthorizeRole.Client);
+            var user = _tokenContext.Login(login);
             var extend = _userClientContext.GetIndexByUserId(user.Id);
             if (extend == null)
                 throw new DefaultException("该账号还在维护基础资料, 请等待.");
             return new LoginClientValueModel
             {
-                AuthorizeRoleId = user.AuthorizeRoleId,
                 Client = extend.Client,
                 Id = user.Id,
                 User = extend.User,

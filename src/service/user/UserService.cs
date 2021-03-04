@@ -40,7 +40,7 @@ namespace service.user
         {
             return await _userContext.CreateAsync(created, userId);
         }
-        public IEnumerable<DataAuthorizeRole> GetAuthorizeList()
+        public IEnumerable<DataPortal> GetAuthorizeList()
         {
             return _userContext.GetAuthorizeList();
         }
