@@ -68,6 +68,14 @@ namespace respository.user
                               Id = r.ClientId,
                           }
                       };
+            if (query.Query != null && query.Query.ClientId != null)
+            {
+                sql = sql.Where(x => x.Client.Id == query.Query.ClientId.Value);
+            }
+            if (!string.IsNullOrEmpty(query.Query?.Phone))
+            {
+                sql = sql.Where(x => x.User.Phone.Contains(query.Query.Phone));
+            }
             var data = new PagerResult<UserClientListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {

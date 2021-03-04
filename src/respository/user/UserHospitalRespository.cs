@@ -69,6 +69,15 @@ namespace respository.user
                               Id = r.HospitalDepartmentId,
                           }
                       };
+            if (query.Query != null && query.Query.HospitalId != null)
+            {
+                var departments = _hospitalDepartmentRespository.GetListByHospitalId(query.Query.HospitalId.Value);
+                sql = sql.Where(x => departments.Select(x => x.Id).ToList().Contains(x.HospitalDepartment.Id));
+            }
+            if (!string.IsNullOrEmpty(query.Query?.Phone))
+            {
+                sql = sql.Where(x => x.User.Phone.Contains(query.Query.Phone));
+            }
             var data = new PagerResult<UserHospitalListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {

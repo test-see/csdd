@@ -2,5 +2,7 @@
 {
     public class UserClientListQueryModel
     {
+        public int? ClientId { get; set; }
+        public string Phone { get; set; }
     }
 }

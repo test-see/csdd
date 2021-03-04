@@ -13,5 +13,6 @@ namespace irespository.hospital
         int Update(int id, HospitalDepartmentUpdateApiModel updated);
         IList<IdNameValueModel> GetParentList();
         IList<HospitalDepartmentValueModel> GetValue(int[] ids);
+        IList<HospitalDepartmentListApiModel> GetListByHospitalId(int hospitalId);
     }
 }

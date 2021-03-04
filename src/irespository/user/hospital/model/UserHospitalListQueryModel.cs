@@ -2,5 +2,7 @@
 {
     public class UserHospitalListQueryModel
     {
+        public int? HospitalId { get; set; }
+        public string Phone { get; set; }
     }
 }

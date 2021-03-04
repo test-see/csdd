@@ -129,5 +129,35 @@ namespace respository.hospital
 
             return profile;
         }
+        public IList<HospitalDepartmentListApiModel> GetListByHospitalId(int hospitalId)
+        {
+            var sql = from r in _context.HospitalDepartment
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
+                      join rp in _context.HospitalDepartment on r.ParentId equals rp.Id into rp_def
+                      from rp_def_t in rp_def.DefaultIfEmpty()
+                      where r.HospitalId == hospitalId
+                      select new HospitalDepartmentListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          Name = r.Name,
+                          Hospital = new HospitalValueModel
+                          {
+                              Id = r.HospitalId
+                          },
+                          CreateUserName = u.Username,
+                          DepartmentType = d,
+                          IsPurchaseCheck = r.IsPurchaseCheck,
+                          Parent = rp_def_t != null ? new IdNameValueModel { Id = rp_def_t.Id, Name = rp_def_t.Name } : null,
+                      };
+            var data = sql.ToList();
+            var hospitals = _hospitalRespository.GetValue(data.Select(x => x.Hospital.Id).ToArray());
+            foreach (var m in data)
+            {
+                m.Hospital = hospitals.FirstOrDefault(x => x.Id == m.Hospital.Id);
+            }
+            return data;
+        }
     }
 }
