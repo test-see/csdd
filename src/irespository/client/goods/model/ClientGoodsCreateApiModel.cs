@@ -4,6 +4,7 @@ namespace irespository.client.goods.model
 {
     public class ClientGoodsCreateApiModel
     {
+        public string Code { get; set; }
         public string Name { get; set; }
         public int ClientId { get; set; }
         public string Spec { get; set; }

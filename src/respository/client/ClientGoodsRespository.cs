@@ -33,6 +33,7 @@ namespace respository.client
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Name = r.Name,
+                          Code = r.Code,
                           Client = new ClientValueModel
                           {
                               Id = h.Id,
@@ -51,6 +52,7 @@ namespace respository.client
         {
             var goods = new ClientGoods
             {
+                Code = created.Code,
                 Name = created.Name,
                 ClientId = created.ClientId,
                 Producer = created.Producer,
@@ -82,6 +84,7 @@ namespace respository.client
         {
             var goods = _context.ClientGoods.First(x => x.Id == id);
 
+            goods.Code = updated.Code;
             goods.Name = updated.Name;
             goods.Producer = updated.Producer;
             goods.Spec = updated.Spec;
@@ -106,6 +109,7 @@ namespace respository.client
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Name = r.Name,
+                          Code = r.Code,
                           Client = new ClientValueModel
                           {
                               Id = h.Id,
@@ -154,6 +158,7 @@ namespace respository.client
                       {
                           Id = r.Id,
                           Name = r.Name,
+                          Code = r.Code,
                           Client = new ClientValueModel
                           {
                               Id = h.Id,

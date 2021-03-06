@@ -7,6 +7,7 @@ namespace irespository.client.model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
         public ClientValueModel Client { get; set; }
         public string Spec { get; set; }
         public string Unit { get; set; }
