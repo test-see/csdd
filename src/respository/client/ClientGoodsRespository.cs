@@ -45,6 +45,18 @@ namespace respository.client
                           CreateUserName = u.Username,
                           IsActive = r.IsActive,
                       };
+            if (!string.IsNullOrEmpty(query.Query?.Name))
+            {
+                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
+            }
+            if (!string.IsNullOrEmpty(query.Query?.Code))
+            {
+                sql = sql.Where(x => x.Code.Contains(query.Query.Code));
+            }
+            if (query.Query?.IsActive != null)
+            {
+                sql = sql.Where(x => x.IsActive == query.Query.IsActive);
+            }
             return new PagerResult<ClientGoodsListApiModel>(query.Index, query.Size, sql);
         }
 

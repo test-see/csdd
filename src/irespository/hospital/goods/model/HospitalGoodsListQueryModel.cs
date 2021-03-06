@@ -7,5 +7,6 @@
         public string Barcode { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public int? IsActive { get; set; }
     }
 }
