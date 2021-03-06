@@ -8,6 +8,7 @@ namespace irespository.purchase.model
         public int Id { get; set; }
         public PurchaseIndexApiModel Purchase { get; set; }
         public HospitalGoodsValueModel HospitalGoods { get; set; }
+        public int HospitalClientId { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
         public string Billno { get; set; }

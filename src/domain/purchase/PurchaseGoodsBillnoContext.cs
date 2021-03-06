@@ -25,9 +25,9 @@ namespace domain.purchase
             _storeRecordBillnoContext = storeRecordBillnoContext;
         }
 
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospitalDepartment(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId)
+        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospital(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalId)
         {
-            return _PurchaseGoodsBillnoRespository.GetPagerListByHospitalDepartment(query, hospitalDepartmentId);
+            return _PurchaseGoodsBillnoRespository.GetPagerListByHospital(query, hospitalId);
         }
         public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
         {

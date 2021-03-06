@@ -14,9 +14,9 @@ namespace service.purchase
         {
             _PurchaseGoodsBillnoContext = PurchaseGoodsBillnoContext;
         }
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospitalDepartment(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId)
+        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospital(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalId)
         {
-            return _PurchaseGoodsBillnoContext.GetPagerListByHospitalDepartment(query, hospitalDepartmentId);
+            return _PurchaseGoodsBillnoContext.GetPagerListByHospital(query, hospitalId);
         }
         public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
         {

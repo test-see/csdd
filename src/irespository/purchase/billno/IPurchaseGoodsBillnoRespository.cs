@@ -8,7 +8,7 @@ namespace irespository.purchase
 {
     public interface IPurchaseGoodsBillnoRespository
     {
-        PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospitalDepartment(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId);
+        PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospital(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId);
         PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId);
         PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId);
         int Delete(int id);

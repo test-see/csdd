@@ -2,6 +2,7 @@
 using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.hospital;
+using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
 using irespository.purchase;
 using irespository.purchase.model;
@@ -26,13 +27,14 @@ namespace respository.purchase
             _purchaseRespository = purchaseRespository;
         }
 
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospitalDepartment(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalDepartmentId)
+        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospital(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalId)
         {
             var sql = from r in _context.PurchaseGoodsBillno
                       join p in _context.PurchaseGoods on r.PurchaseGoodsId equals p.Id
                       join x in _context.Purchase on p.PurchaseId equals x.Id
+                      join d in _context.HospitalDepartment on x.HospitalDepartmentId equals d.Id
                       join u in _context.User on r.CreateUserId equals u.Id
-                      where x.HospitalDepartmentId == hospitalDepartmentId
+                      where d.HospitalId == hospitalId
                       select new PurchaseGoodsBillnoListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -43,9 +45,28 @@ namespace respository.purchase
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
                           Price = r.Price,
-                          Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
+                          HospitalClientId = p.HospitalClientId,
+                          Purchase = new PurchaseIndexApiModel
+                          {
+                              Id = p.PurchaseId,
+                              HospitalDepartment = new HospitalDepartmentValueModel
+                              {
+                                  Id = x.HospitalDepartmentId,
+                              }
+                          },
                       };
-
+            if (query.Query?.HospitalDepartmentId != null)
+            {
+                sql = sql.Where(x => x.Purchase.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
+            }
+            if (query.Query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => x.HospitalGoods.Id == query.Query.HospitalGoodsId.Value);
+            }
+            if (query.Query?.HospitalClientId != null)
+            {
+                sql = sql.Where(x => x.HospitalClientId == query.Query.HospitalClientId.Value);
+            }
             var data = new PagerResult<PurchaseGoodsBillnoListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
