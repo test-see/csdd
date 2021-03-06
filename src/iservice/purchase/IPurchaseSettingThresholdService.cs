@@ -7,7 +7,7 @@ namespace iservice.purchase
 {
     public interface IPurchaseSettingThresholdService
     {
-        PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query);
+        PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query, int hospitalId);
         PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, PurchaseSettingThresholdUpdateApiModel updated);
