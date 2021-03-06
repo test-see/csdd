@@ -3,6 +3,7 @@ using Flurl;
 using Flurl.Http;
 using foundation.config;
 using irespository.client.maping.model;
+using irespository.client.maping.profile.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
@@ -25,6 +26,17 @@ namespace apitest.client
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);
+        }
+        [TestMethod]
+        public async Task ClientGoods_Post_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/ClientMapping/list")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new PagerQuery<ClientMappingListQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<ClientMappingListApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
         }
     }
 }
