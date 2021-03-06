@@ -11,5 +11,6 @@ namespace irespository.purchase.model
         public string Remark { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
+        public int Status { get; set; }
     }
 }

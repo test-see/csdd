@@ -40,6 +40,10 @@ namespace respository.purchase
             {
                 sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
             }
+            if (query.Query?.Status != null)
+            {
+                sql = sql.Where(x => x.Status == query.Query.Status.Value);
+            }
             var data = new PagerResult<PurchaseListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
