@@ -21,14 +21,12 @@ namespace respository.purchase
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
         }
-        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query, int hospitalId)
+        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
         {
             var sql = from r in _context.PurchaseSettingThreshold
                       join p in _context.PurchaseSetting on r.PurchaseSettingId equals p.Id
-                      join d in _context.HospitalDepartment on p.HospitalDepartmentId equals d.Id
                       join u in _context.User on r.CreateUserId equals u.Id
                       join t in _context.DataPurchaseThresholdType on r.ThresholdTypeId equals t.Id
-                      where d.HospitalId == hospitalId
                       select new PurchaseSettingThresholdListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -36,17 +34,12 @@ namespace respository.purchase
                           CreateUserName = u.Username,
                           DownQty = r.DownQty,
                           UpQty = r.UpQty,
-                          HospitalDepartmentId = d.Id,
                           HospitalGoods = new HospitalGoodsValueModel
                           {
                               Id = r.HospitalGoodsId,
                           },
                           ThresholdType = t,
                       };
-            if (query.Query?.HospitalDepartmentId != null)
-            {
-                sql = sql.Where(x => x.HospitalDepartmentId == query.Query.HospitalDepartmentId.Value);
-            }
             var data = new PagerResult<PurchaseSettingThresholdListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {

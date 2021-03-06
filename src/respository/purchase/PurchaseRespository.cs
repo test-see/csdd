@@ -21,10 +21,12 @@ namespace respository.purchase
             _context = context;
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
-        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
+        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query, int hospitalId)
         {
             var sql = from r in _context.Purchase
                       join u in _context.User on r.CreateUserId equals u.Id
+                      join p in _context.HospitalDepartment on r.HospitalDepartmentId equals p.Id
+                      where p.HospitalId == hospitalId
                       select new PurchaseListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -34,6 +36,10 @@ namespace respository.purchase
                           Remark = r.Remark,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
+            if (query.Query?.HospitalDepartmentId != null)
+            {
+                sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
+            }
             var data = new PagerResult<PurchaseListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {

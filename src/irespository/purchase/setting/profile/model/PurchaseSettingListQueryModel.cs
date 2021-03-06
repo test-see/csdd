@@ -2,5 +2,6 @@
 {
     public class PurchaseSettingListQueryModel
     {
+        public int? HospitalDepartmentId { get; set; }
     }
 }

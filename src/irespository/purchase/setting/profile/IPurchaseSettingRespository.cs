@@ -6,7 +6,7 @@ namespace irespository.purchase
 {
     public interface IPurchaseSettingRespository
     {
-        PagerResult<PurchaseSettingListApiModel> GetPagerList(PagerQuery<PurchaseSettingListQueryModel> query);
+        PagerResult<PurchaseSettingListApiModel> GetPagerList(PagerQuery<PurchaseSettingListQueryModel> query, int hospitalId);
         PurchaseSetting Create(PurchaseSettingCreateApiModel created, int departmentId, int userId);
         int Delete(int id);
         int Update(int id, PurchaseSettingUpdateApiModel updated);

@@ -18,9 +18,9 @@ namespace domain.purchase
             _purchaseThresholdTypeRespository = purchaseThresholdTypeRespository;
         }
 
-        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query, int hospitalId)
+        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
         {
-            return _purchaseSettingThresholdRespository.GetPagerList(query, hospitalId);
+            return _purchaseSettingThresholdRespository.GetPagerList(query);
         }
         public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)
         {

@@ -14,9 +14,9 @@ namespace service.purchase
         {
             _purchaseSettingThresholdContext = purchaseSettingThresholdContext;
         }
-        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query, int hospitalId)
+        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
         {
-            return _purchaseSettingThresholdContext.GetPagerList(query, hospitalId);
+            return _purchaseSettingThresholdContext.GetPagerList(query);
         }
         public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)
         {

@@ -13,9 +13,9 @@ namespace service.purchase
         {
             _purchaseContext = PurchaseContext;
         }
-        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
+        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query, int hospitalId)
         {
-            return _purchaseContext.GetPagerList(query);
+            return _purchaseContext.GetPagerList(query, hospitalId);
         }
         public Purchase Create(PurchaseCreateApiModel created, int departmentId, int userId)
         {

@@ -13,9 +13,9 @@ namespace domain.purchase
             _purchaseSettingRespository = purchaseSettingRespository;
         }
 
-        public PagerResult<PurchaseSettingListApiModel> GetPagerList(PagerQuery<PurchaseSettingListQueryModel> query)
+        public PagerResult<PurchaseSettingListApiModel> GetPagerList(PagerQuery<PurchaseSettingListQueryModel> query, int hospitalId)
         {
-            return _purchaseSettingRespository.GetPagerList(query);
+            return _purchaseSettingRespository.GetPagerList(query, hospitalId);
         }
         public PurchaseSetting Create(PurchaseSettingCreateApiModel created, int departmentId, int userId)
         {
