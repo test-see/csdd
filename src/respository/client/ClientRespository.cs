@@ -95,7 +95,11 @@ namespace respository.client
                       where p.ClientId == id
                       select new ClientMappingListApiModel
                       {
-
+                          Client = new ClientValueModel
+                          {
+                              Id = client.Id,
+                              Name = client.Name,
+                          },
                           ClientMappingId = p.Id,
                           HospitalClient = new HospitalClientValueModel
                           {
