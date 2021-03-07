@@ -38,5 +38,12 @@ namespace webstarter.hospital.controllers.prescription
             var data = _prescriptionService.Submit(id, userId);
             return Json(data);
         }
+        [HttpGet]
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
+        {
+            var data = _prescriptionService.GetIndex(id);
+            return Json(data);
+        }
     }
 }

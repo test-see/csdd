@@ -9,5 +9,6 @@ namespace iservice.prescription
         PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId);
         Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId);
         int Submit(int id, int userId);
+        PrescriptionIndexApiModel GetIndex(int id);
     }
 }

@@ -50,5 +50,15 @@ namespace apitest.prescription
             Assert.AreEqual(200, message.Code);
         }
 
+        [TestMethod]
+        public async Task Prescription_Index_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Prescription/1/index")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<PrescriptionIndexApiModel>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
+        }
     }
 }

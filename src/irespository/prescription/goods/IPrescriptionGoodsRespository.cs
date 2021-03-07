@@ -1,10 +1,11 @@
 ﻿using foundation.ef5.poco;
+using irespository.prescription.model;
 using System.Collections.Generic;
 
 namespace irespository.prescription
 {
     public interface IPrescriptionGoodsRespository
     {
-        IList<PrescriptionGoods> GetList(int prescriptionId);
+        IList<PrescriptionGoodsListApiModel> GetList(int prescriptionId);
     }
 }

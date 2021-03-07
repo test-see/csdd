@@ -26,5 +26,9 @@ namespace service.prescription
         {
             return _prescriptionContext.Submit(id, userId);
         }
+        public PrescriptionIndexApiModel GetIndex(int id)
+        {
+            return _prescriptionContext.GetIndex(id);
+        }
     }
 }

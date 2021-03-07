@@ -15,11 +15,14 @@ namespace respository.prescription
     {
         private readonly DefaultDbContext _context;
         private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
+        private readonly IPrescriptionGoodsRespository _prescriptionGoodsRespository;
         public PrescriptionRespository(DefaultDbContext context,
-            IHospitalDepartmentRespository hospitalDepartmentRespository)
+            IHospitalDepartmentRespository hospitalDepartmentRespository,
+            IPrescriptionGoodsRespository prescriptionGoodsRespository)
         {
             _context = context;
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _prescriptionGoodsRespository = prescriptionGoodsRespository;
         }
 
         public Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId)
@@ -30,7 +33,7 @@ namespace respository.prescription
                 CreateUserId = userId,
                 CreateTime = DateTime.UtcNow,
                 Cardno = created.Cardno,
-                Status = 1
+                Status = (int)PrescriptionStatus.Pendding,
             };
             _context.Prescription.Add(prescription);
             _context.SaveChanges();
@@ -98,9 +101,27 @@ namespace respository.prescription
             return setting.Id;
         }
 
-        public Prescription Get(int id)
+        public PrescriptionIndexApiModel GetIndex(int id)
         {
-            return _context.Prescription.FirstOrDefault(x => x.Id == id);
+            var sql = from p in _context.Prescription
+                      join u in _context.User on p.CreateUserId equals u.Id
+                      join d in _context.HospitalDepartment on p.HospitalDepartmentId equals d.Id
+                      where p.Id == id
+                      select new PrescriptionIndexApiModel
+                      {
+                          Cardno = p.Cardno,
+                          CreateTime = p.CreateTime,
+                          CreateUserName = u.Username,
+                          Id = p.Id,
+                          Status = p.Status,
+                          HospitalDepartment = new HospitalDepartmentValueModel { Id = p.HospitalDepartmentId },
+                      };
+            var data = sql.FirstOrDefault();
+            if(data!=null)
+            {
+                data.PrescriptionGoods = _prescriptionGoodsRespository.GetList(id);
+            }
+            return data;
         }
     }
 }

@@ -41,11 +41,11 @@ namespace domain.prescription
 
         public int Submit(int id, int userId)
         {
-            var model = _prescriptionRespository.Get(id);
+            var model = _prescriptionRespository.GetIndex(id);
             var list = _prescriptionGoodsRespository.GetList(id);
             var goods = list.Select(x => new StoreChangeGoodsValueModel
             {
-                HospitalGoodId = x.HospitalGoodsId,
+                HospitalGoodId = x.HospitalGoods.Id,
                 Qty = x.Qty,
             });
             using (var trans = _defaultDbTransaction.Begin())
@@ -54,11 +54,15 @@ namespace domain.prescription
                 {
                     ChangeTypeId = (int)StoreChangeType.Prescription,
                     HospitalChangeGoods = goods.ToList(),
-                }, model.HospitalDepartmentId, userId);
+                }, model.HospitalDepartment.Id, userId);
                 _prescriptionRespository.UpdateStatus(id, PrescriptionStatus.Submited);
                 trans.Commit();
             }
             return 0;
+        }
+        public PrescriptionIndexApiModel GetIndex(int id)
+        {
+            return _prescriptionRespository.GetIndex(id);
         }
     }
 }
