@@ -24,13 +24,13 @@ namespace domain.invoice
             _invoiceTypeRespository = invoiceTypeRespository;
         }
 
-        public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query)
+        public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query, int hospitalId)
         {
-            return _InvoiceRespository.GetPagerList(query);
+            return _InvoiceRespository.GetPagerList(query, hospitalId);
         }
-        public Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId)
+        public Invoice Create(InvoiceCreateApiModel created, int userId)
         {
-            return _InvoiceRespository.Create(created, departmentId, userId);
+            return _InvoiceRespository.Create(created, userId);
         }
 
         public int Generate(int invoiceId)

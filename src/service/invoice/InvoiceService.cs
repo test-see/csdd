@@ -16,13 +16,13 @@ namespace service.invoice
         {
             _InvoiceContext = InvoiceContext;
         }
-        public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query)
+        public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query, int hospitalId)
         {
-            return _InvoiceContext.GetPagerList(query);
+            return _InvoiceContext.GetPagerList(query, hospitalId);
         }
-        public Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId)
+        public Invoice Create(InvoiceCreateApiModel created, int userId)
         {
-            return _InvoiceContext.Create(created, departmentId, userId);
+            return _InvoiceContext.Create(created, userId);
         }
 
         public int Delete(int id)

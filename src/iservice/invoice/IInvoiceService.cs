@@ -9,8 +9,8 @@ namespace iservice.invoice
 {
     public interface IInvoiceService
     {
-        PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query);
-        Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId);
+        PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query, int hospitalId);
+        Invoice Create(InvoiceCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, InvoiceUpdateApiModel updated);
         InvoiceIndexApiModel GetIndex(int id);

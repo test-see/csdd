@@ -21,11 +21,13 @@ namespace respository.invoice
             _context = context;
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
-        public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query)
+        public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query, int hospitalId)
         {
             var sql = from r in _context.Invoice
                       join u in _context.User on r.CreateUserId equals u.Id
                       join t in _context.DataInvoiceType on r.InvoiceTypeId equals t.Id
+                      join p in _context.HospitalDepartment on r.HospitalDepartmentId equals p.Id
+                      where p.HospitalId == hospitalId
                       select new InvoiceListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -36,8 +38,17 @@ namespace respository.invoice
                           EndDate = r.EndDate,
                           StartDate = r.StartDate,
                           InvoiceType = t,
+                          Status = r.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
+            if (query.Query?.HospitalDepartmentId != null)
+            {
+                sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
+            }
+            if (query.Query?.Status != null)
+            {
+                sql = sql.Where(x => x.Status == query.Query.Status.Value);
+            }
             if (query.Query?.Type != null)
             {
                 sql = sql.Where(x => x.InvoiceType.Id == (int)query.Query.Type.Value);
@@ -54,16 +65,16 @@ namespace respository.invoice
             return data;
         }
 
-        public Invoice Create(InvoiceCreateApiModel created, int departmentId, int userId)
+        public Invoice Create(InvoiceCreateApiModel created, int userId)
         {
             var setting = new Invoice
             {
-                HospitalDepartmentId = departmentId,
+                HospitalDepartmentId = created.HospitalDepartmentId,
                 CreateUserId = userId,
                 CreateTime = DateTime.Now,
                 Name = created.Name,
                 Remark = created.Remark,
-                Status = 0,
+                Status = (int)InvoiceStatus.Pendding,
                 EndDate = created.EndDate,
                 StartDate = created.StartDate,
                 InvoiceTypeId = created.InvoiceTypeId,
