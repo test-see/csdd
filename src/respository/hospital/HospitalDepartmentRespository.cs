@@ -46,6 +46,10 @@ namespace respository.hospital
             {
                 sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId.Value);
             }
+            if (query.Query?.DepartmentTypeId != null)
+            {
+                sql = sql.Where(x => x.DepartmentType.Id == query.Query.DepartmentTypeId.Value);
+            }
             if (!string.IsNullOrEmpty(query.Query?.Name))
             {
                 sql = sql.Where(x => x.Name.Contains(query.Query.Name));

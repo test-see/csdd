@@ -53,7 +53,7 @@ namespace domain.sys
                     {
                         menu.FindChildren(menus);
                     }
-                    result.Add(new MenuPortalListApiModel { PortalName = portal.Name, Menus = tops1 });
+                    result.Add(new MenuPortalListApiModel { Portal = portal, Menus = tops1 });
                 }
             }
             return result;

@@ -75,9 +75,18 @@ namespace respository.sys
                 Name = x.Name,
             }).First();
 
-            role.MenuIds = (from p in _context.SysPrivilege
-                            where p.RoleId == roleId
-                            select p.MenuId).ToList();
+            role.Menus = (from p in _context.SysPrivilege
+                          join m in _context.DataMenu on p.MenuId equals m.Id
+                          join xp in _context.DataPortal on m.PortalId equals xp.Id
+                          where p.RoleId == roleId
+                          select new MenuValueModel
+                          {
+                              Name = m.Name,
+                              Path = m.Path,
+                              ParentId = m.ParentId,
+                              Id = m.Id,
+                              Portal = new IdNameValueModel { Id = xp.Id, Name = xp.Name, },
+                          }).ToList();
 
             return role;
         }

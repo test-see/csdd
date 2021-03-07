@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using irespository.data.model;
+using System.Collections.Generic;
 
 namespace irespository.sys.model
 {
@@ -7,6 +8,6 @@ namespace irespository.sys.model
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public IList<int> MenuIds { get; set; }
+        public IList<MenuValueModel> Menus { get; set; }
     }
 }
