@@ -55,18 +55,7 @@ namespace respository.purchase
                               }
                           },
                       };
-            if (query.Query?.HospitalDepartmentId != null)
-            {
-                sql = sql.Where(x => x.Purchase.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
-            }
-            if (query.Query?.HospitalGoodsId != null)
-            {
-                sql = sql.Where(x => x.HospitalGoods.Id == query.Query.HospitalGoodsId.Value);
-            }
-            if (query.Query?.HospitalClientId != null)
-            {
-                sql = sql.Where(x => x.HospitalClientId == query.Query.HospitalClientId.Value);
-            }
+            sql = GetQueryableForList(sql, query.Query);
             var data = new PagerResult<PurchaseGoodsBillnoListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
@@ -99,7 +88,7 @@ namespace respository.purchase
                           Price = r.Price,
                           Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
                       };
-
+            sql = GetQueryableForList(sql, query.Query);
             var data = new PagerResult<PurchaseGoodsBillnoListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
@@ -113,7 +102,34 @@ namespace respository.purchase
             return data;
         }
 
-
+        private IQueryable<PurchaseGoodsBillnoListApiModel> GetQueryableForList(IQueryable<PurchaseGoodsBillnoListApiModel> sql ,PurchaseGoodsBillnoListQueryModel query)
+        {
+            if (query?.HospitalDepartmentId != null)
+            {
+                sql = sql.Where(x => x.Purchase.HospitalDepartment.Id == query.HospitalDepartmentId.Value);
+            }
+            if (query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => x.HospitalGoods.Id == query.HospitalGoodsId.Value);
+            }
+            if (query?.HospitalClientId != null)
+            {
+                sql = sql.Where(x => x.HospitalClientId == query.HospitalClientId.Value);
+            }
+            if (!string.IsNullOrEmpty(query?.Billno))
+            {
+                sql = sql.Where(x => x.Billno.Contains(query.Billno));
+            }
+            if (query?.BeginDate != null)
+            {
+                sql = sql.Where(x => x.CreateTime >= query.BeginDate.Value);
+            }
+            if (query?.EndDate != null)
+            {
+                sql = sql.Where(x => x.CreateTime < query.EndDate.Value.AddDays(1));
+            }
+            return sql;
+        }
         public PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId)
         {
             var setting = new PurchaseGoodsBillno
