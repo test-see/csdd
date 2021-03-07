@@ -9,7 +9,7 @@ namespace iservice.checklist
     {
         PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId);
         CheckListPreviewApiModel GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query);
-        CheckList Create(CheckListCreateApiModel created, int departmentId, int userId);
+        CheckList Create(CheckListCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, CheckListUpdateApiModel updated);
         CheckListIndexApiModel GetIndex(int id);

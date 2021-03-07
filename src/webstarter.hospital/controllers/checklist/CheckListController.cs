@@ -42,7 +42,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("add")]
         public JsonResult Post(CheckListCreateApiModel created)
         {
-            var data = _CheckListService.Create(created, HospitalDepartment.Id, Profile.Id);
+            var data = _CheckListService.Create(created, Profile.Id);
             return Json(data);
         }
 

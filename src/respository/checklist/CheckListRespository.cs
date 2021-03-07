@@ -61,16 +61,17 @@ namespace respository.checklist
             return data;
         }
 
-        public CheckList Create(CheckListCreateApiModel created, int departmentId, int userId)
+        public CheckList Create(CheckListCreateApiModel created, int userId)
         {
             var setting = new CheckList
             {
-                HospitalDepartmentId = departmentId,
+                HospitalDepartmentId = created.HospitalDepartmentId,
                 CreateUserId = userId,
                 CreateTime = DateTime.Now,
                 Name = created.Name,
                 Remark = created.Remark,
-                Status = 0,
+                Status = (int)CheckListStatus.Pendding,
+                 
             };
 
             _context.CheckList.Add(setting);

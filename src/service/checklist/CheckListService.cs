@@ -30,9 +30,9 @@ namespace service.checklist
                 Amount = _CheckListGoodsContext.GetPreviewListAmount(checkListId),
             };
         }
-        public CheckList Create(CheckListCreateApiModel created, int departmentId, int userId)
+        public CheckList Create(CheckListCreateApiModel created, int userId)
         {
-            return _CheckListContext.Create(created, departmentId, userId);
+            return _CheckListContext.Create(created, userId);
         }
 
         public int Delete(int id)
