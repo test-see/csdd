@@ -25,8 +25,15 @@ namespace webstarter.hospital.controllers.hospital
             var data = _hospitalGoodsService.GetPagerList(query);
             return Json(data);
         }
-
-
+        [HttpPost]
+        [Route("store/list")]
+        public JsonResult GetPagerStoreList(PagerQuery<HospitalGoodsListQueryModel> query)
+        {
+            query.Query = query.Query ?? new HospitalGoodsListQueryModel { };
+            query.Query.HospitalId = HospitalDepartment.Hospital.Id;
+            var data = _hospitalGoodsService.GetPagerStoreList(query, HospitalDepartment.Id);
+            return Json(data);
+        }
         [HttpGet]
         [Route("index")]
         public JsonResult GetIndexByBarcode(string barcode)

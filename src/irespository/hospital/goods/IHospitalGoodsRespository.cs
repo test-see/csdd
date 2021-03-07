@@ -10,6 +10,7 @@ namespace irespository.hospital
     public interface IHospitalGoodsRespository
     {
         PagerResult<HospitalGoodsListApiModel> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query);
+        PagerResult<HospitalGoodsStoreListApiModel> GetPagerStoreList(PagerQuery<HospitalGoodsListQueryModel> query, int departmentId);
         HospitalGoods Create(HospitalGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, HospitalGoodsUpdateApiModel updated);

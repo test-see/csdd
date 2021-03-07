@@ -23,6 +23,17 @@ namespace apitest.hospital
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
+        [TestMethod]
+        public async Task HospitalGoods_Store_Post_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/store/list")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new PagerQuery<HospitalGoodsListQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<HospitalGoodsStoreListApiModel>>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data.Total > 0);
+        }
 
         [TestMethod]
         public async Task HospitalGoods_Get_ReturnListAsync()

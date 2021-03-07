@@ -18,6 +18,10 @@ namespace service.hospital
         {
             return _hospitalGoodsContext.GetPagerList(query);
         }
+        public PagerResult<HospitalGoodsStoreListApiModel> GetPagerStoreList(PagerQuery<HospitalGoodsListQueryModel> query, int departmentId)
+        {
+            return _hospitalGoodsContext.GetPagerStoreList(query, departmentId);
+        }
         public HospitalGoods Create(HospitalGoodsCreateApiModel created, int userId)
         {
             return _hospitalGoodsContext.Create(created, userId);

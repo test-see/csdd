@@ -23,6 +23,10 @@ namespace domain.hospital
         {
             return _hospitalGoodsRespository.GetPagerList(query);
         }
+        public PagerResult<HospitalGoodsStoreListApiModel> GetPagerStoreList(PagerQuery<HospitalGoodsListQueryModel> query, int departmentId)
+        {
+            return _hospitalGoodsRespository.GetPagerStoreList(query, departmentId);
+        }
         public HospitalGoods Create(HospitalGoodsCreateApiModel created, int userId)
         {
             return _hospitalGoodsRespository.Create(created, userId);
