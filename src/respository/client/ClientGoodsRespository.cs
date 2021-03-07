@@ -57,6 +57,10 @@ namespace respository.client
             {
                 sql = sql.Where(x => x.IsActive == query.Query.IsActive);
             }
+            if (query.Query?.ClientId != null)
+            {
+                sql = sql.Where(x => x.Client.Id == query.Query.ClientId.Value);
+            }
             return new PagerResult<ClientGoodsListApiModel>(query.Index, query.Size, sql);
         }
 

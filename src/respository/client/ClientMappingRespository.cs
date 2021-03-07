@@ -70,6 +70,10 @@ namespace respository.client
             {
                 sql = sql.Where(x => x.HospitalClient.Hospital.Id == query.Query.HospitalId.Value);
             }
+            if (query.Query?.ClientId != null)
+            {
+                sql = sql.Where(x => x.Client.Id == query.Query.ClientId.Value);
+            }
             if (!string.IsNullOrEmpty(query.Query?.Name))
             {
                 sql = sql.Where(x => x.Client.Name.Contains(query.Query.Name));
