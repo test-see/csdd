@@ -7,7 +7,7 @@ namespace iservice.checklist
 {
     public interface ICheckListService
     {
-        PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query);
+        PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId);
         CheckListPreviewApiModel GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query);
         CheckList Create(CheckListCreateApiModel created, int departmentId, int userId);
         int Delete(int id);

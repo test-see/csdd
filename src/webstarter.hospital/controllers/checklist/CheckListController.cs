@@ -24,9 +24,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("list")]
         public JsonResult GetList(PagerQuery<CheckListQueryModel> query)
         {
-            _logger.LogInformation(DateTime.Now.ToString());
-            var data = _CheckListService.GetPagerList(query);
-            _logger.LogInformation(DateTime.Now.ToString());
+            var data = _CheckListService.GetPagerList(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 

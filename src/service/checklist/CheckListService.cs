@@ -18,9 +18,9 @@ namespace service.checklist
             _CheckListContext = CheckListContext;
             _CheckListGoodsContext = CheckListGoodsContext;
         }
-        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query)
+        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId)
         {
-            return _CheckListContext.GetPagerList(query);
+            return _CheckListContext.GetPagerList(query, hospitalId);
         }
         public CheckListPreviewApiModel GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
         {

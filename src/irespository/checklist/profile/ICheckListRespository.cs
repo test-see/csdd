@@ -7,7 +7,7 @@ namespace irespository.checklist
 {
     public interface ICheckListRespository
     {
-        PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query);
+        PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId);
         CheckList Create(CheckListCreateApiModel created, int departmentId, int userId);
         int Delete(int id);
         int Update(int id, CheckListUpdateApiModel updated);

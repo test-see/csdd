@@ -14,9 +14,9 @@ namespace domain.checklist
             _CheckListRespository = CheckListRespository;
         }
 
-        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query)
+        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId)
         {
-            return _CheckListRespository.GetPagerList(query);
+            return _CheckListRespository.GetPagerList(query, hospitalId);
         }
         public CheckList Create(CheckListCreateApiModel created, int departmentId, int userId)
         {

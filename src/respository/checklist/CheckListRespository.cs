@@ -21,10 +21,12 @@ namespace respository.checklist
             _context = context;
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
-        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query)
+        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId)
         {
             var sql = from r in _context.CheckList
                       join u in _context.User on r.CreateUserId equals u.Id
+                      join d in _context.HospitalDepartment on r.HospitalDepartmentId equals d.Id
+                      where d.HospitalId == hospitalId
                       select new CheckListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -32,8 +34,21 @@ namespace respository.checklist
                           CreateUserName = u.Username,
                           Name = r.Name,
                           Remark = r.Remark,
+                          Status = r.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
+            if (query.Query?.HospitalDepartmentId != null)
+            {
+                sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
+            }
+            if (query.Query?.Status != null)
+            {
+                sql = sql.Where(x => x.Status == query.Query.Status.Value);
+            }
+            if (!string.IsNullOrEmpty(query.Query?.Name))
+            {
+                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
+            }
             var data = new PagerResult<CheckListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
