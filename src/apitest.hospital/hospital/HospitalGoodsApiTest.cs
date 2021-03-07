@@ -36,10 +36,10 @@ namespace apitest.hospital
         }
 
         [TestMethod]
-        public async Task HospitalGoods_Get_ReturnListAsync()
+        public async Task HospitalGoods_Query_Get_ReturnListAsync()
         {
             var message = await _rootpath
-                .AppendPathSegment("/api/HospitalGoods/index")
+                .AppendPathSegment("/api/HospitalGoods/query/index")
                 .WithOAuthBearerToken(await getToken())
                 .SetQueryParam("barcode", "1")
                 .GetJsonAsync<OkMessage<HospitalGoodsValueModel>>();
@@ -47,5 +47,77 @@ namespace apitest.hospital
             Assert.IsTrue(message.Data != null);
         }
 
+        [TestMethod]
+        public async Task HospitalGoods_AddAndDelete_ReturnIntAsync()
+        {
+            var hospital = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/add")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new HospitalGoodsCreateApiModel
+                {
+                    Name = "q",
+                    HospitalId = 1,
+                    Producer = "x",
+                    Unit = "x",
+                    Spec = "x",
+                    PinShou = "x",
+                    Price = new decimal(1.11),
+                })
+                .ReceiveJson<OkMessage<foundation.ef5.poco.HospitalGoods>>();
+            var message = await _rootpath
+                .AppendPathSegment($"/api/HospitalGoods/{hospital.Data.Id}/delete")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data > 0);
+        }
+        [TestMethod]
+        public async Task HospitalGoods_Update_ReturnIntAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/1/update")
+                .WithOAuthBearerToken(await getToken())
+                .PostJsonAsync(new HospitalGoodsUpdateApiModel
+                {
+                    Name = "q",
+                    Producer = "x",
+                    Unit = "x",
+                    Spec = "x",
+                    IsActive = 1,
+                    PinShou = "x",
+                    Price = new decimal(1.11),
+                    Barcode = "1",
+                })
+                .ReceiveJson<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data > 0);
+        }
+
+
+        [TestMethod]
+        public async Task HospitalGoods_Get_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/1/index")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<HospitalGoodsIndexApiModel>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
+        }
+
+        [TestMethod]
+        public async Task HospitalGoods_InActive_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/1/inactive")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<foundation.ef5.poco.HospitalGoods>>();
+            Assert.AreEqual(200, message.Code);
+            message = await _rootpath
+                .AppendPathSegment("/api/HospitalGoods/1/active")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<foundation.ef5.poco.HospitalGoods>>();
+            Assert.AreEqual(200, message.Code);
+        }
     }
 }
