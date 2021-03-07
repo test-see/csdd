@@ -49,10 +49,12 @@ namespace respository.prescription
             return prescription;
         }
 
-        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query)
+        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
         {
             var sql = from p in _context.Prescription
                       join u in _context.User on p.CreateUserId equals u.Id
+                      join d in _context.HospitalDepartment on p.HospitalDepartmentId equals d.Id
+                      where d.HospitalId == hospitalId
                       select new PrescriptionListApiModel
                       {
                           Cardno = p.Cardno,
@@ -62,6 +64,18 @@ namespace respository.prescription
                           Status = p.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = p.HospitalDepartmentId },
                       };
+            if (query.Query?.HospitalDepartmentId != null)
+            {
+                sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
+            }
+            if (!string.IsNullOrEmpty(query.Query?.Cardno))
+            {
+                sql = sql.Where(x => x.Cardno.Contains(query.Query.Cardno));
+            }
+            if (query.Query?.Status != null)
+            {
+                sql = sql.Where(x => x.Status == query.Query.Status.Value);
+            }
             var data = new PagerResult<PrescriptionListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {

@@ -20,7 +20,7 @@ namespace webstarter.hospital.controllers.prescription
         [Route("list")]
         public JsonResult GetList(PagerQuery<PrescriptionListQueryModel> query)
         {
-            var data = _prescriptionService.GetPagerList(query);
+            var data = _prescriptionService.GetPagerList(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 

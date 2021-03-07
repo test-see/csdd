@@ -18,9 +18,9 @@ namespace service.prescription
             return _prescriptionContext.Create(created, departmentId, userId);
         }
 
-        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query)
+        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
         {
-            return _prescriptionContext.GetPagerList(query);
+            return _prescriptionContext.GetPagerList(query, hospitalId);
         }
         public int Submit(int id, int userId)
         {

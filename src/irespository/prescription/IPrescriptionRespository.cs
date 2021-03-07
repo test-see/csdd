@@ -7,7 +7,7 @@ namespace irespository.prescription
 {
     public interface IPrescriptionRespository
     {
-        PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query);
+        PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId);
         Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId);
         int UpdateStatus(int id, PrescriptionStatus status);
         Prescription Get(int id);

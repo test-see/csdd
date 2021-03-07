@@ -29,9 +29,9 @@ namespace domain.prescription
             _prescriptionGoodsRespository = prescriptionGoodsRespository;
         }
 
-        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query)
+        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
         {
-            return _prescriptionRespository.GetPagerList(query);
+            return _prescriptionRespository.GetPagerList(query, hospitalId);
         }
 
         public Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId)
