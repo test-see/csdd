@@ -101,6 +101,14 @@ namespace respository.store
                               Id = r.HospitalGoodsId,
                           },
                       };
+            if (query.Query?.HospitalDepartmentId != null)
+            {
+                sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
+            }
+            if (query.Query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => x.HospitalGoods.Id == query.Query.HospitalGoodsId.Value);
+            }
             var data = new PagerResult<StoreListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
