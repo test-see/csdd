@@ -2,5 +2,6 @@
 {
     public class StoreInoutGoodsListQueryModel
     {
+        public int? StoreInoutId { get; set; }
     }
 }

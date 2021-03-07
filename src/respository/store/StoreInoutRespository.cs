@@ -36,6 +36,14 @@ namespace respository.store
                           ChangeType = d,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
+            if (query.Query?.HospitalDepartmentId != null)
+            {
+                sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
+            }
+            if (query.Query?.ChangeTypeId != null)
+            {
+                sql = sql.Where(x => x.ChangeType.Id == query.Query.ChangeTypeId.Value);
+            }
             var data = new PagerResult<StoreInoutListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
@@ -90,9 +98,28 @@ namespace respository.store
             return setting.Id;
         }
 
-        public StoreInout Get(int id)
+        public StoreInoutIndexApiModel GetIndex(int id)
         {
-            return _context.StoreInout.FirstOrDefault(x => x.Id == id);
+            var sql = from r in _context.StoreInout
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      join d in _context.DataStoreChangeType on r.ChangeTypeId equals d.Id
+                      where r.Id == id
+                      select new StoreInoutIndexApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          CreateUserName = u.Username,
+                          Name = r.Name,
+                          Remark = r.Remark,
+                          ChangeType = d,
+                          HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
+                      };
+            var data = sql.FirstOrDefault();
+            if (data != null)
+            {
+                data.HospitalDepartment = _hospitalDepartmentRespository.GetValue(new int[] { data.HospitalDepartment.Id }).FirstOrDefault();
+            }
+            return data;
         }
 
         public int UpdateStatus(int id, StoreInoutStatus status)

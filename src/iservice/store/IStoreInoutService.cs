@@ -13,5 +13,6 @@ namespace iservice.store
         int Update(int id, StoreInoutUpdateApiModel updated);
         int Submit(int id, int userId);
         IEnumerable<DataStoreChangeType> GetCustomizeChangeTypeList();
+        StoreInoutIndexApiModel GetIndex(int id);
     }
 }

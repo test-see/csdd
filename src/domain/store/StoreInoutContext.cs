@@ -49,9 +49,15 @@ namespace domain.store
         {
             return _StoreInoutRespository.Update(id, updated);
         }
+        public StoreInoutIndexApiModel GetIndex(int id)
+        {
+            return _StoreInoutRespository.GetIndex(id);
+        }
+
+
         public int Submit(int id, int userId)
         {
-            var model = _StoreInoutRespository.Get(id);
+            var model = GetIndex(id);
             var list = _storeInoutGoodsContext.GetListByStoreInout(id);
             var goods = list.Select(x => new StoreChangeGoodsValueModel
             {
@@ -62,9 +68,9 @@ namespace domain.store
             {
                 _storeContext.BatchCreateOrUpdate(new BatchStoreChangeApiModel
                 {
-                    ChangeTypeId = model.ChangeTypeId,
+                    ChangeTypeId = model.ChangeType.Id,
                     HospitalChangeGoods = goods.ToList(),
-                }, model.HospitalDepartmentId, userId);
+                }, model.HospitalDepartment.Id, userId);
                 _StoreInoutRespository.UpdateStatus(id, StoreInoutStatus.Submited);
                 trans.Commit();
             }

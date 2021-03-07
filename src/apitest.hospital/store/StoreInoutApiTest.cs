@@ -71,5 +71,16 @@ namespace apitest.storeinout
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Any());
         }
+        [TestMethod]
+        public async Task StoreInout_Index_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/StoreInout/1/index")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<StoreInoutIndexApiModel>>();
+            Assert.AreEqual(200, message.Code);
+            Assert.IsTrue(message.Data != null);
+        }
+
     }
 }

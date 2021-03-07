@@ -29,11 +29,16 @@ namespace respository.store
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
+                          StoreInoutId = r.StoreInoutId,
                           HospitalGoods = new HospitalGoodsValueModel
                           {
                               Id = r.HospitalGoodsId,
                           },
                       };
+            if (query.Query?.StoreInoutId != null)
+            {
+                sql = sql.Where(x => x.StoreInoutId == query.Query.StoreInoutId.Value);
+            }
             var data = new PagerResult<StoreInoutGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
@@ -53,6 +58,7 @@ namespace respository.store
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
+                          StoreInoutId = r.StoreInoutId,
                           HospitalGoods = new HospitalGoodsValueModel
                           {
                               Id = r.HospitalGoodsId,

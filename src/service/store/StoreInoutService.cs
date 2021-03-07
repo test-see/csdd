@@ -32,6 +32,10 @@ namespace service.store
         {
             return _StoreInoutContext.Update(id, updated);
         }
+        public StoreInoutIndexApiModel GetIndex(int id)
+        {
+            return _StoreInoutContext.GetIndex(id);
+        }
 
         public int Submit(int id, int userId)
         {

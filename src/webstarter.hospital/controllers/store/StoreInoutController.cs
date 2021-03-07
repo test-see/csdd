@@ -49,6 +49,13 @@ namespace webstarter.hospital.controllers.StoreInout
             var data = _storeInoutService.Update(id, updated);
             return Json(data);
         }
+        [HttpGet]
+        [Route("{id}/index")]
+        public JsonResult GetIndex(int id)
+        {
+            var data = _storeInoutService.GetIndex(id);
+            return Json(data);
+        }
 
         [HttpGet]
         [Route("{id}/submit")]
