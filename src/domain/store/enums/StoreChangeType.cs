@@ -2,7 +2,9 @@
 {
     public enum StoreChangeType
     {
-        Purchase = 1,
-        Prescription = 2,
+        Purchase = 3,
+        Prescription = 4,
+        CheckListIn = 5,
+        CheckListOut = 6,
     }
 }

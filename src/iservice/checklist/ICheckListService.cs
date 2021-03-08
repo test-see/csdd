@@ -14,6 +14,6 @@ namespace iservice.checklist
         int Update(int id, CheckListUpdateApiModel updated);
         CheckListIndexApiModel GetIndex(int id);
         int Submit(int id);
-        int Bill(int id);
+        int Bill(int id, int userId);
     }
 }

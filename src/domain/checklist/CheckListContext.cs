@@ -1,4 +1,6 @@
-﻿using foundation.config;
+﻿using domain.store;
+using foundation.config;
+using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.checklist;
 using irespository.checklist.model;
@@ -9,9 +11,15 @@ namespace domain.checklist
     public class CheckListContext
     {
         private readonly ICheckListRespository _CheckListRespository;
-        public CheckListContext(ICheckListRespository CheckListRespository)
+        private readonly StoreContext _storeContext;
+        private readonly DefaultDbTransaction _defaultDbTransaction;
+        public CheckListContext(ICheckListRespository CheckListRespository,
+            StoreContext storeContext,
+            DefaultDbTransaction defaultDbTransaction)
         {
             _CheckListRespository = CheckListRespository;
+            _storeContext = storeContext;
+            _defaultDbTransaction = defaultDbTransaction;
         }
 
         public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId)
@@ -39,7 +47,7 @@ namespace domain.checklist
         {
             return _CheckListRespository.UpdateStatus(id, CheckListStatus.Submited);
         }
-        public int Bill(int id)
+        public int Bill(int id, int userId)
         {
 
             return _CheckListRespository.UpdateStatus(id, CheckListStatus.Billed);

@@ -54,9 +54,9 @@ namespace service.checklist
         {
             return _CheckListContext.Submit(id);
         }
-        public int Bill(int id)
+        public int Bill(int id, int userId)
         {
-            return _CheckListContext.Bill(id);
+            return _CheckListContext.Bill(id, userId);
         }
     }
 }

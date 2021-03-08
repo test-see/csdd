@@ -83,7 +83,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("{id}/bill")]
         public JsonResult Bill(int id)
         {
-            var data = _CheckListService.Bill(id);
+            var data = _CheckListService.Bill(id, Profile.Id);
             return Json(data);
         }
     }
