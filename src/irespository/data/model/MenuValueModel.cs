@@ -9,5 +9,8 @@ namespace irespository.data.model
         public int ParentId { get; set; }
         public int Id { get; set; }
         public IdNameValueModel Portal { get; set; }
+        public string Icon { get; set; }
+        public bool HideInMenu { get; set; }
+        public bool HideChildrenInMenu { get; set; }
     }
 }
