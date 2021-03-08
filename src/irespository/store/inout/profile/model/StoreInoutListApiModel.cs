@@ -13,5 +13,6 @@ namespace irespository.storeinout.model
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
         public DataStoreChangeType ChangeType { get; set; }
+        public int Status { get; set; }
     }
 }

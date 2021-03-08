@@ -46,6 +46,7 @@ namespace respository.purchase
                           CreateUserName = u.Username,
                           Price = r.Price,
                           HospitalClientId = p.HospitalClientId,
+                          Status = r.Status,
                           Purchase = new PurchaseIndexApiModel
                           {
                               Id = p.PurchaseId,
@@ -127,6 +128,10 @@ namespace respository.purchase
             if (query?.EndDate != null)
             {
                 sql = sql.Where(x => x.CreateTime < query.EndDate.Value.AddDays(1));
+            }
+            if (query?.Status != null)
+            {
+                sql = sql.Where(x => x.Status == query.Status.Value);
             }
             return sql;
         }

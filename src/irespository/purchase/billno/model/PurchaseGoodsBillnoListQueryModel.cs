@@ -10,5 +10,6 @@ namespace irespository.purchase.model
         public string Billno { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public int? Status { get; set; }
     }
 }

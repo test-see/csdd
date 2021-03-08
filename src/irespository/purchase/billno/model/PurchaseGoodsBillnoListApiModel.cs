@@ -15,5 +15,6 @@ namespace irespository.purchase.model
         public int Qty { get; set; }
         public decimal Price { get; set; }
         public DateTime Enddate { get; set; }
+        public int? Status { get; set; }
     }
 }

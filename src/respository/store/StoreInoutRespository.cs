@@ -34,6 +34,7 @@ namespace respository.store
                           Name = r.Name,
                           Remark = r.Remark,
                           ChangeType = d,
+                          Status = r.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
             if (query.Query?.HospitalDepartmentId != null)
@@ -43,6 +44,10 @@ namespace respository.store
             if (query.Query?.ChangeTypeId != null)
             {
                 sql = sql.Where(x => x.ChangeType.Id == query.Query.ChangeTypeId.Value);
+            }
+            if (query.Query?.Status != null)
+            {
+                sql = sql.Where(x => x.Status == query.Query.Status.Value);
             }
             var data = new PagerResult<StoreInoutListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
