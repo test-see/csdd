@@ -71,8 +71,11 @@ namespace respository.purchase
         public int Delete(int id)
         {
             var thresholds = _context.PurchaseSettingThreshold.Where(x => x.PurchaseSettingId == id);
-            _context.PurchaseSettingThreshold.RemoveRange(thresholds);
-            _context.SaveChanges();
+            if (thresholds.Any())
+            {
+                _context.PurchaseSettingThreshold.RemoveRange(thresholds);
+                _context.SaveChanges();
+            }
 
             var setting = _context.PurchaseSetting.Find(id);
             _context.PurchaseSetting.Remove(setting);
