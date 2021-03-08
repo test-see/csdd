@@ -1,6 +1,7 @@
 ﻿using foundation.ef5.poco;
 using irespository.client.goods.model;
 using irespository.client.maping;
+using System.Collections.Generic;
 
 namespace domain.client
 {
@@ -21,9 +22,9 @@ namespace domain.client
             return _clientMappingGoodsRespository.Delete(id);
         }
 
-        public ClientMappingGoodsIndexApiModel GetIndexByHospitalGoodsId(int hospitalGoodsId, int clientId)
+        public IList<ClientMappingGoodsIndexApiModel> GetIndexByHospitalGoodsId(int[] hospitalGoodsIds, int clientId)
         {
-            return _clientMappingGoodsRespository.GetIndexByHospitalGoodsId(hospitalGoodsId, clientId);
+            return _clientMappingGoodsRespository.GetIndexByHospitalGoodsId(hospitalGoodsIds, clientId);
         }
     }
 }

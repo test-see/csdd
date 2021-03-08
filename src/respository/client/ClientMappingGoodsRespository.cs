@@ -6,6 +6,7 @@ using irespository.client.maping;
 using irespository.hospital;
 using irespository.hospital.goods.model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.client
@@ -48,11 +49,11 @@ namespace respository.client
             return id;
         }
 
-        public ClientMappingGoodsIndexApiModel GetIndexByHospitalGoodsId(int hospitalGoodsId, int clientId)
+        public IList<ClientMappingGoodsIndexApiModel> GetIndexByHospitalGoodsId(int[] hospitalGoodsIds, int clientId)
         {
             var sql = from r in _context.ClientMappingGoods
                       join c in _context.ClientGoods on r.ClientGoodsId equals c.Id
-                      where r.HospitalGoodsId == hospitalGoodsId && c.ClientId == clientId
+                      where hospitalGoodsIds.Contains(r.HospitalGoodsId) && c.ClientId == clientId
                       select new ClientMappingGoodsIndexApiModel
                       {
                           Id = r.Id,
@@ -62,13 +63,13 @@ namespace respository.client
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId },
                       };
 
-            var profile = sql.FirstOrDefault();
-            if (profile != null)
+            var data = sql.ToList();
+            foreach (var profile in data)
             {
                 profile.HospitalGoods = _hospitalGoodsRespository.GetValue(new int[] { profile.HospitalGoods.Id }).FirstOrDefault();
                 profile.ClientGoods = _clientGoodsRespository.GetValue(new int[] { profile.ClientGoods.Id }).FirstOrDefault();
             }
-            return profile;
+            return data;
         }
 
     }

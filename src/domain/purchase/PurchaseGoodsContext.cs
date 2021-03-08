@@ -44,18 +44,20 @@ namespace domain.purchase
         public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
             var data = _PurchaseGoodsRespository.GetPagerListByClient(query, clientId);
+            var mappings = _clientMappingGoodsContext.GetIndexByHospitalGoodsId(data.Result.Select(x => x.HospitalGoods.Id).ToArray(), clientId);
+
             var result = new List<PurchaseGoodsMappingListApiModel>();
-            foreach (var x in data.Result)
+            foreach (var item in data.Result)
             {
-                var mapping = _clientMappingGoodsContext.GetIndexByHospitalGoodsId(x.HospitalGoods.Id, clientId);
                 result.Add(new PurchaseGoodsMappingListApiModel
                 {
-                    PurchaseGoods = x,
-                    MappingClientGoods = new MappingClientGoodsValueModel
+                    PurchaseGoods = item,
+                    MappingClientGoods = mappings.Where(x => x.HospitalGoods.Id == item.HospitalGoods.Id)
+                    .Select(mapping => new MappingClientGoodsValueModel
                     {
                         ClientGoods = mapping.ClientGoods,
-                        Qty = x.Qty * mapping.ClientQty / mapping.HospitalQty,
-                    },
+                        Qty = item.Qty * mapping.ClientQty / mapping.HospitalQty,
+                    }).FirstOrDefault(),
                 });
             }
             return new PagerResult<PurchaseGoodsMappingListApiModel>

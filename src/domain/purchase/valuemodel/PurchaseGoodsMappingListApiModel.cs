@@ -8,5 +8,6 @@ namespace domain.purchase.valuemodel
     {
         public PurchaseGoodsListApiModel PurchaseGoods { get; set; }
         public MappingClientGoodsValueModel MappingClientGoods { get; set; }
+        //public int BillQty { get; set; }
     }
 }
