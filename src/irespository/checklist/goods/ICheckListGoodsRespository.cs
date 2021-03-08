@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.checklist.goods.model;
 using irespository.checklist.model;
+using System.Collections.Generic;
 
 namespace irespository.checklist
 {
@@ -13,5 +14,6 @@ namespace irespository.checklist
         CheckListGoods Create(CheckListGoodsCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, CheckListGoodsUpdateApiModel updated);
+        IList<CheckListGoodsPreviewListApiModel> GetPreviewList(int checkListId);
     }
 }

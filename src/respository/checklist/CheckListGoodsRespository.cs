@@ -8,6 +8,7 @@ using irespository.checklist.model;
 using System;
 using System.Linq;
 using irespository.checklist.goods.model;
+using System.Collections.Generic;
 
 namespace respository.checklist
 {
@@ -74,6 +75,31 @@ namespace respository.checklist
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                 }
+            }
+            return data;
+        }
+        public IList<CheckListGoodsPreviewListApiModel> GetPreviewList(int checkListId)
+        {
+            var sql = from r in _context.CheckListGoods
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      where r.CheckListId == checkListId && r.CheckQty != r.StoreQty
+                      select new CheckListGoodsPreviewListApiModel
+                      {
+                          CreateTime = r.CreateTime,
+                          Id = r.Id,
+                          CheckQty = r.CheckQty,
+                          HospitalGoods = new HospitalGoodsValueModel
+                          {
+                              Id = r.HospitalGoodsId,
+                          },
+                          CreateUsername = u.Username,
+                          StoreQty = r.StoreQty,
+                      };
+            var data = sql.ToList();
+            var goods = _hospitalGoodsRespository.GetValue(data.Select(x => x.HospitalGoods.Id).ToArray());
+            foreach (var m in data)
+            {
+                m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
             }
             return data;
         }
