@@ -83,8 +83,11 @@ namespace respository.checklist
         public int Delete(int id)
         {
             var thresholds = _context.CheckListGoods.Where(x => x.CheckListId == id);
-            _context.CheckListGoods.RemoveRange(thresholds);
-            _context.SaveChanges();
+            if (thresholds.Any())
+            {
+                _context.CheckListGoods.RemoveRange(thresholds);
+                _context.SaveChanges();
+            }
 
             var setting = _context.CheckList.Find(id);
             _context.CheckList.Remove(setting);

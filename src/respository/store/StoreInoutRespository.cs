@@ -83,8 +83,11 @@ namespace respository.store
         public int Delete(int id)
         {
             var thresholds = _context.StoreInoutGoods.Where(x => x.StoreInoutId == id);
-            _context.StoreInoutGoods.RemoveRange(thresholds);
-            _context.SaveChanges();
+            if (thresholds.Any())
+            {
+                _context.StoreInoutGoods.RemoveRange(thresholds);
+                _context.SaveChanges();
+            }
 
             var setting = _context.StoreInout.Find(id);
             _context.StoreInout.Remove(setting);
