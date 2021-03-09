@@ -12,6 +12,8 @@ namespace foundation.ef5.poco
         public int PortalId { get; set; }
         [Column("name")]
         public string Name { get; set; }
+        [Column("displayname")]
+        public string DisplayName { get; set; }
         [Column("path")]
         public string Path { get; set; }
         [Column("parent_id")]

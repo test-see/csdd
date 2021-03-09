@@ -82,6 +82,7 @@ namespace respository.sys
                           select new MenuValueModel
                           {
                               Name = m.Name,
+                              DisplayName = m.DisplayName,
                               Path = m.Path,
                               ParentId = m.ParentId,
                               Id = m.Id,
@@ -103,6 +104,7 @@ namespace respository.sys
                             Menu = new MenuValueModel
                             {
                                 Name = m.Name,
+                                DisplayName = m.DisplayName,
                                 Path = m.Path,
                                 ParentId = m.ParentId,
                                 Id = m.Id,
@@ -129,6 +131,7 @@ namespace respository.sys
                             Menu = new MenuValueModel
                             {
                                 Name = m.Name,
+                                DisplayName = m.DisplayName,
                                 Path = m.Path,
                                 ParentId = m.ParentId,
                                 Id = m.Id,
