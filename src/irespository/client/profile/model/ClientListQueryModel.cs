@@ -2,5 +2,6 @@
 {
     public class ClientListQueryModel
     {
+        public string Name { get; set; }
     }
 }

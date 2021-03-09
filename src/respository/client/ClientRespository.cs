@@ -35,6 +35,10 @@ namespace respository.client
                           Name = r.Name,
                           CreateUserName = u.Username,
                       };
+            if (!string.IsNullOrEmpty(query.Query?.Name))
+            {
+                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
+            }
             return new PagerResult<ClientListApiModel>(query.Index, query.Size, sql);
         }
 
