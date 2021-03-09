@@ -6,7 +6,7 @@ using irespository.hospital.client.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
-namespace apitest
+namespace apitest.hospital
 {
     [TestClass]
     public class HospitalClientApiTest : BaseApiTest
