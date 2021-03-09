@@ -5,13 +5,13 @@ namespace foundation.rabbitmq
 {
     public class RabbitMqContext
     {
-        protected IConnection _connection;
+        private IConnection _connection;
         private readonly RabbitMqConfig _config;
         public RabbitMqContext(RabbitMqConfig config)
         {
             _config = config;
         }
-        protected IModel GetChannel()
+        public IModel GetChannel()
         {
             if (_connection == null)
             {
@@ -23,6 +23,11 @@ namespace foundation.rabbitmq
                 _connection = factory.CreateConnection();
             }
             return _connection.CreateModel();
+        }
+        public void Close()
+        {
+            _connection?.Close();
+            _connection?.Dispose();
         }
     }
 }
