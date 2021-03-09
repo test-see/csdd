@@ -76,6 +76,10 @@ namespace respository.user
             {
                 sql = sql.Where(x => x.User.Phone.Contains(query.Query.Phone));
             }
+            if (!string.IsNullOrEmpty(query.Query?.Name))
+            {
+                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
+            }
             var data = new PagerResult<UserClientListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
