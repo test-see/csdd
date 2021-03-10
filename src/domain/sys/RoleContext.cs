@@ -43,17 +43,18 @@ namespace domain.sys
         {
             var menus = _sysRoleRespository.GetMenuList();
             var result = new List<MenuPortalListApiModel>();
-            var portals = menus.Select(x => x.Menu.Portal).Distinct();
+            var portals = menus.Select(x => x.Menu.Portal.Id).Distinct();
             foreach (var portal in portals)
             {
-                var tops1 = menus.Where(x => x.Menu.ParentId == 0 && x.Menu.Portal.Id == portal.Id).ToList();
+                var tops1 = menus.Where(x => x.Menu.ParentId == 0 && x.Menu.Portal.Id == portal).ToList();
                 if (tops1.Any())
                 {
+                    var p = tops1.First().Menu.Portal;
                     foreach (var menu in tops1)
                     {
                         menu.FindChildren(menus);
                     }
-                    result.Add(new MenuPortalListApiModel { Portal = portal, Menus = tops1 });
+                    result.Add(new MenuPortalListApiModel { Portal = p, Menus = tops1 });
                 }
             }
             return result;
