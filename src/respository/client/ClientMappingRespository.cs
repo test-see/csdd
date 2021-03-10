@@ -49,6 +49,7 @@ namespace respository.client
         public PagerResult<ClientMappingListApiModel> GetPagerList(PagerQuery<ClientMappingListQueryModel> query)
         {
             var sql = from p in _context.ClientMapping
+                      join u in _context.User on p.CreateUserId equals u.Id
                       join c in _context.HospitalClient on p.HospitalClientId equals c.Id
                       join h in _context.Hospital on c.HospitalId equals h.Id
                       join ct in _context.Client on p.ClientId equals ct.Id
@@ -65,6 +66,8 @@ namespace respository.client
                               Id = c.Id,
                               Hospital = new HospitalValueModel { Id = h.Id, }
                           },
+                          CreateTime = p.CreateTime,
+                          CreateUserName = u.Username,
                       };
             if (query.Query?.HospitalId != null)
             {
