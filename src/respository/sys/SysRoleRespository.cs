@@ -118,7 +118,7 @@ namespace respository.sys
             return menus.ToList();
         }
 
-        public IList<RoleMenuApiModel> GetMenuListByUserId(int authorizeRoleId, int userId)
+        public IList<string> GetMenuListByUserId(int authorizeRoleId, int userId)
         {
             var menus = from m in _context.DataMenu
                         join d in _context.DataPortal on m.PortalId equals d.Id
@@ -126,22 +126,7 @@ namespace respository.sys
                         join u in _context.UserRole on p.RoleId equals u.RoleId
                         where u.UserId == userId && m.PortalId == authorizeRoleId
                         orderby m.Rank
-                        select new RoleMenuApiModel
-                        {
-                            Menu = new MenuValueModel
-                            {
-                                Name = m.Name,
-                                DisplayName = m.DisplayName,
-                                Path = m.Path,
-                                ParentId = m.ParentId,
-                                Id = m.Id,
-                                Icon = m.Icon,
-                                HideChildrenInMenu = m.IsHideChildren > 0,
-                                HideInMenu = m.IsHide > 0,
-                                Portal = new IdNameValueModel { Id = d.Id, Name = d.Name, },
-                            },
-                            IsCheck = true,
-                        };
+                        select m.Name;
             return menus.Distinct().ToList();
         }
 

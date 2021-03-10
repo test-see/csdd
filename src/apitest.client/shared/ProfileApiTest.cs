@@ -27,7 +27,7 @@ namespace apitest.shared
             var message = await _rootpath
                 .AppendPathSegment("/api/Profile/menu/list")
                 .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<IList<RoleMenuApiModel>>>();
+                .GetJsonAsync<OkMessage<IList<string>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data != null);
         }
