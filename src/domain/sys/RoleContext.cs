@@ -50,13 +50,14 @@ namespace domain.sys
                 if (tops1.Any())
                 {
                     var p = tops1.First().Portal;
-                    var ps = tops1.Select(x => new RoleMenuApiModel { IsCheck = false, Menu = x }).ToList();
+                    var ts = tops1.Select(x => new RoleMenuApiModel { IsCheck = false, Menu = x }).ToList();
+                    var ps = menus.Select(x => new RoleMenuApiModel { IsCheck = false, Menu = x }).ToList();
 
-                    foreach (var menu in ps)
+                    foreach (var menu in ts)
                     {
                         menu.FindChildren(ps);
                     }
-                    result.Add(new MenuPortalListApiModel { Portal = p, Menus = ps });
+                    result.Add(new MenuPortalListApiModel { Portal = p, Menus = ts });
                 }
             }
             return result;
