@@ -118,15 +118,26 @@ namespace respository.sys
             return menus.ToList();
         }
 
-        public IList<string> GetMenuListByUserId(int authorizeRoleId, int userId)
+        public IList<MenuValueModel> GetMenuListByUserId(int portalId, int userId)
         {
             var menus = from m in _context.DataMenu
                         join d in _context.DataPortal on m.PortalId equals d.Id
                         join p in _context.SysPrivilege on m.Id equals p.MenuId
                         join u in _context.UserRole on p.RoleId equals u.RoleId
-                        where u.UserId == userId && m.PortalId == authorizeRoleId
+                        where u.UserId == userId && m.PortalId == portalId
                         orderby m.Rank
-                        select m.Name;
+                        select new MenuValueModel
+                        {
+                            Name = m.Name,
+                            DisplayName = m.DisplayName,
+                            Path = m.Path,
+                            ParentId = m.ParentId,
+                            Id = m.Id,
+                            Icon = m.Icon,
+                            HideChildrenInMenu = m.IsHideChildren > 0,
+                            HideInMenu = m.IsHide > 0,
+                            Portal = new IdNameValueModel { Id = d.Id, Name = d.Name, },
+                        };
             return menus.Distinct().ToList();
         }
 

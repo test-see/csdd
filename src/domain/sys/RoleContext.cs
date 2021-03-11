@@ -60,10 +60,22 @@ namespace domain.sys
             return result;
         }
 
-
-        public IList<string> GetMenuListByUserId(int authorizeRoleId, int userId)
+        public IList<string> GetMenuListByUserId(int portalId, int userId)
         {
-            return _sysRoleRespository.GetMenuListByUserId(authorizeRoleId, userId);
+            var all = _sysRoleRespository.GetMenuList();
+            var t = all.Where(x => x.Menu.Portal.Id == portalId).ToList();
+            var menus = _sysRoleRespository.GetMenuListByUserId(portalId, userId);
+            var append = menus.Select(x => x.Name).ToList();
+            foreach (var m in menus)
+            {
+                var item = t.First(x => x.Menu.Id == m.Id);
+                while (item.Menu.ParentId != 0)
+                {
+                    item = t.First(x => x.Menu.Id == item.Menu.ParentId);
+                    append.Add(item.Menu.Name);
+                }
+            }
+            return append;
         }
 
     }
