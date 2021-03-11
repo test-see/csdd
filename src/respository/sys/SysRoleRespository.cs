@@ -94,26 +94,23 @@ namespace respository.sys
 
             return role;
         }
-        public IList<RoleMenuApiModel> GetMenuList()
+        public IList<MenuValueModel> GetMenuList()
         {
             var menus = from m in _context.DataMenu
                         join p in _context.DataPortal on m.PortalId equals p.Id
                         orderby m.Rank
-                        select new RoleMenuApiModel
+                        select new MenuValueModel
                         {
-                            Menu = new MenuValueModel
-                            {
-                                Name = m.Name,
-                                DisplayName = m.DisplayName,
-                                Path = m.Path,
-                                ParentId = m.ParentId,
-                                Id = m.Id,
-                                Icon = m.Icon,
-                                HideChildrenInMenu = m.IsHideChildren > 0,
-                                HideInMenu = m.IsHide > 0,
-                                Portal = new IdNameValueModel { Id = p.Id, Name = p.Name, },
-                            },
-                            IsCheck = false,
+                            Name = m.Name,
+                            DisplayName = m.DisplayName,
+                            Path = m.Path,
+                            ParentId = m.ParentId,
+                            Id = m.Id,
+                            Icon = m.Icon,
+                            HideChildrenInMenu = m.IsHideChildren > 0,
+                            HideInMenu = m.IsHide > 0,
+                            Portal = new IdNameValueModel { Id = p.Id, Name = p.Name, },
+
                         };
             return menus.ToList();
         }

@@ -43,18 +43,20 @@ namespace domain.sys
         {
             var menus = _sysRoleRespository.GetMenuList();
             var result = new List<MenuPortalListApiModel>();
-            var portals = menus.Select(x => x.Menu.Portal.Id).Distinct();
+            var portals = menus.Select(x => x.Portal.Id).Distinct();
             foreach (var portal in portals)
             {
-                var tops1 = menus.Where(x => x.Menu.ParentId == 0 && x.Menu.Portal.Id == portal).ToList();
+                var tops1 = menus.Where(x => x.ParentId == 0 && x.Portal.Id == portal).ToList();
                 if (tops1.Any())
                 {
-                    var p = tops1.First().Menu.Portal;
-                    foreach (var menu in tops1)
+                    var p = tops1.First().Portal;
+                    var ps = tops1.Select(x => new RoleMenuApiModel { IsCheck = false, Menu = x }).ToList();
+
+                    foreach (var menu in ps)
                     {
-                        menu.FindChildren(menus);
+                        menu.FindChildren(ps);
                     }
-                    result.Add(new MenuPortalListApiModel { Portal = p, Menus = tops1 });
+                    result.Add(new MenuPortalListApiModel { Portal = p, Menus = ps });
                 }
             }
             return result;
@@ -63,16 +65,16 @@ namespace domain.sys
         public IList<string> GetMenuListByUserId(int portalId, int userId)
         {
             var all = _sysRoleRespository.GetMenuList();
-            var t = all.Where(x => x.Menu.Portal.Id == portalId).ToList();
+            var t = all.Where(x => x.Portal.Id == portalId).ToList();
             var menus = _sysRoleRespository.GetMenuListByUserId(portalId, userId);
             var append = menus.Select(x => x.Name).ToList();
             foreach (var m in menus)
             {
-                var item = t.First(x => x.Menu.Id == m.Id);
-                while (item.Menu.ParentId != 0)
+                var item = t.First(x => x.Id == m.Id);
+                while (item.ParentId != 0)
                 {
-                    item = t.First(x => x.Menu.Id == item.Menu.ParentId);
-                    append.Add(item.Menu.Name);
+                    item = t.First(x => x.Id == item.ParentId);
+                    append.Add(item.Name);
                 }
             }
             return append;

@@ -13,7 +13,7 @@ namespace irespository.user
         int Delete(int id);
         int Update(int id, RoleIndexUpdateModel updated);
         RoleIndexApiModel GetIndex(int roleId);
-        IList<RoleMenuApiModel> GetMenuList();
+        IList<MenuValueModel> GetMenuList();
         IList<MenuValueModel> GetMenuListByUserId(int portalId, int userId);
     }
 }
