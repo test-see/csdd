@@ -78,7 +78,7 @@ namespace domain.sys
                     append.Add(item.Name);
                 }
             }
-            return append;
+            return append.Distinct().ToList();
         }
 
     }
