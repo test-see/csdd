@@ -42,6 +42,7 @@ namespace domain.sys
         public IList<MenuPortalListApiModel> GetMenuList()
         {
             var menus = _sysRoleRespository.GetMenuList();
+            var ps = menus.Select(x => new RoleMenuApiModel { IsCheck = false, Menu = x }).ToList();
             var result = new List<MenuPortalListApiModel>();
             var portals = menus.Select(x => x.Portal.Id).Distinct();
             foreach (var portal in portals)
@@ -51,7 +52,6 @@ namespace domain.sys
                 {
                     var p = tops1.First().Portal;
                     var ts = tops1.Select(x => new RoleMenuApiModel { IsCheck = false, Menu = x }).ToList();
-                    var ps = menus.Select(x => new RoleMenuApiModel { IsCheck = false, Menu = x }).ToList();
 
                     foreach (var menu in ts)
                     {
