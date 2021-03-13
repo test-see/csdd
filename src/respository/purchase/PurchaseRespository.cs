@@ -70,7 +70,7 @@ namespace respository.purchase
                 CreateTime = DateTime.Now,
                 Name = created.Name,
                 Remark = created.Remark,
-                Status = 0,
+                Status = (int)PurchaseStatus.Pendding,
             };
 
             _context.Purchase.Add(setting);
