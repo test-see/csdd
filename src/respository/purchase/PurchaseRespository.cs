@@ -34,6 +34,7 @@ namespace respository.purchase
                           CreateUserName = u.Username,
                           Name = r.Name,
                           Remark = r.Remark,
+                          Status = r.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
             if (query.Query?.HospitalDepartmentId != null)
