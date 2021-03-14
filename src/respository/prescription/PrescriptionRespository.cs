@@ -79,6 +79,14 @@ namespace respository.prescription
             {
                 sql = sql.Where(x => x.Status == query.Query.Status.Value);
             }
+            if (query.Query?.BeginDate != null)
+            {
+                sql = sql.Where(x => x.CreateTime >= query.Query.BeginDate.Value);
+            }
+            if (query.Query?.EndDate != null)
+            {
+                sql = sql.Where(x => x.CreateTime < query.Query.EndDate.Value.AddDays(1));
+            }
             var data = new PagerResult<PrescriptionListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
