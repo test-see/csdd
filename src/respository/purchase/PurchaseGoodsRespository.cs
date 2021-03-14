@@ -43,11 +43,11 @@ namespace respository.purchase
                       };
             if (query.Query?.HospitalClientId != null)
             {
-                sql = sql.Where(x => query.Query.HospitalClientId.Value == x.HospitalGoods.Id);
+                sql = sql.Where(x => query.Query.HospitalClientId.Value == x.HospitalClient.Id);
             }
             if (query.Query?.HospitalGoodsId != null)
             {
-                sql = sql.Where(x => query.Query.HospitalGoodsId.Value == x.HospitalClient.Id);
+                sql = sql.Where(x => query.Query.HospitalGoodsId.Value == x.HospitalGoods.Id);
             }
             if (query.Query?.PurchaseId != null)
             {
