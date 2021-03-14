@@ -2,5 +2,6 @@
 {
     public class CheckListGoodsQueryModel
     {
+        public int? CheckListId { get; set; }
     }
 }
