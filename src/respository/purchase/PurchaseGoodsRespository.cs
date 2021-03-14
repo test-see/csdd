@@ -41,6 +41,10 @@ namespace respository.purchase
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
+            if (query.Query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => query.Query.HospitalGoodsId.Value == x.HospitalGoods.Id);
+            }
             if (query.Query?.HospitalClientId != null)
             {
                 sql = sql.Where(x => query.Query.HospitalClientId.Value == x.HospitalClient.Id);
