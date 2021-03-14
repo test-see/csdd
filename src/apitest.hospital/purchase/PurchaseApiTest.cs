@@ -80,5 +80,15 @@ namespace apitest.purchase
                 .GetJsonAsync<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
         }
+
+        [TestMethod]
+        public async Task Purchase_Back_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/Purchase/1/back")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
+        }
     }
 }

@@ -57,6 +57,14 @@ namespace respository.store
             {
                 sql = sql.Where(x => x.HospitalGoods.Id == query.Query.HospitalGoodsId.Value);
             }
+            if (query.Query?.BeginDate != null)
+            {
+                sql = sql.Where(x => x.CreateTime >= query.Query.BeginDate.Value);
+            }
+            if (query.Query?.EndDate != null)
+            {
+                sql = sql.Where(x => x.CreateTime < query.Query.EndDate.Value.AddDays(1));
+            }
             var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {

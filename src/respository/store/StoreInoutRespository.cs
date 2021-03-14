@@ -49,6 +49,10 @@ namespace respository.store
             {
                 sql = sql.Where(x => x.Status == query.Query.Status.Value);
             }
+            if (!string.IsNullOrEmpty(query.Query?.Name))
+            {
+                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
+            }
             var data = new PagerResult<StoreInoutListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
@@ -120,6 +124,7 @@ namespace respository.store
                           Name = r.Name,
                           Remark = r.Remark,
                           ChangeType = d,
+                          Status = r.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
             var data = sql.FirstOrDefault();

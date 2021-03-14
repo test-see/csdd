@@ -74,5 +74,12 @@ namespace webstarter.hospital.controllers.purchase
             var data = _PurchaseService.Comfirm(id);
             return Json(data);
         }
+        [HttpGet]
+        [Route("{id}/back")]
+        public JsonResult Revoke(int id)
+        {
+            var data = _PurchaseService.Revoke(id);
+            return Json(data);
+        }
     }
 }
