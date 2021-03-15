@@ -5,6 +5,7 @@ using irespository.data;
 using irespository.store;
 using irespository.store.model;
 using irespository.store.profile.model;
+using System.Collections.Generic;
 
 namespace domain.store
 {
@@ -23,6 +24,10 @@ namespace domain.store
         public PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query)
         {
             return _storeRespository.GetPagerList(query);
+        }
+        public IList<StoreListApiModel> GetListByDepartment(int departmentId)
+        {
+            return _storeRespository.GetListByDepartment(departmentId);
         }
 
         public bool BatchCreateOrUpdate(BatchStoreChangeApiModel created, int department, int userId)

@@ -122,5 +122,38 @@ namespace respository.store
             }
             return data;
         }
+        public IList<StoreListApiModel> GetListByDepartment(int departmentId)
+        {
+            var sql = from r in _context.Store
+                      join uc in _context.User on r.CreateUserId equals uc.Id
+                      join uu in _context.User on r.UpdateUserId equals uu.Id
+                      where r.HospitalDepartmentId == departmentId
+                      select new StoreListApiModel
+                      {
+                          Id = r.Id,
+                          CreateTime = r.CreateTime,
+                          CreateUserName = uc.Username,
+                          UpdateTime = r.UpdateTime,
+                          UpdateUserName = uu.Username,
+                          Qty = r.Qty,
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = r.HospitalDepartmentId,
+                          },
+                          HospitalGoods = new HospitalGoodsValueModel
+                          {
+                              Id = r.HospitalGoodsId,
+                          },
+                      };
+            var data = sql.ToList();
+            var departments = _hospitalDepartmentRespository.GetValue(data.Select(x => x.HospitalDepartment.Id).ToArray());
+            var goods = _hospitalGoodsRespository.GetValue(data.Select(x => x.HospitalGoods.Id).ToArray());
+            foreach (var m in data)
+            {
+                m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
+                m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
+            }
+            return data;
+        }
     }
 }

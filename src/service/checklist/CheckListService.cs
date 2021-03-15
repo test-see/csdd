@@ -1,4 +1,5 @@
 ﻿using domain.checklist;
+using domain.store;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.checklist.goods.model;
@@ -12,11 +13,14 @@ namespace service.checklist
     {
         private readonly CheckListContext _CheckListContext;
         private readonly CheckListGoodsContext _CheckListGoodsContext;
+        private readonly StoreContext _storeContext;
         public CheckListService(CheckListContext CheckListContext,
-            CheckListGoodsContext CheckListGoodsContext)
+            CheckListGoodsContext CheckListGoodsContext,
+            StoreContext storeContext)
         {
             _CheckListContext = CheckListContext;
             _CheckListGoodsContext = CheckListGoodsContext;
+            _storeContext = storeContext;
         }
         public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId)
         {
@@ -32,7 +36,18 @@ namespace service.checklist
         }
         public CheckList Create(CheckListCreateApiModel created, int userId)
         {
-            return _CheckListContext.Create(created, userId);
+            var check = _CheckListContext.Create(created, userId);
+            var stores = _storeContext.GetListByDepartment(created.HospitalDepartmentId);
+            foreach (var s in stores)
+            {
+                _CheckListGoodsContext.Create(new CheckListGoodsCreateApiModel
+                {
+                    CheckListId = check.Id,
+                    CheckQty = s.Qty,
+                    HospitalGoodsId = s.HospitalGoods.Id,
+                }, userId);
+            }
+            return check;
         }
 
         public int Delete(int id)
