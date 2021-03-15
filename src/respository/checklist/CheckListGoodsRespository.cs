@@ -43,6 +43,10 @@ namespace respository.checklist
             {
                 sql = sql.Where(x => x.CheckListId == query.Query.CheckListId.Value);
             }
+            if (query.Query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => query.Query.HospitalGoodsId.Value == x.HospitalGoods.Id);
+            }
             var data = new PagerResult<CheckListGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
