@@ -126,7 +126,8 @@ namespace respository.checklist
                           Id = r.Id,
                           CreateUserName = u.Username,
                           Name = r.Name,
-                          Remark = r.Remark, 
+                          Remark = r.Remark,
+                          Status = r.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
                               Id = r.HospitalDepartmentId,
