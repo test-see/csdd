@@ -81,7 +81,7 @@ namespace domain.checklist
                     HospitalChangeGoods = goods2.ToList(),
                 }, model.HospitalDepartment.Id, userId);
 
-                _checkListRespository.UpdateStatus(id, CheckListStatus.Submited);
+                _checkListRespository.UpdateStatus(id, CheckListStatus.Billed);
                 trans.Commit();
             }
             return 0;
