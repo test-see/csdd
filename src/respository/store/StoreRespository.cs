@@ -37,14 +37,14 @@ namespace respository.store
             var record = _storeRecordRespository.Create(new StoreRecordCreateApiModel
             {
                 BeforeQty = beforeStore?.Qty ?? 0,
-                ChangeQty = created.Qty,
+                ChangeQty = created.ChangeQty,
                 ChangeTypeId = changeTypeId,
                 HospitalDepartmentId = departmentId,
                 HospitalGoodsId = created.HospitalGoodId,
             }, userId);
 
-            if (beforeStore == null) Create(created.HospitalGoodId, created.Qty, departmentId, userId);
-            else Update(beforeStore, created.Qty, userId);
+            if (beforeStore == null) Create(created.HospitalGoodId, created.ChangeQty, departmentId, userId);
+            else Update(beforeStore, created.ChangeQty, userId);
 
             return record.Id;
         }

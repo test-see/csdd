@@ -3,6 +3,6 @@
     public class StoreChangeGoodsValueModel
     {
         public int HospitalGoodId { get; set; }
-        public int Qty { get; set; }
+        public int ChangeQty { get; set; }
     }
 }

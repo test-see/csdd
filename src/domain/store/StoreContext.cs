@@ -38,7 +38,7 @@ namespace domain.store
                 foreach (var item in created.HospitalChangeGoods)
                 {
                     var store = _storeRespository.GetIndexByGoods(department, item.HospitalGoodId);
-                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.Qty;
+                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.ChangeQty;
                     if (afterqty < 0)
                         throw new DefaultException("库存不足!");
                     _storeRespository.CreateOrUpdate(item, created.ChangeTypeId, department, userId);
@@ -53,7 +53,7 @@ namespace domain.store
             lock (balance)
             {
                 var store = _storeRespository.GetIndexByGoods(department, created.HospitalChangeGoods.HospitalGoodId);
-                var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.HospitalChangeGoods.Qty;
+                var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.HospitalChangeGoods.ChangeQty;
                 if (afterqty < 0)
                     throw new DefaultException("库存不足!");
                 return _storeRespository.CreateOrUpdate(created.HospitalChangeGoods, created.ChangeTypeId, department, userId);

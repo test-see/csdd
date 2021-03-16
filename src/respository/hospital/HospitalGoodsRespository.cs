@@ -127,7 +127,7 @@ namespace respository.hospital
             goods.Producer = updated.Producer;
             goods.Spec = updated.Spec;
             goods.Unit = updated.Unit;
-            goods.IsActive = updated.IsActive;
+            //goods.IsActive = updated.IsActive;
             goods.PinShou = updated.PinShou;
             goods.Price = updated.Price;
             goods.Barcode = updated.Barcode;
