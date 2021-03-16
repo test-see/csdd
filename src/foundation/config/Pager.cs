@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace foundation.config
 {
-    public class PagerResult<T>
+    public class PagerResult<T> //where T : OrderBy<int>
     {
         public int Index { get; set; }
         public int Size { get; set; }
@@ -20,6 +20,7 @@ namespace foundation.config
         {
             Index = index;
             Size = size;
+            //if(base.)
             Result = query.Skip(size * (index - 1)).Take(size).ToList();
             Total = query.Count();
         }
