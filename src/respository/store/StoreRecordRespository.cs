@@ -31,6 +31,7 @@ namespace respository.store
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
+                      orderby r.Id descending
                       select new StoreRecordListApiModel
                       {
                           Id = r.Id,
