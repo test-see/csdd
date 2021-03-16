@@ -41,7 +41,7 @@ namespace domain.store
                     var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.ChangeQty;
                     if (afterqty < 0)
                         throw new DefaultException("库存不足!");
-                    _storeRespository.CreateOrUpdate(item, created.ChangeTypeId, department, userId);
+                    _storeRespository.CreateOrUpdate(item, afterqty, created.ChangeTypeId, department, userId);
                 }
             }
             return true;
@@ -56,7 +56,7 @@ namespace domain.store
                 var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.HospitalChangeGoods.ChangeQty;
                 if (afterqty < 0)
                     throw new DefaultException("库存不足!");
-                return _storeRespository.CreateOrUpdate(created.HospitalChangeGoods, created.ChangeTypeId, department, userId);
+                return _storeRespository.CreateOrUpdate(created.HospitalChangeGoods, afterqty, created.ChangeTypeId, department, userId);
 
             }
         }

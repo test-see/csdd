@@ -9,7 +9,7 @@ namespace irespository.store
     public interface IStoreRespository
     {
         PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query);
-        int CreateOrUpdate(StoreChangeGoodsValueModel created, int changeTypeId, int departmentId, int userId);
+        int CreateOrUpdate(StoreChangeGoodsValueModel created, int afterQty, int changeTypeId, int departmentId, int userId);
         Store GetIndexByGoods(int department, int goods);
         IList<StoreListApiModel> GetListByDepartment(int departmentId);
 

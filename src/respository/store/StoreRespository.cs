@@ -31,7 +31,7 @@ namespace respository.store
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
             _storeRecordRespository = storeRecordRespository;
         }
-        public int CreateOrUpdate(StoreChangeGoodsValueModel created, int changeTypeId, int departmentId, int userId)
+        public int CreateOrUpdate(StoreChangeGoodsValueModel created, int afterQty, int changeTypeId, int departmentId, int userId)
         {
             var beforeStore = GetIndexByGoods(departmentId, created.HospitalGoodId);
             var record = _storeRecordRespository.Create(new StoreRecordCreateApiModel
@@ -43,13 +43,13 @@ namespace respository.store
                 HospitalGoodsId = created.HospitalGoodId,
             }, userId);
 
-            if (beforeStore == null) Create(created.HospitalGoodId, created.ChangeQty, departmentId, userId);
-            else Update(beforeStore, created.ChangeQty, userId);
+            if (beforeStore == null) Create(created.HospitalGoodId, afterQty, departmentId, userId);
+            else Update(beforeStore, afterQty, userId);
 
             return record.Id;
         }
 
-        private void Create(int hospitalGoodId, int changeQty, int department, int userId)
+        private void Create(int hospitalGoodId, int afterQty, int department, int userId)
         {
             var store = new Store
             {
@@ -57,7 +57,7 @@ namespace respository.store
                 CreateUserId = userId,
                 HospitalDepartmentId = department,
                 HospitalGoodsId = hospitalGoodId,
-                Qty = changeQty,
+                Qty = afterQty,
                 UpdateTime = DateTime.Now,
                 UpdateUserId = userId,
             };
@@ -65,9 +65,9 @@ namespace respository.store
             _context.SaveChanges();
         }
 
-        private void Update(Store store, int changeQty, int userId)
+        private void Update(Store store, int afterQty, int userId)
         {
-            store.Qty = store.Qty + changeQty;
+            store.Qty = afterQty;
             store.UpdateTime = DateTime.Now;
             store.UpdateUserId = userId;
             _context.Store.Update(store);
