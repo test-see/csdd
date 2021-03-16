@@ -131,7 +131,7 @@ namespace respository.checklist
                 CheckQty = created.CheckQty,
                 CreateTime = DateTime.Now,
                 CreateUserId = userId,
-                StoreQty = 0,
+                StoreQty = created.StoreQty,
             };
 
             _context.CheckListGoods.Add(setting);

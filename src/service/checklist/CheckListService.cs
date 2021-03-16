@@ -44,6 +44,7 @@ namespace service.checklist
                 {
                     CheckListId = check.Id,
                     CheckQty = s.Qty,
+                    StoreQty = s.Qty,
                     HospitalGoodsId = s.HospitalGoods.Id,
                 }, userId);
             }
