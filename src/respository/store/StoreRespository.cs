@@ -67,7 +67,7 @@ namespace respository.store
 
         private void Update(Store store, int changeQty, int userId)
         {
-            store.Qty = +changeQty;
+            store.Qty = store.Qty + changeQty;
             store.UpdateTime = DateTime.Now;
             store.UpdateUserId = userId;
             _context.Store.Update(store);
