@@ -31,6 +31,7 @@ namespace respository.store
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
+                      orderby r.Id descending
                       select new StoreRecordListApiModel
                       {
                           Id = r.Id,
@@ -48,8 +49,6 @@ namespace respository.store
                           {
                               Id = r.HospitalGoodsId,
                           },
-                          //By = r.Id,
-                          //IsAsc = false,
                       };
             if (query.Query?.HospitalDepartmentId != null)
             {
@@ -67,7 +66,6 @@ namespace respository.store
             {
                 sql = sql.Where(x => x.CreateTime < query.Query.EndDate.Value.AddDays(1));
             }
-            sql = sql.OrderByDescending(x => x.Id);
             var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
