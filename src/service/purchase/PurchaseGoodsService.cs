@@ -1,5 +1,4 @@
 ﻿using domain.purchase;
-using domain.purchase.valuemodel;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
@@ -34,9 +33,9 @@ namespace service.purchase
             return _PurchaseGoodsContext.Update(id, updated);
         }
 
-        public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
+        public PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
-            return _PurchaseGoodsContext.GetPagerMappingList(query, clientId);
+            return _PurchaseGoodsContext.GetPagerListByClient(query, clientId);
         }
         public PurchaseGoodsListApiModel GetIndex(int id)
         {

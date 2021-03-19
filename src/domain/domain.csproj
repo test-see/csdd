@@ -12,4 +12,8 @@
     <ProjectReference Include="..\irespository\irespository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="purchase\valuemodel\" />
+  </ItemGroup>
+
 </Project>
