@@ -39,6 +39,10 @@ namespace respository.purchase
             {
                 sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
             }
+            if (!string.IsNullOrEmpty(query.Query?.Name))
+            {
+                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
+            }
             var data = new PagerResult<PurchaseSettingListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {

@@ -5,6 +5,7 @@ using irespository.data;
 using irespository.store;
 using irespository.store.model;
 using irespository.store.profile.model;
+using System.Collections.Generic;
 
 namespace domain.store
 {
@@ -24,6 +25,10 @@ namespace domain.store
         {
             return _storeRespository.GetPagerList(query);
         }
+        public IList<StoreListApiModel> GetListByDepartment(int departmentId)
+        {
+            return _storeRespository.GetListByDepartment(departmentId);
+        }
 
         public bool BatchCreateOrUpdate(BatchStoreChangeApiModel created, int department, int userId)
         {
@@ -33,10 +38,10 @@ namespace domain.store
                 foreach (var item in created.HospitalChangeGoods)
                 {
                     var store = _storeRespository.GetIndexByGoods(department, item.HospitalGoodId);
-                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.Qty;
+                    var afterqty = (store?.Qty ?? 0) + changetype.Operator * item.ChangeQty;
                     if (afterqty < 0)
                         throw new DefaultException("库存不足!");
-                    _storeRespository.CreateOrUpdate(item, created.ChangeTypeId, department, userId);
+                    _storeRespository.CreateOrUpdate(item, afterqty, created.ChangeTypeId, department, userId);
                 }
             }
             return true;
@@ -48,10 +53,10 @@ namespace domain.store
             lock (balance)
             {
                 var store = _storeRespository.GetIndexByGoods(department, created.HospitalChangeGoods.HospitalGoodId);
-                var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.HospitalChangeGoods.Qty;
+                var afterqty = (store?.Qty ?? 0) + changetype.Operator * created.HospitalChangeGoods.ChangeQty;
                 if (afterqty < 0)
                     throw new DefaultException("库存不足!");
-                return _storeRespository.CreateOrUpdate(created.HospitalChangeGoods, created.ChangeTypeId, department, userId);
+                return _storeRespository.CreateOrUpdate(created.HospitalChangeGoods, afterqty, created.ChangeTypeId, department, userId);
 
             }
         }

@@ -45,5 +45,9 @@ namespace service.purchase
         {
             return _purchaseContext.Comfirm(id);
         }
+        public int Revoke(int id)
+        {
+            return _purchaseContext.Revoke(id);
+        }
     }
 }

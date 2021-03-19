@@ -58,5 +58,9 @@ namespace domain.purchase
         {
             return _purchaseRespository.UpdateStatus(id, PurchaseStatus.Comfirmed);
         }
+        public int Revoke(int id)
+        {
+            return _purchaseRespository.UpdateStatus(id, PurchaseStatus.Pendding);
+        }
     }
 }

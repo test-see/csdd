@@ -124,7 +124,7 @@ namespace respository.hospital
             var hospitals = _hospitalRespository.GetValue(hospitalClients.Select(x => x.Hospital.Id).ToArray());
             foreach (var c in hospitalClients)
             {
-                c.Client = sql.FirstOrDefault(x=>x.Id == c.Client.Id);
+                if (c.Client != null) c.Client = sql.FirstOrDefault(x => x.Id == c.Client.Id);
                 c.Hospital = hospitals.FirstOrDefault(x => x.Id == c.Hospital.Id);
             }
 

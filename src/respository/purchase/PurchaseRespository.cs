@@ -34,6 +34,7 @@ namespace respository.purchase
                           CreateUserName = u.Username,
                           Name = r.Name,
                           Remark = r.Remark,
+                          Status = r.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
                       };
             if (query.Query?.HospitalDepartmentId != null)
@@ -43,6 +44,10 @@ namespace respository.purchase
             if (query.Query?.Status != null)
             {
                 sql = sql.Where(x => x.Status == query.Query.Status.Value);
+            }
+            if (!string.IsNullOrEmpty(query.Query?.Name))
+            {
+                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
             }
             var data = new PagerResult<PurchaseListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
@@ -65,7 +70,7 @@ namespace respository.purchase
                 CreateTime = DateTime.Now,
                 Name = created.Name,
                 Remark = created.Remark,
-                Status = 0,
+                Status = (int)PurchaseStatus.Pendding,
             };
 
             _context.Purchase.Add(setting);
@@ -114,6 +119,7 @@ namespace respository.purchase
         {
             var sql = from r in _context.Purchase
                       join u in _context.User on r.CreateUserId equals u.Id
+                      where r.Id == id
                       select new PurchaseIndexApiModel
                       {
                           CreateTime = r.CreateTime,

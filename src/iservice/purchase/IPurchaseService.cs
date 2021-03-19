@@ -13,5 +13,6 @@ namespace iservice.purchase
         PurchaseIndexApiModel GetIndex(int id);
         int Submit(int id);
         int Comfirm(int id);
+        int Revoke(int id);
     }
 }

@@ -31,25 +31,25 @@ namespace respository.store
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
             _storeRecordRespository = storeRecordRespository;
         }
-        public int CreateOrUpdate(StoreChangeGoodsValueModel created, int changeTypeId, int departmentId, int userId)
+        public int CreateOrUpdate(StoreChangeGoodsValueModel created, int afterQty, int changeTypeId, int departmentId, int userId)
         {
             var beforeStore = GetIndexByGoods(departmentId, created.HospitalGoodId);
             var record = _storeRecordRespository.Create(new StoreRecordCreateApiModel
             {
                 BeforeQty = beforeStore?.Qty ?? 0,
-                ChangeQty = created.Qty,
+                ChangeQty = created.ChangeQty,
                 ChangeTypeId = changeTypeId,
                 HospitalDepartmentId = departmentId,
                 HospitalGoodsId = created.HospitalGoodId,
             }, userId);
 
-            if (beforeStore == null) Create(created.HospitalGoodId, created.Qty, departmentId, userId);
-            else Update(beforeStore, created.Qty, userId);
+            if (beforeStore == null) Create(created.HospitalGoodId, afterQty, departmentId, userId);
+            else Update(beforeStore, afterQty, userId);
 
             return record.Id;
         }
 
-        private void Create(int hospitalGoodId, int changeQty, int department, int userId)
+        private void Create(int hospitalGoodId, int afterQty, int department, int userId)
         {
             var store = new Store
             {
@@ -57,7 +57,7 @@ namespace respository.store
                 CreateUserId = userId,
                 HospitalDepartmentId = department,
                 HospitalGoodsId = hospitalGoodId,
-                Qty = changeQty,
+                Qty = afterQty,
                 UpdateTime = DateTime.Now,
                 UpdateUserId = userId,
             };
@@ -65,9 +65,9 @@ namespace respository.store
             _context.SaveChanges();
         }
 
-        private void Update(Store store, int changeQty, int userId)
+        private void Update(Store store, int afterQty, int userId)
         {
-            store.Qty = +changeQty;
+            store.Qty = afterQty;
             store.UpdateTime = DateTime.Now;
             store.UpdateUserId = userId;
             _context.Store.Update(store);
@@ -119,6 +119,39 @@ namespace respository.store
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
                 }
+            }
+            return data;
+        }
+        public IList<StoreListApiModel> GetListByDepartment(int departmentId)
+        {
+            var sql = from r in _context.Store
+                      join uc in _context.User on r.CreateUserId equals uc.Id
+                      join uu in _context.User on r.UpdateUserId equals uu.Id
+                      where r.HospitalDepartmentId == departmentId
+                      select new StoreListApiModel
+                      {
+                          Id = r.Id,
+                          CreateTime = r.CreateTime,
+                          CreateUserName = uc.Username,
+                          UpdateTime = r.UpdateTime,
+                          UpdateUserName = uu.Username,
+                          Qty = r.Qty,
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = r.HospitalDepartmentId,
+                          },
+                          HospitalGoods = new HospitalGoodsValueModel
+                          {
+                              Id = r.HospitalGoodsId,
+                          },
+                      };
+            var data = sql.ToList();
+            var departments = _hospitalDepartmentRespository.GetValue(data.Select(x => x.HospitalDepartment.Id).ToArray());
+            var goods = _hospitalGoodsRespository.GetValue(data.Select(x => x.HospitalGoods.Id).ToArray());
+            foreach (var m in data)
+            {
+                m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
+                m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
             }
             return data;
         }

@@ -31,6 +31,7 @@ namespace respository.checklist
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           CheckQty = r.CheckQty,
+                          CheckListId = r.CheckListId,
                           HospitalGoods = new HospitalGoodsValueModel
                           {
                               Id = r.HospitalGoodsId,
@@ -38,6 +39,14 @@ namespace respository.checklist
                           CreateUsername = u.Username,
                           StoreQty = r.StoreQty,
                       };
+            if (query.Query?.CheckListId != null)
+            {
+                sql = sql.Where(x => x.CheckListId == query.Query.CheckListId.Value);
+            }
+            if (query.Query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => query.Query.HospitalGoodsId.Value == x.HospitalGoods.Id);
+            }
             var data = new PagerResult<CheckListGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
@@ -122,7 +131,7 @@ namespace respository.checklist
                 CheckQty = created.CheckQty,
                 CreateTime = DateTime.Now,
                 CreateUserId = userId,
-                StoreQty = 0,
+                StoreQty = created.StoreQty,
             };
 
             _context.CheckListGoods.Add(setting);

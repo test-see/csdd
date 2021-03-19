@@ -12,5 +12,6 @@ namespace irespository.checklist.model
         public int CheckQty { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUsername { get; set; }
+        public int CheckListId { get; set; }
     }
 }

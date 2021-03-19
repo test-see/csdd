@@ -45,6 +45,10 @@ namespace respository.purchase
             {
                 sql = sql.Where(x => query.Query.HospitalClientId.Value == x.HospitalClient.Id);
             }
+            if (query.Query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => query.Query.HospitalGoodsId.Value == x.HospitalGoods.Id);
+            }
             if (query.Query?.PurchaseId != null)
             {
                 sql = sql.Where(x => x.PurchaseId == query.Query.PurchaseId.Value);
