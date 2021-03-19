@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
+using irespository.hospital.profile.model;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
@@ -74,6 +75,8 @@ namespace respository.purchase
         {
             var sql = from r in _context.PurchaseGoodsBillno
                       join p in _context.PurchaseGoods on r.PurchaseGoodsId equals p.Id
+                      join x in _context.Purchase on p.PurchaseId equals x.Id
+                      join d in _context.HospitalDepartment on x.HospitalDepartmentId equals d.Id
                       join m in _context.ClientMapping on p.HospitalClientId equals m.HospitalClientId
                       join u in _context.User on r.CreateUserId equals u.Id
                       where m.ClientId == clientId
@@ -87,7 +90,15 @@ namespace respository.purchase
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
                           Price = r.Price,
-                          Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
+                          Purchase = new PurchaseIndexApiModel
+                          {
+                              Id = p.PurchaseId,
+                              HospitalDepartment = new HospitalDepartmentValueModel
+                              {
+                                  Hospital = new HospitalValueModel { Id = d.HospitalId },
+                                  Id = d.Id
+                              }
+                          },
                       };
             sql = GetQueryableForList(sql, query.Query);
             var data = new PagerResult<PurchaseGoodsBillnoListApiModel>(query.Index, query.Size, sql);
@@ -105,6 +116,10 @@ namespace respository.purchase
 
         private IQueryable<PurchaseGoodsBillnoListApiModel> GetQueryableForList(IQueryable<PurchaseGoodsBillnoListApiModel> sql ,PurchaseGoodsBillnoListQueryModel query)
         {
+            if (query?.HospitalId != null)
+            {
+                sql = sql.Where(x => x.Purchase.HospitalDepartment.Hospital.Id == query.HospitalId.Value);
+            }
             if (query?.HospitalDepartmentId != null)
             {
                 sql = sql.Where(x => x.Purchase.HospitalDepartment.Id == query.HospitalDepartmentId.Value);
