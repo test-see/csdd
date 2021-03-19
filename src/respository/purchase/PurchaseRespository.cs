@@ -3,6 +3,7 @@ using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.department.model;
+using irespository.hospital.profile.model;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
@@ -21,12 +22,11 @@ namespace respository.purchase
             _context = context;
             _hospitalDepartmentRespository = hospitalDepartmentRespository;
         }
-        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query, int hospitalId)
+        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
         {
             var sql = from r in _context.Purchase
                       join u in _context.User on r.CreateUserId equals u.Id
                       join p in _context.HospitalDepartment on r.HospitalDepartmentId equals p.Id
-                      where p.HospitalId == hospitalId
                       select new PurchaseListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -35,8 +35,16 @@ namespace respository.purchase
                           Name = r.Name,
                           Remark = r.Remark,
                           Status = r.Status,
-                          HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = r.HospitalDepartmentId,
+                              Hospital = new HospitalValueModel { Id = p.HospitalId }
+                          }
                       };
+            if (query.Query?.HospitalId != null)
+            {
+                sql = sql.Where(x => x.HospitalDepartment.Hospital.Id == query.Query.HospitalId.Value);
+            }
             if (query.Query?.HospitalDepartmentId != null)
             {
                 sql = sql.Where(x => x.HospitalDepartment.Id == query.Query.HospitalDepartmentId.Value);
