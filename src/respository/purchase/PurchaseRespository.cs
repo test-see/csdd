@@ -8,6 +8,7 @@ using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace respository.purchase
@@ -148,6 +149,29 @@ namespace respository.purchase
             }
             return setting;
         }
+        public IList<PurchaseValueModel> GetValue(int[] ids)
+        {
+            if (ids.Length == 0) return new List<PurchaseValueModel>();
+            var sql = from r in _context.Purchase
+                      where ids.Contains(r.Id)
+                      select new PurchaseValueModel
+                      {
+                          Id = r.Id,
+                          Name = r.Name,
+                          Status = r.Status,
+                          HospitalDepartment = new HospitalDepartmentValueModel
+                          {
+                              Id = r.HospitalDepartmentId,
+                          }
+                      };
+            var setting = sql.ToList();
+            var departments = _hospitalDepartmentRespository.GetValue(setting.Select(x => x.HospitalDepartment.Id).ToArray());
+            foreach (var m in setting)
+            {
+                m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
+            }
+            return setting;
 
+        }
     }
 }

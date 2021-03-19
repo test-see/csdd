@@ -42,7 +42,7 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
-                          Purchase = new PurchaseIndexApiModel
+                          Purchase = new PurchaseValueModel
                           {
                               Id = r.PurchaseId,
                           },
@@ -67,11 +67,12 @@ namespace respository.purchase
             {
                 var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 var clients = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());
+                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
                     m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
-                    m.Purchase = _purchaseRespository.GetIndex(m.Purchase.Id);
+                    m.Purchase = purachses.FirstOrDefault(x => x.Id == m.Purchase.Id);
                 }
             }
             return data;
@@ -90,7 +91,7 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
-                          Purchase = new PurchaseIndexApiModel
+                          Purchase = new PurchaseValueModel
                           {
                               Id = r.PurchaseId,
                               HospitalDepartment = new HospitalDepartmentValueModel
@@ -124,11 +125,12 @@ namespace respository.purchase
             {
                 var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 var clients = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());
+                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
                     m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
-                    m.Purchase = _purchaseRespository.GetIndex(m.Purchase.Id);
+                    m.Purchase = purachses.FirstOrDefault(x => x.Id == m.Purchase.Id);
                 }
             }
             return data;
@@ -179,7 +181,7 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
-                          Purchase = new PurchaseIndexApiModel
+                          Purchase = new PurchaseValueModel
                           {
                               Id = r.PurchaseId,
                           },
@@ -191,7 +193,7 @@ namespace respository.purchase
             {
                 data.HospitalGoods = _hospitalGoodsRespository.GetValue(new int[] { data.HospitalGoods.Id }).FirstOrDefault();
                 data.HospitalClient = _hospitalClientRespository.GetValue(new int[] { data.HospitalClient.Id }).FirstOrDefault();
-                data.Purchase = _purchaseRespository.GetIndex(data.Purchase.Id);
+                data.Purchase = _purchaseRespository.GetValue(new int[] { data.Purchase.Id }).FirstOrDefault();
             }
             return data;
         }
