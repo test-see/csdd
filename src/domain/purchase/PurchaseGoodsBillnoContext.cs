@@ -58,7 +58,7 @@ namespace domain.purchase
                     HospitalChangeGoods = new StoreChangeGoodsValueModel
                     {
                         HospitalGoodId = goods.HospitalGoods.Id,
-                        Qty = goods.Qty,
+                        ChangeQty = goods.Qty,
                     },
                 };
                 var recordId = _storeContext.CreateOrUpdate(changed, goods.Purchase.HospitalDepartment.Id, userId);

@@ -20,9 +20,9 @@ namespace domain.purchase
             _purchaseGoodsContext = purchaseGoodsContext;
         }
 
-        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query, int hospitalId)
+        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
         {
-            return _purchaseRespository.GetPagerList(query, hospitalId);
+            return _purchaseRespository.GetPagerList(query);
         }
         public Purchase Create(PurchaseCreateApiModel created, int departmentId, int userId)
         {
@@ -57,6 +57,10 @@ namespace domain.purchase
         public int Comfirm(int id)
         {
             return _purchaseRespository.UpdateStatus(id, PurchaseStatus.Comfirmed);
+        }
+        public int Revoke(int id)
+        {
+            return _purchaseRespository.UpdateStatus(id, PurchaseStatus.Pendding);
         }
     }
 }

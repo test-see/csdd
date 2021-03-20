@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
+using irespository.hospital.profile.model;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
@@ -47,7 +48,7 @@ namespace respository.purchase
                           Price = r.Price,
                           HospitalClientId = p.HospitalClientId,
                           Status = r.Status,
-                          Purchase = new PurchaseIndexApiModel
+                          Purchase = new PurchaseValueModel
                           {
                               Id = p.PurchaseId,
                               HospitalDepartment = new HospitalDepartmentValueModel
@@ -61,10 +62,11 @@ namespace respository.purchase
             if (data.Total > 0)
             {
                 var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
-                    m.Purchase = _purchaseRespository.GetIndex(m.Purchase.Id);
+                    m.Purchase = purachses.FirstOrDefault(x => x.Id == m.Purchase.Id);
                 }
             }
             return data;
@@ -74,6 +76,8 @@ namespace respository.purchase
         {
             var sql = from r in _context.PurchaseGoodsBillno
                       join p in _context.PurchaseGoods on r.PurchaseGoodsId equals p.Id
+                      join x in _context.Purchase on p.PurchaseId equals x.Id
+                      join d in _context.HospitalDepartment on x.HospitalDepartmentId equals d.Id
                       join m in _context.ClientMapping on p.HospitalClientId equals m.HospitalClientId
                       join u in _context.User on r.CreateUserId equals u.Id
                       where m.ClientId == clientId
@@ -87,17 +91,26 @@ namespace respository.purchase
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
                           Price = r.Price,
-                          Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
+                          Purchase = new PurchaseValueModel
+                          {
+                              Id = p.PurchaseId,
+                              HospitalDepartment = new HospitalDepartmentValueModel
+                              {
+                                  Hospital = new HospitalValueModel { Id = d.HospitalId },
+                                  Id = d.Id
+                              }
+                          },
                       };
             sql = GetQueryableForList(sql, query.Query);
             var data = new PagerResult<PurchaseGoodsBillnoListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
                 var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
-                    m.Purchase = _purchaseRespository.GetIndex(m.Purchase.Id);
+                    m.Purchase = purachses.FirstOrDefault(x => x.Id == m.Purchase.Id);
                 }
             }
             return data;
@@ -105,6 +118,10 @@ namespace respository.purchase
 
         private IQueryable<PurchaseGoodsBillnoListApiModel> GetQueryableForList(IQueryable<PurchaseGoodsBillnoListApiModel> sql ,PurchaseGoodsBillnoListQueryModel query)
         {
+            if (query?.HospitalId != null)
+            {
+                sql = sql.Where(x => x.Purchase.HospitalDepartment.Hospital.Id == query.HospitalId.Value);
+            }
             if (query?.HospitalDepartmentId != null)
             {
                 sql = sql.Where(x => x.Purchase.HospitalDepartment.Id == query.HospitalDepartmentId.Value);
@@ -201,14 +218,14 @@ namespace respository.purchase
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
                           Price = r.Price,
-                          Purchase = new PurchaseIndexApiModel { Id = p.PurchaseId, },
+                          Purchase = new PurchaseValueModel { Id = p.PurchaseId, },
                       };
             var profile = sql.FirstOrDefault();
 
             if (profile != null)
             {
                 profile.HospitalGoods = _hospitalGoodsRespository.GetValue(new int[] { profile.HospitalGoods.Id }).FirstOrDefault();
-                profile.Purchase = _purchaseRespository.GetIndex(profile.Purchase.Id);
+                profile.Purchase = _purchaseRespository.GetValue(new int[] { profile.Purchase.Id }).FirstOrDefault();
             }
 
             return profile;

@@ -53,6 +53,7 @@ namespace respository.store
         public IList<StoreInoutGoodsListApiModel> GetListByStoreInout(int storeInoutId)
         {
             var sql = from r in _context.StoreInoutGoods
+                      where r.StoreInoutId == storeInoutId
                       select new StoreInoutGoodsListApiModel
                       {
                           CreateTime = r.CreateTime,

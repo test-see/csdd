@@ -62,7 +62,7 @@ namespace domain.store
             var goods = list.Select(x => new StoreChangeGoodsValueModel
             {
                 HospitalGoodId = x.HospitalGoods.Id,
-                Qty = x.Qty,
+                ChangeQty = x.Qty,
             });
             using (var trans = _defaultDbTransaction.Begin())
             {

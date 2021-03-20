@@ -120,13 +120,15 @@ namespace respository.checklist
         {
             var sql = from r in _context.CheckList
                       join u in _context.User on r.CreateUserId equals u.Id
+                      where r.Id == id
                       select new CheckListIndexApiModel
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           CreateUserName = u.Username,
                           Name = r.Name,
-                          Remark = r.Remark, 
+                          Remark = r.Remark,
+                          Status = r.Status,
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
                               Id = r.HospitalDepartmentId,

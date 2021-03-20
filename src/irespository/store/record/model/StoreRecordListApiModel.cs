@@ -1,11 +1,12 @@
-﻿using foundation.ef5.poco;
+﻿using foundation.config;
+using foundation.ef5.poco;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
 using System;
 
 namespace irespository.store.profile.model
 {
-    public class StoreRecordListApiModel
+    public class StoreRecordListApiModel//: OrderBy<int>
     {
         public int Id { get; set; }
         public HospitalDepartmentValueModel HospitalDepartment { get; set; }

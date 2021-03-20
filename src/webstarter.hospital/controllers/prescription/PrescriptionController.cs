@@ -33,9 +33,9 @@ namespace webstarter.hospital.controllers.prescription
         }
         [HttpGet]
         [Route("{id}/submit")]
-        public JsonResult Submit(int id, int userId)
+        public JsonResult Submit(int id)
         {
-            var data = _prescriptionService.Submit(id, userId);
+            var data = _prescriptionService.Submit(id, Profile.Id);
             return Json(data);
         }
         [HttpGet]

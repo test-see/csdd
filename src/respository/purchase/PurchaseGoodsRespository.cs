@@ -4,7 +4,9 @@ using foundation.ef5.poco;
 using irespository.client;
 using irespository.hospital;
 using irespository.hospital.client.model;
+using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
+using irespository.hospital.profile.model;
 using irespository.purchase;
 using irespository.purchase.model;
 using System;
@@ -18,15 +20,18 @@ namespace respository.purchase
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
         private readonly IHospitalClientRespository _hospitalClientRespository;
         private readonly IClientRespository _clientRespository;
+        private readonly IPurchaseRespository _purchaseRespository;
         public PurchaseGoodsRespository(DefaultDbContext context,
             IHospitalGoodsRespository hospitalGoodsRespository,
             IHospitalClientRespository hospitalClientRespository,
-            IClientRespository clientRespository)
+            IClientRespository clientRespository,
+            IPurchaseRespository purchaseRespository)
         {
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
             _hospitalClientRespository = hospitalClientRespository;
             _clientRespository = clientRespository;
+            _purchaseRespository = purchaseRespository;
         }
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
@@ -37,7 +42,10 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
-                          PurchaseId= r.PurchaseId,
+                          Purchase = new PurchaseValueModel
+                          {
+                              Id = r.PurchaseId,
+                          },
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
@@ -49,9 +57,13 @@ namespace respository.purchase
             {
                 sql = sql.Where(x => query.Query.HospitalClientId.Value == x.HospitalClient.Id);
             }
+            if (query.Query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => query.Query.HospitalGoodsId.Value == x.HospitalGoods.Id);
+            }
             if (query.Query?.PurchaseId != null)
             {
-                sql = sql.Where(x => x.PurchaseId == query.Query.PurchaseId.Value);
+                sql = sql.Where(x => x.Purchase.Id == query.Query.PurchaseId.Value);
             }
 
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
@@ -59,10 +71,12 @@ namespace respository.purchase
             {
                 var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 var clients = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());
+                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
                     m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
+                    m.Purchase = purachses.FirstOrDefault(x => x.Id == m.Purchase.Id);
                 }
             }
             return data;
@@ -72,6 +86,8 @@ namespace respository.purchase
         public PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
             var sql = from r in _context.PurchaseGoods
+                      join x in _context.Purchase on r.PurchaseId equals x.Id
+                      join d in _context.HospitalDepartment on x.HospitalDepartmentId equals d.Id
                       join g in _context.ClientMapping on r.HospitalClientId equals g.HospitalClientId
                       where g.ClientId == clientId
                       select new PurchaseGoodsListApiModel
@@ -79,10 +95,30 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
-                          PurchaseId = r.PurchaseId,
+                          Purchase = new PurchaseValueModel
+                          {
+                              Id = r.PurchaseId,
+                              HospitalDepartment = new HospitalDepartmentValueModel
+                              {
+                                  Hospital = new HospitalValueModel { Id = d.HospitalId },
+                                  Id = d.Id
+                              }
+                          },
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
+            if (query.Query?.PurchaseId != null)
+            {
+                sql = sql.Where(x => x.Purchase.Id == query.Query.PurchaseId.Value);
+            }
+            if (query.Query?.HospitalId != null)
+            {
+                sql = sql.Where(x => x.Purchase.HospitalDepartment.Hospital.Id == query.Query.HospitalId.Value);
+            }
+            if (query.Query?.HospitalGoodsId != null)
+            {
+                sql = sql.Where(x => x.HospitalGoods.Id == query.Query.HospitalGoodsId.Value);
+            }
             if (query.Query?.HospitalClientId != null)
             {
                 sql = sql.Where(x => query.Query.HospitalClientId.Value == x.HospitalClient.Id);
@@ -93,10 +129,12 @@ namespace respository.purchase
             {
                 var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
                 var clients = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());
+                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
                     m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
+                    m.Purchase = purachses.FirstOrDefault(x => x.Id == m.Purchase.Id);
                 }
             }
             return data;
@@ -147,7 +185,10 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
-                          PurchaseId = r.PurchaseId,
+                          Purchase = new PurchaseValueModel
+                          {
+                              Id = r.PurchaseId,
+                          },
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
@@ -156,6 +197,7 @@ namespace respository.purchase
             {
                 data.HospitalGoods = _hospitalGoodsRespository.GetValue(new int[] { data.HospitalGoods.Id }).FirstOrDefault();
                 data.HospitalClient = _hospitalClientRespository.GetValue(new int[] { data.HospitalClient.Id }).FirstOrDefault();
+                data.Purchase = _purchaseRespository.GetValue(new int[] { data.Purchase.Id }).FirstOrDefault();
             }
             return data;
         }

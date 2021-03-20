@@ -63,7 +63,7 @@ namespace domain.checklist
                 var goods1 = list.Where(x => x.StoreQty > x.CheckQty).Select(x => new StoreChangeGoodsValueModel
                 {
                     HospitalGoodId = x.HospitalGoods.Id,
-                    Qty = x.StoreQty - x.CheckQty
+                    ChangeQty = x.StoreQty - x.CheckQty
                 });
                 _storeContext.BatchCreateOrUpdate(new BatchStoreChangeApiModel
                 {
@@ -73,7 +73,7 @@ namespace domain.checklist
                 var goods2 = list.Where(x => x.StoreQty < x.CheckQty).Select(x => new StoreChangeGoodsValueModel
                 {
                     HospitalGoodId = x.HospitalGoods.Id,
-                    Qty = -x.StoreQty + x.CheckQty,
+                    ChangeQty = -x.StoreQty + x.CheckQty,
                 });
                 _storeContext.BatchCreateOrUpdate(new BatchStoreChangeApiModel
                 {
@@ -81,7 +81,7 @@ namespace domain.checklist
                     HospitalChangeGoods = goods2.ToList(),
                 }, model.HospitalDepartment.Id, userId);
 
-                _checkListRespository.UpdateStatus(id, CheckListStatus.Submited);
+                _checkListRespository.UpdateStatus(id, CheckListStatus.Billed);
                 trans.Commit();
             }
             return 0;
