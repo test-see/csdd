@@ -13,5 +13,6 @@ namespace irespository.purchase.model
         public int Qty { get; set; }
         public DateTime CreateTime { get; set; }
         public HospitalClientValueModel HospitalClient { get; set; }
+        public int Status { get; set; }
     }
 }

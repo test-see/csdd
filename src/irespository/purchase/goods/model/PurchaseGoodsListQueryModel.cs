@@ -6,5 +6,6 @@
         public int? HospitalGoodsId { get; set; }
         public int? PurchaseId { get; set; }
         public int? HospitalId { get; set; }
+        public int? Status { get; set; }
     }
 }

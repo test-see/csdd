@@ -12,5 +12,6 @@ namespace iservice.purchase
         int Update(int id, PurchaseGoodsUpdateApiModel updated);
         PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId);
         PurchaseGoodsListApiModel GetIndex(int id);
+        int Submit(int id);
     }
 }

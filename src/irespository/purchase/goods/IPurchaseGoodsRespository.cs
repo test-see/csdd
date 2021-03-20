@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
+using irespository.purchase.profile.enums;
 
 namespace irespository.purchase
 {
@@ -12,5 +13,6 @@ namespace irespository.purchase
         int Delete(int id);
         int Update(int id, PurchaseGoodsUpdateApiModel updated);
         PurchaseGoodsListApiModel GetIndex(int id);
+        int UpdateStatus(int id, PurchaseGoodsStatus status);
     }
 }

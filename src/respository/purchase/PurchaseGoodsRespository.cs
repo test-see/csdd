@@ -9,6 +9,7 @@ using irespository.hospital.goods.model;
 using irespository.hospital.profile.model;
 using irespository.purchase;
 using irespository.purchase.model;
+using irespository.purchase.profile.enums;
 using System;
 using System.Linq;
 
@@ -19,18 +20,15 @@ namespace respository.purchase
         private readonly DefaultDbContext _context;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
         private readonly IHospitalClientRespository _hospitalClientRespository;
-        private readonly IClientRespository _clientRespository;
         private readonly IPurchaseRespository _purchaseRespository;
         public PurchaseGoodsRespository(DefaultDbContext context,
             IHospitalGoodsRespository hospitalGoodsRespository,
             IHospitalClientRespository hospitalClientRespository,
-            IClientRespository clientRespository,
             IPurchaseRespository purchaseRespository)
         {
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
             _hospitalClientRespository = hospitalClientRespository;
-            _clientRespository = clientRespository;
             _purchaseRespository = purchaseRespository;
         }
 
@@ -46,12 +44,17 @@ namespace respository.purchase
                           {
                               Id = r.PurchaseId,
                           },
+                          Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
             if (query.Query?.HospitalGoodsId != null)
             {
                 sql = sql.Where(x => query.Query.HospitalGoodsId.Value == x.HospitalGoods.Id);
+            }
+            if (query.Query?.Status != null)
+            {
+                sql = sql.Where(x => query.Query.Status.Value == x.Status);
             }
             if (query.Query?.HospitalClientId != null)
             {
@@ -104,9 +107,14 @@ namespace respository.purchase
                                   Id = d.Id
                               }
                           },
+                          Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
+            if (query.Query?.Status != null)
+            {
+                sql = sql.Where(x => query.Query.Status.Value == x.Status);
+            }
             if (query.Query?.PurchaseId != null)
             {
                 sql = sql.Where(x => x.Purchase.Id == query.Query.PurchaseId.Value);
@@ -149,6 +157,7 @@ namespace respository.purchase
                 Qty = created.Qty,
                 CreateTime = DateTime.Now,
                 HospitalClientId = created.HospitalClientId,
+                Status = (int)PurchaseGoodsStatus.Pendding,
             };
 
             _context.PurchaseGoods.Add(setting);
@@ -189,6 +198,7 @@ namespace respository.purchase
                           {
                               Id = r.PurchaseId,
                           },
+                          Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
                       };
@@ -200,6 +210,16 @@ namespace respository.purchase
                 data.Purchase = _purchaseRespository.GetValue(new int[] { data.Purchase.Id }).FirstOrDefault();
             }
             return data;
+        }
+        
+        public int UpdateStatus(int id, PurchaseGoodsStatus status)
+        {
+            var setting = _context.PurchaseGoods.First(x => x.Id == id);
+            setting.Status = (int)status;
+
+            _context.PurchaseGoods.Update(setting);
+            _context.SaveChanges();
+            return setting.Id;
         }
     }
 }
