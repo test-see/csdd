@@ -53,7 +53,8 @@ namespace respository.purchase
                               Id = p.PurchaseId,
                               HospitalDepartment = new HospitalDepartmentValueModel
                               {
-                                  Id = x.HospitalDepartmentId,
+                                  Hospital = new HospitalValueModel { Id = d.HospitalId },
+                                  Id = d.Id
                               }
                           },
                       };
