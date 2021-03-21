@@ -119,6 +119,10 @@ namespace respository.purchase
 
         private IQueryable<PurchaseGoodsBillnoListApiModel> GetQueryableForList(IQueryable<PurchaseGoodsBillnoListApiModel> sql ,PurchaseGoodsBillnoListQueryModel query)
         {
+            if (query?.PurchaseId != null)
+            {
+                sql = sql.Where(x => x.Purchase.Id == query.PurchaseId.Value);
+            }
             if (query?.HospitalId != null)
             {
                 sql = sql.Where(x => x.Purchase.HospitalDepartment.Hospital.Id == query.HospitalId.Value);
