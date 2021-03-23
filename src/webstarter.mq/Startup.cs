@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -54,6 +57,22 @@ namespace webstarter.mq
             {
                 endpoints.MapControllers();
             });
+
+            var logpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "nlog");
+            if (!Directory.Exists(logpath)) Directory.CreateDirectory(logpath);
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(logpath),
+                RequestPath = new PathString("/nlog"),
+                ServeUnknownFileTypes = true,
+                DefaultContentType = "text/plain; charset=utf-8"
+            });
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            {
+                FileProvider = new PhysicalFileProvider(logpath),
+                RequestPath = new PathString("/nlog"),
+            });
+
         }
     }
 }
