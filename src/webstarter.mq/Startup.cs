@@ -100,7 +100,9 @@ namespace webstarter.mq
         {
             var bus = RabbitHutch.CreateBus("host=localhost");
             var sp = services.BuildServiceProvider();
-            await bus.PubSub.SubscribeAsync<int>("my_subscription_id", msg => sp.GetService<IPurchaseService>().Generate(msg), x => x.WithTopic("Purchase.Generate"));
+            await bus.PubSub.SubscribeAsync<int>("my_subscription_id", 
+                msg => sp.GetService<IPurchaseService>().Generate(msg),
+                x => x.WithTopic("Purchase.Generate"));
         }
     }
 }
