@@ -49,8 +49,8 @@ namespace domain.purchase
                 {
                     _purchaseGoodsContext.Generate(purchase.Id, item, purchase.HospitalDepartment.Id, purchase.CreateUserId);
                 }
-                _purchaseRespository.UpdateStatus(purchase.Id, PurchaseStatus.Pendding);
             }
+            _purchaseRespository.UpdateStatus(purchase.Id, PurchaseStatus.Pendding);
         }
         public int Delete(int id)
         {
