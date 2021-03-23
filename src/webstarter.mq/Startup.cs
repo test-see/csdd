@@ -48,6 +48,7 @@ namespace webstarter.mq
                 .AsSelfWithInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
+            services.AddSingleton(RabbitHutch.CreateBus("host=localhost"));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -98,8 +99,8 @@ namespace webstarter.mq
 
         private async Task SubscribeAsync(IServiceCollection services)
         {
-            var bus = RabbitHutch.CreateBus("host=localhost");
             var sp = services.BuildServiceProvider();
+            var bus = sp.GetService<IBus>();
             await bus.PubSub.SubscribeAsync<int>("my_subscription_id", 
                 msg => sp.GetService<IPurchaseService>().Generate(msg),
                 x => x.WithTopic("Purchase.Generate"));
