@@ -4,6 +4,7 @@ using irespository.purchase.model;
 using iservice.purchase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.purchase
 {
@@ -39,9 +40,9 @@ namespace webstarter.hospital.controllers.purchase
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(PurchaseCreateApiModel created)
+        public async Task<JsonResult> PostAsync(PurchaseCreateApiModel created)
         {
-            var data = _PurchaseService.Create(created, HospitalDepartment.Id, Profile.Id);
+            var data = await _PurchaseService.CreateAsync(created, HospitalDepartment.Id, Profile.Id);
             return Json(data);
         }
 

@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
 using iservice.purchase;
+using System.Threading.Tasks;
 
 namespace service.purchase
 {
@@ -17,9 +18,13 @@ namespace service.purchase
         {
             return _purchaseContext.GetPagerList(query);
         }
-        public Purchase Create(PurchaseCreateApiModel created, int departmentId, int userId)
+        public async Task<Purchase> CreateAsync(PurchaseCreateApiModel created, int departmentId, int userId)
         {
-            return _purchaseContext.Create(created, departmentId, userId);
+            return await _purchaseContext.CreateAsync(created, departmentId, userId);
+        }
+        public void Generate(int id)
+        {
+            _purchaseContext.Generate(id);
         }
 
         public int Delete(int id)

@@ -1,8 +1,10 @@
-﻿using foundation.config;
+﻿using EasyNetQ;
+using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
+using System.Threading.Tasks;
 
 namespace domain.purchase
 {
@@ -11,31 +13,44 @@ namespace domain.purchase
         private readonly IPurchaseRespository _purchaseRespository;
         private readonly PurchaseSettingThresholdContext _purchaseSettingThresholdContext;
         private readonly PurchaseGoodsContext _purchaseGoodsContext;
+        private readonly IBus _bus;
         public PurchaseContext(IPurchaseRespository purchaseRespository,
             PurchaseSettingThresholdContext purchaseSettingThresholdContext,
-            PurchaseGoodsContext purchaseGoodsContext)
+            PurchaseGoodsContext purchaseGoodsContext,
+            IBus bus)
         {
             _purchaseRespository = purchaseRespository;
             _purchaseSettingThresholdContext = purchaseSettingThresholdContext;
             _purchaseGoodsContext = purchaseGoodsContext;
+            _bus = bus;
         }
 
         public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
         {
             return _purchaseRespository.GetPagerList(query);
         }
-        public Purchase Create(PurchaseCreateApiModel created, int departmentId, int userId)
+        public async Task<Purchase> CreateAsync(PurchaseCreateApiModel created, int departmentId, int userId)
         {
             var purchase = _purchaseRespository.Create(created, departmentId, userId);
             if (created.PurchaseSettingId != null)
             {
-                var thresholds = _purchaseSettingThresholdContext.GetListBySettingId(created.PurchaseSettingId.Value);
-                foreach(var item in thresholds)
-                {
-                    _purchaseGoodsContext.Generate(purchase.Id, item, departmentId, userId);
-                }
+                await _bus.PubSub.PublishAsync(purchase.Id, "Purchase.Generate");
+                _purchaseRespository.UpdateStatus(purchase.Id, PurchaseStatus.Generating);
             }
             return purchase;
+        }
+        public void Generate(int id)
+        {
+            var purchase = GetIndex(id);
+            if (purchase.PurchaseSettingId != null)
+            {
+                var thresholds = _purchaseSettingThresholdContext.GetListBySettingId(purchase.PurchaseSettingId.Value);
+                foreach (var item in thresholds)
+                {
+                    _purchaseGoodsContext.Generate(purchase.Id, item, purchase.HospitalDepartment.Id, purchase.CreateUserId);
+                }
+                _purchaseRespository.UpdateStatus(purchase.Id, PurchaseStatus.Pendding);
+            }
         }
         public int Delete(int id)
         {

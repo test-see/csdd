@@ -2,6 +2,7 @@ using EasyNetQ;
 using foundation._3party;
 using foundation.config;
 using foundation.ef5;
+using iservice.purchase;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using TencentCloud.Common;
 
 namespace webstarter.mq
@@ -35,7 +37,6 @@ namespace webstarter.mq
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHealthChecks();
-            services.AddSingleton(RabbitHutch.CreateBus("host=localhost"));
 
             services.AddSingleton(AppConfig);
             services.AddSingleton(new SmsSendRequest(new Credential { SecretId = AppConfig.TencentCloudSMS?.SecretId, SecretKey = AppConfig.TencentCloudSMS?.SecretKey, }));
@@ -48,12 +49,13 @@ namespace webstarter.mq
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
 
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "webstarter.mq", Version = "v1" });
             });
+
+            Task.Run(() => SubscribeAsync(services));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,6 +94,13 @@ namespace webstarter.mq
                 RequestPath = new PathString("/nlog"),
             });
 
+        }
+
+        private async Task SubscribeAsync(IServiceCollection services)
+        {
+            var bus = RabbitHutch.CreateBus("host=localhost");
+            var sp = services.BuildServiceProvider();
+            await bus.PubSub.SubscribeAsync<int>("my_subscription_id", msg => sp.GetService<IPurchaseService>().Generate(msg), x => x.WithTopic("Purchase.Generate"));
         }
     }
 }

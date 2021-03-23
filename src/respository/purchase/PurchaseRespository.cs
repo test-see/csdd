@@ -80,6 +80,7 @@ namespace respository.purchase
                 Name = created.Name,
                 Remark = created.Remark,
                 Status = (int)PurchaseStatus.Pendding,
+                PurchaseSettingId = created.PurchaseSettingId,
             };
 
             _context.Purchase.Add(setting);
@@ -133,10 +134,12 @@ namespace respository.purchase
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
+                          CreateUserId = u.Id,
                           CreateUserName = u.Username,
                           Name = r.Name,
                           Remark = r.Remark,
                           Status = r.Status,
+                          PurchaseSettingId = r.PurchaseSettingId,
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
                               Id = r.HospitalDepartmentId,

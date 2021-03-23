@@ -20,5 +20,7 @@ namespace foundation.ef5.poco
         public DateTime CreateTime { get; set; }
         [Column("createuser_id")]
         public int CreateUserId { get; set; }
+        [Column("purchase_setting_id")]
+        public int? PurchaseSettingId { get; set; }
     }
 }

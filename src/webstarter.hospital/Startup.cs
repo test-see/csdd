@@ -1,5 +1,6 @@
 using AutoMapper;
 using csdd.Middlewares;
+using EasyNetQ;
 using foundation._3party;
 using foundation.config;
 using foundation.ef5;
@@ -68,6 +69,7 @@ namespace webstarter.hospital
                 cfg.AddMaps(Assembly.Load("domain"));
             });
             services.AddSingleton(config.CreateMapper());
+            services.AddSingleton(RabbitHutch.CreateBus("host=localhost"));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
