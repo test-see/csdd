@@ -20,7 +20,10 @@ namespace webstarter.hospital.controllers.purchase
         [Route("list")]
         public JsonResult GetList(PagerQuery<PurchaseListQueryModel> query)
         {
-            var data = _PurchaseService.GetPagerList(query, HospitalDepartment.Hospital.Id);
+            query = query ?? new PagerQuery<PurchaseListQueryModel> { };
+            query.Query = query.Query ?? new PurchaseListQueryModel { };
+            query.Query.HospitalId = HospitalDepartment.Hospital.Id;
+            var data = _PurchaseService.GetPagerList(query);
             return Json(data);
         }
 

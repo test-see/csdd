@@ -47,6 +47,7 @@ namespace domain.prescription
             {
                 HospitalGoodId = x.HospitalGoods.Id,
                 ChangeQty = x.Qty,
+                Recrdno = RecordNumber.Next((int)StoreChangeType.Prescription, x.Id),
             });
             using (var trans = _defaultDbTransaction.Begin())
             {

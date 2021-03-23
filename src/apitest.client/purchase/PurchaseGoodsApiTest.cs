@@ -1,5 +1,4 @@
 ﻿using apitest.shared;
-using domain.purchase.valuemodel;
 using Flurl;
 using Flurl.Http;
 using foundation.config;
@@ -19,7 +18,7 @@ namespace apitest.purchase
                 .AppendPathSegment("/api/PurchaseGoods/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<PurchaseGoodsListQueryModel> { Query= new PurchaseGoodsListQueryModel { HospitalClientId=1 } })
-                .ReceiveJson<OkMessage<PagerResult<PurchaseGoodsMappingListApiModel>>>();
+                .ReceiveJson<OkMessage<PagerResult<PurchaseGoodsListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
@@ -32,6 +31,15 @@ namespace apitest.purchase
                 .GetJsonAsync<OkMessage<PurchaseGoodsListQueryModel>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data != null);
+        }
+        [TestMethod]
+        public async Task PurchaseGoods_Submit_ReturnListAsync()
+        {
+            var message = await _rootpath
+                .AppendPathSegment("/api/PurchaseGoods/1/submit")
+                .WithOAuthBearerToken(await getToken())
+                .GetJsonAsync<OkMessage<int>>();
+            Assert.AreEqual(200, message.Code);
         }
     }
 }

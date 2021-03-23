@@ -1,87 +1,66 @@
 ﻿using domain.client;
 using domain.hospital;
-using domain.purchase.valuemodel;
 using domain.store;
 using foundation.config;
+using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.purchase;
-using irespository.purchase.goods.model;
 using irespository.purchase.model;
+using irespository.purchase.profile.enums;
 using irespository.purchase.setting.threshold.enums;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace domain.purchase
 {
     public class PurchaseGoodsContext
     {
-        private readonly IPurchaseGoodsRespository _PurchaseGoodsRespository;
-        private readonly ClientMappingGoodsContext _clientMappingGoodsContext;
+        private readonly IPurchaseGoodsRespository _purchaseGoodsRespository;
         private readonly StoreContext _storeContext;
         private readonly HospitalGoodsClientContext _hospitalGoodsClientContext;
         private readonly StoreRecordContext _storeRecordContext;
         private readonly HospitalDepartmentContext _hospitalDepartmentContext;
+        private readonly DefaultDbTransaction _defaultDbTransaction;
+        private readonly PurchaseGoodsBillnoContext _purchaseGoodsBillnoContext;
         public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy,
-            ClientMappingGoodsContext clientMappingGoodsContext,
             StoreContext storeContext,
             HospitalGoodsClientContext hospitalGoodsClientContext,
+            DefaultDbTransaction defaultDbTransaction,
             StoreRecordContext storeRecordContext,
-            HospitalDepartmentContext hospitalDepartmentContext)
+            HospitalDepartmentContext hospitalDepartmentContext,
+            PurchaseGoodsBillnoContext purchaseGoodsBillnoContext)
         {
-            _PurchaseGoodsRespository = purchaseGoodsRespositoryy;
-            _clientMappingGoodsContext = clientMappingGoodsContext;
+            _purchaseGoodsRespository = purchaseGoodsRespositoryy;
             _storeContext = storeContext;
             _hospitalGoodsClientContext = hospitalGoodsClientContext;
             _storeRecordContext = storeRecordContext;
             _hospitalDepartmentContext = hospitalDepartmentContext;
+            _defaultDbTransaction = defaultDbTransaction;
+            _purchaseGoodsBillnoContext = purchaseGoodsBillnoContext;
         }
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
-            return _PurchaseGoodsRespository.GetPagerList(query);
+            return _purchaseGoodsRespository.GetPagerList(query);
         }
 
-        public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
+        public PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
-            var data = _PurchaseGoodsRespository.GetPagerListByClient(query, clientId);
-            var mappings = _clientMappingGoodsContext.GetIndexByHospitalGoodsId(data.Result.Select(x => x.HospitalGoods.Id).ToArray(), clientId);
-
-            var result = new List<PurchaseGoodsMappingListApiModel>();
-            foreach (var item in data.Result)
-            {
-                result.Add(new PurchaseGoodsMappingListApiModel
-                {
-                    PurchaseGoods = item,
-                    MappingClientGoods = mappings.Where(x => x.HospitalGoods.Id == item.HospitalGoods.Id)
-                    .Select(mapping => new MappingClientGoodsValueModel
-                    {
-                        ClientGoods = mapping.ClientGoods,
-                        Qty = item.Qty * mapping.ClientQty / mapping.HospitalQty,
-                    }).FirstOrDefault(),
-                });
-            }
-            return new PagerResult<PurchaseGoodsMappingListApiModel>
-            {
-                Index = data.Index,
-                Size = data.Size,
-                Total = data.Total,
-                Result = result
-            };
+            return _purchaseGoodsRespository.GetPagerListByClient(query, clientId);          
         }
 
         public PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId)
         {
-            return _PurchaseGoodsRespository.Create(created, userId);
+            return _purchaseGoodsRespository.Create(created, userId);
         }
         
         public int Delete(int id)
         {
-            return _PurchaseGoodsRespository.Delete(id);
+            return _purchaseGoodsRespository.Delete(id);
         }
         
         public int Update(int id, PurchaseGoodsUpdateApiModel updated)
         {
-            return _PurchaseGoodsRespository.Update(id, updated);
+            return _purchaseGoodsRespository.Update(id, updated);
         }
 
         public void Generate(int purchaseId, PurchaseSettingThreshold threshold, int departmentId, int userId)
@@ -130,7 +109,16 @@ namespace domain.purchase
         }
         public PurchaseGoodsListApiModel GetIndex(int id)
         {
-            return _PurchaseGoodsRespository.GetIndex(id);
+            return _purchaseGoodsRespository.GetIndex(id);
+        }
+        public int Submit(int id)
+        {
+            using (var trans = _defaultDbTransaction.Begin())
+            {
+                var bills = _purchaseGoodsBillnoContext.GetListByPurchaseGoodsId(id);
+                _purchaseGoodsBillnoContext.Submit(bills.Select(x => x.Id).ToList());
+                return _purchaseGoodsRespository.UpdateStatus(id, PurchaseGoodsStatus.Submited);
+            }
         }
     }
 }

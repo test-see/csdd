@@ -8,6 +8,7 @@ using irespository.checklist.model;
 using irespository.checklist.profile.enums;
 using irespository.store.model;
 using irespository.store.profile.model;
+using System;
 using System.Linq;
 
 namespace domain.checklist
@@ -63,7 +64,8 @@ namespace domain.checklist
                 var goods1 = list.Where(x => x.StoreQty > x.CheckQty).Select(x => new StoreChangeGoodsValueModel
                 {
                     HospitalGoodId = x.HospitalGoods.Id,
-                    ChangeQty = x.StoreQty - x.CheckQty
+                    ChangeQty = x.StoreQty - x.CheckQty,
+                    Recrdno = RecordNumber.Next((int)StoreChangeType.CheckListOut, x.Id),
                 });
                 _storeContext.BatchCreateOrUpdate(new BatchStoreChangeApiModel
                 {
@@ -74,6 +76,7 @@ namespace domain.checklist
                 {
                     HospitalGoodId = x.HospitalGoods.Id,
                     ChangeQty = -x.StoreQty + x.CheckQty,
+                    Recrdno = RecordNumber.Next((int)StoreChangeType.CheckListIn, x.Id),
                 });
                 _storeContext.BatchCreateOrUpdate(new BatchStoreChangeApiModel
                 {

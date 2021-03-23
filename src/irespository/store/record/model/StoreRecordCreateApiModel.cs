@@ -7,5 +7,6 @@
         public int ChangeQty { get; set; }
         public int HospitalDepartmentId { get; set; }
         public int HospitalGoodsId { get; set; }
+        public string Recrdno { get; set; }
     }
 }

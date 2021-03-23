@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="purchase\valuemodel\**" />
+    <EmbeddedResource Remove="purchase\valuemodel\**" />
+    <None Remove="purchase\valuemodel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
   </ItemGroup>
 

@@ -15,5 +15,6 @@ namespace irespository.purchase
         int Update(int id, PurchaseGoodsBillnoUpdateApiModel updated);
         int UpdateStatus(int id, BillStatus status);
         PurchaseGoodsBillnoListApiModel GetIndex(int id);
+        IList<PurchaseGoodsBillnoListApiModel> GetListByPurchaseGoodsId(int purchaseGoodsId);
     }
 }

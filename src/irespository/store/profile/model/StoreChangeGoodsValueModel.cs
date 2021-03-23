@@ -4,5 +4,6 @@
     {
         public int HospitalGoodId { get; set; }
         public int ChangeQty { get; set; }
+        public string Recrdno { get; set; }
     }
 }

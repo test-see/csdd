@@ -1,5 +1,4 @@
 ﻿using domain.purchase;
-using domain.purchase.valuemodel;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
@@ -9,38 +8,42 @@ namespace service.purchase
 {
     public class PurchaseGoodsService : IPurchaseGoodsService
     {
-        private readonly PurchaseGoodsContext _PurchaseGoodsContext;
-        public PurchaseGoodsService(PurchaseGoodsContext PurchaseGoodsContext)
+        private readonly PurchaseGoodsContext _purchaseGoodsContext;
+        public PurchaseGoodsService(PurchaseGoodsContext purchaseGoodsContext)
         {
-            _PurchaseGoodsContext = PurchaseGoodsContext;
+            _purchaseGoodsContext = purchaseGoodsContext;
         }
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
-            return _PurchaseGoodsContext.GetPagerList(query);
+            return _purchaseGoodsContext.GetPagerList(query);
         }
 
         public PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId)
         {
-            return _PurchaseGoodsContext.Create(created, userId);
+            return _purchaseGoodsContext.Create(created, userId);
         }
 
         public int Delete(int id)
         {
-            return _PurchaseGoodsContext.Delete(id);
+            return _purchaseGoodsContext.Delete(id);
         }
 
         public int Update(int id, PurchaseGoodsUpdateApiModel updated)
         {
-            return _PurchaseGoodsContext.Update(id, updated);
+            return _purchaseGoodsContext.Update(id, updated);
         }
 
-        public PagerResult<PurchaseGoodsMappingListApiModel> GetPagerMappingList(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
+        public PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
-            return _PurchaseGoodsContext.GetPagerMappingList(query, clientId);
+            return _purchaseGoodsContext.GetPagerListByClient(query, clientId);
         }
         public PurchaseGoodsListApiModel GetIndex(int id)
         {
-            return _PurchaseGoodsContext.GetIndex(id);
+            return _purchaseGoodsContext.GetIndex(id);
+        }
+        public int Submit(int id)
+        {
+            return _purchaseGoodsContext.Submit(id);
         }
     }
 }

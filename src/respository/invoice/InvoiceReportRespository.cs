@@ -72,7 +72,8 @@ namespace respository.invoice
                           c.HospitalClientId,
                           HospitalClientName = ht.Name,
                           RecordId = r.Id,
-                          r.Price
+                          r.Price,
+                          r.ChangeQty,
                       };
             var reports = sql.Select(x => new InvoiceReportValueModel
             {
@@ -81,8 +82,8 @@ namespace respository.invoice
             }).Distinct().ToList();
             foreach (var item in reports)
             {
-                item.Amount = sql.Where(x => x.HospitalClientId == item.Id).Sum(x => x.Price);
-                item.StoreRecordIds = sql.Select(x => x.RecordId).ToList();
+                item.Amount = sql.Where(x => x.HospitalClientId == item.Id).Sum(x => x.Price * x.ChangeQty);
+                item.StoreRecordIds = sql.Where(x => x.HospitalClientId == item.Id).Select(x => x.RecordId).ToList();
             }
             return reports;
         }
@@ -90,7 +91,7 @@ namespace respository.invoice
         public List<InvoiceReportValueModel> GetInvoiceListByChangeType(InvoiceIndexApiModel invoice)
         {
             var sql = from r in _context.StoreRecord
-                      join t in _context.DataInvoiceType on r.ChangeTypeId equals t.Id
+                      join t in _context.DataStoreChangeType on r.ChangeTypeId equals t.Id
                       where r.CreateTime > invoice.StartDate
                       && r.CreateTime < invoice.EndDate.Date.AddDays(1)
                       && r.HospitalDepartmentId == invoice.HospitalDepartment.Id
@@ -99,7 +100,8 @@ namespace respository.invoice
                           r.ChangeTypeId,
                           ChangeTypeName = t.Name,
                           RecordId = r.Id,
-                          r.Price
+                          r.Price,
+                          r.ChangeQty,
                       };
             var reports = sql.Select(x => new InvoiceReportValueModel
             {
@@ -108,8 +110,8 @@ namespace respository.invoice
             }).Distinct().ToList();
             foreach (var item in reports)
             {
-                item.Amount = sql.Where(x => x.ChangeTypeId == item.Id).Sum(x => x.Price);
-                item.StoreRecordIds = sql.Select(x => x.RecordId).ToList();
+                item.Amount = sql.Where(x => x.ChangeTypeId == item.Id).Sum(x => x.Price * x.ChangeQty);
+                item.StoreRecordIds = sql.Where(x => x.ChangeTypeId == item.Id).Select(x => x.RecordId).ToList();
             }
             return reports;
         }

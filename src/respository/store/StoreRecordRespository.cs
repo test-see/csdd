@@ -93,6 +93,7 @@ namespace respository.store
                 HospitalGoodsId = created.HospitalGoodsId,
                 Price = goods.Price,
                 ChangeQty = created.ChangeQty,
+                Recrdno = created.Recrdno,
             };
 
             _context.StoreRecord.Add(record);
@@ -103,11 +104,12 @@ namespace respository.store
 
         public int GetConsumeAmount(int deparmentId, int goodsId, int days)
         {
+            var limitdate = DateTime.Today.AddDays(-days);
             var sql = from r in _context.StoreRecord
                       join ct in _context.DataStoreChangeType on r.ChangeTypeId equals ct.Id
                       where r.HospitalDepartmentId == deparmentId && r.HospitalGoodsId == goodsId
                       && ct.IsConsume == 1
-                      && r.CreateTime >= DateTime.Today.AddDays(-days)
+                      && r.CreateTime >= limitdate
                       select r.ChangeQty;
 
             return sql.Sum();

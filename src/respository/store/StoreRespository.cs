@@ -41,6 +41,7 @@ namespace respository.store
                 ChangeTypeId = changeTypeId,
                 HospitalDepartmentId = departmentId,
                 HospitalGoodsId = created.HospitalGoodId,
+                Recrdno = created.Recrdno,
             }, userId);
 
             if (beforeStore == null) Create(created.HospitalGoodId, afterQty, departmentId, userId);

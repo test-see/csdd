@@ -130,6 +130,7 @@ namespace respository.invoice
             var sql = from r in _context.Invoice
                       join u in _context.User on r.CreateUserId equals u.Id
                       join t in _context.DataInvoiceType on r.InvoiceTypeId equals t.Id
+                      where r.Id == id
                       select new InvoiceIndexApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -139,6 +140,7 @@ namespace respository.invoice
                           Remark = r.Remark,
                           EndDate = r.EndDate,
                           StartDate = r.StartDate,
+                          Status = r.Status,
                           InvoiceType = t,
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
