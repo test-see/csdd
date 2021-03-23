@@ -107,10 +107,12 @@ namespace domain.purchase
                 return average * threshold.UpQty - storeQty;
             return 0;
         }
+        
         public PurchaseGoodsListApiModel GetIndex(int id)
         {
             return _purchaseGoodsRespository.GetIndex(id);
         }
+
         public int Submit(int id)
         {
             using (var trans = _defaultDbTransaction.Begin())
@@ -120,5 +122,6 @@ namespace domain.purchase
                 return _purchaseGoodsRespository.UpdateStatus(id, PurchaseGoodsStatus.Submited);
             }
         }
+        
     }
 }
