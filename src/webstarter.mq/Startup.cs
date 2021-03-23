@@ -1,12 +1,10 @@
 using EasyNetQ;
-using foundation._3party;
 using foundation.config;
-using foundation.ef5;
+using foundation.servicecollection;
 using iservice.purchase;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -14,9 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
-using TencentCloud.Common;
 
 namespace webstarter.mq
 {
@@ -38,19 +34,8 @@ namespace webstarter.mq
         {
             services.AddHealthChecks();
 
-            services.AddSingleton(AppConfig);
-            services.AddSingleton(new SmsSendRequest(new Credential { SecretId = AppConfig.TencentCloudSMS?.SecretId, SecretKey = AppConfig.TencentCloudSMS?.SecretKey, }));
-            services.AddDbContext<DefaultDbContext>(options => options.UseMySQL(AppConfig.ConnectionString));
-            services.AddScoped<DefaultDbTransaction>();
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("respository")).AddClasses(t => t.Where(type => type.IsClass))
-                .AsImplementedInterfaces().WithScopedLifetime());
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("domain")).AddClasses(t => t.Where(type => type.IsClass))
-                .AsSelfWithInterfaces().WithScopedLifetime());
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
-                .AsImplementedInterfaces().WithScopedLifetime());
-            services.AddSingleton(RabbitHutch.CreateBus("host=localhost"));
-
             services.AddControllers();
+            services.AddExtensionCollections(AppConfig);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "webstarter.mq", Version = "v1" });

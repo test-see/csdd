@@ -4,6 +4,7 @@ using EasyNetQ;
 using foundation._3party;
 using foundation.config;
 using foundation.ef5;
+using foundation.servicecollection;
 using irespository.user.enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +44,7 @@ namespace webstarter.hospital
         {
             services.AddHealthChecks();
             services.AddControllers();
+            services.AddExtensionCollections(AppConfig);
             services.AddCors(options =>
             {
                 options.AddPolicy("csdd", builder =>
@@ -52,24 +54,6 @@ namespace webstarter.hospital
                     .AllowAnyHeader();
                 });
             });
-
-            services.AddSingleton(AppConfig);
-            services.AddSingleton(new SmsSendRequest(new Credential { SecretId = AppConfig.TencentCloudSMS?.SecretId, SecretKey = AppConfig.TencentCloudSMS?.SecretKey, }));
-            services.AddDbContext<DefaultDbContext>(options => options.UseMySQL(AppConfig.ConnectionString));
-            services.AddScoped<DefaultDbTransaction>();
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("respository")).AddClasses(t => t.Where(type => type.IsClass))
-                .AsImplementedInterfaces().WithScopedLifetime());
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("domain")).AddClasses(t => t.Where(type => type.IsClass))
-                .AsSelfWithInterfaces().WithScopedLifetime());
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
-                .AsImplementedInterfaces().WithScopedLifetime());
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddMaps(Assembly.Load("domain"));
-            });
-            services.AddSingleton(config.CreateMapper());
-            services.AddSingleton(RabbitHutch.CreateBus("host=localhost"));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
               .AddJwtBearer(options =>
