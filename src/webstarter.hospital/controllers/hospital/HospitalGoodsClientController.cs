@@ -1,4 +1,6 @@
 ﻿using csdd.Controllers.Shared;
+using foundation.config;
+using irespository.hospital.goods.model;
 using iservice.hospital;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +16,11 @@ namespace webstarter.hospital.controllers.hospital
             _hospitalGoodsClientService = hospitalGoodsClientService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("list")]
-        public JsonResult GeListByGoodsId(int goodsId)
+        public JsonResult GetList(PagerQuery<HospitalGoodsClientQueryModel> query)
         {
-            var data = _hospitalGoodsClientService.GeListByGoodsId(goodsId);
+            var data = _hospitalGoodsClientService.GetPagerList(query);
             return Json(data);
         }
 

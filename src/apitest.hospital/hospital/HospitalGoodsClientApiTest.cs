@@ -19,11 +19,12 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalGoodsClient/list")
                 .WithOAuthBearerToken(await getToken())
-                .SetQueryParam("goodsId", "1")
-                .GetJsonAsync<OkMessage<IList<HospitalGoodsClientListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<HospitalGoodsClientQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<HospitalGoodsClientListApiModel>>>();
             Assert.AreEqual(200, message.Code);
-            Assert.IsTrue(message.Data.Count > 0);
+            Assert.IsTrue(message.Data.Total > 0);
         }
+
 
         [TestMethod]
         public async Task HospitalGoodsClient_AddAndDelete_ReturnIntAsync()

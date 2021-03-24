@@ -1,5 +1,7 @@
 ﻿using domain.hospital;
+using foundation.config;
 using foundation.ef5.poco;
+using irespository.hospital.goods.model;
 using irespository.hospital.model;
 using iservice.hospital;
 using System;
@@ -15,9 +17,9 @@ namespace service.hospital
         {
             _hospitalGoodsClientContext = hospitalGoodsClientContext;
         }
-        public IList<HospitalGoodsClientListApiModel> GeListByGoodsId(int goodsId)
+        public PagerResult<HospitalGoodsClientListApiModel> GetPagerList(PagerQuery<HospitalGoodsClientQueryModel> query)
         {
-            return _hospitalGoodsClientContext.GeListByGoodsId(goodsId);
+            return _hospitalGoodsClientContext.GetPagerList(query);
         }
         public HospitalGoodsClient Create(int goodsId, int clientId, int userId)
         {

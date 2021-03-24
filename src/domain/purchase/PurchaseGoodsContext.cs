@@ -65,7 +65,7 @@ namespace domain.purchase
 
         public void Generate(int purchaseId, PurchaseSettingThreshold threshold, int departmentId, int userId)
         {
-            var clients = _hospitalGoodsClientContext.GeListByGoodsId(threshold.HospitalGoodsId);
+            var clients = _hospitalGoodsClientContext.GetListByGoodsId(threshold.HospitalGoodsId);
             if (!clients.Any()) return;
 
             var qty = GetPurchaseGoodsQty(threshold, departmentId);

@@ -1,5 +1,7 @@
-﻿using foundation.ef5.poco;
+﻿using foundation.config;
+using foundation.ef5.poco;
 using irespository.hospital;
+using irespository.hospital.goods.model;
 using irespository.hospital.model;
 using System.Collections.Generic;
 
@@ -13,9 +15,13 @@ namespace domain.hospital
             _hospitalGoodsClientRespository = HospitalGoodsClientRespository;
         }
 
-        public IList<HospitalGoodsClientListApiModel> GeListByGoodsId(int goodsId)
+        public IList<HospitalGoodsClientListApiModel> GetListByGoodsId(int goodsId)
         {
-            return _hospitalGoodsClientRespository.GeListByGoodsId(goodsId);
+            return _hospitalGoodsClientRespository.GetListByGoodsId(goodsId);
+        }
+        public PagerResult<HospitalGoodsClientListApiModel> GetPagerList(PagerQuery<HospitalGoodsClientQueryModel> query)
+        {
+            return _hospitalGoodsClientRespository.GetPagerList(query);
         }
         public HospitalGoodsClient Create(int goodsId, int clientId, int userId)
         {
