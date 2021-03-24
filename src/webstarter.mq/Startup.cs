@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
@@ -86,8 +87,14 @@ namespace webstarter.mq
         {
             var sp = services.BuildServiceProvider();
             var bus = sp.GetService<IBus>();
-            await bus.PubSub.SubscribeAsync<int>("my_subscription_id", 
-                msg => sp.GetService<IPurchaseService>().Generate(msg),
+            var log = sp.GetService<ILoggerFactory>().CreateLogger<Startup>();
+            await bus.PubSub.SubscribeAsync<RabbitMqMessage<int>>("my_subscription_id",
+                msg =>
+                {
+                    log.LogInformation("begin...");
+                    sp.GetService<IPurchaseService>().Generate(msg.Payload);
+                    log.LogInformation("end...");
+                },
                 x => x.WithTopic("Purchase.Generate"));
         }
     }
