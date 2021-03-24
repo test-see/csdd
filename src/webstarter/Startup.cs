@@ -1,16 +1,11 @@
-using AutoMapper;
 using csdd.Middlewares;
-using EasyNetQ;
-using foundation._3party;
 using foundation.config;
-using foundation.ef5;
 using foundation.servicecollection;
 using irespository.user.enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -20,9 +15,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Text;
-using TencentCloud.Common;
 
 namespace csdd
 {

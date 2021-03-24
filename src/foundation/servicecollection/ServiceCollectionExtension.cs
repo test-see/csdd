@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using EasyNetQ;
+﻿using EasyNetQ;
 using foundation._3party;
 using foundation.config;
 using foundation.ef5;
@@ -14,9 +13,10 @@ namespace foundation.servicecollection
     {
         public static void AddExtensionCollections(this IServiceCollection services, AppConfig AppConfig)
         {
-            services.AddSingleton(AppConfig);
+            services.AddSingleton(AppConfig); 
             services.AddSingleton(new SmsSendRequest(new Credential { SecretId = AppConfig.TencentCloudSMS?.SecretId, SecretKey = AppConfig.TencentCloudSMS?.SecretKey, }));
-            services.AddDbContext<DefaultDbContext>(options => options.UseMySQL(AppConfig.ConnectionString));
+            services.AddDbContext<DefaultDbContext>(options => options.UseMySql(AppConfig.ConnectionString));
+
             services.AddScoped<DefaultDbTransaction>();
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("respository")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
@@ -24,12 +24,6 @@ namespace foundation.servicecollection
                 .AsSelfWithInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
-
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddMaps(Assembly.Load("domain"));
-            });
-            services.AddSingleton(config.CreateMapper());
             services.AddSingleton(RabbitHutch.CreateBus("host=localhost"));
         }
     }
