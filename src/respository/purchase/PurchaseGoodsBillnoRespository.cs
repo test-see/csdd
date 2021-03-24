@@ -93,6 +93,8 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
+                          PurchaseGoodsId = r.PurchaseGoodsId,
+                          Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = p.HospitalGoodsId, },
                           HospitalClient = new HospitalClientValueModel { Id = p.HospitalClientId },
                           Billno = r.Billno,
@@ -138,6 +140,8 @@ namespace respository.purchase
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Qty = r.Qty,
+                          PurchaseGoodsId = r.PurchaseGoodsId,
+                          Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = p.HospitalGoodsId, },
                           Billno = r.Billno,
                           Enddate = r.Enddate,
@@ -171,6 +175,10 @@ namespace respository.purchase
             if (query?.PurchaseId != null)
             {
                 sql = sql.Where(x => x.Purchase.Id == query.PurchaseId.Value);
+            }
+            if (query?.PurchaseGoodsId != null)
+            {
+                sql = sql.Where(x => x.PurchaseGoodsId == query.PurchaseGoodsId.Value);
             }
             if (query?.HospitalId != null)
             {

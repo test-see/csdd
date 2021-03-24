@@ -4,6 +4,7 @@ namespace irespository.purchase.model
 {
     public class PurchaseGoodsBillnoListQueryModel
     {
+        public int? PurchaseGoodsId { get; set; }
         public int? PurchaseId { get; set; }
         public int? HospitalId { get; set; }
         public int? HospitalDepartmentId { get; set; }
