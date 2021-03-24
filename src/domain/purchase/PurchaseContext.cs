@@ -34,7 +34,7 @@ namespace domain.purchase
             var purchase = _purchaseRespository.Create(created, departmentId, userId);
             if (created.PurchaseSettingId != null)
             {
-                await _bus.PubSub.PublishAsync(purchase.Id, "Purchase.Generate");
+                await _bus.PubSub.PublishAsync(new RabbitMqMessage<int> { Payload = purchase.Id }, "Purchase.Generate");
                 _purchaseRespository.UpdateStatus(purchase.Id, PurchaseStatus.Generating);
             }
             return purchase;
