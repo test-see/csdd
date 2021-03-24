@@ -4,6 +4,7 @@ using foundation.config;
 using foundation.ef5;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Reflection;
 using TencentCloud.Common;
 
@@ -15,7 +16,7 @@ namespace foundation.servicecollection
         {
             services.AddSingleton(AppConfig); 
             services.AddSingleton(new SmsSendRequest(new Credential { SecretId = AppConfig.TencentCloudSMS?.SecretId, SecretKey = AppConfig.TencentCloudSMS?.SecretKey, }));
-            services.AddDbContext<DefaultDbContext>(options => options.UseMySQL(AppConfig.ConnectionString));
+            services.AddDbContext<DefaultDbContext>(options => options.UseMySql(AppConfig.ConnectionString, new MySqlServerVersion(new Version(5, 7, 18))));
 
             services.AddScoped<DefaultDbTransaction>();
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("respository")).AddClasses(t => t.Where(type => type.IsClass))
