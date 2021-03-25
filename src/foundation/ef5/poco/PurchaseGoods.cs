@@ -20,5 +20,7 @@ namespace foundation.ef5.poco
         public DateTime CreateTime { get; set; }
         [Column("status")]
         public int Status { get; set; }
+        [Column("updatetime")]
+        public DateTime? UpdateTime { get; set; }
     }
 }

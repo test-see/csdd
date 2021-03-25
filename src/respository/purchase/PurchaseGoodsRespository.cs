@@ -216,6 +216,7 @@ namespace respository.purchase
         {
             var setting = _context.PurchaseGoods.First(x => x.Id == id);
             setting.Status = (int)status;
+            setting.UpdateTime = DateTime.Now;
 
             _context.PurchaseGoods.Update(setting);
             _context.SaveChanges();
