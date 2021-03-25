@@ -179,6 +179,7 @@ namespace respository.purchase
             var setting = _context.PurchaseGoods.First(x => x.Id == id);
             setting.Qty = updated.Qty;
             setting.HospitalClientId = updated.HospitalClientId;
+            setting.UpdateTime = DateTime.Now;
 
             _context.PurchaseGoods.Update(setting);
             _context.SaveChanges();
