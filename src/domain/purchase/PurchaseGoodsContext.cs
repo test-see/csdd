@@ -119,7 +119,9 @@ namespace domain.purchase
             {
                 var bills = _purchaseGoodsBillnoContext.GetListByPurchaseGoodsId(id);
                 _purchaseGoodsBillnoContext.Submit(bills.Select(x => x.Id).ToList());
-                return _purchaseGoodsRespository.UpdateStatus(id, PurchaseGoodsStatus.Submited);
+                var result = _purchaseGoodsRespository.UpdateStatus(id, PurchaseGoodsStatus.Submited);
+                trans.Commit();
+                return result;
             }
         }
         
