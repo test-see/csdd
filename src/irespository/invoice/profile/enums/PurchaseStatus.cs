@@ -3,6 +3,7 @@
     public enum InvoiceStatus
     {
         Pendding = 1,
-        Submited = 2,
+        UnSubmited = 2,
+        Submited = 3,
     }
 }

@@ -46,7 +46,8 @@ namespace domain.invoice
                 reports = _invoiceReportRespository.GetInvoiceListByChangeType(invoice);
             }
 
-            return _invoiceReportRespository.Generate(invoiceId, reports);
+            _invoiceReportRespository.Generate(invoiceId, reports);
+            return _InvoiceRespository.UpdateStatus(invoiceId, InvoiceStatus.UnSubmited);
         }
 
         public int Delete(int id)
