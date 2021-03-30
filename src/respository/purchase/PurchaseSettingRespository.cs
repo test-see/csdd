@@ -26,6 +26,7 @@ namespace respository.purchase
                       join d in _context.HospitalDepartment on r.HospitalDepartmentId equals d.Id
                       join u in _context.User on r.CreateUserId equals u.Id
                       where d.HospitalId == hospitalId
+                      orderby r.Id descending
                       select new PurchaseSettingListApiModel
                       {
                           CreateTime = r.CreateTime,

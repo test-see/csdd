@@ -27,6 +27,7 @@ namespace respository.purchase
                       join p in _context.PurchaseSetting on r.PurchaseSettingId equals p.Id
                       join u in _context.User on r.CreateUserId equals u.Id
                       join t in _context.DataPurchaseThresholdType on r.ThresholdTypeId equals t.Id
+                      orderby r.Id descending
                       select new PurchaseSettingThresholdListApiModel
                       {
                           CreateTime = r.CreateTime,

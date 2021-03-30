@@ -24,6 +24,7 @@ namespace respository.store
         public PagerResult<StoreInoutGoodsListApiModel> GetPagerList(PagerQuery<StoreInoutGoodsListQueryModel> query)
         {
             var sql = from r in _context.StoreInoutGoods
+                      orderby r.Id descending
                       select new StoreInoutGoodsListApiModel
                       {
                           CreateTime = r.CreateTime,

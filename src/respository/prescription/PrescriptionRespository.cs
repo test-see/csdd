@@ -58,6 +58,7 @@ namespace respository.prescription
                       join u in _context.User on p.CreateUserId equals u.Id
                       join d in _context.HospitalDepartment on p.HospitalDepartmentId equals d.Id
                       where d.HospitalId == hospitalId
+                      orderby p.Id descending
                       select new PrescriptionListApiModel
                       {
                           Cardno = p.Cardno,

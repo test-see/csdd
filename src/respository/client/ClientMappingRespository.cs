@@ -53,6 +53,7 @@ namespace respository.client
                       join c in _context.HospitalClient on p.HospitalClientId equals c.Id
                       join h in _context.Hospital on c.HospitalId equals h.Id
                       join ct in _context.Client on p.ClientId equals ct.Id
+                      orderby p.Id descending
                       select new ClientMappingListApiModel
                       {
                           Client = new ClientValueModel

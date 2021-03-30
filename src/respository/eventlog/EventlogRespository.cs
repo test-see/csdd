@@ -17,7 +17,7 @@ namespace respository.sys
         {
             var sql = from r in _context.Eventlog
                       join u in _context.User on r.OptionUserId equals u.Id
-                      //orderby r.Id descending
+                      orderby r.Id descending
                       select new EventlogListApiModel
                       {
                           CreateTime = r.CreateTime,

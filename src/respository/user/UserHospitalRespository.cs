@@ -52,6 +52,7 @@ namespace respository.user
             var sql = from r in _context.UserHospital
                       join u in _context.User on r.CreateUserId equals u.Id
                       join s in _context.User on r.UserId equals s.Id
+                      orderby r.Id descending
                       select new UserHospitalListApiModel
                       {
                           CreateTime = r.CreateTime,

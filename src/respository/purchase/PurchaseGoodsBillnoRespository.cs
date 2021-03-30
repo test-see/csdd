@@ -40,6 +40,7 @@ namespace respository.purchase
                       join d in _context.HospitalDepartment on x.HospitalDepartmentId equals d.Id
                       join u in _context.User on r.CreateUserId equals u.Id
                       where d.HospitalId == hospitalId
+                      orderby r.Id descending
                       select new PurchaseGoodsBillnoListApiModel
                       {
                           CreateTime = r.CreateTime,
@@ -88,6 +89,7 @@ namespace respository.purchase
                       join m in _context.ClientMapping on p.HospitalClientId equals m.HospitalClientId
                       join u in _context.User on r.CreateUserId equals u.Id
                       where m.ClientId == clientId
+                      orderby r.Id descending
                       select new PurchaseGoodsBillnoListApiModel
                       {
                           CreateTime = r.CreateTime,

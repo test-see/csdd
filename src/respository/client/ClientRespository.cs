@@ -28,6 +28,7 @@ namespace respository.client
         {
             var sql = from r in _context.Client
                       join u in _context.User on r.CreateUserId equals u.Id
+                      orderby r.Id descending
                       select new ClientListApiModel
                       {
                           CreateTime = r.CreateTime,

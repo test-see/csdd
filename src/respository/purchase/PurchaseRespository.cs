@@ -28,6 +28,7 @@ namespace respository.purchase
             var sql = from r in _context.Purchase
                       join u in _context.User on r.CreateUserId equals u.Id
                       join p in _context.HospitalDepartment on r.HospitalDepartmentId equals p.Id
+                      orderby r.Id descending
                       select new PurchaseListApiModel
                       {
                           CreateTime = r.CreateTime,

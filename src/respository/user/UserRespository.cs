@@ -53,6 +53,7 @@ namespace respository.user
             var sql = from r in _context.User
                       join p in _context.User on r.CreateUserId equals p.Id into p_t
                       from p_tt in p_t.DefaultIfEmpty()
+                      orderby r.Id descending
                       select new UserListApiModel
                       {
                           Id = r.Id,

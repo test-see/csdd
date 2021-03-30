@@ -35,6 +35,7 @@ namespace respository.purchase
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
             var sql = from r in _context.PurchaseGoods
+                      orderby r.Id descending
                       select new PurchaseGoodsListApiModel
                       {
                           CreateTime = r.CreateTime,

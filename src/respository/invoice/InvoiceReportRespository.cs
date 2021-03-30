@@ -120,6 +120,7 @@ namespace respository.invoice
         {
             var sql = from r in _context.InvoiceReport
                       where r.InvoiceId == query.Query.InvoiceId
+                      orderby r.Id descending
                       select new InvoiceReportListApiModel
                       {
                           Id = r.Id,

@@ -27,6 +27,7 @@ namespace respository.checklist
                       join u in _context.User on r.CreateUserId equals u.Id
                       join d in _context.HospitalDepartment on r.HospitalDepartmentId equals d.Id
                       where d.HospitalId == hospitalId
+                      orderby r.Id descending
                       select new CheckListApiModel
                       {
                           CreateTime = r.CreateTime,

@@ -27,6 +27,7 @@ namespace respository.invoice
                       join u in _context.User on r.CreateUserId equals u.Id
                       join t in _context.DataInvoiceType on r.InvoiceTypeId equals t.Id
                       join p in _context.HospitalDepartment on r.HospitalDepartmentId equals p.Id
+                      orderby r.Id descending
                       where p.HospitalId == hospitalId
                       select new InvoiceListApiModel
                       {

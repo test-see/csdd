@@ -28,6 +28,7 @@ namespace respository.hospital
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
                       join rp in _context.HospitalDepartment on r.ParentId equals rp.Id into rp_def
                       from rp_def_t in rp_def.DefaultIfEmpty()
+                      orderby r.Id descending
                       select new HospitalDepartmentListApiModel
                       {
                           CreateTime = r.CreateTime,

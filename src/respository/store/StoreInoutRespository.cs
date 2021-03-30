@@ -26,6 +26,7 @@ namespace respository.store
             var sql = from r in _context.StoreInout
                       join u in _context.User on r.CreateUserId equals u.Id
                       join d in _context.DataStoreChangeType on r.ChangeTypeId equals d.Id
+                      orderby r.Id descending
                       select new StoreInoutListApiModel
                       {
                           CreateTime = r.CreateTime,
