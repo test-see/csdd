@@ -28,5 +28,7 @@ namespace foundation.ef5.poco
         public int IsHide { get; set; }
         [Column("is_hidechildren")]
         public int IsHideChildren { get; set; }
+        [Column("is_parent")]
+        public int IsParent { get; set; }
     }
 }

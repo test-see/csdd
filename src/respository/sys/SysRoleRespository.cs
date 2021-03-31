@@ -78,7 +78,7 @@ namespace respository.sys
             role.Menus = (from p in _context.SysPrivilege
                           join m in _context.DataMenu on p.MenuId equals m.Id
                           join xp in _context.DataPortal on m.PortalId equals xp.Id
-                          where p.RoleId == roleId
+                          where p.RoleId == roleId && m.IsParent == 0
                           select new MenuValueModel
                           {
                               Name = m.Name,
