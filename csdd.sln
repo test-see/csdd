@@ -37,9 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apitest.client", "src\apite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webstarter.mq", "src\webstarter.mq\webstarter.mq.csproj", "{D2874BF0-C839-4427-BA5E-DD64CC06B611}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.handler", "4.handler", "{06E20EE9-6078-4A8D-92C3-A99F987F3523}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.bff", "4.bff", "{06E20EE9-6078-4A8D-92C3-A99F987F3523}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mediator", "src\mediator\mediator.csproj", "{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bff", "src\bff\bff.csproj", "{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.facade", "5.facade", "{2C2CC1B4-CF38-4F8B-9B7C-5DAEAD239557}"
 EndProject

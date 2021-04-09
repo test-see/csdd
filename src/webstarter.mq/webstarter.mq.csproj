@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\mediator\mediator.csproj" />
+    <ProjectReference Include="..\bff\bff.csproj" />
     <ProjectReference Include="..\respository\respository.csproj" />
     <ProjectReference Include="..\service\service.csproj" />
   </ItemGroup>
