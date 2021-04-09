@@ -24,12 +24,12 @@ namespace respository.client
             _context = context;
             _hospitalClientRespository = hospitalClientRespository;
         }
-        public PagerResult<ClientListApiModel> GetPagerList(PagerQuery<ClientListQueryModel> query)
+        public PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query)
         {
             var sql = from r in _context.Client
                       join u in _context.User on r.CreateUserId equals u.Id
                       orderby r.Id descending
-                      select new ClientListApiModel
+                      select new ListClientResponse
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
@@ -40,7 +40,7 @@ namespace respository.client
             {
                 sql = sql.Where(x => x.Name.Contains(query.Query.Name));
             }
-            return new PagerResult<ClientListApiModel>(query.Index, query.Size, sql);
+            return new PagerResult<ListClientResponse>(query.Index, query.Size, sql);
         }
 
         public Client Create(ClientCreateApiModel created, int userId)

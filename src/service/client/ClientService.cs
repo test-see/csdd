@@ -13,7 +13,7 @@ namespace service.client
         {
             _clientContext = clientContext;
         }
-        public PagerResult<ClientListApiModel> GetPagerList(PagerQuery<ClientListQueryModel> query)
+        public PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query)
         {
             return _clientContext.GetPagerList(query);
         }

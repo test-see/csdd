@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Mediator.Net.Contracts;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace foundation.config
 {
-    public class PagerResult<T> //where T : OrderBy<int>
+    public class PagerResult<T> : IResponse
     {
         public int Index { get; set; }
         public int Size { get; set; }
@@ -20,13 +21,12 @@ namespace foundation.config
         {
             Index = index;
             Size = size;
-            //if(base.)
             Result = query.Skip(size * (index - 1)).Take(size).ToList();
             Total = query.Count();
         }
     }
 
-    public class PagerQuery<T>
+    public class PagerQuery<T> : IRequest
     {
         public int Index { get; set; } = 1;
         public int Size { get; set; } = 10;

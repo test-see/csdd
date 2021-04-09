@@ -2,8 +2,10 @@
 using foundation.config;
 using irespository.client.model;
 using iservice.client;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Info
 {
@@ -11,16 +13,19 @@ namespace csdd.Controllers.Info
     public class ClientController : DefaultControllerBase
     {
         private readonly IClientService _clientService;
-        public ClientController(IClientService clientService)
+        private readonly IMediator _mediator;
+        public ClientController(IClientService clientService,
+            IMediator mediator)
         {
             _clientService = clientService;
+            _mediator = mediator;
         }
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<ClientListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<ListClientRequest> query)
         {
-            var data = _clientService.GetPagerList(query);
+            var data = await _mediator.RequestAsync<PagerQuery<ListClientRequest>, PagerResult<ListClientResponse>>(query);
             return Json(data);
         }
 

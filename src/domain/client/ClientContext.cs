@@ -13,7 +13,7 @@ namespace domain.client
             _clientRespository = clientRespository;
         }
 
-        public PagerResult<ClientListApiModel> GetPagerList(PagerQuery<ClientListQueryModel> query)
+        public PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query)
         {
             return _clientRespository.GetPagerList(query);
         }

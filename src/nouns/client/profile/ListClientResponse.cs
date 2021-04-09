@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Mediator.Net.Contracts;
+using System;
 
 namespace irespository.client.model
 {
-    public class ClientListApiModel
+    public class ListClientResponse 
     {
         public int Id { get; set; }
         public string Name { get; set; }
