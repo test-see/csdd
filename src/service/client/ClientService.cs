@@ -13,20 +13,6 @@ namespace service.client
         {
             _clientContext = clientContext;
         }
-        public PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query)
-        {
-            return _clientContext.GetPagerList(query);
-        }
-        public Client Create(ClientCreateApiModel created, int userId)
-        {
-            return _clientContext.Create(created, userId);
-        }
-
-        public int Delete(int id)
-        {
-            return _clientContext.Delete(id);
-        }
-
         public int Update(int id, ClientUpdateApiModel updated, int userId)
         {
             return _clientContext.Update(id, updated, userId);

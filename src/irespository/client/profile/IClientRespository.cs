@@ -9,7 +9,7 @@ namespace irespository.client
     public interface IClientRespository
     {
         PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query);
-        Client Create(ClientCreateApiModel created, int userId);
+        Client Create(CreateClientRequest created);
         int Delete(int id);
         int Update(int id, ClientUpdateApiModel updated, int userId);
         ClientIndexApiModel GetIndex(int id);

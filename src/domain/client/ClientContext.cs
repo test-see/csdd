@@ -17,9 +17,9 @@ namespace domain.client
         {
             return _clientRespository.GetPagerList(query);
         }
-        public Client Create(ClientCreateApiModel created, int userId)
+        public Client Create(CreateClientRequest created)
         {
-            return _clientRespository.Create(created, userId);
+            return _clientRespository.Create(created);
         }
         public int Delete(int id)
         {

@@ -28,7 +28,7 @@ namespace apitest.client
             var Client = await _rootpath
                 .AppendPathSegment("/api/Client/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new ClientCreateApiModel { Name = "q" })
+                .PostJsonAsync(new CreateClientRequest { Name = "q" })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Client>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/Client/{Client.Data.Id}/delete")

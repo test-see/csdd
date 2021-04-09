@@ -1,5 +1,4 @@
-﻿using Mediator.Net.Contracts;
-using System;
+﻿using System;
 
 namespace irespository.client.model
 {

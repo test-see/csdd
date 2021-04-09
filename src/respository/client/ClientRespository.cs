@@ -43,12 +43,12 @@ namespace respository.client
             return new PagerResult<ListClientResponse>(query.Index, query.Size, sql);
         }
 
-        public Client Create(ClientCreateApiModel created, int userId)
+        public Client Create(CreateClientRequest created)
         {
             var client = new Client
             {
                 Name = created.Name,
-                CreateUserId = userId,
+                CreateUserId = created.UserId,
                 CreateTime = DateTime.Now,
             };
 

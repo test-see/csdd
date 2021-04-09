@@ -1,6 +1,4 @@
-﻿using Mediator.Net.Contracts;
-
-namespace irespository.client.model
+﻿namespace irespository.client.model
 {
     public class ListClientRequest 
     {

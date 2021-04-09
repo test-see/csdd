@@ -1,10 +1,12 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
+using foundation.ef5.poco;
 using irespository.client.model;
 using iservice.client;
 using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using nouns.client.profile;
 using System.Threading.Tasks;
 
 namespace csdd.Controllers.Info
@@ -29,21 +31,20 @@ namespace csdd.Controllers.Info
             return Json(data);
         }
 
-
         [HttpGet]
         [Route("{id}/delete")]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> DeleteAsync(int id)
         {
-            var data = _clientService.Delete(id);
-            return Json(data);
+            await _mediator.SendAsync(new DeleteClientCommand(id));
+            return Json(id);
         }
-
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(ClientCreateApiModel created)
+        public async Task<JsonResult> PostAsync(CreateClientRequest created)
         {
-            var data = _clientService.Create(created, UserId);
+            created.UserId = UserId;
+            var data = await _mediator.RequestAsync<CreateClientRequest, Client>(created);
             return Json(data);
         }
 
