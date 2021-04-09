@@ -2,6 +2,8 @@
 using foundation._3party;
 using foundation.config;
 using foundation.ef5;
+using Mediator.Net;
+using Mediator.Net.MicrosoftDependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -25,7 +27,12 @@ namespace foundation.servicecollection
                 .AsSelfWithInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
+
             services.AddSingleton(RabbitHutch.CreateBus("host=localhost"));
+
+            var mediaBuilder = new MediatorBuilder();
+            mediaBuilder.RegisterHandlers(Assembly.Load("mediator"));
+            services.RegisterMediator(mediaBuilder);
         }
     }
 }
