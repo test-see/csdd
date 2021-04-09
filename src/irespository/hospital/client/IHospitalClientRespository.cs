@@ -11,6 +11,6 @@ namespace irespository.hospital
         HospitalClient Create(HospitalClientCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, HospitalClientUpdateApiModel updated);
-        IList<HospitalClientValueModel> GetValue(int[] ids);
+        IList<GetHospitalClientResponse> GetValue(int[] ids);
     }
 }

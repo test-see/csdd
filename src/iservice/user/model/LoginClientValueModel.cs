@@ -1,5 +1,5 @@
-﻿using irespository.client.profile.model;
-using irespository.user.profile.model;
+﻿using irespository.user.profile.model;
+using nouns.client.profile;
 
 namespace domain.user.valuemodel
 {
@@ -7,7 +7,7 @@ namespace domain.user.valuemodel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ClientValueModel Client { get; set; }
+        public GetClientResponse Client { get; set; }
         public UserValueModel User { get; set; }
     }
 }

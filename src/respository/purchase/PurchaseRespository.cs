@@ -40,7 +40,7 @@ namespace respository.purchase
                           HospitalDepartment = new HospitalDepartmentValueModel
                           {
                               Id = r.HospitalDepartmentId,
-                              Hospital = new HospitalValueModel { Id = p.HospitalId }
+                              Hospital = new GetHospitalResponse { Id = p.HospitalId }
                           }
                       };
             if (query.Query?.HospitalId != null)

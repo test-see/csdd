@@ -4,6 +4,7 @@ using Flurl.Http;
 using foundation.config;
 using irespository.client.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using nouns.client.profile;
 using System.Threading.Tasks;
 
 namespace apitest.client
@@ -56,7 +57,7 @@ namespace apitest.client
             var message = await _rootpath
                 .AppendPathSegment("/api/Client/1/index")
                 .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<ClientIndexApiModel>>();
+                .GetJsonAsync<OkMessage<GetClientResponse>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data != null);
         }

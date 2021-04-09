@@ -2,10 +2,10 @@
 using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.client;
-using irespository.client.profile.model;
 using irespository.user.client;
 using irespository.user.client.model;
 using irespository.user.profile.model;
+using nouns.client.profile;
 using System;
 using System.Linq;
 
@@ -64,7 +64,7 @@ namespace respository.user
                               Phone = s.Phone,
                               Username = s.Username,
                           },
-                          Client = new ClientValueModel
+                          Client = new GetClientResponse
                           {
                               Id = r.ClientId,
                           }
@@ -112,7 +112,7 @@ namespace respository.user
                               Phone = s.Phone,
                               Username = s.Username,
                           },
-                          Client = new ClientValueModel
+                          Client = new GetClientResponse
                           {
                               Id = r.ClientId,
                           }

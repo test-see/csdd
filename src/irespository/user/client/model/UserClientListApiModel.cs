@@ -1,5 +1,5 @@
-﻿using irespository.client.profile.model;
-using irespository.user.profile.model;
+﻿using irespository.user.profile.model;
+using nouns.client.profile;
 using System;
 
 namespace irespository.user.client.model
@@ -8,7 +8,7 @@ namespace irespository.user.client.model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ClientValueModel Client { get; set; }
+        public GetClientResponse Client { get; set; }
         public UserValueModel User { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }

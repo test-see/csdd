@@ -1,6 +1,8 @@
-﻿namespace irespository.hospital.profile.model
+﻿using Mediator.Net.Contracts;
+
+namespace irespository.hospital.profile.model
 {
-    public class HospitalValueModel
+    public class GetHospitalResponse : IResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }

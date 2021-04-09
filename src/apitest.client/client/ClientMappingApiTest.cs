@@ -34,7 +34,7 @@ namespace apitest.client
                 .AppendPathSegment("/api/ClientMapping/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<Client2HospitalClientListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<Client2HospitalClientListApiModel>>>();
+                .ReceiveJson<OkMessage<PagerResult<ListClient2HospitalClientResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }

@@ -4,10 +4,9 @@ using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.maping.model;
 using irespository.client.model;
-using irespository.client.profile.model;
 using irespository.hospital;
 using irespository.hospital.client.model;
-using irespository.hospital.profile.model;
+using nouns.client.profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,12 +80,12 @@ namespace respository.client
             return client;
         }
 
-        public ClientIndexApiModel GetIndex(int id)
+        public GetClientResponse GetIndex(int id)
         {
             var client = (from r in _context.Client
                           join u in _context.User on r.CreateUserId equals u.Id
                           where r.Id == id
-                          select new ClientIndexApiModel
+                          select new GetClientResponse
                           {
                               CreateTime = r.CreateTime,
                               Id = r.Id,
@@ -98,15 +97,15 @@ namespace respository.client
                       join c in _context.HospitalClient on p.HospitalClientId equals c.Id
                       join h in _context.Hospital on c.HospitalId equals h.Id
                       where p.ClientId == id
-                      select new Client2HospitalClientListApiModel
+                      select new ListClient2HospitalClientResponse
                       {
-                          Client = new ClientValueModel
+                          Client = new GetClientResponse
                           {
                               Id = client.Id,
                               Name = client.Name,
                           },
                           ClientMappingId = p.Id,
-                          HospitalClient = new HospitalClientValueModel
+                          HospitalClient = new GetHospitalClientResponse
                           {
                               Id = c.Id,
                           },
@@ -121,13 +120,13 @@ namespace respository.client
             return client;
         }
 
-        public IList<ClientValueModel> GetValue(int[] ids)
+        public IList<GetClientResponse> GetValue(int[] ids)
         {
-            if (ids.Length == 0) return new List<ClientValueModel>();
+            if (ids.Length == 0) return new List<GetClientResponse>();
             var client = (from r in _context.Client
                           join u in _context.User on r.CreateUserId equals u.Id
                           where ids.Contains(r.Id)
-                          select new ClientValueModel
+                          select new GetClientResponse
                           {
                               Id = r.Id,
                               Name = r.Name,

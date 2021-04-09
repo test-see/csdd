@@ -9,6 +9,6 @@ namespace irespository.client.maping
     {
         int Delete(int id);
         Client2HospitalClient Create(Client2HospitalClientCreateApiModel created, int userId);
-        PagerResult<Client2HospitalClientListApiModel> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query);
+        PagerResult<ListClient2HospitalClientResponse> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query);
     }
 }

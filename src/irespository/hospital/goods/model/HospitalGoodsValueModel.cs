@@ -13,6 +13,6 @@ namespace irespository.hospital.goods.model
         public string PinShou { get; set; }
         public string Barcode { get; set; }
         public decimal Price { get; set; }
-        public HospitalValueModel Hospital { get; set; }
+        public GetHospitalResponse Hospital { get; set; }
     }
 }

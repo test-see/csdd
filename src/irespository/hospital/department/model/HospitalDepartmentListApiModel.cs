@@ -9,7 +9,7 @@ namespace irespository.hospital.department.model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public HospitalValueModel Hospital { get; set; }
+        public GetHospitalResponse Hospital { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
         public DataDepartmentType DepartmentType { get; set; }

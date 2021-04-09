@@ -1,16 +1,16 @@
 ﻿using irespository.client.maping.model;
-using irespository.hospital.client.model;
+using Mediator.Net.Contracts;
 using System;
 using System.Collections.Generic;
 
-namespace irespository.client.model
+namespace nouns.client.profile
 {
-    public class ClientIndexApiModel
+    public class GetClientResponse: IResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
-        public IList<Client2HospitalClientListApiModel> HospitalClients { get; set; }
+        public IList<ListClient2HospitalClientResponse> HospitalClients { get; set; }
     }
 }

@@ -71,10 +71,10 @@ namespace respository.hospital
             return hospital.Id;
         }
 
-        public IList<HospitalValueModel> GetValue(int[] ids)
+        public IList<GetHospitalResponse> GetValue(int[] ids)
         {
-            if (ids.Length == 0) return new List<HospitalValueModel>();
-            return _context.Hospital.Where(x => ids.Contains(x.Id)).Select(x => new HospitalValueModel
+            if (ids.Length == 0) return new List<GetHospitalResponse>();
+            return _context.Hospital.Where(x => ids.Contains(x.Id)).Select(x => new GetHospitalResponse
             {
                 ConsumeDays = x.ConsumeDays,
                 Id = x.Id,

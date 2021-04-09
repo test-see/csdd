@@ -51,14 +51,14 @@ namespace respository.purchase
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
                           Price = r.Price,
-                          HospitalClient = new HospitalClientValueModel { Id = p.HospitalClientId },
+                          HospitalClient = new GetHospitalClientResponse { Id = p.HospitalClientId },
                           Status = r.Status,
                           Purchase = new PurchaseValueModel
                           {
                               Id = p.PurchaseId,
                               HospitalDepartment = new HospitalDepartmentValueModel
                               {
-                                  Hospital = new HospitalValueModel { Id = d.HospitalId },
+                                  Hospital = new GetHospitalResponse { Id = d.HospitalId },
                                   Id = d.Id
                               }
                           },
@@ -98,7 +98,7 @@ namespace respository.purchase
                           PurchaseGoodsId = r.PurchaseGoodsId,
                           Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = p.HospitalGoodsId, },
-                          HospitalClient = new HospitalClientValueModel { Id = p.HospitalClientId },
+                          HospitalClient = new GetHospitalClientResponse { Id = p.HospitalClientId },
                           Billno = r.Billno,
                           Enddate = r.Enddate,
                           CreateUserName = u.Username,
@@ -108,7 +108,7 @@ namespace respository.purchase
                               Id = p.PurchaseId,
                               HospitalDepartment = new HospitalDepartmentValueModel
                               {
-                                  Hospital = new HospitalValueModel { Id = d.HospitalId },
+                                  Hospital = new GetHospitalResponse { Id = d.HospitalId },
                                   Id = d.Id
                               }
                           },
@@ -154,7 +154,7 @@ namespace respository.purchase
                               Id = p.PurchaseId,
                               HospitalDepartment = new HospitalDepartmentValueModel
                               {
-                                  Hospital = new HospitalValueModel { Id = d.HospitalId },
+                                  Hospital = new GetHospitalResponse { Id = d.HospitalId },
                                   Id = d.Id
                               }
                           },

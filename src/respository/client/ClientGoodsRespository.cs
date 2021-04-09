@@ -4,9 +4,9 @@ using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.goods.model;
 using irespository.client.model;
-using irespository.client.profile.model;
 using irespository.hospital;
 using irespository.hospital.goods.model;
+using nouns.client.profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace respository.client
                           Id = r.Id,
                           Name = r.Name,
                           Code = r.Code,
-                          Client = new ClientValueModel
+                          Client = new GetClientResponse
                           {
                               Id = h.Id,
                               Name = h.Name,
@@ -127,7 +127,7 @@ namespace respository.client
                           Id = r.Id,
                           Name = r.Name,
                           Code = r.Code,
-                          Client = new ClientValueModel
+                          Client = new GetClientResponse
                           {
                               Id = h.Id,
                               Name = h.Name,
@@ -176,7 +176,7 @@ namespace respository.client
                           Id = r.Id,
                           Name = r.Name,
                           Code = r.Code,
-                          Client = new ClientValueModel
+                          Client = new GetClientResponse
                           {
                               Id = h.Id,
                               Name = h.Name,

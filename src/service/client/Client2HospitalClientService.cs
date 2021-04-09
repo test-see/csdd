@@ -14,7 +14,7 @@ namespace service.client
         {
             _clientMappingContext = clientMappingContext;
         }
-        public PagerResult<Client2HospitalClientListApiModel> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query)
+        public PagerResult<ListClient2HospitalClientResponse> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query)
         {
             return _clientMappingContext.GetPagerList(query);
         }

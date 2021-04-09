@@ -34,7 +34,7 @@ namespace respository.hospital
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Name = r.Name,
-                          Hospital = new HospitalValueModel
+                          Hospital = new GetHospitalResponse
                           {
                               Id = r.HospitalId
                           },
@@ -123,7 +123,7 @@ namespace respository.hospital
                       {
                           Id = r.Id,
                           Name = r.Name,
-                          Hospital = new HospitalValueModel
+                          Hospital = new GetHospitalResponse
                           {
                               Id = r.HospitalId,
                           },
@@ -151,7 +151,7 @@ namespace respository.hospital
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           Name = r.Name,
-                          Hospital = new HospitalValueModel
+                          Hospital = new GetHospitalResponse
                           {
                               Id = r.HospitalId
                           },

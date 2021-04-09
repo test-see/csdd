@@ -4,10 +4,10 @@ using foundation.ef5.poco;
 using irespository.client.maping;
 using irespository.client.maping.model;
 using irespository.client.maping.profile.model;
-using irespository.client.profile.model;
 using irespository.hospital;
 using irespository.hospital.client.model;
 using irespository.hospital.profile.model;
+using nouns.client.profile;
 using System;
 using System.Linq;
 
@@ -46,7 +46,7 @@ namespace respository.client
             return id;
         }
 
-        public PagerResult<Client2HospitalClientListApiModel> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query)
+        public PagerResult<ListClient2HospitalClientResponse> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query)
         {
             var sql = from p in _context.Client2HospitalClient
                       join u in _context.User on p.CreateUserId equals u.Id
@@ -54,18 +54,18 @@ namespace respository.client
                       join h in _context.Hospital on c.HospitalId equals h.Id
                       join ct in _context.Client on p.ClientId equals ct.Id
                       orderby p.Id descending
-                      select new Client2HospitalClientListApiModel
+                      select new ListClient2HospitalClientResponse
                       {
-                          Client = new ClientValueModel
+                          Client = new GetClientResponse
                           {
                               Id = ct.Id,
                               Name = ct.Name,
                           },
                           ClientMappingId = p.Id,
-                          HospitalClient = new HospitalClientValueModel
+                          HospitalClient = new GetHospitalClientResponse
                           {
                               Id = c.Id,
-                              Hospital = new HospitalValueModel { Id = h.Id, }
+                              Hospital = new GetHospitalResponse { Id = h.Id, }
                           },
                           CreateTime = p.CreateTime,
                           CreateUserName = u.Username,
@@ -82,7 +82,7 @@ namespace respository.client
             {
                 sql = sql.Where(x => x.Client.Name.Contains(query.Query.Name));
             }
-            var data = new PagerResult<Client2HospitalClientListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<ListClient2HospitalClientResponse>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
                 var hospitals = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());

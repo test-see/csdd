@@ -47,7 +47,7 @@ namespace respository.purchase
                           },
                           Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
-                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
+                          HospitalClient = new GetHospitalClientResponse { Id = r.HospitalClientId },
                       };
             if (query.Query?.HospitalGoodsId != null)
             {
@@ -104,13 +104,13 @@ namespace respository.purchase
                               Id = r.PurchaseId,
                               HospitalDepartment = new HospitalDepartmentValueModel
                               {
-                                  Hospital = new HospitalValueModel { Id = d.HospitalId },
+                                  Hospital = new GetHospitalResponse { Id = d.HospitalId },
                                   Id = d.Id
                               }
                           },
                           Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
-                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
+                          HospitalClient = new GetHospitalClientResponse { Id = r.HospitalClientId },
                       };
             if (query.Query?.Status != null)
             {
@@ -202,7 +202,7 @@ namespace respository.purchase
                           },
                           Status = r.Status,
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
-                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
+                          HospitalClient = new GetHospitalClientResponse { Id = r.HospitalClientId },
                       };
             var data = sql.FirstOrDefault();
             if (data!=null)

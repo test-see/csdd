@@ -2,7 +2,6 @@
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.client.model;
-using iservice.client;
 using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +13,9 @@ namespace csdd.Controllers.Info
     [Authorize(Policy = "RequireAdministratorRole")]
     public class ClientController : DefaultControllerBase
     {
-        private readonly IClientService _clientService;
         private readonly IMediator _mediator;
-        public ClientController(IClientService clientService,
-            IMediator mediator)
+        public ClientController(IMediator mediator)
         {
-            _clientService = clientService;
             _mediator = mediator;
         }
 
@@ -58,12 +54,11 @@ namespace csdd.Controllers.Info
             return Json(data);
         }
 
-
         [HttpGet]
         [Route("{id}/index")]
-        public JsonResult GetIndex(int id)
+        public async Task<JsonResult> GetAsync(int id)
         {
-            var data = _clientService.GetIndex(id);
+            var data = await _mediator.RequestAsync<GetClientRequest, GetClientResponse>(new GetClientRequest(id));
             return Json(data);
         }
 

@@ -1,14 +1,14 @@
 ﻿using irespository.hospital.profile.model;
-using System;
+using Mediator.Net.Contracts;
+using nouns.client.profile;
 
 namespace irespository.hospital.client.model
 {
-    public class HospitalClientListApiModel
+    public class GetHospitalClientResponse : IResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public GetHospitalResponse Hospital { get; set; }
-        public DateTime CreateTime { get; set; }
-        public string CreateUserName { get; set; }
+        public GetClientResponse Client { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.model;
+using nouns.client.profile;
 
 namespace domain.client
 {
@@ -30,7 +31,7 @@ namespace domain.client
             return _clientRespository.Update(updated.Id, updated, updated.UserId);
         }
 
-        public ClientIndexApiModel GetIndex(int id)
+        public GetClientResponse GetIndex(int id)
         {
             return _clientRespository.GetIndex(id);
         }

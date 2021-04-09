@@ -33,7 +33,7 @@ namespace respository.hospital
                           Id = r.Id,
                           Name = r.Name,
                           Code = r.Code,
-                          Hospital = new HospitalValueModel
+                          Hospital = new GetHospitalResponse
                           {
                               Id = r.HospitalId,
                           },
@@ -149,7 +149,7 @@ namespace respository.hospital
                           Code = r.Code,
                           Barcode = r.Barcode,
                           Name = r.Name,
-                          Hospital = new HospitalValueModel
+                          Hospital = new GetHospitalResponse
                           {
                               Id = r.HospitalId,
                           },
@@ -190,7 +190,7 @@ namespace respository.hospital
                           Id = r.Id,
                           Name = r.Name,
                           Code = r.Code,
-                          Hospital = new HospitalValueModel
+                          Hospital = new GetHospitalResponse
                           {
                               Id = r.HospitalId,
                           },
@@ -221,7 +221,7 @@ namespace respository.hospital
                           Id = r.Id,
                           Name = r.Name,
                           Code = r.Code,
-                          Hospital = new HospitalValueModel
+                          Hospital = new GetHospitalResponse
                           {
                               Id = r.HospitalId,
                           },
@@ -253,7 +253,7 @@ namespace respository.hospital
                           Id = r.Id,
                           Name = r.Name,
                           Code = r.Code,
-                          Hospital = new HospitalValueModel
+                          Hospital = new GetHospitalResponse
                           {
                               Id = r.HospitalId,
                           },

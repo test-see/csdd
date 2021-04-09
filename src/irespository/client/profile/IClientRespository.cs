@@ -1,7 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.client.model;
-using irespository.client.profile.model;
+using nouns.client.profile;
 using System.Collections.Generic;
 
 namespace irespository.client
@@ -12,7 +12,7 @@ namespace irespository.client
         Client Create(CreateClientRequest created);
         int Delete(int id);
         Client Update(int id, UpdateClientRequest updated, int userId);
-        ClientIndexApiModel GetIndex(int id);
-        IList<ClientValueModel> GetValue(int[] ids);
+        GetClientResponse GetIndex(int id);
+        IList<GetClientResponse> GetValue(int[] ids);
     }
 }

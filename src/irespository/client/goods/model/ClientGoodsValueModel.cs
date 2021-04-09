@@ -1,4 +1,4 @@
-﻿using irespository.client.profile.model;
+﻿using nouns.client.profile;
 
 namespace irespository.client.goods.model
 {
@@ -10,6 +10,6 @@ namespace irespository.client.goods.model
         public string Spec { get; set; }
         public string Unit { get; set; }
         public string Producer { get; set; }
-        public ClientValueModel Client { get; set; }
+        public GetClientResponse Client { get; set; }
     }
 }

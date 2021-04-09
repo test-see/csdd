@@ -58,7 +58,7 @@ namespace respository.hospital
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           CreateUserName = u.Username,
-                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
+                          HospitalClient = new GetHospitalClientResponse { Id = r.HospitalClientId },
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId },
                       };
             var result = sql.ToList();
@@ -82,7 +82,7 @@ namespace respository.hospital
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           CreateUserName = u.Username,
-                          HospitalClient = new HospitalClientValueModel { Id = r.HospitalClientId },
+                          HospitalClient = new GetHospitalClientResponse { Id = r.HospitalClientId },
                           HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId },
                       };
             if (query.Query?.HospitalClientId != null)

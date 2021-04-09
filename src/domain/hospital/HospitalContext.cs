@@ -31,7 +31,7 @@ namespace domain.hospital
         {
             return _hospitalRespository.Update(id, updated);
         }
-        public HospitalValueModel GetValue(int id)
+        public GetHospitalResponse GetValue(int id)
         {
             return _hospitalRespository.GetValue(new int[] { id }).FirstOrDefault();
         }
