@@ -11,7 +11,7 @@ namespace irespository.client
         PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query);
         Client Create(CreateClientRequest created);
         int Delete(int id);
-        int Update(int id, ClientUpdateApiModel updated, int userId);
+        Client Update(int id, UpdateClientRequest updated, int userId);
         ClientIndexApiModel GetIndex(int id);
         IList<ClientValueModel> GetValue(int[] ids);
     }

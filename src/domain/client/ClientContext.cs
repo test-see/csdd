@@ -25,9 +25,9 @@ namespace domain.client
         {
             return _clientRespository.Delete(id);
         }
-        public int Update(int id, ClientUpdateApiModel updated, int userId)
+        public Client Update(UpdateClientRequest updated)
         {
-            return _clientRespository.Update(id, updated, userId);
+            return _clientRespository.Update(updated.Id, updated, updated.UserId);
         }
 
         public ClientIndexApiModel GetIndex(int id)

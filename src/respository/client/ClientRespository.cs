@@ -70,7 +70,7 @@ namespace respository.client
             return id;
         }
 
-        public int Update(int id, ClientUpdateApiModel updated, int userId)
+        public Client Update(int id, UpdateClientRequest updated, int userId)
         {
             var client = _context.Client.First(x => x.Id == id);
             client.Name = updated.Name;
@@ -78,7 +78,7 @@ namespace respository.client
             _context.Client.Update(client);
             _context.SaveChanges();
 
-            return client.Id;
+            return client;
         }
 
         public ClientIndexApiModel GetIndex(int id)

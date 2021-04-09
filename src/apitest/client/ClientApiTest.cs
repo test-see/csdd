@@ -43,7 +43,7 @@ namespace apitest.client
             var message = await _rootpath
                 .AppendPathSegment("/api/Client/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new ClientUpdateApiModel { Name = "q" })
+                .PostJsonAsync(new UpdateClientRequest { Name = "q" })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);

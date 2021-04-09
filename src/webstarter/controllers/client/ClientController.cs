@@ -50,9 +50,11 @@ namespace csdd.Controllers.Info
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(int id, ClientUpdateApiModel updated)
+        public async Task<JsonResult> UpdateAsync(int id, UpdateClientRequest updated)
         {
-            var data = _clientService.Update(id, updated, UserId);
+            updated.Id = id;
+            updated.UserId = UserId;
+            var data = await _mediator.RequestAsync<UpdateClientRequest, Client>(updated);
             return Json(data);
         }
 

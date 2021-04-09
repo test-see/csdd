@@ -13,11 +13,6 @@ namespace service.client
         {
             _clientContext = clientContext;
         }
-        public int Update(int id, ClientUpdateApiModel updated, int userId)
-        {
-            return _clientContext.Update(id, updated, userId);
-        }
-
         public ClientIndexApiModel GetIndex(int id)
         {
             return _clientContext.GetIndex(id);

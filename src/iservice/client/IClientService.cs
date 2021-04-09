@@ -7,7 +7,6 @@ namespace iservice.client
 {
     public interface IClientService
     {
-        int Update(int id, ClientUpdateApiModel updated, int userId);
         ClientIndexApiModel GetIndex(int id);
     }
 }
