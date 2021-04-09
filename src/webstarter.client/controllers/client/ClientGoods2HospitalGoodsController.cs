@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace csdd.controllers.client
 {
     [Authorize(Policy = "RequireClientRole")]
-    public class ClientMappingGoodsController : DefaultControllerBase
+    [Route("api/ClientMappingGoods")]
+    public class ClientGoods2HospitalGoodsController : DefaultControllerBase
     {
         private readonly IClientGoods2HospitalGoodsService _clientMappingGoodsService;
-        public ClientMappingGoodsController(IClientGoods2HospitalGoodsService clientMappingGoodsService)
+        public ClientGoods2HospitalGoodsController(IClientGoods2HospitalGoodsService clientMappingGoodsService)
         {
             _clientMappingGoodsService = clientMappingGoodsService;
         }

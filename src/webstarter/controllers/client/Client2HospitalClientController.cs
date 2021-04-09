@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace csdd.controllers.client
 {
     [Authorize(Policy = "RequireAdministratorRole")]
-    public class ClientMappingController : DefaultControllerBase
+    [Route("api/ClientMapping")]
+    public class Client2HospitalClientController : DefaultControllerBase
     {
         private readonly IClient2HospitalClientService _clientMappingService;
-        public ClientMappingController(IClient2HospitalClientService clientMappingService)
+        public Client2HospitalClientController(IClient2HospitalClientService clientMappingService)
         {
             _clientMappingService = clientMappingService;
         }
