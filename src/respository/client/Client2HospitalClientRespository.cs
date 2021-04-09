@@ -13,26 +13,26 @@ using System.Linq;
 
 namespace respository.client
 {
-    public class ClientMappingRespository : IClientMappingRespository
+    public class Client2HospitalClientRespository : IClient2HospitalClientRespository
     {
         private readonly DefaultDbContext _context;
         private readonly IHospitalClientRespository _hospitalClientRespository;
-        public ClientMappingRespository(DefaultDbContext context,
+        public Client2HospitalClientRespository(DefaultDbContext context,
             IHospitalClientRespository hospitalClientRespository)
         {
             _context = context;
             _hospitalClientRespository = hospitalClientRespository;
         }
-        public ClientMapping Create(ClientMappingCreateApiModel created, int userId)
+        public Client2HospitalClient Create(Client2HospitalClientCreateApiModel created, int userId)
         {
-            var mapping = new ClientMapping
+            var mapping = new Client2HospitalClient
             {
                 HospitalClientId = created.HospitalClientId,
                 ClientId = created.ClientId,
                 CreateUserId = userId,
                 CreateTime = DateTime.Now,
             };
-            _context.ClientMapping.Add(mapping);
+            _context.Client2HospitalClient.Add(mapping);
             _context.SaveChanges();
 
             return mapping;
@@ -40,21 +40,21 @@ namespace respository.client
 
         public int Delete(int id)
         {
-            var mapping = _context.ClientMapping.Find(id);
-            _context.ClientMapping.Remove(mapping);
+            var mapping = _context.Client2HospitalClient.Find(id);
+            _context.Client2HospitalClient.Remove(mapping);
             _context.SaveChanges();
             return id;
         }
 
-        public PagerResult<ClientMappingListApiModel> GetPagerList(PagerQuery<ClientMappingListQueryModel> query)
+        public PagerResult<Client2HospitalClientListApiModel> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query)
         {
-            var sql = from p in _context.ClientMapping
+            var sql = from p in _context.Client2HospitalClient
                       join u in _context.User on p.CreateUserId equals u.Id
                       join c in _context.HospitalClient on p.HospitalClientId equals c.Id
                       join h in _context.Hospital on c.HospitalId equals h.Id
                       join ct in _context.Client on p.ClientId equals ct.Id
                       orderby p.Id descending
-                      select new ClientMappingListApiModel
+                      select new Client2HospitalClientListApiModel
                       {
                           Client = new ClientValueModel
                           {
@@ -82,7 +82,7 @@ namespace respository.client
             {
                 sql = sql.Where(x => x.Client.Name.Contains(query.Query.Name));
             }
-            var data = new PagerResult<ClientMappingListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<Client2HospitalClientListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
                 var hospitals = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());

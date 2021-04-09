@@ -6,18 +6,18 @@ using irespository.client.maping.profile.model;
 
 namespace domain.client
 {
-    public class ClientMappingContext
+    public class Client2HospitalClientContext
     {
-        private readonly IClientMappingRespository _clientMappingRespository;
-        public ClientMappingContext(IClientMappingRespository clientMappingRespository)
+        private readonly IClient2HospitalClientRespository _clientMappingRespository;
+        public Client2HospitalClientContext(IClient2HospitalClientRespository clientMappingRespository)
         {
             _clientMappingRespository = clientMappingRespository;
         }
-        public PagerResult<ClientMappingListApiModel> GetPagerList(PagerQuery<ClientMappingListQueryModel> query)
+        public PagerResult<Client2HospitalClientListApiModel> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query)
         {
             return _clientMappingRespository.GetPagerList(query);
         }
-        public ClientMapping Create(ClientMappingCreateApiModel created, int userId)
+        public Client2HospitalClient Create(Client2HospitalClientCreateApiModel created, int userId)
         {
             return _clientMappingRespository.Create(created, userId);
         }

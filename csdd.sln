@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.service", "4.service", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.respository", "3.respository", "{AE595840-487B-41A9-8435-EA34511C9CBF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mediator", "src\mediator\mediator.csproj", "{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{D2874BF0-C839-4427-BA5E-DD64CC06B611}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2874BF0-C839-4427-BA5E-DD64CC06B611}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2874BF0-C839-4427-BA5E-DD64CC06B611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +138,7 @@ Global
 		{EE3681EF-AE79-4599-A4D9-E364784FDE3F} = {83601197-D7DC-409B-AED1-932027CB7B76}
 		{6214F13C-1FDC-4442-9A86-BB3C4BC499CE} = {83601197-D7DC-409B-AED1-932027CB7B76}
 		{D2874BF0-C839-4427-BA5E-DD64CC06B611} = {934D1080-B614-4809-AAF2-E6B3F0634DBD}
+		{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD} = {06E20EE9-6078-4A8D-92C3-A99F987F3523}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6653060-E55E-44F1-8F66-F383F05E792D}

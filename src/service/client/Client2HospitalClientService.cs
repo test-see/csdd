@@ -7,18 +7,18 @@ using iservice.client;
 
 namespace service.client
 {
-    public class ClientMappingService: IClientMappingService
+    public class Client2HospitalClientService: IClient2HospitalClientService
     {
-        private readonly ClientMappingContext _clientMappingContext;
-        public ClientMappingService(ClientMappingContext clientMappingContext)
+        private readonly Client2HospitalClientContext _clientMappingContext;
+        public Client2HospitalClientService(Client2HospitalClientContext clientMappingContext)
         {
             _clientMappingContext = clientMappingContext;
         }
-        public PagerResult<ClientMappingListApiModel> GetPagerList(PagerQuery<ClientMappingListQueryModel> query)
+        public PagerResult<Client2HospitalClientListApiModel> GetPagerList(PagerQuery<Client2HospitalClientListQueryModel> query)
         {
             return _clientMappingContext.GetPagerList(query);
         }
-        public ClientMapping Create(ClientMappingCreateApiModel created, int userId)
+        public Client2HospitalClient Create(Client2HospitalClientCreateApiModel created, int userId)
         {
             return _clientMappingContext.Create(created, userId);
         }

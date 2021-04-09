@@ -1,6 +1,6 @@
 ﻿namespace irespository.client.goods.model
 {
-    public class ClientMappingGoodsCreateApiModel
+    public class ClientGoods2HospitalGoodsCreateApiModel
     {
         public int ClientGoodsId { get; set; }
         public int HospitalGoodsId { get; set; }

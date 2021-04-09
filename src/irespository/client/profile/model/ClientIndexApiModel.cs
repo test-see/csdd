@@ -11,6 +11,6 @@ namespace irespository.client.model
         public string Name { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
-        public IList<ClientMappingListApiModel> HospitalClients { get; set; }
+        public IList<Client2HospitalClientListApiModel> HospitalClients { get; set; }
     }
 }

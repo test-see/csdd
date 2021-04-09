@@ -11,16 +11,16 @@ namespace csdd.controllers.client
     [Authorize(Policy = "RequireClientRole")]
     public class ClientMappingController : DefaultControllerBase
     {
-        private readonly IClientMappingService _clientMappingService;
-        public ClientMappingController(IClientMappingService clientMappingService)
+        private readonly IClient2HospitalClientService _clientMappingService;
+        public ClientMappingController(IClient2HospitalClientService clientMappingService)
         {
             _clientMappingService = clientMappingService;
         }
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<ClientMappingListQueryModel> query)
+        public JsonResult GetList(PagerQuery<Client2HospitalClientListQueryModel> query)
         {
-            query.Query = query.Query ?? new ClientMappingListQueryModel { };
+            query.Query = query.Query ?? new Client2HospitalClientListQueryModel { };
             query.Query.ClientId = Client.Id;
             var data = _clientMappingService.GetPagerList(query);
             return Json(data);
@@ -37,7 +37,7 @@ namespace csdd.controllers.client
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(ClientMappingCreateApiModel created)
+        public JsonResult Post(Client2HospitalClientCreateApiModel created)
         {
             created.ClientId = Client.Id;
             var data = _clientMappingService.Create(created, Profile.Id);

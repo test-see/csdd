@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace foundation.ef5.poco
 {
-    [Table("client_mapping_goods")]
-    public class ClientMappingGoods
+    [Table("client_goods_2hospital_goods")]
+    public class ClientGoods2HospitalGoods
     {
         [Column("id")]
         public int Id { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace irespository.client.maping.profile.model
 {
-    public class ClientMappingListQueryModel
+    public class Client2HospitalClientListQueryModel
     {
         public int? HospitalId { get; set; }
         public string Name { get; set; }

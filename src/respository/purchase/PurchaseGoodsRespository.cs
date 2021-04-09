@@ -92,7 +92,7 @@ namespace respository.purchase
             var sql = from r in _context.PurchaseGoods
                       join x in _context.Purchase on r.PurchaseId equals x.Id
                       join d in _context.HospitalDepartment on x.HospitalDepartmentId equals d.Id
-                      join g in _context.ClientMapping on r.HospitalClientId equals g.HospitalClientId
+                      join g in _context.Client2HospitalClient on r.HospitalClientId equals g.HospitalClientId
                       where g.ClientId == clientId
                       select new PurchaseGoodsListApiModel
                       {

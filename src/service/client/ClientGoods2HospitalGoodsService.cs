@@ -5,14 +5,14 @@ using iservice.client;
 
 namespace service.client
 {
-    public class ClientMappingGoodsService: IClientMappingGoodsService
+    public class ClientGoods2HospitalGoodsService: IClientGoods2HospitalGoodsService
     {
-        private readonly ClientMappingGoodsContext _clientMappingGoodsContext;
-        public ClientMappingGoodsService(ClientMappingGoodsContext clientMappingGoodsContext)
+        private readonly ClientGoods2HospitalGoodsContext _clientMappingGoodsContext;
+        public ClientGoods2HospitalGoodsService(ClientGoods2HospitalGoodsContext clientMappingGoodsContext)
         {
             _clientMappingGoodsContext = clientMappingGoodsContext;
         }
-        public ClientMappingGoods Create(ClientMappingGoodsCreateApiModel created, int userId)
+        public ClientGoods2HospitalGoods Create(ClientGoods2HospitalGoodsCreateApiModel created, int userId)
         {
             return _clientMappingGoodsContext.Create(created, userId);
         }

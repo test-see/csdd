@@ -9,8 +9,8 @@ namespace csdd.controllers.client
     [Authorize(Policy = "RequireClientRole")]
     public class ClientMappingGoodsController : DefaultControllerBase
     {
-        private readonly IClientMappingGoodsService _clientMappingGoodsService;
-        public ClientMappingGoodsController(IClientMappingGoodsService clientMappingGoodsService)
+        private readonly IClientGoods2HospitalGoodsService _clientMappingGoodsService;
+        public ClientMappingGoodsController(IClientGoods2HospitalGoodsService clientMappingGoodsService)
         {
             _clientMappingGoodsService = clientMappingGoodsService;
         }
@@ -26,7 +26,7 @@ namespace csdd.controllers.client
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(ClientMappingGoodsCreateApiModel created)
+        public JsonResult Post(ClientGoods2HospitalGoodsCreateApiModel created)
         {
             var data = _clientMappingGoodsService.Create(created, Profile.Id);
             return Json(data);

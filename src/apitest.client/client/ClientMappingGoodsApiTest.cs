@@ -17,14 +17,14 @@ namespace apitest.client
             var Client = await _rootpath
                 .AppendPathSegment("/api/ClientMappingGoods/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new ClientMappingGoodsCreateApiModel
+                .PostJsonAsync(new ClientGoods2HospitalGoodsCreateApiModel
                 {
                     ClientGoodsId = 1,
                     ClientQty = 1,
                     HospitalGoodsId = 1,
                     HospitalQty = 1
                 })
-                .ReceiveJson<OkMessage<foundation.ef5.poco.ClientMappingGoods>>();
+                .ReceiveJson<OkMessage<foundation.ef5.poco.ClientGoods2HospitalGoods>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/ClientMappingGoods/{Client.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())

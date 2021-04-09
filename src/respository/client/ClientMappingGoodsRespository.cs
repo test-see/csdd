@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace respository.client
 {
-    public class ClientMappingGoodsRespository : IClientMappingGoodsRespository
+    public class ClientMappingGoodsRespository : IClientGoods2HospitalGoodsRespository
     {
         private readonly DefaultDbContext _context;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
@@ -24,9 +24,9 @@ namespace respository.client
             _hospitalGoodsRespository = hospitalGoodsRespository;
             _clientGoodsRespository = clientGoodsRespository;
         }
-        public ClientMappingGoods Create(ClientMappingGoodsCreateApiModel created, int userId)
+        public ClientGoods2HospitalGoods Create(ClientGoods2HospitalGoodsCreateApiModel created, int userId)
         {
-            var mapping = new ClientMappingGoods
+            var mapping = new ClientGoods2HospitalGoods
             {
                 ClientGoodsId = created.ClientGoodsId,
                 ClientQty = created.ClientQty,
@@ -35,7 +35,7 @@ namespace respository.client
                 CreateUserId = userId,
                 CreateTime = DateTime.Now,
             };
-            _context.ClientMappingGoods.Add(mapping);
+            _context.ClientGoods2HospitalGoods.Add(mapping);
             _context.SaveChanges();
 
             return mapping;
@@ -43,18 +43,18 @@ namespace respository.client
 
         public int Delete(int id)
         {
-            var mapping = _context.ClientMappingGoods.Find(id);
-            _context.ClientMappingGoods.Remove(mapping);
+            var mapping = _context.ClientGoods2HospitalGoods.Find(id);
+            _context.ClientGoods2HospitalGoods.Remove(mapping);
             _context.SaveChanges();
             return id;
         }
 
-        public IList<ClientMappingGoodsIndexApiModel> GetIndexByHospitalGoodsId(int[] hospitalGoodsIds, int clientId)
+        public IList<ClientGoods2HospitalGoodsIndexApiModel> GetIndexByHospitalGoodsId(int[] hospitalGoodsIds, int clientId)
         {
-            var sql = from r in _context.ClientMappingGoods
+            var sql = from r in _context.ClientGoods2HospitalGoods
                       join c in _context.ClientGoods on r.ClientGoodsId equals c.Id
                       where hospitalGoodsIds.Contains(r.HospitalGoodsId) && c.ClientId == clientId
-                      select new ClientMappingGoodsIndexApiModel
+                      select new ClientGoods2HospitalGoodsIndexApiModel
                       {
                           Id = r.Id,
                           ClientQty = r.ClientQty,

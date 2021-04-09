@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 namespace domain.client
 {
-    public class ClientMappingGoodsContext
+    public class ClientGoods2HospitalGoodsContext
     {
-        private readonly IClientMappingGoodsRespository _clientMappingGoodsRespository;
-        public ClientMappingGoodsContext(IClientMappingGoodsRespository clientMappingGoodsRespository)
+        private readonly IClientGoods2HospitalGoodsRespository _clientMappingGoodsRespository;
+        public ClientGoods2HospitalGoodsContext(IClientGoods2HospitalGoodsRespository clientMappingGoodsRespository)
         {
             _clientMappingGoodsRespository = clientMappingGoodsRespository;
         }
 
-        public ClientMappingGoods Create(ClientMappingGoodsCreateApiModel created, int userId)
+        public ClientGoods2HospitalGoods Create(ClientGoods2HospitalGoodsCreateApiModel created, int userId)
         {
             return _clientMappingGoodsRespository.Create(created, userId);
         }
@@ -22,7 +22,7 @@ namespace domain.client
             return _clientMappingGoodsRespository.Delete(id);
         }
 
-        public IList<ClientMappingGoodsIndexApiModel> GetIndexByHospitalGoodsId(int[] hospitalGoodsIds, int clientId)
+        public IList<ClientGoods2HospitalGoodsIndexApiModel> GetIndexByHospitalGoodsId(int[] hospitalGoodsIds, int clientId)
         {
             return _clientMappingGoodsRespository.GetIndexByHospitalGoodsId(hospitalGoodsIds, clientId);
         }

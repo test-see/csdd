@@ -4,7 +4,7 @@ using System;
 
 namespace irespository.client.maping.model
 {
-    public class ClientMappingListApiModel
+    public class Client2HospitalClientListApiModel
     {
         public int ClientMappingId { get; set; }
         public HospitalClientValueModel HospitalClient { get; set; }

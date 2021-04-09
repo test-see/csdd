@@ -86,7 +86,7 @@ namespace respository.purchase
                       join p in _context.PurchaseGoods on r.PurchaseGoodsId equals p.Id
                       join x in _context.Purchase on p.PurchaseId equals x.Id
                       join d in _context.HospitalDepartment on x.HospitalDepartmentId equals d.Id
-                      join m in _context.ClientMapping on p.HospitalClientId equals m.HospitalClientId
+                      join m in _context.Client2HospitalClient on p.HospitalClientId equals m.HospitalClientId
                       join u in _context.User on r.CreateUserId equals u.Id
                       where m.ClientId == clientId
                       orderby r.Id descending

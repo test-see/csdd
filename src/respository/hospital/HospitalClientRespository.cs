@@ -100,7 +100,7 @@ namespace respository.hospital
             if (ids.Length == 0) return new List<HospitalClientValueModel>();
             var hospitalClients = (from r in _context.HospitalClient
                                    join u in _context.User on r.CreateUserId equals u.Id
-                                   join m in _context.ClientMapping on r.Id equals m.HospitalClientId into md
+                                   join m in _context.Client2HospitalClient on r.Id equals m.HospitalClientId into md
                                    from mdd in md.DefaultIfEmpty()
                                    where ids.Contains(r.Id)
                                    select new HospitalClientValueModel

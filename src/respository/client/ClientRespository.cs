@@ -61,8 +61,8 @@ namespace respository.client
 
         public int Delete(int id)
         {
-            var mappings = _context.ClientMapping.Where(x => x.ClientId == id);
-            _context.ClientMapping.RemoveRange(mappings);
+            var mappings = _context.Client2HospitalClient.Where(x => x.ClientId == id);
+            _context.Client2HospitalClient.RemoveRange(mappings);
 
             var Client = _context.Client.Find(id);
             _context.Client.Remove(Client);
@@ -94,11 +94,11 @@ namespace respository.client
                               CreateUserName = u.Username,
                           }).First();
 
-            var sql = from p in _context.ClientMapping
+            var sql = from p in _context.Client2HospitalClient
                       join c in _context.HospitalClient on p.HospitalClientId equals c.Id
                       join h in _context.Hospital on c.HospitalId equals h.Id
                       where p.ClientId == id
-                      select new ClientMappingListApiModel
+                      select new Client2HospitalClientListApiModel
                       {
                           Client = new ClientValueModel
                           {

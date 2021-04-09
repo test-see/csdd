@@ -88,8 +88,8 @@ namespace respository.client
 
         public int Delete(int id)
         {
-            var mappings = _context.ClientMappingGoods.Where(x => x.ClientGoodsId == id);
-            _context.ClientMappingGoods.RemoveRange(mappings);
+            var mappings = _context.ClientGoods2HospitalGoods.Where(x => x.ClientGoodsId == id);
+            _context.ClientGoods2HospitalGoods.RemoveRange(mappings);
 
             var goods = _context.ClientGoods.Find(id);
             _context.ClientGoods.Remove(goods);
@@ -143,8 +143,8 @@ namespace respository.client
             var profile = sql.FirstOrDefault();
             if (profile != null)
             {
-                var mappings = (from m in _context.ClientMappingGoods
-                                select new ClientMappingGoodsListApiModel
+                var mappings = (from m in _context.ClientGoods2HospitalGoods
+                                select new ClientGoods2HospitalGoodsListApiModel
                                 {
                                     Id = m.Id,
                                     ClientQty = m.ClientQty,

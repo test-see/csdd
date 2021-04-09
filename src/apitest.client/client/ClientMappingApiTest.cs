@@ -18,8 +18,8 @@ namespace apitest.client
             var Client = await _rootpath
                 .AppendPathSegment("/api/ClientMapping/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new ClientMappingCreateApiModel { ClientId = 1, HospitalClientId = 1 })
-                .ReceiveJson<OkMessage<foundation.ef5.poco.ClientMapping>>();
+                .PostJsonAsync(new Client2HospitalClientCreateApiModel { ClientId = 1, HospitalClientId = 1 })
+                .ReceiveJson<OkMessage<foundation.ef5.poco.Client2HospitalClient>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/ClientMapping/{Client.Data.Id}/delete")
                 .WithOAuthBearerToken(await getToken())
@@ -33,8 +33,8 @@ namespace apitest.client
             var message = await _rootpath
                 .AppendPathSegment("/api/ClientMapping/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<ClientMappingListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<ClientMappingListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<Client2HospitalClientListQueryModel> { })
+                .ReceiveJson<OkMessage<PagerResult<Client2HospitalClientListApiModel>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }

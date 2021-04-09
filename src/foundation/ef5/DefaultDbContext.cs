@@ -11,8 +11,8 @@ namespace foundation.ef5
         #region client
         public DbSet<Client> Client { get; set; }
         public DbSet<ClientGoods> ClientGoods { get; set; }
-        public DbSet<ClientMapping> ClientMapping { get; set; }
-        public DbSet<ClientMappingGoods> ClientMappingGoods { get; set; }
+        public DbSet<Client2HospitalClient> Client2HospitalClient { get; set; }
+        public DbSet<ClientGoods2HospitalGoods> ClientGoods2HospitalGoods { get; set; }
         #endregion
 
         #region user
