@@ -1,26 +1,28 @@
-﻿using foundation.config;
+﻿using domain.client.entity;
+using foundation.config;
 using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.model;
+using Mediator.Net;
 using nouns.client.profile;
+using System.Threading.Tasks;
 
 namespace domain.client
 {
-    public class ClientContext
+    public class ClientService
     {
+        private readonly IMediator _mediator;
         private readonly IClientRespository _clientRespository;
-        public ClientContext(IClientRespository clientRespository)
+        public ClientService(IClientRespository clientRespository,
+            IMediator mediator)
         {
             _clientRespository = clientRespository;
+            _mediator = mediator;
         }
 
         public PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query)
         {
             return _clientRespository.GetPagerList(query);
-        }
-        public Client Create(CreateClientRequest created)
-        {
-            return _clientRespository.Create(created);
         }
         public int Delete(int id)
         {
@@ -36,5 +38,9 @@ namespace domain.client
             return _clientRespository.GetIndex(id);
         }
 
+        public async Task<Client> CreateAsync(CreateClientEntity created)
+        {
+            return await _mediator.RequestAsync<CreateClientEntity, Client>(created);
+        }
     }
 }

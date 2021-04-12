@@ -10,8 +10,8 @@ namespace mediator.request.client
 {
     public class ListClientRequestHandler : IRequestHandler<PagerQuery<ListClientRequest>, PagerResult<ListClientResponse>>
     {
-        private readonly ClientContext _clientContext;
-        public ListClientRequestHandler(ClientContext clientContext)
+        private readonly ClientService _clientContext;
+        public ListClientRequestHandler(ClientService clientContext)
         {
             _clientContext = clientContext;
         }

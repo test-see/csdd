@@ -10,8 +10,8 @@ namespace mediator.client
 {
     public class UpdateClientRequestHandler : IRequestHandler<UpdateClientRequest, Client>
     {
-        private readonly ClientContext _clientContext;
-        public UpdateClientRequestHandler(ClientContext clientContext)
+        private readonly ClientService _clientContext;
+        public UpdateClientRequestHandler(ClientService clientContext)
         {
             _clientContext = clientContext;
         }

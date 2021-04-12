@@ -1,4 +1,5 @@
 ﻿using domain.client;
+using domain.client.entity;
 using foundation.ef5.poco;
 using irespository.client.model;
 using Mediator.Net.Context;
@@ -11,14 +12,19 @@ namespace mediator.client
 {
     public class CreateClientRequestHandler : IRequestHandler<CreateClientRequest, Client>
     {
-        private readonly ClientContext _clientContext;
-        public CreateClientRequestHandler(ClientContext clientContext)
+        private readonly ClientService _clientContext;
+        public CreateClientRequestHandler(ClientService clientContext)
         {
             _clientContext = clientContext;
         }
-        public Task<Client> Handle(IReceiveContext<CreateClientRequest> context, CancellationToken cancellationToken)
+        public async Task<Client> Handle(IReceiveContext<CreateClientRequest> context, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_clientContext.Create(context.Message));
+            var entity = new CreateClientEntity
+            {
+                Name = context.Message.Name,
+                UserId = context.Message.UserId,
+            };
+            return await _clientContext.CreateAsync(entity);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace mediator.client
 {
     public class DeleteClientCommandHandler : ICommandHandler<DeleteClientCommand>
     {
-        private readonly ClientContext _clientContext;
-        public DeleteClientCommandHandler(ClientContext clientContext)
+        private readonly ClientService _clientContext;
+        public DeleteClientCommandHandler(ClientService clientContext)
         {
             _clientContext = clientContext;
         }

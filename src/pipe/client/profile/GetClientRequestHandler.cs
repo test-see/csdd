@@ -9,8 +9,8 @@ namespace mediator.client.profile
 {
     public class GetClientRequestHandler : IRequestHandler<GetClientRequest, GetClientResponse>
     {
-        private readonly ClientContext _clientContext;
-        public GetClientRequestHandler(ClientContext clientContext)
+        private readonly ClientService _clientContext;
+        public GetClientRequestHandler(ClientService clientContext)
         {
             _clientContext = clientContext;
         }

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\domain\domain.csproj" />
     <ProjectReference Include="..\foundation\foundation.csproj" />
     <ProjectReference Include="..\irespository\irespository.csproj" />
   </ItemGroup>
