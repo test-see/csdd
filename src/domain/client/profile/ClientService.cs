@@ -28,11 +28,12 @@ namespace domain.client
         {
             return _clientRespository.GetIndex(id);
         }
-        public int Delete(int id)
-        {
-            return _clientRespository.Delete(id);
-        }
 
+        public async Task<int> DeleteAsync(int id)
+        {
+            await _mediator.SendAsync(new ClientDeleting { Id = id });
+            return id; 
+        }
         public async Task<Client> UpdateAsync(ClientUpdating updated)
         {
             return await _mediator.RequestAsync<ClientUpdating, Client>(updated);

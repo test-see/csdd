@@ -9,7 +9,6 @@ namespace irespository.client
     public interface IClientRespository
     {
         PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query);
-        int Delete(int id);
         GetClientResponse GetIndex(int id);
         IList<GetClientResponse> GetValue(int[] ids);
     }
