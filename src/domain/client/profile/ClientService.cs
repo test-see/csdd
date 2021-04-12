@@ -23,23 +23,23 @@ namespace domain.client
         {
             return _clientRespository.GetPagerList(query);
         }
-        public Client Update(UpdateClientRequest updated)
-        {
-            return _clientRespository.Update(updated.Id, updated, updated.UserId);
-        }
 
         public GetClientResponse GetIndex(int id)
         {
             return _clientRespository.GetIndex(id);
         }
-
-        public async Task<Client> CreateAsync(ClientCreating created)
-        {
-            return await _mediator.RequestAsync<ClientCreating, Client>(created);
-        }
         public int Delete(int id)
         {
             return _clientRespository.Delete(id);
+        }
+
+        public async Task<Client> UpdateAsync(ClientUpdating updated)
+        {
+            return await _mediator.RequestAsync<ClientUpdating, Client>(updated);
+        }
+        public async Task<Client> CreateAsync(ClientCreating created)
+        {
+            return await _mediator.RequestAsync<ClientCreating, Client>(created);
         }
     }
 }

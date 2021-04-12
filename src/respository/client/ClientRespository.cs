@@ -42,21 +42,6 @@ namespace respository.client
             }
             return new PagerResult<ListClientResponse>(query.Index, query.Size, sql);
         }
-        public Client Create(ClientCreating created)
-        {
-            var client = new Client
-            {
-                Name = created.Name,
-                CreateUserId = created.UserId,
-                CreateTime = DateTime.Now,
-            };
-
-            _context.Client.Add(client);
-            _context.SaveChanges();
-
-
-            return client;
-        }
 
         public int Delete(int id)
         {
@@ -69,16 +54,6 @@ namespace respository.client
             return id;
         }
 
-        public Client Update(int id, UpdateClientRequest updated, int userId)
-        {
-            var client = _context.Client.First(x => x.Id == id);
-            client.Name = updated.Name;
-
-            _context.Client.Update(client);
-            _context.SaveChanges();
-
-            return client;
-        }
 
         public GetClientResponse GetIndex(int id)
         {

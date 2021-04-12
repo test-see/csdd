@@ -1,4 +1,5 @@
 ﻿using domain.client;
+using domain.client.profile.entity;
 using foundation.ef5.poco;
 using irespository.client.model;
 using Mediator.Net.Context;
@@ -15,9 +16,15 @@ namespace mediator.client
         {
             _clientContext = clientContext;
         }
-        public Task<Client> Handle(IReceiveContext<UpdateClientRequest> context, CancellationToken cancellationToken)
+        public async Task<Client> Handle(IReceiveContext<UpdateClientRequest> context, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_clientContext.Update(context.Message));
+            var updating = new ClientUpdating
+            {
+                Id = context.Message.Id,
+                Name = context.Message.Name,
+                UserId = context.Message.UserId,
+            };
+            return await _clientContext.UpdateAsync(updating);
         }
     }
 }
