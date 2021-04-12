@@ -14,10 +14,9 @@ namespace mediator.client
         {
             _clientContext = clientContext;
         }
-        public Task Handle(IReceiveContext<DeleteClientCommand> context, CancellationToken cancellationToken)
+        public async Task Handle(IReceiveContext<DeleteClientCommand> context, CancellationToken cancellationToken)
         {
-            _clientContext.Delete(context.Message.Id);
-            return Task.FromResult(0);
+            await _clientContext.DeleteAsync(context.Message.Id);
         }
     }
 }

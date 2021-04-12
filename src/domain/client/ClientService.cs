@@ -24,10 +24,6 @@ namespace domain.client
         {
             return _clientRespository.GetPagerList(query);
         }
-        public int Delete(int id)
-        {
-            return _clientRespository.Delete(id);
-        }
         public Client Update(UpdateClientRequest updated)
         {
             return _clientRespository.Update(updated.Id, updated, updated.UserId);
@@ -38,6 +34,11 @@ namespace domain.client
             return _clientRespository.GetIndex(id);
         }
 
+        public async Task<int> DeleteAsync(int id)
+        {
+            await _mediator.SendAsync(new DeleteClientEntity(id));
+            return id;
+        }
         public async Task<Client> CreateAsync(CreateClientEntity created)
         {
             return await _mediator.RequestAsync<CreateClientEntity, Client>(created);

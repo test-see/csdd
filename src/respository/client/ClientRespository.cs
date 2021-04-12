@@ -44,17 +44,6 @@ namespace respository.client
         }
 
 
-        public int Delete(int id)
-        {
-            var mappings = _context.Client2HospitalClient.Where(x => x.ClientId == id);
-            _context.Client2HospitalClient.RemoveRange(mappings);
-
-            var Client = _context.Client.Find(id);
-            _context.Client.Remove(Client);
-            _context.SaveChanges();
-            return id;
-        }
-
         public Client Update(int id, UpdateClientRequest updated, int userId)
         {
             var client = _context.Client.First(x => x.Id == id);
