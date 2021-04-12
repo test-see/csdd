@@ -1,4 +1,5 @@
-﻿using foundation.config;
+﻿using domain.client.profile.entity;
+using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.client;
@@ -41,7 +42,7 @@ namespace respository.client
             }
             return new PagerResult<ListClientResponse>(query.Index, query.Size, sql);
         }
-        public Client Create(CreateClientRequest created)
+        public Client Create(ClientCreating created)
         {
             var client = new Client
             {
