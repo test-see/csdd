@@ -2,9 +2,11 @@
 
 namespace domain.client.profile.entity
 {
-    public class ClientCreating : IRequest
+    public class UpdatingClient : IRequest
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int UserId { get; set; }
+
     }
 }

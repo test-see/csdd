@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class ClientCreatingRequestHandler : IRequestHandler<ClientCreating, Client>
+    public class CreatingClientRequestHandler : IRequestHandler<CreatingClient, Client>
     {
         private readonly DefaultDbContext _context;
-        public ClientCreatingRequestHandler(DefaultDbContext context)
+        public CreatingClientRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<Client> Handle(IReceiveContext<ClientCreating> context, CancellationToken cancellationToken)
+        public async Task<Client> Handle(IReceiveContext<CreatingClient> context, CancellationToken cancellationToken)
         {
             var client = new Client
             {

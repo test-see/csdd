@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class ClientUpdatingRequestHandler : IRequestHandler<ClientUpdating, Client>
+    public class UpdatingClientRequestHandler : IRequestHandler<UpdatingClient, Client>
     {
         private readonly DefaultDbContext _context;
-        public ClientUpdatingRequestHandler(DefaultDbContext context)
+        public UpdatingClientRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<Client> Handle(IReceiveContext<ClientUpdating> context, CancellationToken cancellationToken)
+        public async Task<Client> Handle(IReceiveContext<UpdatingClient> context, CancellationToken cancellationToken)
         {
             var client = _context.Client.First(x => x.Id == context.Message.Id);
             client.Name = context.Message.Name;

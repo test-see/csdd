@@ -2,7 +2,7 @@
 
 namespace domain.client.profile.entity
 {
-    public class ClientDeleting : ICommand
+    public class DeletingClient : ICommand
     {
         public int Id { get; set; }
     }

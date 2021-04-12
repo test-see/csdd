@@ -18,7 +18,7 @@ namespace mediator.client
         }
         public async Task<Client> Handle(IReceiveContext<UpdateClientRequest> context, CancellationToken cancellationToken)
         {
-            var updating = new ClientUpdating
+            var updating = new UpdatingClient
             {
                 Id = context.Message.Id,
                 Name = context.Message.Name,

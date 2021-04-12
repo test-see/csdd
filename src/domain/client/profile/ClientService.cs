@@ -31,16 +31,16 @@ namespace domain.client
 
         public async Task<int> DeleteAsync(int id)
         {
-            await _mediator.SendAsync(new ClientDeleting { Id = id });
+            await _mediator.SendAsync(new DeletingClient { Id = id });
             return id; 
         }
-        public async Task<Client> UpdateAsync(ClientUpdating updated)
+        public async Task<Client> UpdateAsync(UpdatingClient updated)
         {
-            return await _mediator.RequestAsync<ClientUpdating, Client>(updated);
+            return await _mediator.RequestAsync<UpdatingClient, Client>(updated);
         }
-        public async Task<Client> CreateAsync(ClientCreating created)
+        public async Task<Client> CreateAsync(CreatingClient created)
         {
-            return await _mediator.RequestAsync<ClientCreating, Client>(created);
+            return await _mediator.RequestAsync<CreatingClient, Client>(created);
         }
     }
 }

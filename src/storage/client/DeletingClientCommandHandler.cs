@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class ClientDeletingCommandHandler : ICommandHandler<ClientDeleting>
+    public class DeletingClientCommandHandler : ICommandHandler<DeletingClient>
     {
         private readonly DefaultDbContext _context;
-        public ClientDeletingCommandHandler(DefaultDbContext context)
+        public DeletingClientCommandHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task Handle(IReceiveContext<ClientDeleting> context, CancellationToken cancellationToken)
+        public async Task Handle(IReceiveContext<DeletingClient> context, CancellationToken cancellationToken)
         {
             var mappings = _context.Client2HospitalClient.Where(x => x.ClientId == context.Message.Id);
             _context.Client2HospitalClient.RemoveRange(mappings);
