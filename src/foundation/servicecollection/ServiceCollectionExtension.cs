@@ -31,7 +31,7 @@ namespace foundation.servicecollection
             services.AddSingleton(RabbitHutch.CreateBus("host=localhost"));
 
             var mediaBuilder = new MediatorBuilder();
-            mediaBuilder.RegisterHandlers(Assembly.Load("pipe"), Assembly.Load("storage")); 
+            mediaBuilder.RegisterHandlers(Assembly.Load("pipe")); 
             services.RegisterMediator(mediaBuilder);
         }
     }
