@@ -1,10 +1,8 @@
 ﻿using domain.client;
-using domain.client.entity;
 using foundation.ef5.poco;
 using irespository.client.model;
 using Mediator.Net.Context;
 using Mediator.Net.Contracts;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,12 +17,7 @@ namespace mediator.client
         }
         public async Task<Client> Handle(IReceiveContext<CreateClientRequest> context, CancellationToken cancellationToken)
         {
-            var entity = new CreateClientEntity
-            {
-                Name = context.Message.Name,
-                UserId = context.Message.UserId,
-            };
-            return await _clientContext.CreateAsync(entity);
+            return await Task.FromResult(_clientContext.Create(context.Message));
         }
     }
 }

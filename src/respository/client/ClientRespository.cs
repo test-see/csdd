@@ -1,5 +1,4 @@
-﻿using domain.client.entity;
-using foundation.config;
+﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.client;
@@ -42,7 +41,32 @@ namespace respository.client
             }
             return new PagerResult<ListClientResponse>(query.Index, query.Size, sql);
         }
+        public Client Create(CreateClientRequest created)
+        {
+            var client = new Client
+            {
+                Name = created.Name,
+                CreateUserId = created.UserId,
+                CreateTime = DateTime.Now,
+            };
 
+            _context.Client.Add(client);
+            _context.SaveChanges();
+
+
+            return client;
+        }
+
+        public int Delete(int id)
+        {
+            var mappings = _context.Client2HospitalClient.Where(x => x.ClientId == id);
+            _context.Client2HospitalClient.RemoveRange(mappings);
+
+            var Client = _context.Client.Find(id);
+            _context.Client.Remove(Client);
+            _context.SaveChanges();
+            return id;
+        }
 
         public Client Update(int id, UpdateClientRequest updated, int userId)
         {

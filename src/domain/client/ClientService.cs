@@ -1,11 +1,9 @@
-﻿using domain.client.entity;
-using foundation.config;
+﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.client;
 using irespository.client.model;
 using Mediator.Net;
 using nouns.client.profile;
-using System.Threading.Tasks;
 
 namespace domain.client
 {
@@ -34,14 +32,13 @@ namespace domain.client
             return _clientRespository.GetIndex(id);
         }
 
-        public async Task<int> DeleteAsync(int id)
+        public Client Create(CreateClientRequest created)
         {
-            await _mediator.SendAsync(new DeleteClientEntity(id));
-            return id;
+            return _clientRespository.Create(created);
         }
-        public async Task<Client> CreateAsync(CreateClientEntity created)
+        public int Delete(int id)
         {
-            return await _mediator.RequestAsync<CreateClientEntity, Client>(created);
+            return _clientRespository.Delete(id);
         }
     }
 }
