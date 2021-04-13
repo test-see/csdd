@@ -36,7 +36,7 @@ namespace respository.store
                           Remark = r.Remark,
                           ChangeType = d,
                           Status = r.Status,
-                          HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
+                          HospitalDepartment = new GetHospitalDepartmentResponse { Id = r.HospitalDepartmentId, }
                       };
             if (query.Query?.HospitalDepartmentId != null)
             {
@@ -126,7 +126,7 @@ namespace respository.store
                           Remark = r.Remark,
                           ChangeType = d,
                           Status = r.Status,
-                          HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
+                          HospitalDepartment = new GetHospitalDepartmentResponse { Id = r.HospitalDepartmentId, }
                       };
             var data = sql.FirstOrDefault();
             if (data != null)

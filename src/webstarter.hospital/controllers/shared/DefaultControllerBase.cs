@@ -16,7 +16,7 @@ namespace csdd.Controllers.Shared
     public class DefaultControllerBase : ControllerBase
     {
         protected UserValueModel Profile => JsonConvert.DeserializeObject<UserValueModel>(HttpContext.User.Identity.Name);
-        protected HospitalDepartmentValueModel HospitalDepartment => JsonConvert.DeserializeObject<HospitalDepartmentValueModel>(HttpContext.User.Claims.First(x => x.Type == "HospitalDepartment").Value);
+        protected GetHospitalDepartmentResponse HospitalDepartment => JsonConvert.DeserializeObject<GetHospitalDepartmentResponse>(HttpContext.User.Claims.First(x => x.Type == "HospitalDepartment").Value);
         protected JsonResult Json<T>(T d)
         {
             return new JsonResult(new OkMessage<T>(d));

@@ -6,7 +6,7 @@ namespace irespository.purchase.model
     public class PurchaseValueModel
     {
         public int Id { get; set; }
-        public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
         public string Name { get; set; }
         public int Status { get; set; }
     }

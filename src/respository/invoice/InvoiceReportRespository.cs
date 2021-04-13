@@ -147,7 +147,7 @@ namespace respository.invoice
                           BeforeQty = r.BeforeQty,
                           Price = r.Price,
                           ChangeType = ct,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           },
@@ -214,7 +214,7 @@ namespace respository.invoice
                           BeforeQty = r.BeforeQty,
                           Price = r.Price,
                           ChangeType = ct,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           },
@@ -245,7 +245,7 @@ namespace respository.invoice
                           BeforeQty = r.BeforeQty,
                           Price = r.Price,
                           ChangeType = ct,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           },

@@ -19,7 +19,7 @@ namespace apitest.hospital
                 .AppendPathSegment("/api/HospitalGoods/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<HospitalGoodsListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<HospitalGoodsListApiModel>>>();
+                .ReceiveJson<OkMessage<PagerResult<ListHospitalGoodsResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }

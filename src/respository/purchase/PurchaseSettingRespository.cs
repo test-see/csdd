@@ -34,7 +34,7 @@ namespace respository.purchase
                           CreateUserName = u.Username,
                           Name = r.Name,
                           Remark = r.Remark,
-                          HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
+                          HospitalDepartment = new GetHospitalDepartmentResponse { Id = r.HospitalDepartmentId, }
                       };
             if (query.Query?.HospitalDepartmentId != null)
             {
@@ -110,7 +110,7 @@ namespace respository.purchase
                           CreateUserName = u.Username,
                           Name = r.Name,
                           Remark = r.Remark,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           }

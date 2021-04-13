@@ -7,7 +7,7 @@ namespace irespository.store.profile.model
     public class StoreListApiModel
     {
         public int Id { get; set; }
-        public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
         public HospitalGoodsValueModel HospitalGoods { get; set; }
         public int Qty { get; set; }
         public DateTime CreateTime { get; set; }

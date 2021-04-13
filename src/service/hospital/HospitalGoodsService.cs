@@ -14,7 +14,7 @@ namespace service.hospital
         {
             _hospitalGoodsContext = hospitalGoodsContext;
         }
-        public PagerResult<HospitalGoodsListApiModel> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query)
+        public PagerResult<ListHospitalGoodsResponse> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query)
         {
             return _hospitalGoodsContext.GetPagerList(query);
         }

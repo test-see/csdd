@@ -19,8 +19,8 @@ namespace apitest.client
             var message = await _rootpath
                 .AppendPathSegment("/api/Client/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<ListingClientRequest> { })
-                .ReceiveJson<OkMessage<PagerResult<ListingClientResponse>>>();
+                .PostJsonAsync(new PagerQuery<ListClientRequest> { })
+                .ReceiveJson<OkMessage<PagerResult<ListClientResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
@@ -45,7 +45,7 @@ namespace apitest.client
             var message = await _rootpath
                 .AppendPathSegment("/api/Client/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new UpdateClientRequest { Name = "q" })
+                .PostJsonAsync(new UpdateClient { Name = "q" })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);

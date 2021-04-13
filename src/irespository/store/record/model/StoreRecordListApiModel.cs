@@ -9,7 +9,7 @@ namespace irespository.store.profile.model
     public class StoreRecordListApiModel//: OrderBy<int>
     {
         public int Id { get; set; }
-        public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
         public HospitalGoodsValueModel HospitalGoods { get; set; }
         public int BeforeQty { get; set; }
         public DataStoreChangeType ChangeType { get; set; }

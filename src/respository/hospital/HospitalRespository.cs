@@ -3,7 +3,6 @@ using foundation.ef5;
 using foundation.ef5.poco;
 using irespository.hospital;
 using irespository.hospital.model;
-using irespository.hospital.profile.model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,16 +70,5 @@ namespace respository.hospital
             return hospital.Id;
         }
 
-        public IList<GetHospitalResponse> GetValue(int[] ids)
-        {
-            if (ids.Length == 0) return new List<GetHospitalResponse>();
-            return _context.Hospital.Where(x => ids.Contains(x.Id)).Select(x => new GetHospitalResponse
-            {
-                ConsumeDays = x.ConsumeDays,
-                Id = x.Id,
-                Name = x.Name,
-                Remark = x.Remark,
-            }).ToList();
-        }
     }
 }

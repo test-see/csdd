@@ -57,9 +57,9 @@ namespace webstarter.hospital.controllers.purchase
 
         [HttpPost]
         [Route("client")]
-        public JsonResult GetHospitalClientList(PagerQuery<HospitalClientListQueryModel> query)
+        public JsonResult GetHospitalClientList(PagerQuery<ListHospitalClientRequest> query)
         {
-            query.Query = query.Query ?? new HospitalClientListQueryModel { };
+            query.Query = query.Query ?? new ListHospitalClientRequest { };
             query.Query.HospitalId = HospitalDepartment.Hospital.Id;
             var data = _hospitalClientService.GetPagerList(query);
             return Json(data);

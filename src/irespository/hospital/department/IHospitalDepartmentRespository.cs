@@ -12,7 +12,7 @@ namespace irespository.hospital
         int Delete(int id);
         int Update(int id, HospitalDepartmentUpdateApiModel updated);
         IList<IdNameValueModel> GetParentList();
-        IList<HospitalDepartmentValueModel> GetValue(int[] ids);
+        IList<GetHospitalDepartmentResponse> GetValue(int[] ids);
         IList<HospitalDepartmentListApiModel> GetListByHospitalId(int hospitalId);
     }
 }

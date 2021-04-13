@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace foundation.config
+﻿namespace foundation.config
 {
-    public class RecordNumber
+    public static class RecordNumber
     {
         public static string Next(int changeType, int id)
         {

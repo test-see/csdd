@@ -113,13 +113,13 @@ namespace respository.hospital
             return _context.HospitalDepartment.Select(x => new IdNameValueModel { Id = x.Id, Name = x.Name }).ToList();
         }
 
-        public IList<HospitalDepartmentValueModel> GetValue(int[] ids)
+        public IList<GetHospitalDepartmentResponse> GetValue(int[] ids)
         {
-            if (ids.Length == 0) return new List<HospitalDepartmentValueModel>();
+            if (ids.Length == 0) return new List<GetHospitalDepartmentResponse>();
             var sql = from r in _context.HospitalDepartment
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
                       where ids.Contains(r.Id)
-                      select new HospitalDepartmentValueModel
+                      select new GetHospitalDepartmentResponse
                       {
                           Id = r.Id,
                           Name = r.Name,

@@ -7,7 +7,7 @@ namespace irespository.invoice.model
     public class InvoiceListApiModel
     {
         public int Id { get; set; }
-        public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
         public DataInvoiceType InvoiceType { get; set; }
         public string Name { get; set; }
         public string Remark { get; set; }

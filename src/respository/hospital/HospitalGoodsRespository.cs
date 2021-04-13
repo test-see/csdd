@@ -22,12 +22,12 @@ namespace respository.hospital
             _hospitalRespository = hospitalRespository;
         }
 
-        public PagerResult<HospitalGoodsListApiModel> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query)
+        public PagerResult<ListHospitalGoodsResponse> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query)
         {
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
                       orderby r.Id descending
-                      select new HospitalGoodsListApiModel
+                      select new ListHospitalGoodsResponse
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
@@ -70,7 +70,7 @@ namespace respository.hospital
             {
                 sql = sql.Where(x => x.IsActive == query.Query.IsActive);
             }
-            var data = new PagerResult<HospitalGoodsListApiModel>(query.Index, query.Size, sql);
+            var data = new PagerResult<ListHospitalGoodsResponse>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
                 var hospitals = _hospitalRespository.GetValue(data.Result.Select(x => x.Hospital.Id).ToArray());

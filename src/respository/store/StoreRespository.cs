@@ -93,7 +93,7 @@ namespace respository.store
                           UpdateTime = r.UpdateTime,
                           UpdateUserName = uu.Username,
                           Qty = r.Qty,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           },
@@ -137,7 +137,7 @@ namespace respository.store
                           UpdateTime = r.UpdateTime,
                           UpdateUserName = uu.Username,
                           Qty = r.Qty,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           },

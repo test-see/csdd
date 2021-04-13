@@ -7,7 +7,7 @@ namespace domain.user.valuemodel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
         public UserValueModel User { get; set; }
     }
 }

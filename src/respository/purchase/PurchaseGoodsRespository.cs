@@ -102,7 +102,7 @@ namespace respository.purchase
                           Purchase = new PurchaseValueModel
                           {
                               Id = r.PurchaseId,
-                              HospitalDepartment = new HospitalDepartmentValueModel
+                              HospitalDepartment = new GetHospitalDepartmentResponse
                               {
                                   Hospital = new GetHospitalResponse { Id = d.HospitalId },
                                   Id = d.Id

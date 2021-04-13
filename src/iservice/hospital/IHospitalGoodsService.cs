@@ -7,7 +7,7 @@ namespace iservice.hospital
 {
     public interface IHospitalGoodsService
     {
-        PagerResult<HospitalGoodsListApiModel> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query);
+        PagerResult<ListHospitalGoodsResponse> GetPagerList(PagerQuery<HospitalGoodsListQueryModel> query);
         PagerResult<HospitalGoodsStoreListApiModel> GetPagerStoreList(PagerQuery<HospitalGoodsListQueryModel> query, int departmentId);
         HospitalGoods Create(HospitalGoodsCreateApiModel created, int userId);
         int Delete(int id);

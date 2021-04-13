@@ -65,7 +65,7 @@ namespace respository.user
                               Phone = s.Phone,
                               Username = s.Username,
                           },
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           }
@@ -110,7 +110,7 @@ namespace respository.user
                               Phone = s.Phone,
                               Username = s.Username,
                           },
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           }

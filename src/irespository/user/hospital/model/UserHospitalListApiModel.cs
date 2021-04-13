@@ -8,7 +8,7 @@ namespace irespository.user.hospital.model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
         public UserValueModel User { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }

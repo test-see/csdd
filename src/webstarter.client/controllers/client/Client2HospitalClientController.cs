@@ -19,9 +19,9 @@ namespace csdd.controllers.client
         }
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<Client2HospitalClientListQueryModel> query)
+        public JsonResult GetList(PagerQuery<ListClient2HospitalClientRequest> query)
         {
-            query.Query = query.Query ?? new Client2HospitalClientListQueryModel { };
+            query.Query = query.Query ?? new ListClient2HospitalClientRequest { };
             query.Query.ClientId = Client.Id;
             var data = _clientMappingService.GetPagerList(query);
             return Json(data);
@@ -38,7 +38,7 @@ namespace csdd.controllers.client
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(Client2HospitalClientCreateApiModel created)
+        public JsonResult Post(CreateClient2HospitalClient created)
         {
             created.ClientId = Client.Id;
             var data = _clientMappingService.Create(created, Profile.Id);

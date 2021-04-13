@@ -7,7 +7,7 @@ namespace irespository.prescription.model
     public class PrescriptionIndexApiModel
     {
         public int Id { get; set; }
-        public HospitalDepartmentValueModel HospitalDepartment { get; set; }
+        public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
         public string Cardno { get; set; }
         public int Status { get; set; }
         public DateTime CreateTime { get; set; }

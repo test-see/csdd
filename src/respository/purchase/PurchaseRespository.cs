@@ -37,7 +37,7 @@ namespace respository.purchase
                           Name = r.Name,
                           Remark = r.Remark,
                           Status = r.Status,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                               Hospital = new GetHospitalResponse { Id = p.HospitalId }
@@ -141,7 +141,7 @@ namespace respository.purchase
                           Remark = r.Remark,
                           Status = r.Status,
                           PurchaseSettingId = r.PurchaseSettingId,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           }
@@ -163,7 +163,7 @@ namespace respository.purchase
                           Id = r.Id,
                           Name = r.Name,
                           Status = r.Status,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           }

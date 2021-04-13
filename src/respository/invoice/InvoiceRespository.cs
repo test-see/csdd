@@ -40,7 +40,7 @@ namespace respository.invoice
                           StartDate = r.StartDate,
                           InvoiceType = t,
                           Status = r.Status,
-                          HospitalDepartment = new HospitalDepartmentValueModel { Id = r.HospitalDepartmentId, }
+                          HospitalDepartment = new GetHospitalDepartmentResponse { Id = r.HospitalDepartmentId, }
                       };
             if (query.Query?.HospitalDepartmentId != null)
             {
@@ -143,7 +143,7 @@ namespace respository.invoice
                           StartDate = r.StartDate,
                           Status = r.Status,
                           InvoiceType = t,
-                          HospitalDepartment = new HospitalDepartmentValueModel
+                          HospitalDepartment = new GetHospitalDepartmentResponse
                           {
                               Id = r.HospitalDepartmentId,
                           }

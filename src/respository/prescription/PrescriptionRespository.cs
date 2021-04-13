@@ -66,7 +66,7 @@ namespace respository.prescription
                           CreateUserName = u.Username,
                           Id = p.Id,
                           Status = p.Status,
-                          HospitalDepartment = new HospitalDepartmentValueModel { Id = p.HospitalDepartmentId },
+                          HospitalDepartment = new GetHospitalDepartmentResponse { Id = p.HospitalDepartmentId },
                       };
             if (query.Query?.HospitalDepartmentId != null)
             {
@@ -123,7 +123,7 @@ namespace respository.prescription
                           CreateUserName = u.Username,
                           Id = p.Id,
                           Status = p.Status,
-                          HospitalDepartment = new HospitalDepartmentValueModel { Id = p.HospitalDepartmentId },
+                          HospitalDepartment = new GetHospitalDepartmentResponse { Id = p.HospitalDepartmentId },
                       };
             var data = sql.FirstOrDefault();
             if(data!=null)
