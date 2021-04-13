@@ -4,7 +4,7 @@ using System.Text;
 
 namespace domain.client.profile.entity
 {
-    class GetingClient
+    class GettingClient
     {
     }
 }

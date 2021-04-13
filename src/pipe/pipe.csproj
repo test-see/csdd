@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\domain\domain.csproj" />
+    <ProjectReference Include="..\storage\storage.csproj" />
   </ItemGroup>
 
 </Project>
