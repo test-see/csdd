@@ -24,11 +24,6 @@ namespace domain.client
             return _clientRespository.GetIndex(id);
         }
 
-        public async Task<int> DeleteAsync(int id)
-        {
-            await _mediator.SendAsync(new DeletingClient { Id = id });
-            return id; 
-        }
         public async Task<Client> UpdateAsync(UpdatingClient updated)
         {
             return await _mediator.RequestAsync<UpdatingClient, Client>(updated);

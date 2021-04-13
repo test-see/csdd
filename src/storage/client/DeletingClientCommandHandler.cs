@@ -2,6 +2,7 @@
 using foundation.ef5;
 using Mediator.Net.Context;
 using Mediator.Net.Contracts;
+using nouns.client.profile;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

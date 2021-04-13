@@ -1,4 +1,5 @@
 ﻿using csdd.Controllers.Shared;
+using domain.client.profile.entity;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.client.model;
@@ -31,7 +32,7 @@ namespace csdd.Controllers.Info
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendAsync(new DeleteClientCommand(id));
+            await _mediator.SendAsync(new DeletingClient { Id = id });
             return Json(id);
         }
 
