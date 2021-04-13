@@ -1,4 +1,5 @@
 ﻿using apitest.shared;
+using domain.client.profile.entity;
 using Flurl;
 using Flurl.Http;
 using foundation.config;
@@ -29,7 +30,7 @@ namespace apitest.client
             var Client = await _rootpath
                 .AppendPathSegment("/api/Client/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new CreateClientRequest { Name = "q" })
+                .PostJsonAsync(new CreateClient { Name = "q" })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Client>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/Client/{Client.Data.Id}/delete")

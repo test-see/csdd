@@ -1,6 +1,7 @@
 ﻿using domain.client.profile.entity;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using Mediator.Net.Context;
 using Mediator.Net.Contracts;
 using System;
@@ -9,19 +10,20 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class CreatingClientRequestHandler : IRequestHandler<CreatingClient, Client>
+    public class CreateClientStorageRequestHandler : IRequestHandler<StorageRequest<CreateClient>, Client>
     {
         private readonly DefaultDbContext _context;
-        public CreatingClientRequestHandler(DefaultDbContext context)
+        public CreateClientStorageRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<Client> Handle(IReceiveContext<CreatingClient> context, CancellationToken cancellationToken)
+        public async Task<Client> Handle(IReceiveContext<StorageRequest<CreateClient>> context, CancellationToken cancellationToken)
         {
+            var payload = context.Message.Payload;
             var client = new Client
             {
-                Name = context.Message.Name,
-                CreateUserId = context.Message.UserId,
+                Name = payload.Name,
+                CreateUserId = payload.UserId,
                 CreateTime = DateTime.Now,
             };
 

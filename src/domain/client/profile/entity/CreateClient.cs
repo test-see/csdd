@@ -1,8 +1,8 @@
 ﻿using Mediator.Net.Contracts;
 
-namespace irespository.client.model
+namespace domain.client.profile.entity
 {
-    public class CreateClientRequest: IRequest
+    public class CreateClient : IRequest
     {
         public string Name { get; set; }
         public int UserId { get; set; }

@@ -2,6 +2,7 @@
 using domain.client.profile.entity;
 using foundation.config;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.client.model;
 using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
@@ -36,14 +37,6 @@ namespace csdd.Controllers.Info
             return Json(id);
         }
 
-        [HttpPost]
-        [Route("add")]
-        public async Task<JsonResult> PostAsync(CreateClientRequest created)
-        {
-            created.UserId = UserId;
-            var data = await _mediator.RequestAsync<CreateClientRequest, Client>(created);
-            return Json(data);
-        }
 
         [HttpPost]
         [Route("{id}/update")]
@@ -63,5 +56,14 @@ namespace csdd.Controllers.Info
             return Json(data);
         }
 
+
+        [HttpPost]
+        [Route("add")]
+        public async Task<JsonResult> PostAsync(CreateClient created)
+        {
+            created.UserId = UserId;
+            var data = await _mediator.RequestAsync<PipeRequest<CreateClient>, Client>(new PipeRequest<CreateClient>(created));
+            return Json(data);
+        }
     }
 }

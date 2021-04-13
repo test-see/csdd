@@ -1,8 +1,7 @@
 ﻿using domain.client.profile.entity;
-using foundation.config;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.client;
-using irespository.client.model;
 using Mediator.Net;
 using nouns.client.profile;
 using System.Threading.Tasks;
@@ -28,9 +27,9 @@ namespace domain.client
         {
             return await _mediator.RequestAsync<UpdatingClient, Client>(updated);
         }
-        public async Task<Client> CreateAsync(CreatingClient created)
+        public async Task<Client> CreateAsync(CreateClient created)
         {
-            return await _mediator.RequestAsync<CreatingClient, Client>(created);
+            return await _mediator.RequestAsync<StorageRequest<CreateClient>, Client>(new StorageRequest<CreateClient>(created));
         }
     }
 }
