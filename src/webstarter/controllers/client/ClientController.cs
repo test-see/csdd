@@ -8,6 +8,7 @@ using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nouns.client.profile;
+using System;
 using System.Threading.Tasks;
 
 namespace csdd.Controllers.Info
@@ -23,18 +24,10 @@ namespace csdd.Controllers.Info
 
         [HttpPost]
         [Route("list")]
-        public async Task<JsonResult> GetListAsync(PagerQuery<ListingClientRequest> query)
+        public async Task<JsonResult> ListAsync(PagerQuery<ListingClientRequest> query)
         {
             var data = await _mediator.RequestAsync<PagerQuery<ListingClientRequest>, PagerResult<ListingClientResponse>>(query);
             return Json(data);
-        }
-
-        [HttpGet]
-        [Route("{id}/delete")]
-        public async Task<JsonResult> DeleteAsync(int id)
-        {
-            await _mediator.SendAsync(new DeletingClient { Id = id });
-            return Json(id);
         }
 
 
@@ -56,6 +49,14 @@ namespace csdd.Controllers.Info
             return Json(data);
         }
 
+
+        [HttpGet]
+        [Route("{id}/delete")]
+        public async Task<JsonResult> DeleteAsync(int id)
+        {
+            await _mediator.SendAsync(new PipeCommand<DeleteClient>(new DeleteClient { Id = id }));
+            return Json(id);
+        }
 
         [HttpPost]
         [Route("add")]

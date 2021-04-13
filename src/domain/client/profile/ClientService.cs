@@ -27,9 +27,15 @@ namespace domain.client
         {
             return await _mediator.RequestAsync<UpdatingClient, Client>(updated);
         }
+
+
         public async Task<Client> CreateAsync(CreateClient created)
         {
             return await _mediator.RequestAsync<StorageRequest<CreateClient>, Client>(new StorageRequest<CreateClient>(created));
+        }
+        public async Task DeleteAsync(DeleteClient deleted)
+        {
+            await _mediator.SendAsync(new StorageCommand<DeleteClient>(deleted));
         }
     }
 }
