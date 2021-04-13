@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\pipe\pipe.csproj" />
     <ProjectReference Include="..\service\service.csproj" />
+    <ProjectReference Include="..\storage\storage.csproj" />
   </ItemGroup>
 
 </Project>

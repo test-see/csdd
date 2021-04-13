@@ -19,11 +19,6 @@ namespace domain.client
             _mediator = mediator;
         }
 
-        public PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query)
-        {
-            return _clientRespository.GetPagerList(query);
-        }
-
         public GetClientResponse GetIndex(int id)
         {
             return _clientRespository.GetIndex(id);

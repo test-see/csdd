@@ -21,9 +21,9 @@ namespace csdd.Controllers.Info
 
         [HttpPost]
         [Route("list")]
-        public async Task<JsonResult> GetListAsync(PagerQuery<ListClientRequest> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<ListingClientRequest> query)
         {
-            var data = await _mediator.RequestAsync<PagerQuery<ListClientRequest>, PagerResult<ListClientResponse>>(query);
+            var data = await _mediator.RequestAsync<PagerQuery<ListingClientRequest>, PagerResult<ListingClientResponse>>(query);
             return Json(data);
         }
 

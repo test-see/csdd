@@ -24,26 +24,6 @@ namespace respository.client
             _context = context;
             _hospitalClientRespository = hospitalClientRespository;
         }
-        public PagerResult<ListClientResponse> GetPagerList(PagerQuery<ListClientRequest> query)
-        {
-            var sql = from r in _context.Client
-                      join u in _context.User on r.CreateUserId equals u.Id
-                      orderby r.Id descending
-                      select new ListClientResponse
-                      {
-                          CreateTime = r.CreateTime,
-                          Id = r.Id,
-                          Name = r.Name,
-                          CreateUserName = u.Username,
-                      };
-            if (!string.IsNullOrEmpty(query.Query?.Name))
-            {
-                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
-            }
-            return new PagerResult<ListClientResponse>(query.Index, query.Size, sql);
-        }
-
-
 
         public GetClientResponse GetIndex(int id)
         {

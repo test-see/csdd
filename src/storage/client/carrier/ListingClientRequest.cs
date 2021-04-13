@@ -1,6 +1,6 @@
 ﻿namespace irespository.client.model
 {
-    public class ListClientRequest 
+    public class ListingClientRequest 
     {
         public string Name { get; set; }
     }

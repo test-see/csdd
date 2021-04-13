@@ -18,8 +18,8 @@ namespace apitest.client
             var message = await _rootpath
                 .AppendPathSegment("/api/Client/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<ListClientRequest> { })
-                .ReceiveJson<OkMessage<PagerResult<ListClientResponse>>>();
+                .PostJsonAsync(new PagerQuery<ListingClientRequest> { })
+                .ReceiveJson<OkMessage<PagerResult<ListingClientResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }

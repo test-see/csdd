@@ -2,7 +2,7 @@
 
 namespace irespository.client.model
 {
-    public class ListClientResponse 
+    public class ListingClientResponse 
     {
         public int Id { get; set; }
         public string Name { get; set; }
