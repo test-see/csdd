@@ -1,8 +1,12 @@
 ﻿using csdd.Controllers.Shared;
+using domain.client.goods2hospitalgoods.entity;
+using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.client.goods.model;
-using iservice.client;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.controllers.client
 {
@@ -10,26 +14,26 @@ namespace csdd.controllers.client
     [Route("api/ClientMappingGoods")]
     public class ClientGoods2HospitalGoodsController : DefaultControllerBase
     {
-        private readonly IClientGoods2HospitalGoodsService _clientMappingGoodsService;
-        public ClientGoods2HospitalGoodsController(IClientGoods2HospitalGoodsService clientMappingGoodsService)
+        private readonly IMediator _mediator;
+        public ClientGoods2HospitalGoodsController(IMediator mediator)
         {
-            _clientMappingGoodsService = clientMappingGoodsService;
+            _mediator = mediator;
         }
 
         [HttpGet]
         [Route("{id}/delete")]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> DeleteAsync(int id)
         {
-            var data = _clientMappingGoodsService.Delete(id);
-            return Json(data);
+            await _mediator.SendAsync(new PipeCommand<DeleteClientGoods2HospitalGoods>(new DeleteClientGoods2HospitalGoods { Id = id }));
+            return Json(id);
         }
-
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(ClientGoods2HospitalGoodsCreateApiModel created)
+        public async Task<JsonResult> PostAsync(CreateClientGoods2HospitalGoods created)
         {
-            var data = _clientMappingGoodsService.Create(created, UserId);
+            created.UserId = UserId;
+            var data = await _mediator.RequestAsync<PipeRequest<CreateClientGoods2HospitalGoods>, ClientGoods2HospitalGoods>(new PipeRequest<CreateClientGoods2HospitalGoods>(created));
             return Json(data);
         }
 

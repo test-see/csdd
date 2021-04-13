@@ -23,49 +23,8 @@ namespace respository.client
             _context = context;
             _hospitalGoodsRespository = hospitalGoodsRespository;
         }
-        public PagerResult<ClientGoodsListApiModel> GetPagerList(PagerQuery<ClientGoodsListQueryModel> query)
-        {
-            var sql = from r in _context.ClientGoods
-                      join u in _context.User on r.CreateUserId equals u.Id
-                      join h in _context.Client on r.ClientId equals h.Id
-                      orderby r.Id descending
-                      select new ClientGoodsListApiModel
-                      {
-                          CreateTime = r.CreateTime,
-                          Id = r.Id,
-                          Name = r.Name,
-                          Code = r.Code,
-                          Client = new GetClientResponse
-                          {
-                              Id = h.Id,
-                              Name = h.Name,
-                          },
-                          Producer = r.Producer,
-                          Spec = r.Spec,
-                          Unit = r.Unit,
-                          CreateUserName = u.Username,
-                          IsActive = r.IsActive,
-                      };
-            if (!string.IsNullOrEmpty(query.Query?.Name))
-            {
-                sql = sql.Where(x => x.Name.Contains(query.Query.Name));
-            }
-            if (!string.IsNullOrEmpty(query.Query?.Code))
-            {
-                sql = sql.Where(x => x.Code.Contains(query.Query.Code));
-            }
-            if (query.Query?.IsActive != null)
-            {
-                sql = sql.Where(x => x.IsActive == query.Query.IsActive);
-            }
-            if (query.Query?.ClientId != null)
-            {
-                sql = sql.Where(x => x.Client.Id == query.Query.ClientId.Value);
-            }
-            return new PagerResult<ClientGoodsListApiModel>(query.Index, query.Size, sql);
-        }
 
-        public ClientGoods Create(ClientGoodsCreateApiModel created, int userId)
+        public ClientGoods Create(CreateClientGoods created, int userId)
         {
             var goods = new ClientGoods
             {
@@ -97,7 +56,7 @@ namespace respository.client
             return id;
         }
 
-        public int Update(int id, ClientGoodsUpdateApiModel updated, int userId)
+        public int Update(int id, UpdateClientGoods updated, int userId)
         {
             var goods = _context.ClientGoods.First(x => x.Id == id);
 
@@ -113,82 +72,6 @@ namespace respository.client
 
 
             return goods.Id;
-        }
-
-        public ClientGoodsIndexApiModel GetIndex(int id)
-        {
-            var sql = from r in _context.ClientGoods
-                      join u in _context.User on r.CreateUserId equals u.Id
-                      join h in _context.Client on r.ClientId equals h.Id
-                      where r.Id == id
-                      select new ClientGoodsIndexApiModel
-                      {
-                          CreateTime = r.CreateTime,
-                          Id = r.Id,
-                          Name = r.Name,
-                          Code = r.Code,
-                          Client = new GetClientResponse
-                          {
-                              Id = h.Id,
-                              Name = h.Name,
-                          },
-                          Producer = r.Producer,
-                          Spec = r.Spec,
-                          Unit = r.Unit,
-                          CreateUserName = u.Username,
-                          IsActive = r.IsActive,
-
-                      };
-
-            var profile = sql.FirstOrDefault();
-            if (profile != null)
-            {
-                var mappings = (from m in _context.ClientGoods2HospitalGoods
-                                select new ClientGoods2HospitalGoodsListApiModel
-                                {
-                                    Id = m.Id,
-                                    ClientQty = m.ClientQty,
-                                    HospitalQty = m.HospitalQty,
-                                    HospitalGoods = new HospitalGoodsValueModel
-                                    {
-                                        Id = m.HospitalGoodsId,
-                                    }
-                                }).ToList();
-                var goods = _hospitalGoodsRespository.GetValue(mappings.Select(x => x.HospitalGoods.Id).ToArray());
-                foreach (var m in mappings)
-                {
-                    m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
-                }
-                profile.Mappings = mappings;
-            }
-            return profile;
-        }
-
-        public IList<ClientGoodsValueModel> GetValue(int[] ids)
-        {
-            if (ids.Length == 0) return new List<ClientGoodsValueModel>();
-            var sql = from r in _context.ClientGoods
-                      join u in _context.User on r.CreateUserId equals u.Id
-                      join h in _context.Client on r.ClientId equals h.Id
-                      where ids.Contains(r.Id)
-                      select new ClientGoodsValueModel
-                      {
-                          Id = r.Id,
-                          Name = r.Name,
-                          Code = r.Code,
-                          Client = new GetClientResponse
-                          {
-                              Id = h.Id,
-                              Name = h.Name,
-                          },
-                          Producer = r.Producer,
-                          Spec = r.Spec,
-                          Unit = r.Unit,
-
-                      };
-
-            var profile = sql.ToList();
-            return profile;
         }
 
     }

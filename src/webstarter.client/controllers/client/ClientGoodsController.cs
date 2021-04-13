@@ -38,7 +38,7 @@ namespace csdd.Controllers.Sys
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(ClientGoodsCreateApiModel created)
+        public JsonResult Post(CreateClientGoods created)
         {
             created.ClientId = Client.Id;
             var data = _clientGoodsService.Create(created, Profile.Id);
@@ -47,7 +47,7 @@ namespace csdd.Controllers.Sys
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(int id, ClientGoodsUpdateApiModel updated)
+        public JsonResult Update(int id, UpdateClientGoods updated)
         {
             var data = _clientGoodsService.Update(id, updated, Profile.Id);
             return Json(data);
