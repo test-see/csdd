@@ -63,7 +63,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> GetAsync(int id)
         {
             var request = new StorageRequest<GetClientGoodsRequest>(new GetClientGoodsRequest(id));
-            var data = await _mediator.RequestAsync<StorageRequest<GetClientGoodsRequest>, GetResponse<GetClientGoodsResponse>>(request);
+            var data = await _mediator.RequestAsync<StorageRequest<GetClientGoodsRequest>, ListResponse<GetClientGoodsResponse>>(request);
             return Json(data.Payloads.FirstOrDefault());
         }
     }

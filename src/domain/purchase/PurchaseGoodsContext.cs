@@ -18,7 +18,7 @@ namespace domain.purchase
         private readonly StoreContext _storeContext;
         private readonly HospitalGoodsClientContext _hospitalGoodsClientContext;
         private readonly StoreRecordContext _storeRecordContext;
-        private readonly HospitalDepartmentContext _hospitalDepartmentContext;
+        private readonly HospitalDepartmentService _hospitalDepartmentContext;
         private readonly DefaultDbTransaction _defaultDbTransaction;
         private readonly PurchaseGoodsBillnoContext _purchaseGoodsBillnoContext;
         public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy,
@@ -26,7 +26,7 @@ namespace domain.purchase
             HospitalGoodsClientContext hospitalGoodsClientContext,
             DefaultDbTransaction defaultDbTransaction,
             StoreRecordContext storeRecordContext,
-            HospitalDepartmentContext hospitalDepartmentContext,
+            HospitalDepartmentService hospitalDepartmentContext,
             PurchaseGoodsBillnoContext purchaseGoodsBillnoContext)
         {
             _purchaseGoodsRespository = purchaseGoodsRespositoryy;

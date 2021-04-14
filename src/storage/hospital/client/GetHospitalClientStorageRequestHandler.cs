@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetHospitalClientStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalClientRequest>, GetResponse<GetHospitalClientResponse>>
+    public class GetHospitalClientStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalClientRequest>, ListResponse<GetHospitalClientResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
@@ -22,7 +22,7 @@ namespace mediator.client.profile
             _context = context;
             _mediator = mediator;
         }
-        public async Task<GetResponse<GetHospitalClientResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalClientRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetHospitalClientResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalClientRequest>> context, CancellationToken cancellationToken)
         {
             var payload = context.Message.Payload;
             var hospitalClients = await (from r in _context.HospitalClient
@@ -50,7 +50,7 @@ namespace mediator.client.profile
                            Name = c.Name,
                        }).ToList();
             var request = new StorageRequest<GetHospitalRequest>(new GetHospitalRequest(hospitalClients.Select(x => x.Hospital.Id).ToArray()));
-            var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, GetResponse<GetHospitalResponse>>(request);
+            var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>(request);
 
             foreach (var c in hospitalClients)
             {
@@ -58,7 +58,7 @@ namespace mediator.client.profile
                 c.Hospital = hospitals.Payloads.FirstOrDefault(x => x.Id == c.Hospital.Id);
             }
 
-            return new GetResponse<GetHospitalClientResponse>(hospitalClients.ToArray());
+            return new ListResponse<GetHospitalClientResponse>(hospitalClients.ToArray());
         }
     }
 }

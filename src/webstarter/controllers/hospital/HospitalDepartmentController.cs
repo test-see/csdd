@@ -1,69 +1,80 @@
 ﻿using csdd.Controllers.Shared;
+using domain.client.profile.entity;
 using foundation.config;
+using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital.department.model;
-using iservice.hospital;
+using irespository.hospital.model;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using storage.data.carrier;
+using storage.hospital.department.carrier;
+using storage.hospitaldepartment.carrier;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Sys
 {
     [Authorize(Policy = "RequireAdministratorRole")]
     public class HospitalDepartmentController : DefaultControllerBase
     {
-        private readonly IHospitalDepartmentService _hospitalDepartmentService;
-        public HospitalDepartmentController(IHospitalDepartmentService HospitalDepartmentService)
+        private readonly IMediator _mediator;
+        public HospitalDepartmentController(IMediator mediator)
         {
-            _hospitalDepartmentService = HospitalDepartmentService;
+            _mediator = mediator;
         }
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<HospitalDepartmentListQueryModel> query)
+        public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalDepartmentRequest> query)
         {
-            var data = _hospitalDepartmentService.GetPagerList(query);
-            return Json(data);
-        }
-
-
-        [HttpGet]
-        [Route("{id}/delete")]
-        public JsonResult Delete(int id)
-        {
-            var data = _hospitalDepartmentService.Delete(id);
-            return Json(data);
-        }
-
-
-        [HttpPost]
-        [Route("add")]
-        public JsonResult Post(HospitalDepartmentCreateApiModel created)
-        {
-            var data = _hospitalDepartmentService.Create(created, UserId);
+            var data = await _mediator.RequestAsync<StorageRequest<PagerQuery<ListHospitalDepartmentRequest>>, PagerResult<ListHospitalDepartmentResponse>>(
+                new StorageRequest<PagerQuery<ListHospitalDepartmentRequest>>(query));
             return Json(data);
         }
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(int id, HospitalDepartmentUpdateApiModel updated)
+        public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalDepartment updated)
         {
-            var data = _hospitalDepartmentService.Update(id, updated, UserId);
+            updated.Id = id;
+            var data = await _mediator.RequestAsync<PipeRequest<UpdateHospitalDepartment>, HospitalDepartment>(new PipeRequest<UpdateHospitalDepartment>(updated));
             return Json(data);
         }
 
         [HttpGet]
-        [Route("type")]
-        public JsonResult GetDepartmentTypeList()
+        [Route("{id}/delete")]
+        public async Task<JsonResult> DeleteAsync(int id)
         {
-            var data = _hospitalDepartmentService.GetDepartmentTypeList();
+            await _mediator.SendAsync(new PipeCommand<DeleteHospitalDepartment>(new DeleteHospitalDepartment { Id = id }));
+            return Json(id);
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public async Task<JsonResult> PostAsync(CreateHospitalDepartment created)
+        {
+            created.UserId = UserId;
+            var data = await _mediator.RequestAsync<PipeRequest<CreateHospitalDepartment>, HospitalDepartment>(new PipeRequest<CreateHospitalDepartment>(created));
             return Json(data);
         }
 
         [HttpGet]
         [Route("parent")]
-        public JsonResult GetParentList()
+        public async Task<JsonResult> ListParentAsync()
         {
-            var data = _hospitalDepartmentService.GetParentList();
-            return Json(data);
+            var data = await _mediator.RequestAsync<StorageRequest<ListParentHospitalDepartmentRequest>, ListResponse<IdNameValueModel>>(
+                new StorageRequest<ListParentHospitalDepartmentRequest>(null));
+            return Json(data.Payloads);
+        }
+
+        [HttpGet]
+        [Route("type")]
+        public async Task<JsonResult> ListTypeAsync()
+        {
+            var data = await _mediator.RequestAsync<StorageRequest<ListDepartmentTypeRequest>, ListResponse<IdNameValueModel>>(
+                new StorageRequest<ListDepartmentTypeRequest>(null));
+            return Json(data.Payloads);
         }
     }
 }

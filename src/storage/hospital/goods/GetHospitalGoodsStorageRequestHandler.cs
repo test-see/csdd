@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetHospitalGoodsStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalGoodsRequest>, GetResponse<GetHospitalGoodsResponse>>
+    public class GetHospitalGoodsStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalGoodsRequest>, ListResponse<GetHospitalGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
@@ -24,7 +24,7 @@ namespace mediator.client.profile
             _context = context;
             _mediator = mediator;
         }
-        public async Task<GetResponse<GetHospitalGoodsResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalGoodsRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetHospitalGoodsResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalGoodsRequest>> context, CancellationToken cancellationToken)
         {
             var payload = context.Message.Payload;
             var sql = from r in _context.HospitalGoods
@@ -52,14 +52,14 @@ namespace mediator.client.profile
             var profiles = await sql.ToListAsync();
 
             var request = new StorageRequest<GetHospitalRequest>(new GetHospitalRequest(profiles.Select(x => x.Hospital.Id).ToArray()));
-            var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, GetResponse<GetHospitalResponse>>(request);
+            var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>(request);
 
             foreach (var profile in profiles)
             {
                 profile.Hospital = hospitals.Payloads.FirstOrDefault(x=>x.Id== profile.Hospital.Id);
             }
 
-            return new GetResponse<GetHospitalGoodsResponse>(profiles.ToArray());
+            return new ListResponse<GetHospitalGoodsResponse>(profiles.ToArray());
         }
     }
 }

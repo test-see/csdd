@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetClientGoodsStorageRequestHandler : IRequestHandler<StorageRequest<GetClientGoodsRequest>, GetResponse<GetClientGoodsResponse>>
+    public class GetClientGoodsStorageRequestHandler : IRequestHandler<StorageRequest<GetClientGoodsRequest>, ListResponse<GetClientGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
@@ -24,7 +24,7 @@ namespace mediator.client.profile
             _context = context;
             _mediator = mediator;
         }
-        public async Task<GetResponse<GetClientGoodsResponse>> Handle(IReceiveContext<StorageRequest<GetClientGoodsRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetClientGoodsResponse>> Handle(IReceiveContext<StorageRequest<GetClientGoodsRequest>> context, CancellationToken cancellationToken)
         {
             var payload = context.Message.Payload;
             var sql = from r in _context.ClientGoods
@@ -54,13 +54,13 @@ namespace mediator.client.profile
 
             var request = new StorageRequest<ListClientGoods2HospitalGoodsRequest>(
                 new ListClientGoods2HospitalGoodsRequest { ClientGoodsIds = profiles.Select(x => x.Id).ToArray(), });
-            var mappings = await _mediator.RequestAsync<StorageRequest<ListClientGoods2HospitalGoodsRequest>, GetResponse<ListClientGoods2HospitalGoodsResponse>>(request);
+            var mappings = await _mediator.RequestAsync<StorageRequest<ListClientGoods2HospitalGoodsRequest>, ListResponse<ListClientGoods2HospitalGoodsResponse>>(request);
 
             foreach (var profile in profiles)
             {
                 profile.Mappings = mappings.Payloads.Where(x => x.ClientGoodsId == profile.Id).ToList();
             }
-            return new GetResponse<GetClientGoodsResponse>(profiles.ToArray());
+            return new ListResponse<GetClientGoodsResponse>(profiles.ToArray());
         }
     }
 }

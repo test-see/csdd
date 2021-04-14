@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class ListClientGoods2HospitalGoodsStorageRequestHandler : IRequestHandler<StorageRequest<ListClientGoods2HospitalGoodsRequest>, GetResponse<ListClientGoods2HospitalGoodsResponse>>
+    public class ListClientGoods2HospitalGoodsStorageRequestHandler : IRequestHandler<StorageRequest<ListClientGoods2HospitalGoodsRequest>, ListResponse<ListClientGoods2HospitalGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
@@ -24,7 +24,7 @@ namespace mediator.client
             _mediator = mediator;
         }
 
-        public async Task<GetResponse<ListClientGoods2HospitalGoodsResponse>> Handle(IReceiveContext<StorageRequest<ListClientGoods2HospitalGoodsRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<ListClientGoods2HospitalGoodsResponse>> Handle(IReceiveContext<StorageRequest<ListClientGoods2HospitalGoodsRequest>> context, CancellationToken cancellationToken)
         {
             var payload = context.Message.Payload;
             var mappings = await (from m in _context.ClientGoods2HospitalGoods
@@ -42,13 +42,13 @@ namespace mediator.client
                                   }).ToListAsync();
 
             var request = new StorageRequest<GetHospitalGoodsRequest>(new GetHospitalGoodsRequest(mappings.Select(x => x.HospitalGoods.Id).ToArray()));
-            var goods = await _mediator.RequestAsync<StorageRequest<GetHospitalGoodsRequest>, GetResponse<GetHospitalGoodsResponse>>(request);
+            var goods = await _mediator.RequestAsync<StorageRequest<GetHospitalGoodsRequest>, ListResponse<GetHospitalGoodsResponse>>(request);
 
             foreach (var m in mappings)
             {
                 m.HospitalGoods = goods.Payloads.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
             }
-            return new GetResponse<ListClientGoods2HospitalGoodsResponse>(mappings.ToArray());
+            return new ListResponse<ListClientGoods2HospitalGoodsResponse>(mappings.ToArray());
         }
     }
 }

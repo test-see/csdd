@@ -1,11 +1,12 @@
 ﻿using foundation.config;
+using Mediator.Net.Contracts;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace foundation.ef5.poco
 {
     [Table("hospital_department")]
-    public class HospitalDepartment
+    public class HospitalDepartment:IResponse
     {
         [Column("id")]
         public int Id { get; set; }

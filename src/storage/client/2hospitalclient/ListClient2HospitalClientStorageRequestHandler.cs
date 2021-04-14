@@ -66,7 +66,7 @@ namespace mediator.request.client
             if (data.Total > 0)
             {
                 var request = new StorageRequest<GetHospitalClientRequest>(new GetHospitalClientRequest(data.Result.Select(x => x.HospitalClient.Id).ToArray()));
-                var hospitalclients = await _mediator.RequestAsync<StorageRequest<GetHospitalClientRequest>, GetResponse<GetHospitalClientResponse>>(request);
+                var hospitalclients = await _mediator.RequestAsync<StorageRequest<GetHospitalClientRequest>, ListResponse<GetHospitalClientResponse>>(request);
 
                 foreach (var m in data.Result)
                 {

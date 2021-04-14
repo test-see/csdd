@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetHospitalStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalRequest>, GetResponse<GetHospitalResponse>>
+    public class GetHospitalStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>
     {
         private readonly DefaultDbContext _context;
         public GetHospitalStorageRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<GetResponse<GetHospitalResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetHospitalResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalRequest>> context, CancellationToken cancellationToken)
         {
             var payload = context.Message.Payload;
             var hospitals = await _context.Hospital.Where(x => payload.Ids.Contains(x.Id)).Select(x => new GetHospitalResponse
@@ -29,7 +29,7 @@ namespace mediator.client.profile
                 Remark = x.Remark,
             }).ToListAsync();
 
-            return new GetResponse<GetHospitalResponse>(hospitals.ToArray());
+            return new ListResponse<GetHospitalResponse>(hospitals.ToArray());
         }
     }
 }

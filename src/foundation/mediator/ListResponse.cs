@@ -2,10 +2,10 @@
 
 namespace foundation.mediator
 {
-    public class GetResponse<T> : IResponse
+    public class ListResponse<T> : IResponse
     {
         public T[] Payloads { get; set; }
-        public GetResponse(params T[] payloads)
+        public ListResponse(params T[] payloads)
         {
             Payloads = payloads;
         }

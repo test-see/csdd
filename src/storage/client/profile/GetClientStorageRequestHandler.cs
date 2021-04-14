@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetClientStorageRequestHandler : IRequestHandler<StorageRequest<GetClientRequest>, GetResponse<GetClientResponse>>
+    public class GetClientStorageRequestHandler : IRequestHandler<StorageRequest<GetClientRequest>, ListResponse<GetClientResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
@@ -23,7 +23,7 @@ namespace mediator.client.profile
             _context = context;
             _mediator = mediator;
         }
-        public async Task<GetResponse<GetClientResponse>> Handle(IReceiveContext<StorageRequest<GetClientRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetClientResponse>> Handle(IReceiveContext<StorageRequest<GetClientRequest>> context, CancellationToken cancellationToken)
         {
             var payload = context.Message.Payload;
             var clients = await (from r in _context.Client
@@ -53,7 +53,7 @@ namespace mediator.client.profile
 
             var mappings = await sql.ToListAsync();
             var request = new StorageRequest<GetHospitalClientRequest>(new GetHospitalClientRequest(mappings.Select(x => x.HospitalClient.Id).ToArray()));
-            var hospitalclients = await _mediator.RequestAsync<StorageRequest<GetHospitalClientRequest>, GetResponse<GetHospitalClientResponse>>(request);
+            var hospitalclients = await _mediator.RequestAsync<StorageRequest<GetHospitalClientRequest>, ListResponse<GetHospitalClientResponse>>(request);
             foreach (var m in mappings)
             {
                 m.HospitalClient = hospitalclients.Payloads.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
@@ -63,7 +63,7 @@ namespace mediator.client.profile
                 client.HospitalClients = mappings.Where(x => x.Client.Id == client.Id).ToList();
             }
 
-            return new GetResponse<GetClientResponse>(clients.ToArray());
+            return new ListResponse<GetClientResponse>(clients.ToArray());
         }
     }
 }
