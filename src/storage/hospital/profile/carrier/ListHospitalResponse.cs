@@ -2,7 +2,7 @@
 
 namespace irespository.hospital.model
 {
-    public class HospitalListApiModel
+    public class ListHospitalResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }

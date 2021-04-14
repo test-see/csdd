@@ -18,7 +18,7 @@ namespace csdd.Controllers.Info
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<HospitalListQueryModel> query)
+        public JsonResult GetList(PagerQuery<ListHospitalRequest> query)
         {
             var data = _hospitalService.GetPagerList(query);
             return Json(data);
