@@ -1,30 +1,33 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
+using foundation.mediator;
 using irespository.hospital.client.model;
 using iservice.hospital;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Sys
 {
     [Authorize(Policy = "RequireClientRole")]
     public class HospitalClientController : DefaultControllerBase
     {
-        private readonly IHospitalClientService _HospitalClientService;
-        public HospitalClientController(IHospitalClientService HospitalClientService)
+        private readonly IMediator _mediator;
+        public HospitalClientController(IMediator mediator)
         {
-            _HospitalClientService = HospitalClientService;
+            _mediator = mediator;
         }
+
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<ListHospitalClientRequest> query)
+        public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalClientRequest> query)
         {
             query.Query = query.Query ?? new ListHospitalClientRequest { };
-            var data = _HospitalClientService.GetPagerList(query);
+            var data = await _mediator.RequestPagerListAsync<ListHospitalClientRequest, ListHospitalClientResponse>(query);
             return Json(data);
         }
-
 
     }
 }

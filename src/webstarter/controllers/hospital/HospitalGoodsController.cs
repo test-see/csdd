@@ -60,8 +60,6 @@ namespace csdd.Controllers.Sys
         }
 
 
-
-
         [HttpGet]
         [Route("{id}/inactive")]
         public JsonResult UpdateInActive(int id)
