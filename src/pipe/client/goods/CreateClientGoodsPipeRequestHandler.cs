@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class CreateClientGoodsPipeRequestHandler : IRequestHandler<PipeRequest<CreateClientGoods>, ClientGoods>
+    public class CreateClientGoodsPipeRequestHandler : IRequestHandler<Pipe<CreateClientGoods>, ClientGoods>
     {
         private readonly ClientGoodsService _clientContext;
         public CreateClientGoodsPipeRequestHandler(ClientGoodsService clientContext)
         {
             _clientContext = clientContext;
         }
-        public async Task<ClientGoods> Handle(IReceiveContext<PipeRequest<CreateClientGoods>> context, CancellationToken cancellationToken)
+        public async Task<ClientGoods> Handle(IReceiveContext<Pipe<CreateClientGoods>> context, CancellationToken cancellationToken)
         {
             return await _clientContext.CreateAsync(context.Message.Payload);
         }

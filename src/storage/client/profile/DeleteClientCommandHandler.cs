@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class DeleteClientStorageCommandHandler : ICommandHandler<StorageCommand<DeleteClient>>
+    public class DeleteClientCommandHandler : ICommandHandler<DeleteClient>
     {
         private readonly DefaultDbContext _context;
-        public DeleteClientStorageCommandHandler(DefaultDbContext context)
+        public DeleteClientCommandHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task Handle(IReceiveContext<StorageCommand<DeleteClient>> context, CancellationToken cancellationToken)
+        public async Task Handle(IReceiveContext<DeleteClient> context, CancellationToken cancellationToken)
         {
-            var mappings = _context.Client2HospitalClient.Where(x => x.ClientId == context.Message.Payload.Id);
+            var mappings = _context.Client2HospitalClient.Where(x => x.ClientId == context.Message.Id);
             _context.Client2HospitalClient.RemoveRange(mappings);
 
-            var Client = _context.Client.Find(context.Message.Payload.Id);
+            var Client = _context.Client.Find(context.Message.Id);
             _context.Client.Remove(Client);
             await _context.SaveChangesAsync();
         }

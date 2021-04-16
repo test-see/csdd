@@ -61,7 +61,7 @@ namespace csdd.Controllers.Sys
         [Route("{id}/index")]
         public async Task<JsonResult> GetAsync(int id)
         {
-            var data = await _mediator.RequestSingleAsync<GetClientGoodsRequest, GetClientGoodsResponse>(new GetClientGoodsRequest(id));
+            var data = await _mediator.RequestSingleByIdAsync<GetClientGoodsRequest, GetClientGoodsResponse>(id);
             return Json(data);
         }
     }

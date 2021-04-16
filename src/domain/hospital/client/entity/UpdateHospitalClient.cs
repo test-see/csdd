@@ -1,6 +1,8 @@
-﻿namespace irespository.hospital.model
+﻿using Mediator.Net.Contracts;
+
+namespace irespository.hospital.model
 {
-    public class UpdateHospitalClient
+    public class UpdateHospitalClient:IRequest
     {
         public string Name { get; set; }
         public int Id { get; set; }

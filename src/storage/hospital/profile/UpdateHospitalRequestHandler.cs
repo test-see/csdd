@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class UpdateHospitalStorageRequestHandler : IRequestHandler<StorageRequest<UpdateHospital>, Hospital>
+    public class UpdateHospitalRequestHandler : IRequestHandler<UpdateHospital, Hospital>
     {
         private readonly DefaultDbContext _context;
-        public UpdateHospitalStorageRequestHandler(DefaultDbContext context)
+        public UpdateHospitalRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<Hospital> Handle(IReceiveContext<StorageRequest<UpdateHospital>> context, CancellationToken cancellationToken)
+        public async Task<Hospital> Handle(IReceiveContext<UpdateHospital> context, CancellationToken cancellationToken)
         {
-            var updated = context.Message.Payload;
+            var updated = context.Message;
             var hospital = _context.Hospital.First(x => x.Id == updated.Id);
             hospital.Name = updated.Name;
             hospital.Remark = updated.Remark;

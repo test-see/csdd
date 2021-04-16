@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class UpdateClientPipeRequestHandler : IRequestHandler<PipeRequest<UpdateClient>, Client>
+    public class UpdateClientPipeRequestHandler : IRequestHandler<Pipe<UpdateClient>, Client>
     {
         private readonly ClientService _clientContext;
         public UpdateClientPipeRequestHandler(ClientService clientContext)
         {
             _clientContext = clientContext;
         }
-        public async Task<Client> Handle(IReceiveContext<PipeRequest<UpdateClient>> context, CancellationToken cancellationToken)
+        public async Task<Client> Handle(IReceiveContext<Pipe<UpdateClient>> context, CancellationToken cancellationToken)
         {
             return await _clientContext.UpdateAsync(context.Message.Payload);
         }

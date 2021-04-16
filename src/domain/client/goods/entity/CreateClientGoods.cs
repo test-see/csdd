@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Mediator.Net.Contracts;
+using System.Collections.Generic;
 
 namespace irespository.client.goods.model
 {
-    public class CreateClientGoods
+    public class CreateClientGoods:IRequest
     {
         public string Code { get; set; }
         public string Name { get; set; }

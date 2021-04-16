@@ -1,6 +1,8 @@
-﻿namespace irespository.hospital.goods.model
+﻿using Mediator.Net.Contracts;
+
+namespace irespository.hospital.goods.model
 {
-    public class CreateHospitalGoods
+    public class CreateHospitalGoods : IRequest
     {
         public int HospitalId { get; set; }
         public string Code { get; set; }

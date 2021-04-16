@@ -2,10 +2,10 @@
 
 namespace foundation.mediator
 {
-    public class PipeRequest<T> :IRequest
+    public class Pipe<T> :IRequest, ICommand
     {
         public T Payload { get; set; }
-        public PipeRequest(T payload)
+        public Pipe(T payload)
         {
             Payload = payload;
         }

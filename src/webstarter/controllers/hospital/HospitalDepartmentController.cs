@@ -62,7 +62,7 @@ namespace csdd.Controllers.Sys
         [Route("parent")]
         public async Task<JsonResult> ListParentAsync()
         {
-            var data = await _mediator.RequestStorageAsync<ListParentHospitalDepartmentRequest, IdNameValueModel>();
+            var data = await _mediator.RequestListAsync<ListParentHospitalDepartmentRequest, IdNameValueModel>();
             return Json(data);
         }
 
@@ -70,7 +70,7 @@ namespace csdd.Controllers.Sys
         [Route("type")]
         public async Task<JsonResult> ListTypeAsync()
         {
-            var data = await _mediator.RequestStorageAsync<ListDepartmentTypeRequest, IdNameValueModel>();
+            var data = await _mediator.RequestListAsync<ListDepartmentTypeRequest, IdNameValueModel>();
             return Json(data);
         }
     }

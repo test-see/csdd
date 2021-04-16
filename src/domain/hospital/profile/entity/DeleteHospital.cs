@@ -1,6 +1,8 @@
-﻿namespace domain.client.profile.entity
+﻿using Mediator.Net.Contracts;
+
+namespace domain.client.profile.entity
 {
-    public class DeleteHospital
+    public class DeleteHospital : ICommand
     {
         public int Id { get; set; }
     }

@@ -1,7 +1,7 @@
 ﻿using foundation.ef5;
 using foundation.ef5.poco;
 using foundation.mediator;
-using irespository.client.goods.model;
+using irespository.hospital.goods.model;
 using Mediator.Net.Context;
 using Mediator.Net.Contracts;
 using System;
@@ -10,31 +10,35 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class CreateClientGoodsStorageRequestHandler : IRequestHandler<StorageRequest<CreateClientGoods>, ClientGoods>
+    public class CreateHospitalGoodsRequestHandler : IRequestHandler<CreateHospitalGoods, HospitalGoods>
     {
         private readonly DefaultDbContext _context;
-        public CreateClientGoodsStorageRequestHandler(DefaultDbContext context)
+        public CreateHospitalGoodsRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<ClientGoods> Handle(IReceiveContext<StorageRequest<CreateClientGoods>> context, CancellationToken cancellationToken)
+        public async Task<HospitalGoods> Handle(IReceiveContext<CreateHospitalGoods> context, CancellationToken cancellationToken)
         {
-            var created = context.Message.Payload;
-            var goods = new ClientGoods
+            var created = context.Message;
+            var goods = new HospitalGoods
             {
                 Code = created.Code,
                 Name = created.Name,
-                ClientId = created.ClientId,
+                HospitalId = created.HospitalId,
                 Producer = created.Producer,
                 Spec = created.Spec,
                 Unit = created.Unit,
                 CreateUserId = created.UserId,
                 IsActive = 1,
+                PinShou = created.PinShou,
+                Barcode = created.Barcode,
+                Price = created.Price,
                 CreateTime = DateTime.Now,
             };
 
-            _context.ClientGoods.Add(goods);
+            _context.HospitalGoods.Add(goods);
             await _context.SaveChangesAsync();
+
             return goods;
         }
     }

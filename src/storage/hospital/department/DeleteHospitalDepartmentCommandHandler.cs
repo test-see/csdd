@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class DeleteHospitalDepartmentStorageCommandHandler : ICommandHandler<StorageCommand<DeleteHospitalDepartment>>
+    public class DeleteHospitalDepartmentCommandHandler : ICommandHandler<DeleteHospitalDepartment>
     {
         private readonly DefaultDbContext _context;
-        public DeleteHospitalDepartmentStorageCommandHandler(DefaultDbContext context)
+        public DeleteHospitalDepartmentCommandHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task Handle(IReceiveContext<StorageCommand<DeleteHospitalDepartment>> context, CancellationToken cancellationToken)
+        public async Task Handle(IReceiveContext<DeleteHospitalDepartment> context, CancellationToken cancellationToken)
         {
-            var id = context.Message.Payload;
+            var id = context.Message;
             var goods = _context.HospitalDepartment.Find(id);
             _context.HospitalDepartment.Remove(goods);
             await _context.SaveChangesAsync();
