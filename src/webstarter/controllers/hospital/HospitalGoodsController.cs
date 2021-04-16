@@ -1,78 +1,87 @@
 ﻿using csdd.Controllers.Shared;
+using domain.client.profile.entity;
 using foundation.config;
+using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital.goods.model;
+using irespository.hospital.model;
 using iservice.hospital;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using storage.hospitalgoods.carrier;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Sys
 {
     [Authorize(Policy = "RequireAdministratorRole")]
     public class HospitalGoodsController : DefaultControllerBase
     {
-        private readonly IHospitalGoodsService _hospitalGoodsService;
-        public HospitalGoodsController(IHospitalGoodsService hospitalGoodsService)
+        private readonly IMediator _mediator;
+        public HospitalGoodsController(IMediator mediator)
         {
-            _hospitalGoodsService = hospitalGoodsService;
+            _mediator = mediator;
         }
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<ListHospitalGoodsRequest> query)
+        public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalGoodsRequest> query)
         {
-            var data = _hospitalGoodsService.GetPagerList(query);
+            var data = await _mediator.RequestPagerListAsync<ListHospitalGoodsRequest, ListHospitalGoodsResponse>(query);
             return Json(data);
         }
 
 
         [HttpGet]
         [Route("{id}/delete")]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> DeleteAsync(int id)
         {
-            var data = _hospitalGoodsService.Delete(id);
-            return Json(data);
+            await _mediator.SendPipeAsync(new DeleteHospitalGoods { Id = id });
+            return Json(id);
         }
-
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(CreateHospitalGoods created)
+        public async Task<JsonResult> PostAsync(CreateHospitalGoods created)
         {
-            var data = _hospitalGoodsService.Create(created, UserId);
+            created.UserId = UserId;
+            var data = await _mediator.RequestPipeAsync<CreateHospitalGoods, HospitalGoods>(created);
             return Json(data);
         }
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(int id, UpdateHospitalGoods updated)
+        public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalGoods updated)
         {
-            var data = _hospitalGoodsService.Update(id, updated, UserId);
+            updated.Id = id;
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoods, HospitalGoods>(updated);
             return Json(data);
         }
 
-
         [HttpGet]
         [Route("{id}/index")]
-        public JsonResult GetIndex(int id)
+        public async Task<JsonResult> GetAsync(int id)
         {
-            var data = _hospitalGoodsService.GetIndex(id);
+            var data = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(id);
             return Json(data);
         }
 
 
         [HttpGet]
         [Route("{id}/inactive")]
-        public JsonResult UpdateInActive(int id)
+        public async Task<JsonResult> UpdateInActiveAsync(int id)
         {
-            var data = _hospitalGoodsService.UpdateIsActive(id, false);
+            var updated = new UpdateHospitalGoodsIsActive { Id = id, IsActive = false, };
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActive, HospitalGoods>(updated);
             return Json(data);
         }
 
         [HttpGet]
         [Route("{id}/active")]
-        public JsonResult UpdateActive(int id)
+        public async Task<JsonResult> UpdateActiveAsync(int id)
         {
-            var data = _hospitalGoodsService.UpdateIsActive(id, true);
+            var updated = new UpdateHospitalGoodsIsActive { Id = id, IsActive = true, };
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActive, HospitalGoods>(updated);
             return Json(data);
         }
     }

@@ -19,7 +19,7 @@ namespace mediator.client
         }
         public async Task<HospitalGoods> Handle(IReceiveContext<UpdateHospitalGoodsIsActive> context, CancellationToken cancellationToken)
         {
-            var updated = context.Message.Payload;
+            var updated = context.Message;
             var goods = _context.HospitalGoods.First(x => x.Id == updated.Id);
 
             goods.IsActive = updated.IsActive ? 1 : 0;
