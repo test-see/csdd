@@ -1,64 +1,70 @@
 ﻿using csdd.Controllers.Shared;
+using domain.client.profile.entity;
 using foundation.config;
+using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.client.goods.model;
-using iservice.client;
+using irespository.client.model;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Sys
 {
     [Authorize(Policy = "RequireClientRole")]
     public class ClientGoodsController : DefaultControllerBase
     {
-        private readonly IClientGoodsService _clientGoodsService;
-        public ClientGoodsController(IClientGoodsService ClientGoodsService)
+        private readonly IMediator _mediator;
+        public ClientGoodsController(IMediator mediator)
         {
-            _clientGoodsService = ClientGoodsService;
+            _mediator = mediator;
         }
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<ClientGoodsListQueryModel> query)
+        public async Task<JsonResult> ListAsync(PagerQuery<ListClientGoodsRequest> query)
         {
-            query.Query = query.Query ?? new ClientGoodsListQueryModel { };
+            query.Query = query.Query ?? new ListClientGoodsRequest { };
             query.Query.ClientId = Client.Id;
-            var data = _clientGoodsService.GetPagerList(query);
+            var data = await _mediator.RequestPagerListAsync<ListClientGoodsRequest, ListClientGoodsResponse>(query);
             return Json(data);
         }
-
 
         [HttpGet]
         [Route("{id}/delete")]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> DeleteAsync(int id)
         {
-            var data = _clientGoodsService.Delete(id);
-            return Json(data);
+            await _mediator.SendPipeAsync(new DeleteClientGoods { Id = id });
+            return Json(id);
         }
-
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(CreateClientGoods created)
+        public async Task<JsonResult> PostAsync(CreateClientGoods created)
         {
+            created.UserId = Profile.Id;
             created.ClientId = Client.Id;
-            var data = _clientGoodsService.Create(created, Profile.Id);
+            var data = await _mediator.RequestPipeAsync<CreateClientGoods, ClientGoods>(created);
             return Json(data);
         }
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(int id, UpdateClientGoods updated)
+        public async Task<JsonResult> UpdateAsync(int id, UpdateClientGoods updated)
         {
-            var data = _clientGoodsService.Update(id, updated, Profile.Id);
+            updated.Id = id;
+            updated.UserId = Profile.Id;
+            var data = await _mediator.RequestPipeAsync<UpdateClientGoods, ClientGoods>(updated);
             return Json(data);
         }
 
 
         [HttpGet]
         [Route("{id}/index")]
-        public JsonResult GetIndex(int id)
+        public async Task<JsonResult> GetAsync(int id)
         {
-            var data = _clientGoodsService.GetIndex(id);
+            var data = await _mediator.RequestSingleByIdAsync<GetClientGoodsRequest, GetClientGoodsResponse>(id);
             return Json(data);
         }
     }

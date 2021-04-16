@@ -1,4 +1,5 @@
 using csdd.Middlewares;
+using EasyNetQ;
 using foundation.config;
 using foundation.servicecollection;
 using irespository.user.enums;
@@ -10,12 +11,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital
 {
@@ -89,6 +92,8 @@ namespace webstarter.hospital
                     new List<string>() }
                 });
             });
+
+            Task.Run(() => SubscribeAsync(services));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,6 +137,21 @@ namespace webstarter.hospital
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", $"My API {Version}");
             });
+        }
+
+        private async Task SubscribeAsync(IServiceCollection services)
+        {
+            var sp = services.BuildServiceProvider();
+            var bus = sp.GetService<IBus>();
+            var log = sp.GetService<ILoggerFactory>().CreateLogger<Startup>();
+            await bus.PubSub.SubscribeAsync<RabbitMqMessage<int>>("my_subscription_id",
+                msg =>
+                {
+                    log.LogInformation("begin...");
+                    sp.GetService<IPurchaseService>().Generate(msg.Payload);
+                    log.LogInformation("end...");
+                },
+                x => x.WithTopic("Purchase.Generate"));
         }
     }
 }

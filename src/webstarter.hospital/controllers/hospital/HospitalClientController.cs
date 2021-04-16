@@ -1,57 +1,62 @@
 ﻿using csdd.Controllers.Shared;
+using domain.client.profile.entity;
 using foundation.config;
+using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital.client.model;
+using irespository.hospital.model;
 using iservice.hospital;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Sys
 {
     [Authorize(Policy = "RequireHospitalRole")]
     public class HospitalClientController : DefaultControllerBase
     {
-        private readonly IHospitalClientService _HospitalClientService;
-        public HospitalClientController(IHospitalClientService HospitalClientService)
+        private readonly IMediator _mediator;
+        public HospitalClientController(IMediator mediator)
         {
-            _HospitalClientService = HospitalClientService;
+            _mediator = mediator;
         }
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<ListHospitalClientRequest> query)
+        public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalClientRequest> query)
         {
             query.Query = query.Query ?? new ListHospitalClientRequest { };
             query.Query.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = _HospitalClientService.GetPagerList(query);
+            var data = await _mediator.RequestPagerListAsync<ListHospitalClientRequest, ListHospitalClientResponse>(query);
             return Json(data);
         }
-
 
         [HttpGet]
         [Route("{id}/delete")]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> DeleteAsync(int id)
         {
-            var data = _HospitalClientService.Delete(id);
-            return Json(data);
+            await _mediator.SendPipeAsync(new DeleteHospitalClient { Id = id });
+            return Json(id);
         }
-
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(HospitalClientCreateApiModel created)
+        public async Task<JsonResult> PostAsync(CreateHospitalClient created)
         {
+            created.UserId = Profile.Id;
             created.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = _HospitalClientService.Create(created, Profile.Id);
+            var data = await _mediator.RequestPipeAsync<CreateHospitalClient, HospitalClient>(created);
             return Json(data);
         }
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(int id, HospitalClientUpdateApiModel updated)
+        public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalClient updated)
         {
-            var data = _HospitalClientService.Update(id, updated, Profile.Id);
+            updated.Id = id;
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalClient, HospitalClient>(updated);
             return Json(data);
         }
-
     }
 }
