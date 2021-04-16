@@ -7,12 +7,12 @@ namespace service.sys
 {
     public class EventlogService: IEventlogService
     {
-        private readonly EventlogContext _eventlogContext;
-        public EventlogService(EventlogContext eventlogContext)
+        private readonly domain.sys.EventlogService _eventlogContext;
+        public EventlogService(domain.sys.EventlogService eventlogContext)
         {
             _eventlogContext = eventlogContext;
         }
-        public PagerResult<EventlogListApiModel> GetPagerList(PagerQuery<EventlogListQueryModel> query)
+        public PagerResult<ListEventlogResponse> GetPagerList(PagerQuery<ListEventlogListRequest> query)
         {
             return _eventlogContext.GetPagerList(query);
         }

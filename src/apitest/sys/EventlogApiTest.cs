@@ -17,8 +17,8 @@ namespace apitest.sys
             var message = await _rootpath
                 .AppendPathSegment("/api/Eventlog/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<EventlogListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<EventlogListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<ListEventlogListRequest> { })
+                .ReceiveJson<OkMessage<PagerResult<ListEventlogResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }

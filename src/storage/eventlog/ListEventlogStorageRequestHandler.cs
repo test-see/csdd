@@ -1,24 +1,30 @@
 ﻿using foundation.config;
 using foundation.ef5;
-using irespository.sys;
+using foundation.mediator;
 using irespository.sys.model;
+using Mediator.Net.Context;
+using Mediator.Net.Contracts;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace respository.sys
+namespace mediator.request.client
 {
-    public class EventlogRespository : IEventlogRespository
+    public class ListEventlogStorageRequestHandler : IRequestHandler<StorageRequest<PagerQuery<ListEventlogRequest>>, PagerResult<ListEventlogResponse>>
     {
         private readonly DefaultDbContext _context;
-        public EventlogRespository(DefaultDbContext context)
+        public ListEventlogStorageRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public PagerResult<EventlogListApiModel> GetPagerList(PagerQuery<EventlogListQueryModel> query)
+
+        public Task<PagerResult<ListEventlogResponse>> Handle(IReceiveContext<StorageRequest<PagerQuery<ListEventlogRequest>>> context, CancellationToken cancellationToken)
         {
+            var query = context.Message.Payload;
             var sql = from r in _context.Eventlog
                       join u in _context.User on r.OptionUserId equals u.Id
                       orderby r.Id descending
-                      select new EventlogListApiModel
+                      select new ListEventlogResponse
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
@@ -28,13 +34,14 @@ namespace respository.sys
                       };
             if (query.Query?.BeginDate != null)
             {
-                sql=sql.Where(x => x.CreateTime >= query.Query.BeginDate.Value);
+                sql = sql.Where(x => x.CreateTime >= query.Query.BeginDate.Value);
             }
             if (query.Query?.EndDate != null)
             {
                 sql = sql.Where(x => x.CreateTime < query.Query.EndDate.Value.AddDays(1));
             }
-            return new PagerResult<EventlogListApiModel>(query.Index, query.Size, sql);
+            var pager = new PagerResult<ListEventlogResponse>(query.Index, query.Size, sql);
+            return Task.FromResult(pager);
         }
     }
 }

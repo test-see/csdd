@@ -8,6 +8,6 @@ namespace irespository.eventlog
     public interface IEventlogHospitalGoodsRespository
     {
         EventlogHospitalGoods Create(EventlogHospitalGoodsCreateApiModel created, int userId);
-        IList<EventlogListApiModel> GetList(int goodsId);
+        IList<ListEventlogResponse> GetList(int goodsId);
     }
 }

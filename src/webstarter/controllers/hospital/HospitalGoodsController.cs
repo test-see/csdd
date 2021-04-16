@@ -18,7 +18,7 @@ namespace csdd.Controllers.Sys
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<HospitalGoodsListQueryModel> query)
+        public JsonResult GetList(PagerQuery<ListHospitalGoodsRequest> query)
         {
             var data = _hospitalGoodsService.GetPagerList(query);
             return Json(data);
@@ -36,7 +36,7 @@ namespace csdd.Controllers.Sys
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(HospitalGoodsCreateApiModel created)
+        public JsonResult Post(CreateHospitalGoods created)
         {
             var data = _hospitalGoodsService.Create(created, UserId);
             return Json(data);
@@ -44,7 +44,7 @@ namespace csdd.Controllers.Sys
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(int id, HospitalGoodsUpdateApiModel updated)
+        public JsonResult Update(int id, UpdateHospitalGoods updated)
         {
             var data = _hospitalGoodsService.Update(id, updated, UserId);
             return Json(data);
@@ -58,6 +58,9 @@ namespace csdd.Controllers.Sys
             var data = _hospitalGoodsService.GetIndex(id);
             return Json(data);
         }
+
+
+
 
         [HttpGet]
         [Route("{id}/inactive")]

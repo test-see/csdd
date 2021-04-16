@@ -3,7 +3,7 @@ using System;
 
 namespace irespository.hospital.model
 {
-    public class HospitalGoodsListApiModel
+    public class ListHospitalGoodsResponse
     {
         public int Id { get; set; }
         public string Code { get; set; }

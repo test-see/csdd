@@ -21,6 +21,6 @@ namespace irespository.hospital.goods.model
         public decimal Price { get; set; }
         public string Barcode { get; set; }
 
-        public IList<EventlogListApiModel> Logs { get; set; }
+        public IList<ListEventlogResponse> Logs { get; set; }
     }
 }

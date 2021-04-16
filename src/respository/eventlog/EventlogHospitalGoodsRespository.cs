@@ -40,13 +40,13 @@ namespace respository.eventlog
             _context.SaveChanges();
             return reference;
         }
-        public IList<EventlogListApiModel> GetList(int goodsId)
+        public IList<ListEventlogResponse> GetList(int goodsId)
         {
             var sql = from g in _context.EventlogHospitalGoods
                       join r in _context.Eventlog on g.EventlogId equals r.Id
                       join u in _context.User on r.OptionUserId equals u.Id
                       where g.HospitalGoodsId == goodsId
-                      select new EventlogListApiModel
+                      select new ListEventlogResponse
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,

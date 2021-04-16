@@ -16,7 +16,7 @@ namespace csdd.Controllers.Sys
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<EventlogListQueryModel> query)
+        public JsonResult GetList(PagerQuery<ListEventlogListRequest> query)
         {
             var data = _eventlogService.GetPagerList(query);
             return Json(data);

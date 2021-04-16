@@ -18,7 +18,7 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalGoods/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<HospitalGoodsListQueryModel> { })
+                .PostJsonAsync(new PagerQuery<ListHospitalGoodsRequest> { })
                 .ReceiveJson<OkMessage<PagerResult<ListHospitalGoodsResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
@@ -29,7 +29,7 @@ namespace apitest.hospital
             var hospital = await _rootpath
                 .AppendPathSegment("/api/HospitalGoods/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalGoodsCreateApiModel
+                .PostJsonAsync(new CreateHospitalGoods
                 {
                     Name = "q",
                     HospitalId = 1,
@@ -53,7 +53,7 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalGoods/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalGoodsUpdateApiModel
+                .PostJsonAsync(new UpdateHospitalGoods
                 {
                     Name = "q",
                     Producer = "x",

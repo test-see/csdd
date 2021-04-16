@@ -2,7 +2,7 @@
 
 namespace irespository.sys.model
 {
-    public class EventlogListApiModel
+    public class ListEventlogResponse
     {
         public int Id { get; set; }
         public string Title { get; set; }

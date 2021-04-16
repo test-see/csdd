@@ -19,18 +19,18 @@ namespace webstarter.hospital.controllers.hospital
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<HospitalGoodsListQueryModel> query)
+        public JsonResult GetList(PagerQuery<ListHospitalGoodsRequest> query)
         {
-            query.Query = query.Query ?? new HospitalGoodsListQueryModel { };
+            query.Query = query.Query ?? new ListHospitalGoodsRequest { };
             query.Query.HospitalId = HospitalDepartment.Hospital.Id;
             var data = _hospitalGoodsService.GetPagerList(query);
             return Json(data);
         }
         [HttpPost]
         [Route("store/list")]
-        public JsonResult GetPagerStoreList(PagerQuery<HospitalGoodsListQueryModel> query)
+        public JsonResult GetPagerStoreList(PagerQuery<ListHospitalGoodsRequest> query)
         {
-            query.Query = query.Query ?? new HospitalGoodsListQueryModel { };
+            query.Query = query.Query ?? new ListHospitalGoodsRequest { };
             query.Query.HospitalId = HospitalDepartment.Hospital.Id;
             var data = _hospitalGoodsService.GetPagerStoreList(query, HospitalDepartment.Id);
             return Json(data);
@@ -62,7 +62,7 @@ namespace webstarter.hospital.controllers.hospital
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(HospitalGoodsCreateApiModel created)
+        public JsonResult Post(CreateHospitalGoods created)
         {
             created.HospitalId = HospitalDepartment.Hospital.Id;
             var data = _hospitalGoodsService.Create(created, Profile.Id);
@@ -71,7 +71,7 @@ namespace webstarter.hospital.controllers.hospital
 
         [HttpPost]
         [Route("{id}/update")]
-        public JsonResult Update(int id, HospitalGoodsUpdateApiModel updated)
+        public JsonResult Update(int id, UpdateHospitalGoods updated)
         {
             var data = _hospitalGoodsService.Update(id, updated, Profile.Id);
             return Json(data);

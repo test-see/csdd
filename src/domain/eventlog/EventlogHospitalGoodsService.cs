@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 namespace domain.eventlog
 {
-    public class EventlogHospitalGoodsContext
+    public class EventlogHospitalGoodsService
     {
         private readonly IEventlogHospitalGoodsRespository _eventlogHospitalGoodsRespository;
         private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
 
-        public EventlogHospitalGoodsContext(IEventlogHospitalGoodsRespository eventlogHospitalGoodsRespository,
+        public EventlogHospitalGoodsService(IEventlogHospitalGoodsRespository eventlogHospitalGoodsRespository,
             IHospitalGoodsRespository hospitalGoodsRespository)
         {
             _eventlogHospitalGoodsRespository = eventlogHospitalGoodsRespository;
@@ -31,7 +31,7 @@ namespace domain.eventlog
             };
             _eventlogHospitalGoodsRespository.Create(log, userId);
         }
-        public IList<EventlogListApiModel> GetList(int goodsId)
+        public IList<ListEventlogResponse> GetList(int goodsId)
         {
             return _eventlogHospitalGoodsRespository.GetList(goodsId);
         }

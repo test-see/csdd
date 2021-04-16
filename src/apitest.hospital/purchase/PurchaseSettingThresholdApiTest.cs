@@ -68,7 +68,7 @@ namespace apitest.purchase
             var message = await _rootpath
                 .AppendPathSegment("/api/PurchaseSettingThreshold/goods")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<HospitalGoodsListQueryModel> {  })
+                .PostJsonAsync(new PagerQuery<ListHospitalGoodsRequest> {  })
                 .ReceiveJson<OkMessage<PagerResult<ListHospitalGoodsResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
