@@ -21,7 +21,7 @@ namespace domain.client
 
         public async Task DeleteAsync(DeleteClientGoods2HospitalGoods deleted)
         {
-            await _mediator.SendStorageAsync(deleted);
+            await _mediator.SendAsync(deleted);
         }
     }
 }

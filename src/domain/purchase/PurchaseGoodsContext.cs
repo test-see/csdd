@@ -16,14 +16,14 @@ namespace domain.purchase
     {
         private readonly IPurchaseGoodsRespository _purchaseGoodsRespository;
         private readonly StoreContext _storeContext;
-        private readonly HospitalGoodsClientContext _hospitalGoodsClientContext;
+        private readonly HospitalGoodsClientService _hospitalGoodsClientContext;
         private readonly StoreRecordContext _storeRecordContext;
         private readonly HospitalDepartmentService _hospitalDepartmentContext;
         private readonly DefaultDbTransaction _defaultDbTransaction;
         private readonly PurchaseGoodsBillnoContext _purchaseGoodsBillnoContext;
         public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy,
             StoreContext storeContext,
-            HospitalGoodsClientContext hospitalGoodsClientContext,
+            HospitalGoodsClientService hospitalGoodsClientContext,
             DefaultDbTransaction defaultDbTransaction,
             StoreRecordContext storeRecordContext,
             HospitalDepartmentService hospitalDepartmentContext,

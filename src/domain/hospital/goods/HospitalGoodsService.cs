@@ -37,7 +37,7 @@ namespace domain.hospital
 
         public async Task DeleteAsync(DeleteHospitalGoods deleted)
         {
-            await _mediator.SendStorageAsync(deleted);
+            await _mediator.SendAsync(deleted);
         }
         public async Task<HospitalGoods> UpdateIsActiveAsync(UpdateHospitalGoodsIsActive updated)
         {

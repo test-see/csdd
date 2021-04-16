@@ -9,8 +9,4 @@
     <ProjectReference Include="..\storage\storage.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="hospital\goodsclient\" />
-  </ItemGroup>
-
 </Project>
