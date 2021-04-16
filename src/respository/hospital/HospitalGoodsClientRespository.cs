@@ -24,30 +24,6 @@ namespace respository.hospital
             _hospitalGoodsRespository = hospitalGoodsRespository;
             _hospitalClientRespository = hospitalClientRespository;
         }
-        public HospitalGoodsClient Create(int goodsId, int clientId, int userId)
-        {
-            var goods = new HospitalGoodsClient
-            {
-                CreateUserId = userId,
-                CreateTime = DateTime.Now,
-                HospitalClientId = clientId,
-                HospitalGoodsId = goodsId,
-            };
-
-            _context.HospitalGoodsClient.Add(goods);
-            _context.SaveChanges();
-
-            return goods;
-        }
-
-        public int Delete(int id)
-        {
-            var goods = _context.HospitalGoodsClient.Find(id);
-            _context.HospitalGoodsClient.Remove(goods);
-            _context.SaveChanges();
-            return id;
-        }
-
         public IList<HospitalGoodsClientListApiModel> GetListByGoodsId(int goodsId)
         {
             var sql = from r in _context.HospitalGoodsClient
