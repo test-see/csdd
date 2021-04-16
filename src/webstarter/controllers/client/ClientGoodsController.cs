@@ -26,8 +26,7 @@ namespace csdd.Controllers.Sys
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListClientGoodsRequest> query)
         {
-            var data = await _mediator.RequestAsync<StorageRequest<PagerQuery<ListClientGoodsRequest>>, PagerResult<ListClientGoodsResponse>>(
-                new StorageRequest<PagerQuery<ListClientGoodsRequest>>(query));
+            var data = await _mediator.RequestPagerListAsync<ListClientGoodsRequest, ListClientGoodsResponse>(query);
             return Json(data);
         }
 
@@ -35,7 +34,7 @@ namespace csdd.Controllers.Sys
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendAsync(new PipeCommand<DeleteClientGoods>(new DeleteClientGoods { Id = id }));
+            await _mediator.SendPipeAsync(new DeleteClientGoods { Id = id });
             return Json(id);
         }
 
@@ -44,7 +43,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> PostAsync(CreateClientGoods created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestAsync<PipeRequest<CreateClientGoods>, ClientGoods>(new PipeRequest<CreateClientGoods>(created));
+            var data = await _mediator.RequestPipeAsync<CreateClientGoods, ClientGoods>(created);
             return Json(data);
         }
 
@@ -54,7 +53,7 @@ namespace csdd.Controllers.Sys
         {
             updated.Id = id;
             updated.UserId = UserId;
-            var data = await _mediator.RequestAsync<PipeRequest<UpdateClientGoods>, ClientGoods>(new PipeRequest<UpdateClientGoods>(updated));
+            var data = await _mediator.RequestPipeAsync<UpdateClientGoods, ClientGoods>(updated);
             return Json(data);
         }
 
@@ -62,9 +61,8 @@ namespace csdd.Controllers.Sys
         [Route("{id}/index")]
         public async Task<JsonResult> GetAsync(int id)
         {
-            var request = new StorageRequest<GetClientGoodsRequest>(new GetClientGoodsRequest(id));
-            var data = await _mediator.RequestAsync<StorageRequest<GetClientGoodsRequest>, ListResponse<GetClientGoodsResponse>>(request);
-            return Json(data.Payloads.FirstOrDefault());
+            var data = await _mediator.RequestSingleAsync<GetClientGoodsRequest, GetClientGoodsResponse>(new GetClientGoodsRequest(id));
+            return Json(data);
         }
     }
 }

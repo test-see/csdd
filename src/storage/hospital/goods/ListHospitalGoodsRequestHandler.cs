@@ -14,24 +14,23 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListHospitalGoodsStoreStorageRequestHandler : IRequestHandler<StorageRequest<PagerQuery<ListHospitalGoodsStoreRequest>>, PagerResult<ListHospitalGoodsStoreResponse>>
+    public class ListHospitalGoodsRequestHandler : IRequestHandler<PagerQuery<ListHospitalGoodsRequest>, PagerResult<ListHospitalGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public ListHospitalGoodsStoreStorageRequestHandler(DefaultDbContext context, IMediator mediator)
+        public ListHospitalGoodsRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
 
-        public async Task<PagerResult<ListHospitalGoodsStoreResponse>> Handle(IReceiveContext<StorageRequest<PagerQuery<ListHospitalGoodsStoreRequest>>> context, CancellationToken cancellationToken)
+        public async Task<PagerResult<ListHospitalGoodsResponse>> Handle(IReceiveContext<PagerQuery<ListHospitalGoodsRequest>> context, CancellationToken cancellationToken)
         {
-            var query = context.Message.Payload;
+            var query = context.Message;
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
-                      join s in _context.Store on new { HospitalGoodsId = r.Id, HospitalDepartmentId = query.Query.HospitalDepartmentId } equals new { s.HospitalGoodsId, s.HospitalDepartmentId } into ss
-                      from ssx in ss.DefaultIfEmpty()
-                      select new ListHospitalGoodsStoreResponse
+                      orderby r.Id descending
+                      select new ListHospitalGoodsResponse
                       {
                           CreateTime = r.CreateTime,
                           Id = r.Id,
@@ -49,8 +48,11 @@ namespace mediator.request.client
                           PinShou = r.PinShou,
                           Price = r.Price,
                           Barcode = r.Barcode,
-                          Qty = ssx != null ? ssx.Qty : 0,
                       };
+            if (query.Query?.HospitalId != null)
+            {
+                sql = sql.Where(x => x.Hospital.Id == query.Query.HospitalId.Value);
+            }
             if (!string.IsNullOrEmpty(query.Query?.PinShou))
             {
                 sql = sql.Where(x => x.PinShou.Contains(query.Query.PinShou));
@@ -71,14 +73,13 @@ namespace mediator.request.client
             {
                 sql = sql.Where(x => x.IsActive == query.Query.IsActive);
             }
-            var data = new PagerResult<ListHospitalGoodsStoreResponse>(query.Index, query.Size, sql);
+            var data = new PagerResult<ListHospitalGoodsResponse>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var request = new StorageRequest<GetHospitalRequest>(new GetHospitalRequest(data.Result.Select(x => x.Hospital.Id).ToArray()));
-                var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>(request);
+                var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(data.Select(x => x.Hospital.Id));
                 foreach (var m in data.Result)
                 {
-                    m.Hospital = hospitals.Payloads.FirstOrDefault(x => x.Id == m.Hospital.Id);
+                    m.Hospital = hospitals.FirstOrDefault(x => x.Id == m.Hospital.Id);
                 }
             }
             return data;

@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListClientStorageRequestHandler : IRequestHandler<StorageRequest<PagerQuery<ListClientRequest>>, PagerResult<ListClientResponse>>
+    public class ListClientRequestHandler : IRequestHandler<PagerQuery<ListClientRequest>, PagerResult<ListClientResponse>>
     {
         private readonly DefaultDbContext _context;
-        public ListClientStorageRequestHandler(DefaultDbContext context)
+        public ListClientRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
 
-        public Task<PagerResult<ListClientResponse>> Handle(IReceiveContext<StorageRequest<PagerQuery<ListClientRequest>>> context, CancellationToken cancellationToken)
+        public Task<PagerResult<ListClientResponse>> Handle(IReceiveContext<PagerQuery<ListClientRequest>> context, CancellationToken cancellationToken)
         {
-            var payload = context.Message.Payload;
+            var payload = context.Message;
             var sql = from r in _context.Client
                       join u in _context.User on r.CreateUserId equals u.Id
                       orderby r.Id descending

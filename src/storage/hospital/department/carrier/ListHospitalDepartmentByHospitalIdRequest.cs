@@ -1,6 +1,8 @@
-﻿namespace storage.hospital.department.carrier
+﻿using Mediator.Net.Contracts;
+
+namespace storage.hospital.department.carrier
 {
-    public class ListHospitalDepartmentByHospitalIdRequest
+    public class ListHospitalDepartmentByHospitalIdRequest:IRequest
     {
         public int HospitalId { get; set; }
     }

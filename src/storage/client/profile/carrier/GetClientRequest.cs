@@ -1,13 +1,9 @@
-﻿using Mediator.Net.Contracts;
+﻿using foundation.mediator;
+using Mediator.Net.Contracts;
 
 namespace nouns.client.profile
 {
-    public class GetClientRequest 
+    public class GetClientRequest:GetRequest
     {
-        public GetClientRequest(params int[] ids)
-        {
-            Ids = ids;
-        }
-        public int[] Ids { get; set; }
     }
 }

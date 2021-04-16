@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetHospitalStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>
+    public class GetHospitalRequestHandler : IRequestHandler<GetHospitalRequest, ListResponse<GetHospitalResponse>>
     {
         private readonly DefaultDbContext _context;
-        public GetHospitalStorageRequestHandler(DefaultDbContext context)
+        public GetHospitalRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<ListResponse<GetHospitalResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetHospitalResponse>> Handle(IReceiveContext<GetHospitalRequest> context, CancellationToken cancellationToken)
         {
-            var payload = context.Message.Payload;
+            var payload = context.Message;
             var hospitals = await _context.Hospital.Where(x => payload.Ids.Contains(x.Id)).Select(x => new GetHospitalResponse
             {
                 ConsumeDays = x.ConsumeDays,
@@ -29,7 +29,7 @@ namespace mediator.client.profile
                 Remark = x.Remark,
             }).ToListAsync();
 
-            return new ListResponse<GetHospitalResponse>(hospitals.ToArray());
+            return hospitals.ToResponse();
         }
     }
 }

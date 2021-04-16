@@ -26,36 +26,15 @@ namespace csdd.Controllers.Info
         [Route("{id}/index")]
         public async Task<JsonResult> GetAsync(int id)
         {
-            var request = new StorageRequest<GetClientRequest>(new GetClientRequest(id));
-            var data = await _mediator.RequestAsync<StorageRequest<GetClientRequest>, ListResponse<GetClientResponse>>(request);
-            return Json(data.Payloads.FirstOrDefault());
-        }
-
-        [HttpPost]
-        [Route("{id}/update")]
-        public async Task<JsonResult> UpdateAsync(int id, UpdateClient updated)
-        {
-            updated.Id = id;
-            updated.UserId = UserId;
-            var data = await _mediator.RequestAsync<PipeRequest<UpdateClient>, Client>(new PipeRequest<UpdateClient>(updated));
+            var data = await _mediator.RequestSingleAsync<GetClientRequest, GetClientResponse>(new GetClientRequest(id));
             return Json(data);
         }
-
         [HttpPost]
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListClientRequest> query)
         {
-            var data = await _mediator.RequestAsync<StorageRequest<PagerQuery<ListClientRequest>>, PagerResult<ListClientResponse>>(
-                new StorageRequest<PagerQuery<ListClientRequest>>(query));
+            var data = await _mediator.RequestPagerListAsync<ListClientRequest, ListClientResponse>(query);
             return Json(data);
-        }
-
-        [HttpGet]
-        [Route("{id}/delete")]
-        public async Task<JsonResult> DeleteAsync(int id)
-        {
-            await _mediator.SendAsync(new PipeCommand<DeleteClient>(new DeleteClient { Id = id }));
-            return Json(id);
         }
 
         [HttpPost]
@@ -63,8 +42,24 @@ namespace csdd.Controllers.Info
         public async Task<JsonResult> PostAsync(CreateClient created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestAsync<PipeRequest<CreateClient>, Client>(new PipeRequest<CreateClient>(created));
+            var data = await _mediator.RequestPipeAsync<CreateClient, Client>(created);
             return Json(data);
+        }
+        [HttpPost]
+        [Route("{id}/update")]
+        public async Task<JsonResult> UpdateAsync(int id, UpdateClient updated)
+        {
+            updated.Id = id;
+            updated.UserId = UserId;
+            var data = await _mediator.RequestPipeAsync<UpdateClient, Client>(updated);
+            return Json(data);
+        }
+        [HttpGet]
+        [Route("{id}/delete")]
+        public async Task<JsonResult> DeleteAsync(int id)
+        {
+            await _mediator.SendPipeAsync(new DeleteClient { Id = id });
+            return Json(id);
         }
     }
 }

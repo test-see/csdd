@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetHospitalDepartmentStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalDepartmentRequest>, ListResponse<GetHospitalDepartmentResponse>>
+    public class GetHospitalDepartmentRequestHandler : IRequestHandler<GetHospitalDepartmentRequest, ListResponse<GetHospitalDepartmentResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public GetHospitalDepartmentStorageRequestHandler(DefaultDbContext context, IMediator mediator)
+        public GetHospitalDepartmentRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
-        public async Task<ListResponse<GetHospitalDepartmentResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalDepartmentRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetHospitalDepartmentResponse>> Handle(IReceiveContext<GetHospitalDepartmentRequest> context, CancellationToken cancellationToken)
         {
-            var payload = context.Message.Payload;
+            var payload = context.Message;
             var sql = from r in _context.HospitalDepartment
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
                       where payload.Ids.Contains(r.Id)
@@ -40,16 +40,14 @@ namespace mediator.client.profile
                           DepartmentType = d,
                       };
             var profiles = await sql.ToListAsync();
-
-            var request = new StorageRequest<GetHospitalRequest>(new GetHospitalRequest(profiles.Select(x => x.Hospital.Id).ToArray()));
-            var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>(request);
+            var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(profiles.Select(x => x.Hospital.Id).ToArray());
 
             foreach (var department in profiles)
             {
-                department.Hospital = hospitals.Payloads.FirstOrDefault(x => x.Id == department.Hospital.Id);
+                department.Hospital = hospitals.FirstOrDefault(x => x.Id == department.Hospital.Id);
             }
 
-            return new ListResponse<GetHospitalDepartmentResponse>(profiles.ToArray());
+            return profiles.ToResponse();
         }
     }
 }

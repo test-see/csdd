@@ -17,16 +17,16 @@ namespace domain.hospital
 
         public async Task<Hospital> UpdateAsync(UpdateHospital updated)
         {
-            return await _mediator.RequestAsync<StorageRequest<UpdateHospital>, Hospital>(new StorageRequest<UpdateHospital>(updated));
+            return await _mediator.RequestSingleAsync<UpdateHospital, Hospital>(updated);
         }
 
         public async Task<Hospital> CreateAsync(CreateHospital created)
         {
-            return await _mediator.RequestAsync<StorageRequest<CreateHospital>, Hospital>(new StorageRequest<CreateHospital>(created));
+            return await _mediator.RequestSingleAsync<CreateHospital, Hospital>(created);
         }
         public async Task DeleteAsync(DeleteHospital deleted)
         {
-            await _mediator.SendAsync(new StorageCommand<DeleteHospital>(deleted));
+            await _mediator.SendStorageAsync(deleted);
         }
     }
 }

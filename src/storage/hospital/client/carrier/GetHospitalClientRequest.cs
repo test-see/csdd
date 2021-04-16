@@ -1,11 +1,8 @@
-﻿namespace nouns.client.profile
+﻿using foundation.mediator;
+
+namespace nouns.client.profile
 {
-    public class GetHospitalClientRequest
+    public class GetHospitalClientRequest: GetRequest
     {
-        public GetHospitalClientRequest(params int[] ids)
-        {
-            Ids = ids;
-        }
-        public int[] Ids { get; set; }
     }
 }

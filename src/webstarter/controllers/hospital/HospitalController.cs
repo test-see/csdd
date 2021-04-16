@@ -24,8 +24,7 @@ namespace csdd.Controllers.Info
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalRequest> query)
         {
-            var data = await _mediator.RequestAsync<StorageRequest<PagerQuery<ListHospitalRequest>>, PagerResult<ListHospitalResponse>>(
-                new StorageRequest<PagerQuery<ListHospitalRequest>>(query));
+            var data = await _mediator.RequestPagerListAsync<ListHospitalRequest, ListHospitalResponse>(query);
             return Json(data);
         }
 
@@ -34,7 +33,7 @@ namespace csdd.Controllers.Info
         public async Task<JsonResult> UpdateAsync(int id, UpdateHospital updated)
         {
             updated.Id = id;
-            var data = await _mediator.RequestAsync<PipeRequest<UpdateHospital>, Hospital>(new PipeRequest<UpdateHospital>(updated));
+            var data = await _mediator.RequestPipeAsync<UpdateHospital, Hospital>(updated);
             return Json(data);
         }
 
@@ -42,7 +41,7 @@ namespace csdd.Controllers.Info
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendAsync(new PipeCommand<DeleteHospital>(new DeleteHospital { Id = id }));
+            await _mediator.SendPipeAsync(new DeleteHospital { Id = id });
             return Json(id);
         }
 
@@ -51,7 +50,7 @@ namespace csdd.Controllers.Info
         public async Task<JsonResult> PostAsync(CreateHospital created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestAsync<PipeRequest<CreateHospital>, Hospital>(new PipeRequest<CreateHospital>(created));
+            var data = await _mediator.RequestPipeAsync<CreateHospital, Hospital>(created);
             return Json(data);
         }
     }

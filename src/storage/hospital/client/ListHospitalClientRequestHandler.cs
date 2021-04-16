@@ -13,19 +13,19 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListHospitalClientStorageRequestHandler : IRequestHandler<StorageRequest<PagerQuery<ListHospitalClientRequest>>, PagerResult<ListHospitalClientResponse>>
+    public class ListHospitalClientRequestHandler : IRequestHandler<PagerQuery<ListHospitalClientRequest>, PagerResult<ListHospitalClientResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public ListHospitalClientStorageRequestHandler(DefaultDbContext context, IMediator mediator)
+        public ListHospitalClientRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
 
-        public async Task<PagerResult<ListHospitalClientResponse>> Handle(IReceiveContext<StorageRequest<PagerQuery<ListHospitalClientRequest>>> context, CancellationToken cancellationToken)
+        public async Task<PagerResult<ListHospitalClientResponse>> Handle(IReceiveContext<PagerQuery<ListHospitalClientRequest>> context, CancellationToken cancellationToken)
         {
-            var query = context.Message.Payload;
+            var query = context.Message;
             var sql = from r in _context.HospitalClient
                       join u in _context.User on r.CreateUserId equals u.Id
                       orderby r.Id descending
@@ -51,12 +51,11 @@ namespace mediator.request.client
             var data = new PagerResult<ListHospitalClientResponse>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var request = new StorageRequest<GetHospitalRequest>(new GetHospitalRequest(data.Result.Select(x => x.Hospital.Id).ToArray()));
-                var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>(request);
+                var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(data.Select(x => x.Hospital.Id));
 
                 foreach (var m in data.Result)
                 {
-                    m.Hospital = hospitals.Payloads.FirstOrDefault(x => x.Id == m.Hospital.Id);
+                    m.Hospital = hospitals.FirstOrDefault(x => x.Id == m.Hospital.Id);
                 }
             }
             return data;

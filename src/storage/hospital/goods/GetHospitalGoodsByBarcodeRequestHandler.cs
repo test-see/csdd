@@ -15,16 +15,16 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetHospitalGoodsByBarcodeStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalGoodsByBarcodeRequest>, ListResponse<GetHospitalGoodsResponse>>
+    public class GetHospitalGoodsByBarcodeRequestHandler : IRequestHandler<GetHospitalGoodsByBarcodeRequest, ListResponse<GetHospitalGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public GetHospitalGoodsByBarcodeStorageRequestHandler(DefaultDbContext context, IMediator mediator)
+        public GetHospitalGoodsByBarcodeRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
-        public async Task<ListResponse<GetHospitalGoodsResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalGoodsByBarcodeRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetHospitalGoodsResponse>> Handle(IReceiveContext<GetHospitalGoodsByBarcodeRequest> context, CancellationToken cancellationToken)
         {
             var payload = context.Message.Payload;
             var sql = from r in _context.HospitalGoods
@@ -48,12 +48,11 @@ namespace mediator.client.profile
                       };
             var profiles = await sql.ToListAsync();
 
-            var request = new StorageRequest<GetHospitalRequest>(new GetHospitalRequest(profiles.Select(x => x.Hospital.Id).ToArray()));
-            var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>(request);
+            var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(profiles.Select(x => x.Hospital.Id).ToArray());
 
             foreach (var profile in profiles)
             {
-                profile.Hospital = hospitals.Payloads.FirstOrDefault(x=>x.Id== profile.Hospital.Id);
+                profile.Hospital = hospitals.FirstOrDefault(x=>x.Id== profile.Hospital.Id);
             }
 
             return new ListResponse<GetHospitalGoodsResponse>(profiles.ToArray());

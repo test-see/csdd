@@ -14,19 +14,19 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class ListClientGoods2HospitalGoodsStorageRequestHandler : IRequestHandler<StorageRequest<ListClientGoods2HospitalGoodsRequest>, ListResponse<ListClientGoods2HospitalGoodsResponse>>
+    public class ListClientGoods2HospitalGoodsRequestHandler : IRequestHandler<ListClientGoods2HospitalGoodsRequest, ListResponse<ListClientGoods2HospitalGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public ListClientGoods2HospitalGoodsStorageRequestHandler(DefaultDbContext context, IMediator mediator)
+        public ListClientGoods2HospitalGoodsRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
 
-        public async Task<ListResponse<ListClientGoods2HospitalGoodsResponse>> Handle(IReceiveContext<StorageRequest<ListClientGoods2HospitalGoodsRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<ListClientGoods2HospitalGoodsResponse>> Handle(IReceiveContext<ListClientGoods2HospitalGoodsRequest> context, CancellationToken cancellationToken)
         {
-            var payload = context.Message.Payload;
+            var payload = context.Message;
             var mappings = await (from m in _context.ClientGoods2HospitalGoods
                                   where payload.ClientGoodsIds.Contains(m.ClientGoodsId)
                                   select new ListClientGoods2HospitalGoodsResponse
@@ -41,14 +41,13 @@ namespace mediator.client
                                       }
                                   }).ToListAsync();
 
-            var request = new StorageRequest<GetHospitalGoodsRequest>(new GetHospitalGoodsRequest(mappings.Select(x => x.HospitalGoods.Id).ToArray()));
-            var goods = await _mediator.RequestAsync<StorageRequest<GetHospitalGoodsRequest>, ListResponse<GetHospitalGoodsResponse>>(request);
+            var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(mappings.Select(x => x.HospitalGoods.Id).ToList());
 
             foreach (var m in mappings)
             {
-                m.HospitalGoods = goods.Payloads.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
+                m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
             }
-            return new ListResponse<ListClientGoods2HospitalGoodsResponse>(mappings.ToArray());
+            return mappings.ToResponse();
         }
     }
 }

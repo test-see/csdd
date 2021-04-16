@@ -1,4 +1,5 @@
 ﻿using Mediator.Net.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +25,13 @@ namespace foundation.config
             Result = query.Skip(size * (index - 1)).Take(size).ToList();
             Total = query.Count();
         }
+
+        public IList<int> Select(Func<T, int> func)
+        {
+            return Result.Select(func).ToList();
+        }
     }
+
 
     public class PagerQuery<T> : IRequest
     {

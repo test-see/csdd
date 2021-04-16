@@ -16,18 +16,18 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetHospitalGoodsStorageRequestHandler : IRequestHandler<StorageRequest<GetHospitalGoodsRequest>, ListResponse<GetHospitalGoodsResponse>>
+    public class GetHospitalGoodsRequestHandler : IRequestHandler<GetHospitalGoodsRequest, ListResponse<GetHospitalGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public GetHospitalGoodsStorageRequestHandler(DefaultDbContext context, IMediator mediator)
+        public GetHospitalGoodsRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
-        public async Task<ListResponse<GetHospitalGoodsResponse>> Handle(IReceiveContext<StorageRequest<GetHospitalGoodsRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetHospitalGoodsResponse>> Handle(IReceiveContext<GetHospitalGoodsRequest> context, CancellationToken cancellationToken)
         {
-            var payload = context.Message.Payload;
+            var payload = context.Message;
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
                       where payload.Ids.Contains(r.Id)
@@ -52,13 +52,13 @@ namespace mediator.client.profile
                       };
             var profiles = await sql.ToListAsync();
 
-            var hospitals = await _mediator.RequestStorageAsync<GetHospitalRequest, GetHospitalResponse>(new GetHospitalRequest(profiles.Select(x => x.Hospital.Id).ToArray()));
+            var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(profiles.Select(x => x.Hospital.Id).ToArray());
             var logs = await _mediator.RequestStorageAsync<ListEventlogByGoodsIdRequest, ListEventlogByGoodsIdResponse>(new ListEventlogByGoodsIdRequest { GoodsIds = profiles.Select(x => x.Id).ToArray() });
 
             foreach (var profile in profiles)
             {
-                profile.Hospital = hospitals.Payloads.FirstOrDefault(x=>x.Id== profile.Hospital.Id);
-                profile.Logs = logs.Payloads.Where(x => x.GoodsId == profile.Id).Select(x=>x.Log).ToList();
+                profile.Hospital = hospitals.FirstOrDefault(x=>x.Id== profile.Hospital.Id);
+                profile.Logs = logs.Where(x => x.GoodsId == profile.Id).Select(x=>x.Log).ToList();
             }
 
             return new ListResponse<GetHospitalGoodsResponse>(profiles.ToArray());

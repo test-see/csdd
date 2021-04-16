@@ -1,11 +1,8 @@
-﻿namespace storage.hospital.department.carrier
+﻿using foundation.mediator;
+
+namespace storage.hospital.department.carrier
 {
-    public class GetHospitalDepartmentRequest
+    public class GetHospitalDepartmentRequest:GetRequest
     {
-        public GetHospitalDepartmentRequest(params int[] ids)
-        {
-            Ids = ids;
-        }
-        public int[] Ids { get; set; }
     }
 }

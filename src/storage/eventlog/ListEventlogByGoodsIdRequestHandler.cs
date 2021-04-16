@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListEventlogByGoodsIdStorageRequestHandler : IRequestHandler<StorageRequest<ListEventlogByGoodsIdRequest>, ListResponse<ListEventlogByGoodsIdResponse>>
+    public class ListEventlogByGoodsIdRequestHandler : IRequestHandler<ListEventlogByGoodsIdRequest, ListResponse<ListEventlogByGoodsIdResponse>>
     {
         private readonly DefaultDbContext _context;
-        public ListEventlogByGoodsIdStorageRequestHandler(DefaultDbContext context)
+        public ListEventlogByGoodsIdRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
 
-        public async Task<ListResponse<ListEventlogByGoodsIdResponse>> Handle(IReceiveContext<StorageRequest<ListEventlogByGoodsIdRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<ListEventlogByGoodsIdResponse>> Handle(IReceiveContext<ListEventlogByGoodsIdRequest> context, CancellationToken cancellationToken)
         {
-            var query = context.Message.Payload;
+            var query = context.Message;
             var sql = from g in _context.EventlogHospitalGoods
                       join r in _context.Eventlog on g.EventlogId equals r.Id
                       join u in _context.User on r.OptionUserId equals u.Id
@@ -37,7 +37,7 @@ namespace mediator.request.client
                               Title = r.Title,
                           }
                       };
-            return new ListResponse<ListEventlogByGoodsIdResponse>((await sql.ToListAsync()).ToArray());
+            return (await sql.ToListAsync()).ToResponse();
         }
     }
 }

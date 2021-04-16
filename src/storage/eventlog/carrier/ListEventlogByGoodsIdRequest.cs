@@ -1,6 +1,8 @@
-﻿namespace irespository.sys.model
+﻿using Mediator.Net.Contracts;
+
+namespace irespository.sys.model
 {
-    public class ListEventlogByGoodsIdRequest
+    public class ListEventlogByGoodsIdRequest:IRequest
     {
         public int[] GoodsIds { get; set; }
     }

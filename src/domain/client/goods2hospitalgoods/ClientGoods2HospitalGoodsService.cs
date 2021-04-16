@@ -16,12 +16,12 @@ namespace domain.client
         }
         public async Task<ClientGoods2HospitalGoods> CreateAsync(CreateClientGoods2HospitalGoods created)
         {
-            return await _mediator.RequestAsync<StorageRequest<CreateClientGoods2HospitalGoods>, ClientGoods2HospitalGoods>(new StorageRequest<CreateClientGoods2HospitalGoods>(created));
+            return await _mediator.RequestSingleAsync<CreateClientGoods2HospitalGoods, ClientGoods2HospitalGoods>(created);
         }
 
         public async Task DeleteAsync(DeleteClientGoods2HospitalGoods deleted)
         {
-            await _mediator.SendAsync(new StorageCommand<DeleteClientGoods2HospitalGoods>(deleted));
+            await _mediator.SendStorageAsync(deleted);
         }
     }
 }

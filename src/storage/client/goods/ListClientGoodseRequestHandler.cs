@@ -12,17 +12,17 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListClientGoodsStorageRequestHandler : IRequestHandler<StorageRequest<PagerQuery<ListClientGoodsRequest>>, PagerResult<ListClientGoodsResponse>>
+    public class ListClientGoodseRequestHandler : IRequestHandler<PagerQuery<ListClientGoodsRequest>, PagerResult<ListClientGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
-        public ListClientGoodsStorageRequestHandler(DefaultDbContext context)
+        public ListClientGoodseRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
 
-        public Task<PagerResult<ListClientGoodsResponse>> Handle(IReceiveContext<StorageRequest<PagerQuery<ListClientGoodsRequest>>> context, CancellationToken cancellationToken)
+        public Task<PagerResult<ListClientGoodsResponse>> Handle(IReceiveContext<PagerQuery<ListClientGoodsRequest>> context, CancellationToken cancellationToken)
         {
-            var query = context.Message.Payload;
+            var query = context.Message;
             var sql = from r in _context.ClientGoods
                       join u in _context.User on r.CreateUserId equals u.Id
                       join h in _context.Client on r.ClientId equals h.Id

@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace mediator.client.profile
 {
-    public class GetClientStorageRequestHandler : IRequestHandler<StorageRequest<GetClientRequest>, ListResponse<GetClientResponse>>
+    public class GetClientRequestHandler : IRequestHandler<GetClientRequest, ListResponse<GetClientResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public GetClientStorageRequestHandler(DefaultDbContext context, IMediator mediator)
+        public GetClientRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
-        public async Task<ListResponse<GetClientResponse>> Handle(IReceiveContext<StorageRequest<GetClientRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<GetClientResponse>> Handle(IReceiveContext<GetClientRequest> context, CancellationToken cancellationToken)
         {
-            var payload = context.Message.Payload;
+            var payload = context.Message;
             var clients = await (from r in _context.Client
                                  join u in _context.User on r.CreateUserId equals u.Id
                                  where payload.Ids.Contains(r.Id)
@@ -52,18 +52,17 @@ namespace mediator.client.profile
                       };
 
             var mappings = await sql.ToListAsync();
-            var request = new StorageRequest<GetHospitalClientRequest>(new GetHospitalClientRequest(mappings.Select(x => x.HospitalClient.Id).ToArray()));
-            var hospitalclients = await _mediator.RequestAsync<StorageRequest<GetHospitalClientRequest>, ListResponse<GetHospitalClientResponse>>(request);
+            var hospitalclients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(mappings.Select(x => x.HospitalClient.Id).ToArray());
             foreach (var m in mappings)
             {
-                m.HospitalClient = hospitalclients.Payloads.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
+                m.HospitalClient = hospitalclients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
             }
             foreach (var client in clients)
             {
                 client.HospitalClients = mappings.Where(x => x.Client.Id == client.Id).ToList();
             }
 
-            return new ListResponse<GetClientResponse>(clients.ToArray());
+            return clients.ToResponse();
         }
     }
 }

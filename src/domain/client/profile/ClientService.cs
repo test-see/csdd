@@ -16,16 +16,16 @@ namespace domain.client
 
         public async Task<Client> UpdateAsync(UpdateClient updated)
         {
-            return await _mediator.RequestAsync<StorageRequest<UpdateClient>, Client>(new StorageRequest<UpdateClient>(updated));
+            return await _mediator.RequestSingleAsync<UpdateClient, Client>(updated);
         }
 
         public async Task<Client> CreateAsync(CreateClient created)
         {
-            return await _mediator.RequestAsync<StorageRequest<CreateClient>, Client>(new StorageRequest<CreateClient>(created));
+            return await _mediator.RequestSingleAsync<CreateClient, Client>(created);
         }
         public async Task DeleteAsync(DeleteClient deleted)
         {
-            await _mediator.SendAsync(new StorageCommand<DeleteClient>(deleted));
+            await _mediator.SendStorageAsync(deleted);
         }
     }
 }

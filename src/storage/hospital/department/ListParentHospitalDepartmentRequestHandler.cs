@@ -12,19 +12,19 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListParentHospitalDepartmentStorageRequestHandler : IRequestHandler<StorageRequest<ListParentHospitalDepartmentRequest>, ListResponse<IdNameValueModel>>
+    public class ListParentHospitalDepartmentRequestHandler : IRequestHandler<ListParentHospitalDepartmentRequest, ListResponse<IdNameValueModel>>
     {
         private readonly DefaultDbContext _context;
-        public ListParentHospitalDepartmentStorageRequestHandler(DefaultDbContext context)
+        public ListParentHospitalDepartmentRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
 
-        public async Task<ListResponse<IdNameValueModel>> Handle(IReceiveContext<StorageRequest<ListParentHospitalDepartmentRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<IdNameValueModel>> Handle(IReceiveContext<ListParentHospitalDepartmentRequest> context, CancellationToken cancellationToken)
         {
             var data = await _context.HospitalDepartment.Select(x => new IdNameValueModel { Id = x.Id, Name = x.Name }).ToListAsync();
 
-            return new ListResponse<IdNameValueModel>(data.ToArray());
+            return data.ToResponse();
         }
     }
 }

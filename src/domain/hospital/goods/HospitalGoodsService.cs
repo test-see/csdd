@@ -21,39 +21,27 @@ namespace domain.hospital
         }
         public async Task<HospitalGoods> CreateAsync(CreateHospitalGoods created)
         {
-            return await _mediator.RequestAsync<StorageRequest<CreateHospitalGoods>, HospitalGoods>(new StorageRequest<CreateHospitalGoods>(created));
+            return await _mediator.RequestSingleAsync<CreateHospitalGoods, HospitalGoods>(created);
         }
 
         public async Task<HospitalGoods> UpdateAsync(UpdateHospitalGoods updated)
         {
-            var reponse = await _mediator.RequestAsync<StorageRequest<UpdateHospitalGoods>, HospitalGoods>(new StorageRequest<UpdateHospitalGoods>(updated));
+            var response = await _mediator.RequestSingleAsync<UpdateHospitalGoods, HospitalGoods>(updated);
             _eventlogHospitalGoodsContext.Create(new EventlogHospitalGoodsChangeValueModel
             {
-                GoodId = reponse.Id,
+                GoodId = response.Id,
                 ChangeValue = null,
             }, updated.UserId);
-            return reponse;
+            return response;
         }
 
         public async Task DeleteAsync(DeleteHospitalGoods deleted)
         {
-            await _mediator.SendAsync(new StorageCommand<DeleteHospitalGoods>(deleted));
+            await _mediator.SendStorageAsync(deleted);
         }
         public async Task<HospitalGoods> UpdateIsActiveAsync(UpdateHospitalGoodsIsActive updated)
         {
-            var reponse = await _mediator.RequestAsync<StorageRequest<UpdateHospitalGoodsIsActive>, HospitalGoods>(new StorageRequest<UpdateHospitalGoodsIsActive>(updated));
-            return reponse;
-        }
-
-        public HospitalGoodsValueModel GetValueByBarcode(string barcode)
-        {
-            return _hospitalGoodsRespository.GetValueByBarcode(barcode);
-        }
-        public HospitalGoodsIndexApiModel GetIndex(int id)
-        {
-            var goods = _hospitalGoodsRespository.GetIndex(id);
-            goods.Logs = _eventlogHospitalGoodsContext.GetList(id);
-            return goods;
+            return await _mediator.RequestSingleAsync<UpdateHospitalGoodsIsActive, HospitalGoods>(updated);
         }
     }
 }

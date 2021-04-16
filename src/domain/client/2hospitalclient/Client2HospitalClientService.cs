@@ -16,7 +16,7 @@ namespace domain.client
         }
         public async Task<Client> CreateAsync(CreateClient2HospitalClient created)
         {
-            return await _mediator.RequestAsync<StorageRequest<CreateClient2HospitalClient>, Client>(new StorageRequest<CreateClient2HospitalClient>(created));
+            return await _mediator.RequestSingleAsync<CreateClient2HospitalClient, Client>(created);
         }
         public async Task DeleteAsync(DeleteClient2HospitalClient deleted)
         {

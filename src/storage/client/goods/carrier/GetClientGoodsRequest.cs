@@ -1,11 +1,8 @@
-﻿namespace irespository.client.goods.model
+﻿using foundation.mediator;
+
+namespace irespository.client.goods.model
 {
-    public class GetClientGoodsRequest
+    public class GetClientGoodsRequest:GetRequest
     {
-        public GetClientGoodsRequest(params int[] ids)
-        {
-            Ids = ids;
-        }
-        public int[] Ids { get; set; }
     }
 }

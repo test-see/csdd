@@ -15,19 +15,19 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListHospitalDepartmentByHospitalIdStorageRequestHandler : IRequestHandler<StorageRequest<ListHospitalDepartmentByHospitalIdRequest>, ListResponse<ListHospitalDepartmentResponse>>
+    public class ListHospitalDepartmentByHospitalIdRequestHandler : IRequestHandler<ListHospitalDepartmentByHospitalIdRequest, ListResponse<ListHospitalDepartmentResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public ListHospitalDepartmentByHospitalIdStorageRequestHandler(DefaultDbContext context, IMediator mediator)
+        public ListHospitalDepartmentByHospitalIdRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;
         }
 
-        public async Task<ListResponse<ListHospitalDepartmentResponse>> Handle(IReceiveContext<StorageRequest<ListHospitalDepartmentByHospitalIdRequest>> context, CancellationToken cancellationToken)
+        public async Task<ListResponse<ListHospitalDepartmentResponse>> Handle(IReceiveContext<ListHospitalDepartmentByHospitalIdRequest> context, CancellationToken cancellationToken)
         {
-            var query = context.Message.Payload;
+            var query = context.Message;
             var sql = from r in _context.HospitalDepartment
                       join u in _context.User on r.CreateUserId equals u.Id
                       join d in _context.DataDepartmentType on r.DepartmentTypeId equals d.Id
@@ -49,14 +49,13 @@ namespace mediator.request.client
                           Parent = rp_def_t != null ? new IdNameValueModel { Id = rp_def_t.Id, Name = rp_def_t.Name } : null,
                       };
             var data = await sql.ToListAsync();
-            var request = new StorageRequest<GetHospitalRequest>(new GetHospitalRequest(data.Select(x => x.Hospital.Id).ToArray()));
-            var hospitals = await _mediator.RequestAsync<StorageRequest<GetHospitalRequest>, ListResponse<GetHospitalResponse>>(request);
+            var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(data.Select(x => x.Hospital.Id).ToList());
 
             foreach (var m in data)
             {
-                m.Hospital = hospitals.Payloads.FirstOrDefault(x => x.Id == m.Hospital.Id);
+                m.Hospital = hospitals.FirstOrDefault(x => x.Id == m.Hospital.Id);
             }
-            return new ListResponse<ListHospitalDepartmentResponse>(data.ToArray());
+            return data.ToResponse();
         }
     }
 }

@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListEventlogStorageRequestHandler : IRequestHandler<StorageRequest<PagerQuery<ListEventlogRequest>>, PagerResult<ListEventlogResponse>>
+    public class ListEventlogRequestHandler : IRequestHandler<PagerQuery<ListEventlogRequest>, PagerResult<ListEventlogResponse>>
     {
         private readonly DefaultDbContext _context;
-        public ListEventlogStorageRequestHandler(DefaultDbContext context)
+        public ListEventlogRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
 
-        public Task<PagerResult<ListEventlogResponse>> Handle(IReceiveContext<StorageRequest<PagerQuery<ListEventlogRequest>>> context, CancellationToken cancellationToken)
+        public Task<PagerResult<ListEventlogResponse>> Handle(IReceiveContext<PagerQuery<ListEventlogRequest>> context, CancellationToken cancellationToken)
         {
-            var query = context.Message.Payload;
+            var query = context.Message;
             var sql = from r in _context.Eventlog
                       join u in _context.User on r.OptionUserId equals u.Id
                       orderby r.Id descending

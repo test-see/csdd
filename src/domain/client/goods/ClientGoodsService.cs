@@ -17,15 +17,15 @@ namespace domain.client
 
         public async Task<ClientGoods> UpdateAsync(UpdateClientGoods updated)
         {
-            return await _mediator.RequestAsync<StorageRequest<UpdateClientGoods>, ClientGoods>(new StorageRequest<UpdateClientGoods>(updated));
+            return await _mediator.RequestSingleAsync<UpdateClientGoods, ClientGoods>(updated);
         }
         public async Task<ClientGoods> CreateAsync(CreateClientGoods created)
         {
-            return await _mediator.RequestAsync<StorageRequest<CreateClientGoods>, ClientGoods>(new StorageRequest<CreateClientGoods>(created));
+            return await _mediator.RequestSingleAsync<CreateClientGoods, ClientGoods>(created);
         }
         public async Task DeleteAsync(DeleteClientGoods deleted)
         {
-            await _mediator.SendAsync(new StorageCommand<DeleteClientGoods>(deleted));
+            await _mediator.SendStorageAsync(deleted);
         }
     }
 }
