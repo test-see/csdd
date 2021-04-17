@@ -7,9 +7,5 @@
   <ItemGroup>
     <ProjectReference Include="..\domain\domain.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="hospital\goodsclient\carrier\" />
-  </ItemGroup>
 
 </Project>
