@@ -1,28 +1,29 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
+using foundation.mediator;
 using irespository.hospital.goods.model;
 using irespository.hospital.model;
-using iservice.hospital;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.hospital
 {
     [Authorize(Policy = "RequireClientRole")]
     public class HospitalGoodsController : DefaultControllerBase
     {
-        private readonly IHospitalGoodsService _hospitalGoodsService;
-        public HospitalGoodsController(IHospitalGoodsService hospitalGoodsService)
+        private readonly IMediator _mediator;
+        public HospitalGoodsController(IMediator mediator)
         {
-            _hospitalGoodsService = hospitalGoodsService;
+            _mediator = mediator;
         }
-
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<ListHospitalGoodsRequest> query)
+        public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalGoodsRequest> query)
         {
             query.Query = query.Query ?? new ListHospitalGoodsRequest { };
-            var data = _hospitalGoodsService.GetPagerList(query);
+            var data = await _mediator.RequestPagerListAsync<ListHospitalGoodsRequest, ListHospitalGoodsResponse>(query);
             return Json(data);
         }
     }

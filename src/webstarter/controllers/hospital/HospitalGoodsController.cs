@@ -5,7 +5,6 @@ using foundation.ef5.poco;
 using foundation.mediator;
 using irespository.hospital.goods.model;
 using irespository.hospital.model;
-using iservice.hospital;
 using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

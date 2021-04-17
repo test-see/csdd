@@ -26,7 +26,7 @@ namespace mediator.client.profile
         }
         public async Task<ListResponse<GetHospitalGoodsResponse>> Handle(IReceiveContext<GetHospitalGoodsByBarcodeRequest> context, CancellationToken cancellationToken)
         {
-            var payload = context.Message.Payload;
+            var payload = context.Message;
             var sql = from r in _context.HospitalGoods
                       join u in _context.User on r.CreateUserId equals u.Id
                       where r.Barcode == payload.Barcode.Trim()

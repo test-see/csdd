@@ -1,6 +1,8 @@
-﻿namespace storage.hospitalgoods.carrier
+﻿using Mediator.Net.Contracts;
+
+namespace storage.hospitalgoods.carrier
 {
-    public class GetHospitalGoodsByBarcodeRequest
+    public class GetHospitalGoodsByBarcodeRequest:IRequest
     {
         public GetHospitalGoodsByBarcodeRequest(string barcode)
         {
