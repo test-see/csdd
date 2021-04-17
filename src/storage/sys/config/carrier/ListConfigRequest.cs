@@ -1,6 +1,6 @@
 ﻿namespace irespository.sys.model
 {
-    public class ConfigListQueryModel
+    public class ListConfigRequest
     {
     }
 }

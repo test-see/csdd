@@ -1,45 +1,48 @@
 ﻿using csdd.Controllers.Shared;
+using domain.client.profile.entity;
 using foundation.config;
+using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.sys.model;
-using iservice.sys;
+using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Sys
 {
     [Authorize(Policy = "RequireAdministratorRole")]
     public class ConfigController : DefaultControllerBase
     {
-        private readonly IConfigService _configService;
-        public ConfigController(IConfigService configService)
+        private readonly IMediator _mediator;
+        public ConfigController(IMediator mediator)
         {
-            _configService = configService;
+            _mediator = mediator;
         }
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<ConfigListQueryModel> query)
+        public async Task<JsonResult> ListAsync(PagerQuery<ListConfigRequest> query)
         {
-            var data = _configService.GetPagerList(query);
+            var data = await _mediator.RequestPagerListAsync<ListConfigRequest, ListConfigResponse>(query);
             return Json(data);
         }
-
-
         [HttpGet]
         [Route("{id}/delete")]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> DeleteAsync(int id)
         {
-            var data = _configService.Delete(id);
-            return Json(data);
+            await _mediator.SendPipeAsync(new DeleteConfig { Id = id });
+            return Json(id);
         }
-
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(ConfigCreateApiModel created)
+        public async Task<JsonResult> PostAsync(CreateConfig created)
         {
-            var data = _configService.Create(created, UserId);
+            created.UserId = UserId;
+            var data = await _mediator.RequestPipeAsync<CreateConfig, SysConfig>(created);
             return Json(data);
         }
+
     }
 }

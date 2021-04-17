@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Mediator.Net.Contracts;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace foundation.ef5.poco
 {
     [Table("sys_config")]
-    public class SysConfig
+    public class SysConfig:IResponse
     {
         [Column("id")]
         public int Id { get; set; }

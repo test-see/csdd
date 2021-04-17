@@ -18,8 +18,8 @@ namespace apitest.sys
             var message = await _rootpath
                 .AppendPathSegment("/api/Config/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<ConfigListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<ConfigListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<ListConfigRequest> { })
+                .ReceiveJson<OkMessage<PagerResult<ListConfigResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }

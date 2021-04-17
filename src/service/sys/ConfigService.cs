@@ -8,12 +8,12 @@ namespace service.sys
 {
     public class ConfigService : IConfigService
     {
-        private readonly ConfigContext _configContext;
-        public ConfigService(ConfigContext configContext)
+        private readonly domain.sys.ConfigService _configContext;
+        public ConfigService(domain.sys.ConfigService configContext)
         {
             _configContext = configContext;
         }
-        public PagerResult<ConfigListApiModel> GetPagerList(PagerQuery<ConfigListQueryModel> query)
+        public PagerResult<ListConfigResponse> GetPagerList(PagerQuery<ListConfigRequest> query)
         {
             return _configContext.GetPagerList(query);
         }

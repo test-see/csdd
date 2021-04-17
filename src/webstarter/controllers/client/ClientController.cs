@@ -26,7 +26,7 @@ namespace csdd.Controllers.Info
         [Route("{id}/index")]
         public async Task<JsonResult> GetAsync(int id)
         {
-            var data = await _mediator.RequestSingleAsync<GetClientRequest, GetClientResponse>(new GetClientRequest(id));
+            var data = await _mediator.RequestSingleByIdAsync<GetClientRequest, GetClientResponse>(id);
             return Json(data);
         }
         [HttpPost]

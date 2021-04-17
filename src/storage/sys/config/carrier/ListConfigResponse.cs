@@ -2,7 +2,7 @@
 
 namespace irespository.sys.model
 {
-    public class ConfigListApiModel
+    public class ListConfigResponse
     {
         public int Id { get; set; }
         public string Key { get; set; }
