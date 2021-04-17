@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Mediator.Net.Contracts;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace foundation.ef5.poco
 {
     [Table("eventlog_hospital_goods")]
-    public class EventlogHospitalGoods
+    public class EventlogHospitalGoods:IResponse
     {
         [Column("id")]
         public int Id { get; set; }

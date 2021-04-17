@@ -1,39 +1,26 @@
 ﻿using domain.eventlog.valueobjects;
-using irespository.eventlog;
+using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.eventlog.model;
-using irespository.hospital;
-using irespository.sys.model;
-using System.Collections.Generic;
+using irespository.hospital.goods.model;
+using Mediator.Net;
+using storage.hospitalgoods.carrier;
+using System.Threading.Tasks;
 
 namespace domain.eventlog
 {
     public class EventlogHospitalGoodsService
     {
-        private readonly IEventlogHospitalGoodsRespository _eventlogHospitalGoodsRespository;
-        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
-
-        public EventlogHospitalGoodsService(IEventlogHospitalGoodsRespository eventlogHospitalGoodsRespository,
-            IHospitalGoodsRespository hospitalGoodsRespository)
+        private readonly IMediator _mediator;
+        public EventlogHospitalGoodsService(IMediator mediator)
         {
-            _eventlogHospitalGoodsRespository = eventlogHospitalGoodsRespository;
-            _hospitalGoodsRespository = hospitalGoodsRespository;
+            _mediator = mediator;
         }
-        public void Create(EventlogHospitalGoodsChangeValueModel changed, int userId)
+        public async Task<EventlogHospitalGoods> CreateAsync(CreateEventlogHospitalGoods created)
         {
-            var goods = _hospitalGoodsRespository.Get(changed.GoodId);
-            var log = new EventlogHospitalGoodsCreateApiModel
-            {
-                GoodsId = changed.GoodId,
-                Title = $"修改药品 {goods.Name}",
-                Content = changed.ChangeValue == null ?
-                    "没有记录细节" :
-                    $"修改药品信息 {changed.ChangeValue.Field} 从 {changed.ChangeValue.Source} 改为 {changed.ChangeValue.Result}",
-            };
-            _eventlogHospitalGoodsRespository.Create(log, userId);
-        }
-        public IList<ListEventlogResponse> GetList(int goodsId)
-        {
-            return _eventlogHospitalGoodsRespository.GetList(goodsId);
+            var goods = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(created.GoodsId);
+            created.HospitalGoods = goods;
+            return await _mediator.RequestAsync<CreateEventlogHospitalGoods, EventlogHospitalGoods>(created);
         }
     }
 

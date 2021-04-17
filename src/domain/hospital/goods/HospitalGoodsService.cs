@@ -27,11 +27,12 @@ namespace domain.hospital
         public async Task<HospitalGoods> UpdateAsync(UpdateHospitalGoods updated)
         {
             var response = await _mediator.RequestSingleAsync<UpdateHospitalGoods, HospitalGoods>(updated);
-            _eventlogHospitalGoodsContext.Create(new EventlogHospitalGoodsChangeValueModel
+            await _eventlogHospitalGoodsContext.CreateAsync(new CreateEventlogHospitalGoods
             {
-                GoodId = response.Id,
+                GoodsId = response.Id,
                 ChangeValue = null,
-            }, updated.UserId);
+                UserId = updated.UserId,
+            });
             return response;
         }
 
