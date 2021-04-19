@@ -2,6 +2,7 @@
 using iservice.sys;
 using iservice.user;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Shared
 {
@@ -17,9 +18,9 @@ namespace csdd.Controllers.Shared
         }
         [HttpGet]
         [Route("index")]
-        public JsonResult GetProfile()
+        public async Task<JsonResult> GetProfileAsync()
         {
-            var data = _userHospitalService.GetIndexByUserIdAsync(Profile.Id);
+            var data = await _userHospitalService.GetIndexByUserIdAsync(Profile.Id);
             return Json(data);
         }
         [HttpGet]

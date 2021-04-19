@@ -4,6 +4,7 @@ using irespository.prescription.model;
 using iservice.prescription;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.prescription
 {
@@ -18,9 +19,9 @@ namespace webstarter.hospital.controllers.prescription
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<PrescriptionListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<PrescriptionListQueryModel> query)
         {
-            var data = _prescriptionService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
+            var data = await _prescriptionService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 
@@ -33,16 +34,16 @@ namespace webstarter.hospital.controllers.prescription
         }
         [HttpGet]
         [Route("{id}/submit")]
-        public JsonResult Submit(int id)
+        public async Task<JsonResult> SubmitAsync(int id)
         {
-            var data = _prescriptionService.SubmitAsync(id, Profile.Id);
+            var data = await _prescriptionService.SubmitAsync(id, Profile.Id);
             return Json(data);
         }
         [HttpGet]
         [Route("{id}/index")]
-        public JsonResult GetIndex(int id)
+        public async Task<JsonResult> GetIndexAsync(int id)
         {
-            var data = _prescriptionService.GetIndexAsync(id);
+            var data = await _prescriptionService.GetIndexAsync(id);
             return Json(data);
         }
     }

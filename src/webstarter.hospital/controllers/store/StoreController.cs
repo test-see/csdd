@@ -5,6 +5,7 @@ using irespository.store.profile.model;
 using iservice.store;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.store
 {
@@ -19,9 +20,9 @@ namespace webstarter.hospital.controllers.store
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<StoreListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<StoreListQueryModel> query)
         {
-            var data = _storeService.GetPagerListAsync(query);
+            var data = await _storeService.GetPagerListAsync(query);
             return Json(data);
         }
 

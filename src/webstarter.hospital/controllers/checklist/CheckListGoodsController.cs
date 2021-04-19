@@ -4,6 +4,7 @@ using irespository.checklist.model;
 using iservice.checklist;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.CheckList
 {
@@ -18,9 +19,9 @@ namespace webstarter.hospital.controllers.CheckList
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<CheckListGoodsQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<CheckListGoodsQueryModel> query)
         {
-            var data = _CheckListGoodsService.GetPagerListAsync(query);
+            var data = await _CheckListGoodsService.GetPagerListAsync(query);
             return Json(data);
         }
 

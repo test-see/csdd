@@ -4,6 +4,7 @@ using irespository.storeinout.model;
 using iservice.store;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.StoreInout
 {
@@ -18,9 +19,9 @@ namespace webstarter.hospital.controllers.StoreInout
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<StoreInoutListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<StoreInoutListQueryModel> query)
         {
-            var data = _storeInoutService.GetPagerListAsync(query);
+            var data = await _storeInoutService.GetPagerListAsync(query);
             return Json(data);
         }
 
@@ -51,17 +52,17 @@ namespace webstarter.hospital.controllers.StoreInout
         }
         [HttpGet]
         [Route("{id}/index")]
-        public JsonResult GetIndex(int id)
+        public async Task<JsonResult> GetIndexAsync(int id)
         {
-            var data = _storeInoutService.GetIndexAsync(id);
+            var data = await _storeInoutService.GetIndexAsync(id);
             return Json(data);
         }
 
         [HttpGet]
         [Route("{id}/submit")]
-        public JsonResult Submit(int id)
+        public async Task<JsonResult> SubmitAsync(int id)
         {
-            var data = _storeInoutService.SubmitAsync(id, Profile.Id);
+            var data = await _storeInoutService.SubmitAsync(id, Profile.Id);
             return Json(data);
         }
 

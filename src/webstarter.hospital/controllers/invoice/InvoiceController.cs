@@ -5,6 +5,7 @@ using irespository.invoice.profile.enums;
 using iservice.invoice;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.invoice
 {
@@ -19,9 +20,9 @@ namespace webstarter.hospital.controllers.invoice
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<InvoiceListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<InvoiceListQueryModel> query)
         {
-            var data = _InvoiceService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
+            var data = await _InvoiceService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 
@@ -55,9 +56,9 @@ namespace webstarter.hospital.controllers.invoice
 
         [HttpGet]
         [Route("{id}/index")]
-        public JsonResult GetIndex(int id)
+        public async Task<JsonResult> GetIndexAsync(int id)
         {
-            var data = _InvoiceService.GetIndexAsync(id);
+            var data = await _InvoiceService.GetIndexAsync(id);
             return Json(data);
         }
 
@@ -71,9 +72,9 @@ namespace webstarter.hospital.controllers.invoice
 
         [HttpGet]
         [Route("{id}/generate")]
-        public JsonResult Generate(int id)
+        public async Task<JsonResult> GenerateAsync(int id)
         {
-            var data = _InvoiceService.GenerateAsync(id);
+            var data = await _InvoiceService.GenerateAsync(id);
             return Json(data);
         }
 
@@ -95,17 +96,17 @@ namespace webstarter.hospital.controllers.invoice
 
         [HttpPost]
         [Route("index/report/list")]
-        public JsonResult GetPagerRecordListByReportId(PagerQuery<int> query)
+        public async Task<JsonResult> GetPagerRecordListByReportIdAsync(PagerQuery<int> query)
         {
-            var data = _InvoiceService.GetPagerRecordListByReportIdAsync(query);
+            var data = await _InvoiceService.GetPagerRecordListByReportIdAsync(query);
             return Json(data);
         }
 
         [HttpPost]
         [Route("index/storerecord/list")]
-        public JsonResult GetPagerRecordListByInvoiceId(PagerQuery<int> query)
+        public async Task<JsonResult> GetPagerRecordListByInvoiceIdAsync(PagerQuery<int> query)
         {
-            var data = _InvoiceService.GetPagerRecordListByInvoiceIdAsync(query);
+            var data = await _InvoiceService.GetPagerRecordListByInvoiceIdAsync(query);
             return Json(data);
         }
     }
