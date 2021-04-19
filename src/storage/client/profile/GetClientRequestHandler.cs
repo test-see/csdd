@@ -37,31 +37,31 @@ namespace mediator.client.profile
                                      CreateUserName = u.Username,
                                  }).ToListAsync();
 
-            var sql = from p in _context.Client2HospitalClient
-                      join c in _context.HospitalClient on p.HospitalClientId equals c.Id
-                      join h in _context.Hospital on c.HospitalId equals h.Id
-                      where payload.Ids.Contains(p.ClientId)
-                      select new ListClient2HospitalClientResponse
-                      {
-                          Client = new GetClientResponse { Id = p.ClientId },
-                          ClientMappingId = p.Id,
-                          HospitalClient = new GetHospitalClientResponse
-                          {
-                              Id = c.Id,
-                          },
-                      };
+            //var sql = from p in _context.Client2HospitalClient
+            //          join c in _context.HospitalClient on p.HospitalClientId equals c.Id
+            //          join h in _context.Hospital on c.HospitalId equals h.Id
+            //          where payload.Ids.Contains(p.ClientId)
+            //          select new ListClient2HospitalClientResponse
+            //          {
+            //              Client = new GetClientResponse { Id = p.ClientId },
+            //              ClientMappingId = p.Id,
+            //              HospitalClient = new GetHospitalClientResponse
+            //              {
+            //                  Id = c.Id,
+            //              },
+            //          };
 
-            var mappings = await sql.ToListAsync();
-            var hospitalclients = await _mediator.ListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(mappings.Select(x => x.HospitalClient.Id).ToArray());
-            foreach (var m in mappings)
-            {
-                m.HospitalClient = hospitalclients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
-                m.Client = clients.First(x => x.Id == m.Client.Id);
-            }
-            foreach (var client in clients)
-            {
-                client.HospitalClients = mappings.Where(x => x.Client.Id == client.Id).ToList();
-            }
+            //var mappings = await sql.ToListAsync();
+            //var hospitalclients = await _mediator.ListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(mappings.Select(x => x.HospitalClient.Id).ToArray());
+            //foreach (var m in mappings)
+            //{
+            //    m.HospitalClient = hospitalclients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
+            //    m.Client = clients.First(x => x.Id == m.Client.Id);
+            //}
+            //foreach (var client in clients)
+            //{
+            //    client.HospitalClients = mappings.Where(x => x.Client.Id == client.Id).ToList();
+            //}
 
             return clients.ToResponse();
         }

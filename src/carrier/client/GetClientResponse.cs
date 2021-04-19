@@ -11,6 +11,6 @@ namespace nouns.client.profile
         public string Name { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }
-        public IList<ListClient2HospitalClientResponse> HospitalClients { get; set; }
+        //public IList<ListClient2HospitalClientResponse> HospitalClients { get; set; }
     }
 }
