@@ -22,6 +22,7 @@ namespace mediator.client.profile
         public async Task<ListResponse<IdNameValueModel>> Handle(IReceiveContext<ListDepartmentTypeRequest> context, CancellationToken cancellationToken)
         {
             var data = await  _context.DataDepartmentType.Select(x => new IdNameValueModel { Id = x.Id, Name = x.Name }).ToListAsync();
+
             return data.ToResponse();
         }
     }
