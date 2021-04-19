@@ -19,7 +19,7 @@ namespace csdd.Controllers.Shared
         [Route("index")]
         public JsonResult GetProfile()
         {
-            var data = _userClientService.GetIndexByUserId(Profile.Id);
+            var data = _userClientService.GetIndexByUserIdAsync(Profile.Id);
             return Json(data);
         }
         [HttpGet]

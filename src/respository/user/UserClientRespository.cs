@@ -1,25 +1,27 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.client;
 using irespository.user.client;
 using irespository.user.client.model;
 using irespository.user.profile.model;
+using Mediator.Net;
 using nouns.client.profile;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.user
 {
     public class UserClientRespository : IUserClientRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IClientRespository _ClientRespository;
-        public UserClientRespository(DefaultDbContext context,
-            IClientRespository ClientRespository)
+        private readonly IMediator _mediator;
+        public UserClientRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _ClientRespository = ClientRespository;
+            _mediator = mediator;
         }
         public UserClient Create(UserClientCreateApiModel created, int userId)
         {
@@ -46,7 +48,7 @@ namespace respository.user
             return id;
         }
 
-        public PagerResult<UserClientListApiModel> GetPagerList(PagerQuery<UserClientListQueryModel> query)
+        public async Task<PagerResult<UserClientListApiModel>> GetPagerListAsync(PagerQuery<UserClientListQueryModel> query)
         {
             var sql = from r in _context.UserClient
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -84,7 +86,7 @@ namespace respository.user
             var data = new PagerResult<UserClientListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var clients = _ClientRespository.GetValue(data.Result.Select(x=>x.Client.Id).ToArray());
+                var clients = await _mediator.RequestListByIdsAsync<GetClientRequest, GetClientResponse>(data.Select(x => x.Client.Id));
                 foreach (var m in data.Result)
                 {
                     m.Client = clients.FirstOrDefault(x => x.Id == m.Client.Id);
@@ -94,7 +96,7 @@ namespace respository.user
         }
 
 
-        public UserClientIndexApiModel GetIndexByUserId(int userId)
+        public async Task<UserClientIndexApiModel> GetIndexByUserIdAsync(int userId)
         {
             var sql = from r in _context.UserClient
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -120,7 +122,7 @@ namespace respository.user
             var user = sql.FirstOrDefault();
             if (user != null)
             {
-                user.Client = _ClientRespository.GetValue(new int[] { user.Client.Id }).FirstOrDefault();
+                user.Client = await _mediator.RequestSingleByIdAsync<GetClientRequest, GetClientResponse>(user.Client.Id );
             }
             return user;
         }

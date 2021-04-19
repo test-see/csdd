@@ -20,7 +20,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("list")]
         public JsonResult GetList(PagerQuery<PurchaseSettingListQueryModel> query)
         {
-            var data = _purchaseSettingService.GetPagerList(query, HospitalDepartment.Hospital.Id);
+            var data = _purchaseSettingService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 
@@ -55,7 +55,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("{id}/index")]
         public JsonResult GetIndex(int id)
         {
-            var data = _purchaseSettingService.GetIndex(id);
+            var data = _purchaseSettingService.GetIndexAsync(id);
             return Json(data);
         }
     }

@@ -68,7 +68,7 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseGoodsBillnoListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
+                var purachses = await _purchaseRespository.GetValueAsync(data.Result.Select(x => x.Purchase.Id).ToArray());
                 var clients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
                 var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 
@@ -119,7 +119,7 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseGoodsBillnoListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
+                var purachses = await _purchaseRespository.GetValueAsync(data.Result.Select(x => x.Purchase.Id).ToArray());
                 var clients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
                 var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
 
@@ -164,7 +164,7 @@ namespace respository.purchase
                       };
             var data = sql.ToList();
 
-            var purachses = _purchaseRespository.GetValue(data.Select(x => x.Purchase.Id).ToArray());
+            var purachses = await _purchaseRespository.GetValueAsync(data.Select(x => x.Purchase.Id).ToArray());
             var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
             foreach (var m in data)
             {
@@ -293,7 +293,7 @@ namespace respository.purchase
             if (profile != null)
             {
                 profile.HospitalGoods = goods;
-                profile.Purchase = _purchaseRespository.GetValue(new int[] { profile.Purchase.Id }).FirstOrDefault();
+                profile.Purchase = (await _purchaseRespository.GetValueAsync(new int[] { profile.Purchase.Id })).FirstOrDefault();
             }
             return profile;
         }

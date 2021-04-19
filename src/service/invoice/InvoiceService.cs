@@ -6,6 +6,7 @@ using irespository.invoice.profile.enums;
 using irespository.store.profile.model;
 using iservice.invoice;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace service.invoice
 {
@@ -16,9 +17,9 @@ namespace service.invoice
         {
             _InvoiceContext = InvoiceContext;
         }
-        public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<InvoiceListApiModel>> GetPagerListAsync(PagerQuery<InvoiceListQueryModel> query, int hospitalId)
         {
-            return _InvoiceContext.GetPagerList(query, hospitalId);
+            return await _InvoiceContext.GetPagerListAsync(query, hospitalId);
         }
         public Invoice Create(InvoiceCreateApiModel created, int userId)
         {
@@ -35,9 +36,9 @@ namespace service.invoice
             return _InvoiceContext.Update(id, updated);
         }
 
-        public InvoiceIndexApiModel GetIndex(int id)
+        public async Task<InvoiceIndexApiModel> GetIndexAsync(int id)
         {
-            return _InvoiceContext.GetIndex(id);
+            return await _InvoiceContext.GetIndexAsync(id);
         }
 
         public int Submit(int id)
@@ -46,9 +47,9 @@ namespace service.invoice
         }
 
 
-        public int Generate(int invoiceId)
+        public async Task<int> GenerateAsync(int invoiceId)
         {
-            return _InvoiceContext.Generate(invoiceId);
+            return await _InvoiceContext.GenerateAsync(invoiceId);
         }
 
 
@@ -56,13 +57,13 @@ namespace service.invoice
         {
             return _InvoiceContext.GetPagerReportList(query);
         }
-        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByInvoiceId(PagerQuery<int> query)
+        public async Task<PagerResult<StoreRecordListApiModel>> GetPagerRecordListByInvoiceIdAsync(PagerQuery<int> query)
         {
-            return _InvoiceContext.GetPagerRecordListByInvoiceIdAsync(query);
+            return await _InvoiceContext.GetPagerRecordListByInvoiceIdAsync(query);
         }
-        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByReportId(PagerQuery<int> query)
+        public async Task<PagerResult<StoreRecordListApiModel>> GetPagerRecordListByReportIdAsync(PagerQuery<int> query)
         {
-            return _InvoiceContext.GetPagerRecordListByReportIdAsync(query);
+            return await _InvoiceContext.GetPagerRecordListByReportIdAsync(query);
         }
         public IEnumerable<DataInvoiceType> GetInvoiceTypeList()
         {

@@ -30,9 +30,9 @@ namespace domain.prescription
             _prescriptionGoodsRespository = prescriptionGoodsRespository;
         }
 
-        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<PrescriptionListApiModel>> GetPagerListAsync(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
         {
-            return _prescriptionRespository.GetPagerList(query, hospitalId);
+            return await _prescriptionRespository.GetPagerListAsync(query, hospitalId);
         }
 
         public Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId)
@@ -42,7 +42,7 @@ namespace domain.prescription
 
         public async Task<int> SubmitAsync(int id, int userId)
         {
-            var model = _prescriptionRespository.GetIndex(id);
+            var model = await _prescriptionRespository.GetIndexAsync(id);
             var list = await _prescriptionGoodsRespository.GetListAsync(id);
             var goods = list.Select(x => new StoreChangeGoodsValueModel
             {
@@ -62,9 +62,9 @@ namespace domain.prescription
             }
             return 0;
         }
-        public PrescriptionIndexApiModel GetIndex(int id)
+        public async Task<PrescriptionIndexApiModel> GetIndexAsync(int id)
         {
-            return _prescriptionRespository.GetIndex(id);
+            return await _prescriptionRespository.GetIndexAsync(id);
         }
     }
 }

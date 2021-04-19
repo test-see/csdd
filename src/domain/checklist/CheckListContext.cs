@@ -31,9 +31,9 @@ namespace domain.checklist
             _checkListGoodsRespository = checkListGoodsRespository;
         }
 
-        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<CheckListApiModel>> GetPagerListAsync(PagerQuery<CheckListQueryModel> query, int hospitalId)
         {
-            return _checkListRespository.GetPagerList(query, hospitalId);
+            return await _checkListRespository.GetPagerListAsync(query, hospitalId);
         }
         public CheckList Create(CheckListCreateApiModel created, int userId)
         {
@@ -47,9 +47,9 @@ namespace domain.checklist
         {
             return _checkListRespository.Update(id, updated);
         }
-        public CheckListIndexApiModel GetIndex(int id)
+        public async Task<CheckListIndexApiModel> GetIndexAsync(int id)
         {
-            var goods = _checkListRespository.GetIndex(id);
+            var goods = await _checkListRespository.GetIndexAsync(id);
             return goods;
         }
         public int Submit(int id)
@@ -58,7 +58,7 @@ namespace domain.checklist
         }
         public async Task<int> BillAsync(int id, int userId)
         {
-            var model = _checkListRespository.GetIndex(id);
+            var model = await _checkListRespository.GetIndexAsync(id);
             var list = await _checkListGoodsRespository.GetPreviewListAsync(id);
             using (var trans = _defaultDbTransaction.Begin())
             {

@@ -1,8 +1,6 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
-using irespository.hospital.client.model;
 using irespository.purchase.model;
-using iservice.hospital;
 using iservice.purchase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +20,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("list")]
         public JsonResult GetList(PagerQuery<PurchaseGoodsBillnoListQueryModel> query)
         {
-            var data = _PurchaseGoodsBillnoService.GetPagerListByClient(query, Client.Id);
+            var data = _PurchaseGoodsBillnoService.GetPagerListByClientAsync(query, Client.Id);
             return Json(data);
         }
 

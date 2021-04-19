@@ -11,7 +11,7 @@ namespace iservice.user
     {
         User Login(LoginApiModel login);
         Task<string> GenerateVerificationCodeAsync(string phone);
-        LoginHospitalValueModel LoginByHospital(LoginApiModel login);
-        LoginClientValueModel LoginByClient(LoginApiModel login);
+        Task<LoginHospitalValueModel> LoginByHospitalAsync(LoginApiModel login);
+        Task<LoginClientValueModel> LoginByClientAsync(LoginApiModel login);
     }
 }

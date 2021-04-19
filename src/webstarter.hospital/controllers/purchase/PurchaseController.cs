@@ -24,7 +24,7 @@ namespace webstarter.hospital.controllers.purchase
             query = query ?? new PagerQuery<PurchaseListQueryModel> { };
             query.Query = query.Query ?? new PurchaseListQueryModel { };
             query.Query.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = _PurchaseService.GetPagerList(query);
+            var data = _PurchaseService.GetPagerListAsync(query);
             return Json(data);
         }
 
@@ -59,7 +59,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("{id}/index")]
         public JsonResult GetIndex(int id)
         {
-            var data = _PurchaseService.GetIndex(id);
+            var data = _PurchaseService.GetIndexAsync(id);
             return Json(data);
         }
 

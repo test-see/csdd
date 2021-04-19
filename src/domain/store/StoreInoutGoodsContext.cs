@@ -3,6 +3,7 @@ using foundation.ef5.poco;
 using irespository.storeinout;
 using irespository.storeinout.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace domain.storeinout
 {
@@ -14,13 +15,13 @@ namespace domain.storeinout
             _StoreInoutGoodsRespository = StoreInoutGoodsRespositoryy;
         }
 
-        public PagerResult<StoreInoutGoodsListApiModel> GetPagerList(PagerQuery<StoreInoutGoodsListQueryModel> query)
+        public async Task<PagerResult<StoreInoutGoodsListApiModel>> GetPagerListAsync(PagerQuery<StoreInoutGoodsListQueryModel> query)
         {
-            return _StoreInoutGoodsRespository.GetPagerList(query);
+            return await _StoreInoutGoodsRespository.GetPagerListAsync(query);
         }
-        public IList<StoreInoutGoodsListApiModel> GetListByStoreInout(int storeInoutId)
+        public async Task<IList<StoreInoutGoodsListApiModel>> GetListByStoreInoutAsync(int storeInoutId)
         {
-            return _StoreInoutGoodsRespository.GetListByStoreInout(storeInoutId);
+            return await _StoreInoutGoodsRespository.GetListByStoreInoutAsync(storeInoutId);
         }
         public StoreInoutGoods Create(StoreInoutGoodsCreateApiModel created, int userId)
         {

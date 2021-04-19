@@ -1,8 +1,6 @@
 ﻿using csdd.Controllers.Shared;
 using foundation.config;
-using irespository.hospital.client.model;
 using irespository.purchase.model;
-using iservice.hospital;
 using iservice.purchase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,19 +11,16 @@ namespace webstarter.hospital.controllers.purchase
     public class PurchaseGoodsController : DefaultControllerBase
     {
         private readonly IPurchaseGoodsService _PurchaseGoodsService;
-        private readonly IHospitalClientService _hospitalClientService; 
-        public PurchaseGoodsController(IPurchaseGoodsService PurchaseGoodsService,
-            IHospitalClientService hospitalClientService)
+        public PurchaseGoodsController(IPurchaseGoodsService PurchaseGoodsService)
         {
             _PurchaseGoodsService = PurchaseGoodsService;
-            _hospitalClientService = hospitalClientService;
         }
 
         [HttpPost]
         [Route("list")]
         public JsonResult GetList(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
-            var data = _PurchaseGoodsService.GetPagerList(query);
+            var data = _PurchaseGoodsService.GetPagerListAsync(query);
             return Json(data);
         }
 
@@ -52,16 +47,6 @@ namespace webstarter.hospital.controllers.purchase
         public JsonResult Update(int id, PurchaseGoodsUpdateApiModel updated)
         {
             var data = _PurchaseGoodsService.Update(id, updated);
-            return Json(data);
-        }
-
-        [HttpPost]
-        [Route("client")]
-        public JsonResult GetHospitalClientList(PagerQuery<ListHospitalClientRequest> query)
-        {
-            query.Query = query.Query ?? new ListHospitalClientRequest { };
-            query.Query.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = _hospitalClientService.GetPagerList(query);
             return Json(data);
         }
     }

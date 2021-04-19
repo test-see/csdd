@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
 using iservice.purchase;
+using System.Threading.Tasks;
 
 namespace service.purchase
 {
@@ -13,9 +14,9 @@ namespace service.purchase
         {
             _purchaseSettingContext = purchaseSettingContext;
         }
-        public PagerResult<PurchaseSettingListApiModel> GetPagerList(PagerQuery<PurchaseSettingListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<PurchaseSettingListApiModel>> GetPagerListAsync(PagerQuery<PurchaseSettingListQueryModel> query, int hospitalId)
         {
-            return _purchaseSettingContext.GetPagerList(query, hospitalId);
+            return await _purchaseSettingContext.GetPagerListAsync(query, hospitalId);
         }
         public PurchaseSetting Create(PurchaseSettingCreateApiModel created, int departmentId, int userId)
         {
@@ -32,9 +33,9 @@ namespace service.purchase
             return _purchaseSettingContext.Update(id, updated);
         }
 
-        public PurchaseSettingIndexApiModel GetIndex(int id)
+        public async Task<PurchaseSettingIndexApiModel> GetIndexAsync(int id)
         {
-            return _purchaseSettingContext.GetIndex(id);
+            return await _purchaseSettingContext.GetIndexAsync(id);
         }
     }
 }

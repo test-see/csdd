@@ -5,6 +5,7 @@ using irespository.store.model;
 using irespository.store.profile.model;
 using iservice.store;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace service.store
 {
@@ -15,9 +16,9 @@ namespace service.store
         {
             _storeContext = storeContext;
         }
-        public PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query)
+        public async Task<PagerResult<StoreListApiModel>> GetPagerListAsync(PagerQuery<StoreListQueryModel> query)
         {
-            return _storeContext.GetPagerList(query);
+            return await _storeContext.GetPagerListAsync(query);
         }
         public Store GetIndexByGoods(int department, int goods)
         {

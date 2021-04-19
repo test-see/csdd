@@ -28,9 +28,9 @@ namespace csdd.Controllers.Shared
         }
         [HttpPost]
         [AllowAnonymous]
-        public JsonResult Post(LoginApiModel login)
+        public async Task<JsonResult> PostAsync(LoginApiModel login)
         {
-            var profile = _userService.LoginByHospital(login);
+            var profile = await _userService.LoginByHospitalAsync(login);
 
             var identity = new ClaimsIdentity();
             var key = Encoding.UTF8.GetBytes(_appConfig.Authentication.IssuerSigningKey);

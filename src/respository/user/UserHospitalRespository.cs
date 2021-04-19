@@ -1,26 +1,30 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.profile.model;
 using irespository.user.hospital;
 using irespository.user.hospital.model;
 using irespository.user.profile.model;
+using Mediator.Net;
+using storage.hospital.department.carrier;
+using storage.hospitaldepartment.carrier;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.user
 {
     public class UserHospitalRespository : IUserHospitalRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
-        public UserHospitalRespository(DefaultDbContext context,
-            IHospitalDepartmentRespository hospitalDepartmentRespository)
+        private readonly IMediator _mediator;
+        public UserHospitalRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _mediator = mediator;
         }
         public UserHospital Create(UserHospitalCreateApiModel created, int userId)
         {
@@ -47,7 +51,7 @@ namespace respository.user
             return id;
         }
 
-        public PagerResult<UserHospitalListApiModel> GetPagerList(PagerQuery<UserHospitalListQueryModel> query)
+        public async Task<PagerResult<UserHospitalListApiModel>> GetPagerListAsync(PagerQuery<UserHospitalListQueryModel> query)
         {
             var sql = from r in _context.UserHospital
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -72,7 +76,9 @@ namespace respository.user
                       };
             if (query.Query != null && query.Query.HospitalId != null)
             {
-                var departments = _hospitalDepartmentRespository.GetListByHospitalId(query.Query.HospitalId.Value);
+               var departments= await _mediator.RequestListAsync<ListHospitalDepartmentRequest, ListHospitalDepartmentResponse>(new ListHospitalDepartmentRequest { 
+                 HospitalId= query.Query.HospitalId.Value,
+                });
                 sql = sql.Where(x => departments.Select(x => x.Id).ToList().Contains(x.HospitalDepartment.Id));
             }
             if (!string.IsNullOrEmpty(query.Query?.Phone))
@@ -82,7 +88,7 @@ namespace respository.user
             var data = new PagerResult<UserHospitalListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
+                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
@@ -92,7 +98,7 @@ namespace respository.user
         }
 
 
-        public UserHospitalIndexApiModel GetIndexByUserId(int userId)
+        public async Task<UserHospitalIndexApiModel> GetIndexByUserIdAsync(int userId)
         {
             var sql = from r in _context.UserHospital
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -118,7 +124,7 @@ namespace respository.user
             var user = sql.FirstOrDefault();
             if (user != null)
             {
-                user.HospitalDepartment = _hospitalDepartmentRespository.GetValue(new int[] { user.HospitalDepartment.Id }).FirstOrDefault();
+                user.HospitalDepartment = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(user.HospitalDepartment.Id);
             }
             return user;
         }

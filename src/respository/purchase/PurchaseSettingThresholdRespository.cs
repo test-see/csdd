@@ -1,27 +1,30 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital;
 using irespository.hospital.goods.model;
 using irespository.purchase;
 using irespository.purchase.model;
+using Mediator.Net;
+using storage.hospitalgoods.carrier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.purchase
 {
     public class PurchaseSettingThresholdRespository : IPurchaseSettingThresholdRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
-        public PurchaseSettingThresholdRespository(DefaultDbContext context,
-            IHospitalGoodsRespository hospitalGoodsRespository)
+        private readonly IMediator _mediator;
+        public PurchaseSettingThresholdRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _hospitalGoodsRespository = hospitalGoodsRespository;
+            _mediator = mediator;
         }
-        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
+        public async Task<PagerResult<PurchaseSettingThresholdListApiModel>> GetPagerListAsync(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
         {
             var sql = from r in _context.PurchaseSettingThreshold
                       join p in _context.PurchaseSetting on r.PurchaseSettingId equals p.Id
@@ -35,7 +38,7 @@ namespace respository.purchase
                           CreateUserName = u.Username,
                           DownQty = r.DownQty,
                           UpQty = r.UpQty,
-                          HospitalGoods = new HospitalGoodsValueModel
+                          HospitalGoods = new GetHospitalGoodsResponse
                           {
                               Id = r.HospitalGoodsId,
                           },
@@ -44,7 +47,7 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseSettingThresholdListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);

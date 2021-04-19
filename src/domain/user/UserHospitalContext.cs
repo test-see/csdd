@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.user.hospital;
 using irespository.user.hospital.model;
+using System.Threading.Tasks;
 
 namespace domain.user
 {
@@ -13,9 +14,9 @@ namespace domain.user
             _userHospitalRespository = userHospitalRespository;
         }
 
-        public PagerResult<UserHospitalListApiModel> GetPagerList(PagerQuery<UserHospitalListQueryModel> query)
+        public async Task<PagerResult<UserHospitalListApiModel>> GetPagerListAsync(PagerQuery<UserHospitalListQueryModel> query)
         {
-            return _userHospitalRespository.GetPagerList(query);
+            return await _userHospitalRespository.GetPagerListAsync(query);
         }
         public UserHospital Create(UserHospitalCreateApiModel created, int userId)
         {
@@ -25,9 +26,9 @@ namespace domain.user
         {
             return _userHospitalRespository.Delete(id);
         }
-        public UserHospitalIndexApiModel GetIndexByUserId(int userId)
+        public async Task<UserHospitalIndexApiModel> GetIndexByUserIdAsync(int userId)
         {
-            return _userHospitalRespository.GetIndexByUserId(userId);
+            return await _userHospitalRespository.GetIndexByUserIdAsync(userId);
         }
     }
 }

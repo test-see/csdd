@@ -7,9 +7,9 @@ namespace iservice.prescription
 {
     public interface IPrescriptionService
     {
-        PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId);
+        Task<PagerResult<PrescriptionListApiModel>> GetPagerListAsync(PagerQuery<PrescriptionListQueryModel> query, int hospitalId);
         Prescription Create(PrescriptionCreateApiModel created, int departmentId, int userId);
         Task<int> SubmitAsync(int id, int userId);
-        PrescriptionIndexApiModel GetIndex(int id);
+        Task<PrescriptionIndexApiModel> GetIndexAsync(int id);
     }
 }

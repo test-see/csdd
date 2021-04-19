@@ -20,7 +20,7 @@ namespace webstarter.hospital.controllers.StoreInout
         [Route("list")]
         public JsonResult GetList(PagerQuery<StoreInoutListQueryModel> query)
         {
-            var data = _storeInoutService.GetPagerList(query);
+            var data = _storeInoutService.GetPagerListAsync(query);
             return Json(data);
         }
 
@@ -53,7 +53,7 @@ namespace webstarter.hospital.controllers.StoreInout
         [Route("{id}/index")]
         public JsonResult GetIndex(int id)
         {
-            var data = _storeInoutService.GetIndex(id);
+            var data = _storeInoutService.GetIndexAsync(id);
             return Json(data);
         }
 
@@ -61,7 +61,7 @@ namespace webstarter.hospital.controllers.StoreInout
         [Route("{id}/submit")]
         public JsonResult Submit(int id)
         {
-            var data = _storeInoutService.Submit(id, Profile.Id);
+            var data = _storeInoutService.SubmitAsync(id, Profile.Id);
             return Json(data);
         }
 

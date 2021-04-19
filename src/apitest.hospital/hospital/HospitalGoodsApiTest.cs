@@ -30,7 +30,7 @@ namespace apitest.hospital
                 .AppendPathSegment("/api/HospitalGoods/store/list")
                 .WithOAuthBearerToken(await getToken())
                 .PostJsonAsync(new PagerQuery<ListHospitalGoodsRequest> { })
-                .ReceiveJson<OkMessage<PagerResult<HospitalGoodsStoreListApiModel>>>();
+                .ReceiveJson<OkMessage<PagerResult<ListHospitalGoodsStoreResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
@@ -42,7 +42,7 @@ namespace apitest.hospital
                 .AppendPathSegment("/api/HospitalGoods/query/index")
                 .WithOAuthBearerToken(await getToken())
                 .SetQueryParam("barcode", "1")
-                .GetJsonAsync<OkMessage<HospitalGoodsValueModel>>();
+                .GetJsonAsync<OkMessage<GetHospitalGoodsResponse>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data != null);
         }
@@ -100,7 +100,7 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalGoods/1/index")
                 .WithOAuthBearerToken(await getToken())
-                .GetJsonAsync<OkMessage<HospitalGoodsIndexApiModel>>();
+                .GetJsonAsync<OkMessage<GetHospitalGoodsResponse>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data != null);
         }

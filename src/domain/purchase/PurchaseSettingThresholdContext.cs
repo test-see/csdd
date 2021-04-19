@@ -4,6 +4,7 @@ using irespository.data;
 using irespository.purchase;
 using irespository.purchase.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace domain.purchase
 {
@@ -18,9 +19,9 @@ namespace domain.purchase
             _purchaseThresholdTypeRespository = purchaseThresholdTypeRespository;
         }
 
-        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
+        public async Task<PagerResult<PurchaseSettingThresholdListApiModel>> GetPagerListAsync(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
         {
-            return _purchaseSettingThresholdRespository.GetPagerList(query);
+            return await _purchaseSettingThresholdRespository.GetPagerListAsync(query);
         }
         public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)
         {

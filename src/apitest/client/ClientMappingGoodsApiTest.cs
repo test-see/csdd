@@ -17,7 +17,7 @@ namespace apitest.client
             var Client = await _rootpath
                 .AppendPathSegment("/api/ClientMappingGoods/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new ClientGoods2HospitalGoodsCreateApiModel
+                .PostJsonAsync(new CreateClientGoods2HospitalGoodsRequest
                 {
                     ClientGoodsId = 1,
                     ClientQty = 1,

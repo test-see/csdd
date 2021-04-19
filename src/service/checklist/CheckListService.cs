@@ -6,6 +6,7 @@ using irespository.checklist.goods.model;
 using irespository.checklist.model;
 using irespository.checklist.profile.model;
 using iservice.checklist;
+using System.Threading.Tasks;
 
 namespace service.checklist
 {
@@ -22,22 +23,22 @@ namespace service.checklist
             _CheckListGoodsContext = CheckListGoodsContext;
             _storeContext = storeContext;
         }
-        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<CheckListApiModel>> GetPagerListAsync(PagerQuery<CheckListQueryModel> query, int hospitalId)
         {
-            return _CheckListContext.GetPagerList(query, hospitalId);
+            return await _CheckListContext.GetPagerListAsync(query, hospitalId);
         }
-        public CheckListPreviewApiModel GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        public async Task<CheckListPreviewApiModel> GetPagerPreviewListAsync(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
         {
             return new CheckListPreviewApiModel
             {
-                CheckListGoods = _CheckListGoodsContext.GetPagerPreviewListAsync(checkListId, query),
+                CheckListGoods = await _CheckListGoodsContext.GetPagerPreviewListAsync(checkListId, query),
                 Amount = _CheckListGoodsContext.GetPreviewListAmount(checkListId),
             };
         }
-        public CheckList Create(CheckListCreateApiModel created, int userId)
+        public async Task<CheckList> CreateAsync(CheckListCreateApiModel created, int userId)
         {
             var check = _CheckListContext.Create(created, userId);
-            var stores = _storeContext.GetListByDepartment(created.HospitalDepartmentId);
+            var stores = await _storeContext.GetListByDepartmentAsync(created.HospitalDepartmentId);
             foreach (var s in stores)
             {
                 _CheckListGoodsContext.Create(new CheckListGoodsCreateApiModel
@@ -61,18 +62,18 @@ namespace service.checklist
             return _CheckListContext.Update(id, updated);
         }
 
-        public CheckListIndexApiModel GetIndex(int id)
+        public async Task<CheckListIndexApiModel> GetIndexAsync(int id)
         {
-            return _CheckListContext.GetIndex(id);
+            return await _CheckListContext.GetIndexAsync(id);
         }
 
         public int Submit(int id)
         {
             return _CheckListContext.Submit(id);
         }
-        public int Bill(int id, int userId)
+        public async Task<int> BillAsync(int id, int userId)
         {
-            return _CheckListContext.BillAsync(id, userId);
+            return await _CheckListContext.BillAsync(id, userId);
         }
     }
 }

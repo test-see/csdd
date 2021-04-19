@@ -6,6 +6,7 @@ using irespository.store;
 using irespository.store.model;
 using irespository.store.profile.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace domain.store
 {
@@ -21,13 +22,13 @@ namespace domain.store
             _storeChangeTypeRespository = storeChangeTypeRespository;
         }
 
-        public PagerResult<StoreListApiModel> GetPagerList(PagerQuery<StoreListQueryModel> query)
+        public async Task<PagerResult<StoreListApiModel>> GetPagerListAsync(PagerQuery<StoreListQueryModel> query)
         {
-            return _storeRespository.GetPagerList(query);
+            return await _storeRespository.GetPagerListAsync(query);
         }
-        public IList<StoreListApiModel> GetListByDepartment(int departmentId)
+        public async Task<IList<StoreListApiModel>> GetListByDepartmentAsync(int departmentId)
         {
-            return _storeRespository.GetListByDepartment(departmentId);
+            return await _storeRespository.GetListByDepartmentAsync(departmentId);
         }
 
         public bool BatchCreateOrUpdate(BatchStoreChangeApiModel created, int department, int userId)

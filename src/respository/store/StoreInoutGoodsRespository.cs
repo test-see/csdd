@@ -1,27 +1,30 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital;
 using irespository.hospital.goods.model;
 using irespository.storeinout;
 using irespository.storeinout.model;
+using Mediator.Net;
+using storage.hospitalgoods.carrier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.store
 {
     public class StoreInoutGoodsRespository : IStoreInoutGoodsRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
-        public StoreInoutGoodsRespository(DefaultDbContext context,
-            IHospitalGoodsRespository hospitalGoodsRespository)
+        private readonly IMediator _mediator;
+        public StoreInoutGoodsRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _hospitalGoodsRespository = hospitalGoodsRespository;
+            _mediator = mediator;
         }
-        public PagerResult<StoreInoutGoodsListApiModel> GetPagerList(PagerQuery<StoreInoutGoodsListQueryModel> query)
+        public async Task<PagerResult<StoreInoutGoodsListApiModel>> GetPagerListAsync(PagerQuery<StoreInoutGoodsListQueryModel> query)
         {
             var sql = from r in _context.StoreInoutGoods
                       orderby r.Id descending
@@ -31,7 +34,7 @@ namespace respository.store
                           Id = r.Id,
                           Qty = r.Qty,
                           StoreInoutId = r.StoreInoutId,
-                          HospitalGoods = new HospitalGoodsValueModel
+                          HospitalGoods = new GetHospitalGoodsResponse
                           {
                               Id = r.HospitalGoodsId,
                           },
@@ -43,7 +46,7 @@ namespace respository.store
             var data = new PagerResult<StoreInoutGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
@@ -51,7 +54,7 @@ namespace respository.store
             }
             return data;
         }
-        public IList<StoreInoutGoodsListApiModel> GetListByStoreInout(int storeInoutId)
+        public async Task<IList<StoreInoutGoodsListApiModel>> GetListByStoreInoutAsync(int storeInoutId)
         {
             var sql = from r in _context.StoreInoutGoods
                       where r.StoreInoutId == storeInoutId
@@ -61,13 +64,13 @@ namespace respository.store
                           Id = r.Id,
                           Qty = r.Qty,
                           StoreInoutId = r.StoreInoutId,
-                          HospitalGoods = new HospitalGoodsValueModel
+                          HospitalGoods = new GetHospitalGoodsResponse
                           {
                               Id = r.HospitalGoodsId,
                           },
                       };
             var data = sql.ToList();
-            var goods = _hospitalGoodsRespository.GetValue(data.Select(x => x.HospitalGoods.Id).ToArray());
+            var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
             foreach (var m in data)
             {
                 m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);

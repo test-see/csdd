@@ -1,27 +1,31 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.prescription;
 using irespository.prescription.model;
 using irespository.prescription.profile.enums;
+using Mediator.Net;
+using storage.hospital.department.carrier;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.prescription
 {
     public class PrescriptionRespository : IPrescriptionRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
         private readonly IPrescriptionGoodsRespository _prescriptionGoodsRespository;
+        private readonly IMediator _mediator;
         public PrescriptionRespository(DefaultDbContext context,
-            IHospitalDepartmentRespository hospitalDepartmentRespository,
+            IMediator mediator,
             IPrescriptionGoodsRespository prescriptionGoodsRespository)
         {
             _context = context;
-            _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _mediator = mediator;
             _prescriptionGoodsRespository = prescriptionGoodsRespository;
         }
 
@@ -52,7 +56,7 @@ namespace respository.prescription
             return prescription;
         }
 
-        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<PrescriptionListApiModel>> GetPagerListAsync(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
         {
             var sql = from p in _context.Prescription
                       join u in _context.User on p.CreateUserId equals u.Id
@@ -91,7 +95,7 @@ namespace respository.prescription
             var data = new PagerResult<PrescriptionListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
+                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
@@ -110,7 +114,7 @@ namespace respository.prescription
             return setting.Id;
         }
 
-        public PrescriptionIndexApiModel GetIndex(int id)
+        public async Task<PrescriptionIndexApiModel> GetIndexAsync(int id)
         {
             var sql = from p in _context.Prescription
                       join u in _context.User on p.CreateUserId equals u.Id
@@ -128,7 +132,7 @@ namespace respository.prescription
             var data = sql.FirstOrDefault();
             if(data!=null)
             {
-                data.PrescriptionGoods = _prescriptionGoodsRespository.GetListAsync(id);
+                data.PrescriptionGoods = await _prescriptionGoodsRespository.GetListAsync(id);
             }
             return data;
         }

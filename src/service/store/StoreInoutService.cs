@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.storeinout.model;
 using iservice.store;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace service.store
 {
@@ -14,9 +15,9 @@ namespace service.store
         {
             _StoreInoutContext = StoreInoutContext;
         }
-        public PagerResult<StoreInoutListApiModel> GetPagerList(PagerQuery<StoreInoutListQueryModel> query)
+        public async Task<PagerResult<StoreInoutListApiModel>> GetPagerListAsync(PagerQuery<StoreInoutListQueryModel> query)
         {
-            return _StoreInoutContext.GetPagerList(query);
+            return await _StoreInoutContext.GetPagerListAsync(query);
         }
         public StoreInout Create(StoreInoutCreateApiModel created, int departmentId, int userId)
         {
@@ -32,14 +33,14 @@ namespace service.store
         {
             return _StoreInoutContext.Update(id, updated);
         }
-        public StoreInoutIndexApiModel GetIndex(int id)
+        public async Task<StoreInoutIndexApiModel> GetIndexAsync(int id)
         {
-            return _StoreInoutContext.GetIndex(id);
+            return await _StoreInoutContext.GetIndexAsync(id);
         }
 
-        public int Submit(int id, int userId)
+        public async Task<int> SubmitAsync(int id, int userId)
         {
-            return _StoreInoutContext.Submit(id, userId);
+            return await _StoreInoutContext.SubmitAsync(id, userId);
         }
 
         public IEnumerable<DataStoreChangeType> GetCustomizeChangeTypeList()

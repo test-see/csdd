@@ -25,18 +25,18 @@ namespace domain.invoice
             _invoiceTypeRespository = invoiceTypeRespository;
         }
 
-        public PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<InvoiceListApiModel>> GetPagerListAsync(PagerQuery<InvoiceListQueryModel> query, int hospitalId)
         {
-            return _InvoiceRespository.GetPagerList(query, hospitalId);
+            return await _InvoiceRespository.GetPagerListAsync(query, hospitalId);
         }
         public Invoice Create(InvoiceCreateApiModel created, int userId)
         {
             return _InvoiceRespository.Create(created, userId);
         }
 
-        public int Generate(int invoiceId)
+        public async Task<int> GenerateAsync(int invoiceId)
         {
-            var invoice = _InvoiceRespository.GetIndex(invoiceId);
+            var invoice = await _InvoiceRespository.GetIndexAsync(invoiceId);
             var reports = new List<InvoiceReportValueModel>();
             if (invoice.InvoiceType.Id == (int)InvoiceType.Client)
             {
@@ -59,9 +59,9 @@ namespace domain.invoice
         {
             return _InvoiceRespository.Update(id, updated);
         }
-        public InvoiceIndexApiModel GetIndex(int id)
+        public async Task<InvoiceIndexApiModel> GetIndexAsync(int id)
         {
-            var goods = _InvoiceRespository.GetIndex(id);
+            var goods = await _InvoiceRespository.GetIndexAsync(id);
             return goods;
         }
         public int Submit(int id)

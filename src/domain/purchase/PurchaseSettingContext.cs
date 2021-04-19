@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.model;
+using System.Threading.Tasks;
 
 namespace domain.purchase
 {
@@ -13,9 +14,9 @@ namespace domain.purchase
             _purchaseSettingRespository = purchaseSettingRespository;
         }
 
-        public PagerResult<PurchaseSettingListApiModel> GetPagerList(PagerQuery<PurchaseSettingListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<PurchaseSettingListApiModel>> GetPagerListAsync(PagerQuery<PurchaseSettingListQueryModel> query, int hospitalId)
         {
-            return _purchaseSettingRespository.GetPagerList(query, hospitalId);
+            return await _purchaseSettingRespository.GetPagerListAsync(query, hospitalId);
         }
         public PurchaseSetting Create(PurchaseSettingCreateApiModel created, int departmentId, int userId)
         {
@@ -29,9 +30,9 @@ namespace domain.purchase
         {
             return _purchaseSettingRespository.Update(id, updated);
         }
-        public PurchaseSettingIndexApiModel GetIndex(int id)
+        public async Task<PurchaseSettingIndexApiModel> GetIndexAsync(int id)
         {
-            var goods = _purchaseSettingRespository.GetIndex(id);
+            var goods = await _purchaseSettingRespository.GetIndexAsync(id);
             return goods;
         }
     }

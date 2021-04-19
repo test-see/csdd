@@ -21,7 +21,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("list")]
         public JsonResult GetList(PagerQuery<PurchaseGoodsBillnoListQueryModel> query)
         {
-            var data = _PurchaseGoodsBillnoService.GetPagerListByHospital(query, HospitalDepartment.Hospital.Id);
+            var data = _PurchaseGoodsBillnoService.GetPagerListByHospitalAsync(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 
@@ -29,7 +29,7 @@ namespace webstarter.hospital.controllers.purchase
         [Route("comfirm")]
         public JsonResult Comfirm(IList<int> ids)
         {
-            var data = _PurchaseGoodsBillnoService.Comfirm(ids, Profile.Id);
+            var data = _PurchaseGoodsBillnoService.ComfirmAsync(ids, Profile.Id);
             return Json(data);
         }
     }

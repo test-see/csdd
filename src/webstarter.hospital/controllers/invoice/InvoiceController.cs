@@ -21,7 +21,7 @@ namespace webstarter.hospital.controllers.invoice
         [Route("list")]
         public JsonResult GetList(PagerQuery<InvoiceListQueryModel> query)
         {
-            var data = _InvoiceService.GetPagerList(query, HospitalDepartment.Hospital.Id);
+            var data = _InvoiceService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 
@@ -57,7 +57,7 @@ namespace webstarter.hospital.controllers.invoice
         [Route("{id}/index")]
         public JsonResult GetIndex(int id)
         {
-            var data = _InvoiceService.GetIndex(id);
+            var data = _InvoiceService.GetIndexAsync(id);
             return Json(data);
         }
 
@@ -73,7 +73,7 @@ namespace webstarter.hospital.controllers.invoice
         [Route("{id}/generate")]
         public JsonResult Generate(int id)
         {
-            var data = _InvoiceService.Generate(id);
+            var data = _InvoiceService.GenerateAsync(id);
             return Json(data);
         }
 
@@ -97,7 +97,7 @@ namespace webstarter.hospital.controllers.invoice
         [Route("index/report/list")]
         public JsonResult GetPagerRecordListByReportId(PagerQuery<int> query)
         {
-            var data = _InvoiceService.GetPagerRecordListByReportId(query);
+            var data = _InvoiceService.GetPagerRecordListByReportIdAsync(query);
             return Json(data);
         }
 
@@ -105,7 +105,7 @@ namespace webstarter.hospital.controllers.invoice
         [Route("index/storerecord/list")]
         public JsonResult GetPagerRecordListByInvoiceId(PagerQuery<int> query)
         {
-            var data = _InvoiceService.GetPagerRecordListByInvoiceId(query);
+            var data = _InvoiceService.GetPagerRecordListByInvoiceIdAsync(query);
             return Json(data);
         }
     }

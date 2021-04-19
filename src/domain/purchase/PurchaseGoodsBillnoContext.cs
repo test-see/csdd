@@ -8,6 +8,7 @@ using irespository.purchase.profile.enums;
 using irespository.store.model;
 using irespository.store.profile.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace domain.purchase
 {
@@ -25,17 +26,17 @@ namespace domain.purchase
             _storeRecordBillnoContext = storeRecordBillnoContext;
         }
 
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospital(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<PurchaseGoodsBillnoListApiModel>> GetPagerListByHospitalAsync(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalId)
         {
-            return _purchaseGoodsBillnoRespository.GetPagerListByHospitalAsync(query, hospitalId);
+            return await _purchaseGoodsBillnoRespository.GetPagerListByHospitalAsync(query, hospitalId);
         }
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
+        public async Task<PagerResult<PurchaseGoodsBillnoListApiModel>> GetPagerListByClientAsync(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
         {
-            return _purchaseGoodsBillnoRespository.GetPagerListByClientAsync(query, clientId);
+            return await _purchaseGoodsBillnoRespository.GetPagerListByClientAsync(query, clientId);
         }
-        public IList<PurchaseGoodsBillnoListApiModel> GetListByPurchaseGoodsId(int purchaseGoodsId)
+        public async Task<IList<PurchaseGoodsBillnoListApiModel>> GetListByPurchaseGoodsIdAsync(int purchaseGoodsId)
         {
-            return _purchaseGoodsBillnoRespository.GetListByPurchaseGoodsIdAsync(purchaseGoodsId);
+            return await _purchaseGoodsBillnoRespository.GetListByPurchaseGoodsIdAsync(purchaseGoodsId);
         }
 
         public PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId)
@@ -51,11 +52,11 @@ namespace domain.purchase
             return _purchaseGoodsBillnoRespository.Update(id, updated);
         }
 
-        public int Comfirm(IList<int> ids, int userId)
+        public async Task<int> ComfirmAsync(IList<int> ids, int userId)
         {
             foreach (var id in ids)
             {
-                var goods = _purchaseGoodsBillnoRespository.GetIndexAsync(id);
+                var goods = await _purchaseGoodsBillnoRespository.GetIndexAsync(id);
                 var changed = new StoreChangeApiModel
                 {
                     ChangeTypeId = (int)StoreChangeType.Purchase,

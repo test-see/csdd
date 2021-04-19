@@ -2,6 +2,7 @@
 using foundation.ef5.poco;
 using irespository.user.client;
 using irespository.user.client.model;
+using System.Threading.Tasks;
 
 namespace domain.user
 {
@@ -13,9 +14,9 @@ namespace domain.user
             _userClientRespository = userClientRespository;
         }
 
-        public PagerResult<UserClientListApiModel> GetPagerList(PagerQuery<UserClientListQueryModel> query)
+        public async Task<PagerResult<UserClientListApiModel>> GetPagerListAsync(PagerQuery<UserClientListQueryModel> query)
         {
-            return _userClientRespository.GetPagerList(query);
+            return await _userClientRespository.GetPagerListAsync(query);
         }
         public UserClient Create(UserClientCreateApiModel created, int userId)
         {
@@ -25,9 +26,9 @@ namespace domain.user
         {
             return _userClientRespository.Delete(id);
         }
-        public UserClientIndexApiModel GetIndexByUserId(int userId)
+        public async Task<UserClientIndexApiModel> GetIndexByUserIdAsync(int userId)
         {
-            return _userClientRespository.GetIndexByUserId(userId);
+            return await _userClientRespository.GetIndexByUserIdAsync(userId);
         }
     }
 }

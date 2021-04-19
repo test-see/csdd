@@ -8,20 +8,23 @@ using irespository.checklist.model;
 using irespository.checklist.profile.enums;
 using System;
 using System.Linq;
+using Mediator.Net;
+using foundation.mediator;
+using storage.hospital.department.carrier;
+using System.Threading.Tasks;
 
 namespace respository.checklist
 {
     public class CheckListRespository : ICheckListRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
-        public CheckListRespository(DefaultDbContext context,
-            IHospitalDepartmentRespository hospitalDepartmentRespository)
+        private readonly IMediator _mediator;
+        public CheckListRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _mediator = mediator;
         }
-        public PagerResult<CheckListApiModel> GetPagerList(PagerQuery<CheckListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<CheckListApiModel>> GetPagerListAsync(PagerQuery<CheckListQueryModel> query, int hospitalId)
         {
             var sql = from r in _context.CheckList
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -53,7 +56,7 @@ namespace respository.checklist
             var data = new PagerResult<CheckListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
+                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
@@ -117,7 +120,7 @@ namespace respository.checklist
             return setting.Id;
         }
 
-        public CheckListIndexApiModel GetIndex(int id)
+        public async Task<CheckListIndexApiModel> GetIndexAsync(int id)
         {
             var sql = from r in _context.CheckList
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -138,7 +141,7 @@ namespace respository.checklist
             var setting =  sql.FirstOrDefault();
             if (setting != null)
             {
-                setting.HospitalDepartment = _hospitalDepartmentRespository.GetValue(new int[] { setting.HospitalDepartment.Id }).FirstOrDefault();
+                setting.HospitalDepartment = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(setting.HospitalDepartment.Id);
             }
             return setting;
         }

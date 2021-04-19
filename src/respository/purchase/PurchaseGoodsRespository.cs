@@ -76,7 +76,7 @@ namespace respository.purchase
             {
                 var clients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
                 var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
-                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
+                var purachses = await _purchaseRespository.GetValueAsync(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
                     m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
@@ -139,7 +139,7 @@ namespace respository.purchase
             {
                 var clients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
                 var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
-                var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
+                var purachses = await  _purchaseRespository.GetValueAsync(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
                     m.HospitalClient = clients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
@@ -210,7 +210,7 @@ namespace respository.purchase
             {
                 data.HospitalGoods = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.HospitalGoods.Id);
                 data.HospitalClient = await _mediator.RequestSingleByIdAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.HospitalClient.Id );
-                data.Purchase = _purchaseRespository.GetValue(new int[] { data.Purchase.Id }).FirstOrDefault();
+                data.Purchase =( await  _purchaseRespository.GetValueAsync(new int[] { data.Purchase.Id })).FirstOrDefault();
             }
             return data;
         }

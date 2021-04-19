@@ -19,17 +19,17 @@ namespace service.prescription
             return _prescriptionContext.Create(created, departmentId, userId);
         }
 
-        public PagerResult<PrescriptionListApiModel> GetPagerList(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<PrescriptionListApiModel>> GetPagerListAsync(PagerQuery<PrescriptionListQueryModel> query, int hospitalId)
         {
-            return _prescriptionContext.GetPagerList(query, hospitalId);
+            return await _prescriptionContext.GetPagerListAsync(query, hospitalId);
         }
         public async Task<int> SubmitAsync(int id, int userId)
         {
             return await _prescriptionContext.SubmitAsync(id, userId);
         }
-        public PrescriptionIndexApiModel GetIndex(int id)
+        public async Task<PrescriptionIndexApiModel> GetIndexAsync(int id)
         {
-            return _prescriptionContext.GetIndex(id);
+            return await _prescriptionContext.GetIndexAsync(id);
         }
     }
 }

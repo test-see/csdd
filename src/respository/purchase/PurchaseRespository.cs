@@ -1,29 +1,32 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.profile.model;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
+using Mediator.Net;
+using storage.hospital.department.carrier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.purchase
 {
     public class PurchaseRespository : IPurchaseRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
-        public PurchaseRespository(DefaultDbContext context,
-            IHospitalDepartmentRespository hospitalDepartmentRespository)
+        private readonly IMediator _mediator;
+        public PurchaseRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _mediator = mediator;
         }
-        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
+        public async Task<PagerResult<PurchaseListApiModel>> GetPagerListAsync(PagerQuery<PurchaseListQueryModel> query)
         {
             var sql = from r in _context.Purchase
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -62,7 +65,7 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
+                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
@@ -126,7 +129,7 @@ namespace respository.purchase
             return setting.Id;
         }
 
-        public PurchaseIndexApiModel GetIndex(int id)
+        public async Task<PurchaseIndexApiModel> GetIndexAsync(int id)
         {
             var sql = from r in _context.Purchase
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -149,11 +152,11 @@ namespace respository.purchase
             var setting =  sql.FirstOrDefault();
             if (setting != null)
             {
-                setting.HospitalDepartment = _hospitalDepartmentRespository.GetValue(new int[] { setting.HospitalDepartment.Id }).FirstOrDefault();
+                setting.HospitalDepartment = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(setting.HospitalDepartment.Id);
             }
             return setting;
         }
-        public IList<PurchaseValueModel> GetValue(int[] ids)
+        public async Task<IList<PurchaseValueModel>> GetValueAsync(int[] ids)
         {
             if (ids.Length == 0) return new List<PurchaseValueModel>();
             var sql = from r in _context.Purchase
@@ -169,7 +172,7 @@ namespace respository.purchase
                           }
                       };
             var setting = sql.ToList();
-            var departments = _hospitalDepartmentRespository.GetValue(setting.Select(x => x.HospitalDepartment.Id).ToArray());
+            var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(setting.Select(x => x.HospitalDepartment.Id).ToList());
             foreach (var m in setting)
             {
                 m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);

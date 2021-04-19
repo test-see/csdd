@@ -1,27 +1,30 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.store.inout.profile.enums;
 using irespository.storeinout;
 using irespository.storeinout.model;
+using Mediator.Net;
+using storage.hospital.department.carrier;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.store
 {
     public class StoreInoutRespository : IStoreInoutRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
-        public StoreInoutRespository(DefaultDbContext context,
-            IHospitalDepartmentRespository hospitalDepartmentRespository)
+        private readonly IMediator _mediator;
+        public StoreInoutRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _mediator = mediator;
         }
-        public PagerResult<StoreInoutListApiModel> GetPagerList(PagerQuery<StoreInoutListQueryModel> query)
+        public async Task<PagerResult<StoreInoutListApiModel>> GetPagerListAsync(PagerQuery<StoreInoutListQueryModel> query)
         {
             var sql = from r in _context.StoreInout
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -57,7 +60,7 @@ namespace respository.store
             var data = new PagerResult<StoreInoutListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
+                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
@@ -111,7 +114,7 @@ namespace respository.store
             return setting.Id;
         }
 
-        public StoreInoutIndexApiModel GetIndex(int id)
+        public async Task<StoreInoutIndexApiModel> GetIndexAsync(int id)
         {
             var sql = from r in _context.StoreInout
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -131,7 +134,7 @@ namespace respository.store
             var data = sql.FirstOrDefault();
             if (data != null)
             {
-                data.HospitalDepartment = _hospitalDepartmentRespository.GetValue(new int[] { data.HospitalDepartment.Id }).FirstOrDefault();
+                data.HospitalDepartment = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.HospitalDepartment.Id);
             }
             return data;
         }

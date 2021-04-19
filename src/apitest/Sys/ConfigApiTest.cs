@@ -1,4 +1,5 @@
 ﻿using apitest.shared;
+using domain.client.profile.entity;
 using Flurl;
 using Flurl.Http;
 using foundation.config;
@@ -29,7 +30,7 @@ namespace apitest.sys
             var role = await _rootpath
                 .AppendPathSegment("/api/Config/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new ConfigCreateApiModel { Key = "q", Remark = "d", Value = "d" })
+                .PostJsonAsync(new CreateConfigRequest { Key = "q", Remark = "d", Value = "d" })
                 .ReceiveJson<OkMessage<SysConfig>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/Config/{role.Data.Id}/delete")

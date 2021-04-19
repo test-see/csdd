@@ -25,9 +25,9 @@ namespace domain.purchase
             _bus = bus;
         }
 
-        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
+        public async Task<PagerResult<PurchaseListApiModel>> GetPagerListAsync(PagerQuery<PurchaseListQueryModel> query)
         {
-            return _purchaseRespository.GetPagerList(query);
+            return await _purchaseRespository.GetPagerListAsync(query);
         }
         public async Task<Purchase> CreateAsync(PurchaseCreateApiModel created, int departmentId, int userId)
         {
@@ -41,7 +41,7 @@ namespace domain.purchase
         }
         public async Task GenerateAsync(int id)
         {
-            var purchase = GetIndex(id);
+            var purchase = await GetIndexAsync(id);
             if (purchase.PurchaseSettingId != null)
             {
                 var thresholds = _purchaseSettingThresholdContext.GetListBySettingId(purchase.PurchaseSettingId.Value);
@@ -60,9 +60,9 @@ namespace domain.purchase
         {
             return _purchaseRespository.Update(id, updated);
         }
-        public PurchaseIndexApiModel GetIndex(int id)
+        public async Task<PurchaseIndexApiModel> GetIndexAsync(int id)
         {
-            var goods = _purchaseRespository.GetIndex(id);
+            var goods = await _purchaseRespository.GetIndexAsync(id);
             return goods;
         }
         public int Submit(int id)

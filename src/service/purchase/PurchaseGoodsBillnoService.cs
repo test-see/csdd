@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.purchase.model;
 using iservice.purchase;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace service.purchase
 {
@@ -14,13 +15,13 @@ namespace service.purchase
         {
             _PurchaseGoodsBillnoContext = PurchaseGoodsBillnoContext;
         }
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospital(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalId)
+        public async Task<PagerResult<PurchaseGoodsBillnoListApiModel>> GetPagerListByHospitalAsync(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalId)
         {
-            return _PurchaseGoodsBillnoContext.GetPagerListByHospital(query, hospitalId);
+            return await _PurchaseGoodsBillnoContext.GetPagerListByHospitalAsync(query, hospitalId);
         }
-        public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
+        public async Task<PagerResult<PurchaseGoodsBillnoListApiModel>> GetPagerListByClientAsync(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
         {
-            return _PurchaseGoodsBillnoContext.GetPagerListByClient(query, clientId);
+            return await _PurchaseGoodsBillnoContext.GetPagerListByClientAsync(query, clientId);
         }
 
         public PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId)
@@ -38,9 +39,9 @@ namespace service.purchase
             return _PurchaseGoodsBillnoContext.Update(id, updated);
         }
 
-        public int Comfirm(IList<int> ids, int userId)
+        public async Task<int> ComfirmAsync(IList<int> ids, int userId)
         {
-            return _PurchaseGoodsBillnoContext.Comfirm(ids, userId);
+            return await _PurchaseGoodsBillnoContext.ComfirmAsync(ids, userId);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("list")]
         public JsonResult GetList(PagerQuery<CheckListQueryModel> query)
         {
-            var data = _CheckListService.GetPagerList(query, HospitalDepartment.Hospital.Id);
+            var data = _CheckListService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 
@@ -42,7 +42,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("add")]
         public JsonResult Post(CheckListCreateApiModel created)
         {
-            var data = _CheckListService.Create(created, Profile.Id);
+            var data = _CheckListService.CreateAsync(created, Profile.Id);
             return Json(data);
         }
 
@@ -59,7 +59,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("{id}/index")]
         public JsonResult GetIndex(int id)
         {
-            var data = _CheckListService.GetIndex(id);
+            var data = _CheckListService.GetIndexAsync(id);
             return Json(data);
         }
 
@@ -75,7 +75,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("{id}/preview")]
         public JsonResult GetPreviewList(int id, PagerQuery<CheckListGoodsPreviewQueryModel> query)
         {
-            var data = _CheckListService.GetPagerPreviewList(id, query);
+            var data = _CheckListService.GetPagerPreviewListAsync(id, query);
             return Json(data);
         }
 
@@ -83,7 +83,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("{id}/bill")]
         public JsonResult Bill(int id)
         {
-            var data = _CheckListService.Bill(id, Profile.Id);
+            var data = _CheckListService.BillAsync(id, Profile.Id);
             return Json(data);
         }
     }

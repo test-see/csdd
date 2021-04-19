@@ -4,21 +4,22 @@ using irespository.invoice.model;
 using irespository.invoice.profile.enums;
 using irespository.store.profile.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace iservice.invoice
 {
     public interface IInvoiceService
     {
-        PagerResult<InvoiceListApiModel> GetPagerList(PagerQuery<InvoiceListQueryModel> query, int hospitalId);
+        Task<PagerResult<InvoiceListApiModel>> GetPagerListAsync(PagerQuery<InvoiceListQueryModel> query, int hospitalId);
         Invoice Create(InvoiceCreateApiModel created, int userId);
         int Delete(int id);
         int Update(int id, InvoiceUpdateApiModel updated);
-        InvoiceIndexApiModel GetIndex(int id);
+        Task<InvoiceIndexApiModel> GetIndexAsync(int id);
         int Submit(int id);
-        int Generate(int invoiceId);
+        Task<int> GenerateAsync(int invoiceId);
         PagerResult<InvoiceReportListApiModel> GetPagerReportList(PagerQuery<InvoiceReportQueryApiModel> query);
-        PagerResult<StoreRecordListApiModel> GetPagerRecordListByInvoiceId(PagerQuery<int> query);
-        PagerResult<StoreRecordListApiModel> GetPagerRecordListByReportId(PagerQuery<int> query);
+        Task<PagerResult<StoreRecordListApiModel>> GetPagerRecordListByInvoiceIdAsync(PagerQuery<int> query);
+       Task<PagerResult<StoreRecordListApiModel>> GetPagerRecordListByReportIdAsync(PagerQuery<int> query);
         IEnumerable<DataInvoiceType> GetInvoiceTypeList();
     }
 }

@@ -48,14 +48,14 @@ namespace domain.purchase
             _mediator = mediator;
         }
 
-        public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
+        public async Task<PagerResult<PurchaseGoodsListApiModel>> GetPagerListAsync(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
-            return _purchaseGoodsRespository.GetPagerListAsync(query);
+            return await _purchaseGoodsRespository.GetPagerListAsync(query);
         }
 
-        public PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
+        public async Task<PagerResult<PurchaseGoodsListApiModel>> GetPagerListByClientAsync(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
-            return _purchaseGoodsRespository.GetPagerListByClientAsync(query, clientId);          
+            return await _purchaseGoodsRespository.GetPagerListByClientAsync(query, clientId);          
         }
 
         public PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId)
@@ -121,16 +121,16 @@ namespace domain.purchase
             return 0;
         }
         
-        public PurchaseGoodsListApiModel GetIndex(int id)
+        public async Task<PurchaseGoodsListApiModel> GetIndexAsync(int id)
         {
-            return _purchaseGoodsRespository.GetIndexAsync(id);
+            return await _purchaseGoodsRespository.GetIndexAsync(id);
         }
 
-        public int Submit(int id)
+        public async Task<int> SubmitAsync(int id)
         {
             using (var trans = _defaultDbTransaction.Begin())
             {
-                var bills = _purchaseGoodsBillnoContext.GetListByPurchaseGoodsId(id);
+                var bills = await _purchaseGoodsBillnoContext.GetListByPurchaseGoodsIdAsync(id);
                 _purchaseGoodsBillnoContext.Submit(bills.Select(x => x.Id).ToList());
                 var result = _purchaseGoodsRespository.UpdateStatus(id, PurchaseGoodsStatus.Submited);
                 trans.Commit();

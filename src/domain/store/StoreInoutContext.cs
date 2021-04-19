@@ -10,6 +10,7 @@ using irespository.storeinout;
 using irespository.storeinout.model;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace domain.store
 {
@@ -33,9 +34,9 @@ namespace domain.store
             _storeChangeTypeRespository = storeChangeTypeRespository;
         }
 
-        public PagerResult<StoreInoutListApiModel> GetPagerList(PagerQuery<StoreInoutListQueryModel> query)
+        public async Task<PagerResult<StoreInoutListApiModel>> GetPagerListAsync(PagerQuery<StoreInoutListQueryModel> query)
         {
-            return _StoreInoutRespository.GetPagerList(query);
+            return await _StoreInoutRespository.GetPagerListAsync(query);
         }
         public StoreInout Create(StoreInoutCreateApiModel created, int departmentId, int userId)
         {
@@ -49,16 +50,16 @@ namespace domain.store
         {
             return _StoreInoutRespository.Update(id, updated);
         }
-        public StoreInoutIndexApiModel GetIndex(int id)
+        public async Task<StoreInoutIndexApiModel> GetIndexAsync(int id)
         {
-            return _StoreInoutRespository.GetIndex(id);
+            return await _StoreInoutRespository.GetIndexAsync(id);
         }
 
 
-        public int Submit(int id, int userId)
+        public async Task<int> SubmitAsync(int id, int userId)
         {
-            var model = GetIndex(id);
-            var list = _storeInoutGoodsContext.GetListByStoreInout(id);
+            var model = await GetIndexAsync(id);
+            var list = await _storeInoutGoodsContext.GetListByStoreInoutAsync(id);
             var goods = list.Select(x => new StoreChangeGoodsValueModel
             {
                 HospitalGoodId = x.HospitalGoods.Id,

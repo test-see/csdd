@@ -37,10 +37,10 @@ namespace service.user
             return _tokenContext.Login(login);
         }
 
-        public LoginHospitalValueModel LoginByHospital(LoginApiModel login)
+        public async Task<LoginHospitalValueModel> LoginByHospitalAsync(LoginApiModel login)
         {
             var user = _tokenContext.Login(login);
-            var extend = _userHospitalContext.GetIndexByUserId(user.Id);
+            var extend = await _userHospitalContext.GetIndexByUserIdAsync(user.Id);
             if (extend == null)
                 throw new DefaultException("该账号还在维护基础资料, 请等待.");
             return new LoginHospitalValueModel
@@ -52,10 +52,10 @@ namespace service.user
             };
         }
 
-        public LoginClientValueModel LoginByClient(LoginApiModel login)
+        public async Task<LoginClientValueModel> LoginByClientAsync(LoginApiModel login)
         {
             var user = _tokenContext.Login(login);
-            var extend = _userClientContext.GetIndexByUserId(user.Id);
+            var extend = await _userClientContext.GetIndexByUserIdAsync(user.Id);
             if (extend == null)
                 throw new DefaultException("该账号还在维护基础资料, 请等待.");
             return new LoginClientValueModel

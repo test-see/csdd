@@ -19,7 +19,7 @@ namespace csdd.Controllers.Shared
         [Route("index")]
         public JsonResult GetProfile()
         {
-            var data = _userHospitalService.GetIndexByUserId(Profile.Id);
+            var data = _userHospitalService.GetIndexByUserIdAsync(Profile.Id);
             return Json(data);
         }
         [HttpGet]

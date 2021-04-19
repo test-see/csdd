@@ -7,11 +7,11 @@ namespace iservice.purchase
 {
     public interface IPurchaseService
     {
-        PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query);
+        Task<PagerResult<PurchaseListApiModel>> GetPagerListAsync(PagerQuery<PurchaseListQueryModel> query);
         Task<Purchase> CreateAsync(PurchaseCreateApiModel created, int departmentId, int userId);
         int Delete(int id);
         int Update(int id, PurchaseUpdateApiModel updated);
-        PurchaseIndexApiModel GetIndex(int id);
+        Task<PurchaseIndexApiModel> GetIndexAsync(int id);
         int Submit(int id);
         int Comfirm(int id);
         int Revoke(int id);

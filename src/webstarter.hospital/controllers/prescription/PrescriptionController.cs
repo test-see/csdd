@@ -20,7 +20,7 @@ namespace webstarter.hospital.controllers.prescription
         [Route("list")]
         public JsonResult GetList(PagerQuery<PrescriptionListQueryModel> query)
         {
-            var data = _prescriptionService.GetPagerList(query, HospitalDepartment.Hospital.Id);
+            var data = _prescriptionService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 
@@ -42,7 +42,7 @@ namespace webstarter.hospital.controllers.prescription
         [Route("{id}/index")]
         public JsonResult GetIndex(int id)
         {
-            var data = _prescriptionService.GetIndex(id);
+            var data = _prescriptionService.GetIndexAsync(id);
             return Json(data);
         }
     }

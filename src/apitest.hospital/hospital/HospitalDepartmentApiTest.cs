@@ -4,7 +4,9 @@ using Flurl.Http;
 using foundation.config;
 using foundation.ef5.poco;
 using irespository.hospital.department.model;
+using irespository.hospital.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using storage.hospitaldepartment.carrier;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,8 +22,8 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalDepartment/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<HospitalDepartmentListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<HospitalDepartmentListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<ListHospitalDepartmentRequest> { })
+                .ReceiveJson<OkMessage<PagerResult<ListHospitalDepartmentResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
@@ -31,7 +33,7 @@ namespace apitest.hospital
             var hospital = await _rootpath
                 .AppendPathSegment("/api/HospitalDepartment/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalDepartmentCreateApiModel
+                .PostJsonAsync(new CreateHospitalDepartmentRequest
                 {
                     Name = "q",
                     HospitalId = 1,
@@ -51,7 +53,7 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalDepartment/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalDepartmentUpdateApiModel
+                .PostJsonAsync(new UpdateHospitalDepartmentRequest
                 {
                     Name = "q",
                     DepartmentTypeId = 1,

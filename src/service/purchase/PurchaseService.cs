@@ -14,9 +14,9 @@ namespace service.purchase
         {
             _purchaseContext = PurchaseContext;
         }
-        public PagerResult<PurchaseListApiModel> GetPagerList(PagerQuery<PurchaseListQueryModel> query)
+        public async Task<PagerResult<PurchaseListApiModel>> GetPagerListAsync(PagerQuery<PurchaseListQueryModel> query)
         {
-            return _purchaseContext.GetPagerList(query);
+            return await _purchaseContext.GetPagerListAsync(query);
         }
         public async Task<Purchase> CreateAsync(PurchaseCreateApiModel created, int departmentId, int userId)
         {
@@ -37,9 +37,9 @@ namespace service.purchase
             return _purchaseContext.Update(id, updated);
         }
 
-        public PurchaseIndexApiModel GetIndex(int id)
+        public async Task<PurchaseIndexApiModel> GetIndexAsync(int id)
         {
-            return _purchaseContext.GetIndex(id);
+            return await _purchaseContext.GetIndexAsync(id);
         }
 
         public int Submit(int id)

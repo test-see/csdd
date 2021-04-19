@@ -3,6 +3,7 @@ using Flurl;
 using Flurl.Http;
 using foundation.config;
 using irespository.hospital.client.model;
+using irespository.hospital.model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 
@@ -17,14 +18,14 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalClient/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<HospitalClientListQueryModel>
+                .PostJsonAsync(new PagerQuery<ListHospitalClientRequest>
                 {
-                    Query = new HospitalClientListQueryModel
+                    Query = new ListHospitalClientRequest
                     {
                         HospitalId = 1,
                     }
                 })
-                .ReceiveJson<OkMessage<PagerResult<HospitalClientListApiModel>>>();
+                .ReceiveJson<OkMessage<PagerResult<ListHospitalClientResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
@@ -34,7 +35,7 @@ namespace apitest.hospital
             var hospital = await _rootpath
                 .AppendPathSegment("/api/HospitalClient/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalClientCreateApiModel
+                .PostJsonAsync(new CreateHospitalClientRequest
                 {
                     Name = "q",
                     HospitalId = 1,
@@ -53,7 +54,7 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalClient/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new HospitalClientUpdateApiModel
+                .PostJsonAsync(new UpdateHospitalClientRequest
                 {
                     Name = "qxx",
                 })

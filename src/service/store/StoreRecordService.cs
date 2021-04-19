@@ -2,6 +2,7 @@
 using foundation.config;
 using irespository.store.profile.model;
 using iservice.store;
+using System.Threading.Tasks;
 
 namespace service.store
 {
@@ -12,9 +13,9 @@ namespace service.store
         {
             _storeRecordContext = storeRecordContext;
         }
-        public PagerResult<StoreRecordListApiModel> GetPagerList(PagerQuery<StoreRecordListQueryModel> query)
+        public async Task<PagerResult<StoreRecordListApiModel>> GetPagerListAsync(PagerQuery<StoreRecordListQueryModel> query)
         {
-            return _storeRecordContext.GetPagerList(query);
+            return await _storeRecordContext.GetPagerListAsync(query);
         }
 
     }

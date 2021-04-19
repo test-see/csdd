@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.storeinout.model;
 using iservice.store;
+using System.Threading.Tasks;
 
 namespace service.store
 {
@@ -13,9 +14,9 @@ namespace service.store
         {
             _StoreInoutGoodsContext = StoreInoutGoodsContext;
         }
-        public PagerResult<StoreInoutGoodsListApiModel> GetPagerList(PagerQuery<StoreInoutGoodsListQueryModel> query)
+        public async Task<PagerResult<StoreInoutGoodsListApiModel>> GetPagerListAsync(PagerQuery<StoreInoutGoodsListQueryModel> query)
         {
-            return _StoreInoutGoodsContext.GetPagerList(query);
+            return await _StoreInoutGoodsContext.GetPagerListAsync(query);
         }
         public StoreInoutGoods Create(StoreInoutGoodsCreateApiModel created, int userId)
         {

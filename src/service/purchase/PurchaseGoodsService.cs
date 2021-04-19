@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase.model;
 using iservice.purchase;
+using System.Threading.Tasks;
 
 namespace service.purchase
 {
@@ -13,9 +14,9 @@ namespace service.purchase
         {
             _purchaseGoodsContext = purchaseGoodsContext;
         }
-        public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
+        public async Task<PagerResult<PurchaseGoodsListApiModel>> GetPagerListAsync(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
-            return _purchaseGoodsContext.GetPagerList(query);
+            return await _purchaseGoodsContext.GetPagerListAsync(query);
         }
 
         public PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId)
@@ -33,17 +34,17 @@ namespace service.purchase
             return _purchaseGoodsContext.Update(id, updated);
         }
 
-        public PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
+        public async Task<PagerResult<PurchaseGoodsListApiModel>> GetPagerListByClientAsync(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
-            return _purchaseGoodsContext.GetPagerListByClient(query, clientId);
+            return await _purchaseGoodsContext.GetPagerListByClientAsync(query, clientId);
         }
-        public PurchaseGoodsListApiModel GetIndex(int id)
+        public async Task<PurchaseGoodsListApiModel> GetIndexAsync(int id)
         {
-            return _purchaseGoodsContext.GetIndex(id);
+            return await _purchaseGoodsContext.GetIndexAsync(id);
         }
-        public int Submit(int id)
+        public async Task<int> SubmitAsync(int id)
         {
-            return _purchaseGoodsContext.Submit(id);
+            return await _purchaseGoodsContext.SubmitAsync(id);
         }
     }
 }

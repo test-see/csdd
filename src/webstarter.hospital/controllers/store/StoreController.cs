@@ -21,7 +21,7 @@ namespace webstarter.hospital.controllers.store
         [Route("list")]
         public JsonResult GetList(PagerQuery<StoreListQueryModel> query)
         {
-            var data = _storeService.GetPagerList(query);
+            var data = _storeService.GetPagerListAsync(query);
             return Json(data);
         }
 

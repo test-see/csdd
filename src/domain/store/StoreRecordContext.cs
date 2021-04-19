@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using irespository.store;
 using irespository.store.profile.model;
+using System.Threading.Tasks;
 
 namespace domain.store
 {
@@ -12,9 +13,9 @@ namespace domain.store
             _storeRecordRespository = storeRecordRespository;
         }
 
-        public PagerResult<StoreRecordListApiModel> GetPagerList(PagerQuery<StoreRecordListQueryModel> query)
+        public async Task<PagerResult<StoreRecordListApiModel>> GetPagerListAsync(PagerQuery<StoreRecordListQueryModel> query)
         {
-            return _storeRecordRespository.GetPagerList(query);
+            return await _storeRecordRespository.GetPagerListAsync(query);
         }
 
         public int GetConsumeAmount(int deparmentId, int goodsId, int days)

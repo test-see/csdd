@@ -1,32 +1,33 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.hospital;
 using irespository.hospital.department.model;
 using irespository.hospital.goods.model;
 using irespository.store;
 using irespository.store.profile.model;
 using irespository.store.record.model;
+using Mediator.Net;
+using storage.hospital.department.carrier;
+using storage.hospitalgoods.carrier;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.store
 {
     public class StoreRecordRespository : IStoreRecordRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
-        private readonly IHospitalDepartmentRespository _hospitalDepartmentRespository;
-        public StoreRecordRespository(DefaultDbContext context,
-            IHospitalGoodsRespository hospitalGoodsRespository,
-            IHospitalDepartmentRespository hospitalDepartmentRespository)
+        private readonly IMediator _mediator;
+        public StoreRecordRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _hospitalGoodsRespository = hospitalGoodsRespository;
-            _hospitalDepartmentRespository = hospitalDepartmentRespository;
+            _mediator = mediator;
         }
 
-        public PagerResult<StoreRecordListApiModel> GetPagerList(PagerQuery<StoreRecordListQueryModel> query)
+        public async Task<PagerResult<StoreRecordListApiModel>> GetPagerListAsync(PagerQuery<StoreRecordListQueryModel> query)
         {
             var sql = from r in _context.StoreRecord
                       join uc in _context.User on r.CreateUserId equals uc.Id
@@ -45,7 +46,7 @@ namespace respository.store
                           {
                               Id = r.HospitalDepartmentId,
                           },
-                          HospitalGoods = new HospitalGoodsValueModel
+                          HospitalGoods = new GetHospitalGoodsResponse
                           {
                               Id = r.HospitalGoodsId,
                           },
@@ -69,8 +70,8 @@ namespace respository.store
             var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = _hospitalDepartmentRespository.GetValue(data.Result.Select(x => x.HospitalDepartment.Id).ToArray());
-                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
+                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
@@ -80,9 +81,9 @@ namespace respository.store
             return data;
         }
 
-        public StoreRecord Create(StoreRecordCreateApiModel created, int userId)
+        public async Task<StoreRecord> CreateAsync(StoreRecordCreateApiModel created, int userId)
         {
-            var goods = _hospitalGoodsRespository.GetValue(new int[] { created.HospitalGoodsId }).First();
+            var goods = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(created.HospitalGoodsId );
             var record = new StoreRecord
             {
                 BeforeQty = created.BeforeQty,

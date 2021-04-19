@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.purchase.model;
 using iservice.purchase;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace service.purchase
 {
@@ -14,9 +15,9 @@ namespace service.purchase
         {
             _purchaseSettingThresholdContext = purchaseSettingThresholdContext;
         }
-        public PagerResult<PurchaseSettingThresholdListApiModel> GetPagerList(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
+        public async Task<PagerResult<PurchaseSettingThresholdListApiModel>> GetPagerListAsync(PagerQuery<PurchaseSettingThresholdListQueryModel> query)
         {
-            return _purchaseSettingThresholdContext.GetPagerList(query);
+            return await _purchaseSettingThresholdContext.GetPagerListAsync(query);
         }
         public PurchaseSettingThreshold Create(PurchaseSettingThresholdCreateApiModel created, int userId)
         {

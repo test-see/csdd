@@ -2,7 +2,6 @@
 using foundation.config;
 using foundation.mediator;
 using irespository.hospital.model;
-using iservice.hospital;
 using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
