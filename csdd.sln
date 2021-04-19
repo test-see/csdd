@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webstarter", "src\webstarte
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.foundation", "1.foundation", "{212AAB47-05AD-4C25-A412-14636AE0EDB6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.domain", "2.domain", "{04C28EDC-6EF4-4AAA-8D92-AF797EE53A6A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.kernel", "2.kernel", "{04C28EDC-6EF4-4AAA-8D92-AF797EE53A6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.facade", "3.facade", "{6249983F-7CF5-46CB-BB70-A585ACC30046}"
 EndProject
@@ -47,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.dependent", "3.dependent"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage", "src\storage\storage.csproj", "{49B22CE6-3E0B-4229-8B8F-75377F4F3BFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "carrier", "src\carrier\carrier.csproj", "{165D803C-9A7E-4B5F-B978-433A694EBB0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carrier", "src\carrier\carrier.csproj", "{165D803C-9A7E-4B5F-B978-433A694EBB0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
