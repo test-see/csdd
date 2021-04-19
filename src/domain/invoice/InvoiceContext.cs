@@ -7,6 +7,7 @@ using irespository.invoice.profile.enums;
 using irespository.invoice.report.model;
 using irespository.store.profile.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace domain.invoice
 {
@@ -72,13 +73,13 @@ namespace domain.invoice
         {
             return _invoiceReportRespository.GetPagerList(query);
         }
-        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByReportId(PagerQuery<int> query)
+        public async Task<PagerResult<StoreRecordListApiModel>> GetPagerRecordListByReportIdAsync(PagerQuery<int> query)
         {
-            return _invoiceReportRespository.GetPagerRecordListByReportId(query);
+            return await _invoiceReportRespository.GetPagerRecordListByReportIdAsync(query);
         }
-        public PagerResult<StoreRecordListApiModel> GetPagerRecordListByInvoiceId(PagerQuery<int> query)
+        public async Task<PagerResult<StoreRecordListApiModel>> GetPagerRecordListByInvoiceIdAsync(PagerQuery<int> query)
         {
-            return _invoiceReportRespository.GetPagerRecordListByInvoiceId(query);
+            return await _invoiceReportRespository.GetPagerRecordListByInvoiceIdAsync(query);
         }
 
         public IEnumerable<DataInvoiceType> GetInvoiceTypeList()
