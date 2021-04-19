@@ -22,9 +22,9 @@ namespace service.purchase
         {
             return await _purchaseContext.CreateAsync(created, departmentId, userId);
         }
-        public void Generate(int id)
+        public async Task GenerateAsync(int id)
         {
-            _purchaseContext.GenerateAsync(id);
+            await _purchaseContext.GenerateAsync(id);
         }
 
         public int Delete(int id)

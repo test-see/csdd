@@ -3,6 +3,7 @@ using EasyNetQ;
 using foundation.config;
 using foundation.servicecollection;
 using irespository.user.enums;
+using iservice.purchase;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -145,10 +146,10 @@ namespace webstarter.hospital
             var bus = sp.GetService<IBus>();
             var log = sp.GetService<ILoggerFactory>().CreateLogger<Startup>();
             await bus.PubSub.SubscribeAsync<RabbitMqMessage<int>>("my_subscription_id",
-                msg =>
+                async msg =>
                 {
                     log.LogInformation("begin...");
-                    sp.GetService<IPurchaseService>().Generate(msg.Payload);
+                    await sp.GetService<IPurchaseService>().GenerateAsync(msg.Payload);
                     log.LogInformation("end...");
                 },
                 x => x.WithTopic("Purchase.Generate"));

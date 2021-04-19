@@ -1,11 +1,12 @@
 ﻿using foundation.ef5.poco;
 using irespository.prescription.model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace irespository.prescription
 {
     public interface IPrescriptionGoodsRespository
     {
-        IList<PrescriptionGoodsListApiModel> GetList(int prescriptionId);
+        Task<IList<PrescriptionGoodsListApiModel>> GetListAsync(int prescriptionId);
     }
 }

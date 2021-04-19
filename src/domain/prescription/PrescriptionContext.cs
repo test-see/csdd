@@ -42,7 +42,7 @@ namespace domain.prescription
         public int Submit(int id, int userId)
         {
             var model = _prescriptionRespository.GetIndex(id);
-            var list = _prescriptionGoodsRespository.GetList(id);
+            var list = _prescriptionGoodsRespository.GetListAsync(id);
             var goods = list.Select(x => new StoreChangeGoodsValueModel
             {
                 HospitalGoodId = x.HospitalGoods.Id,

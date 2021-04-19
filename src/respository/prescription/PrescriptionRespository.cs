@@ -128,7 +128,7 @@ namespace respository.prescription
             var data = sql.FirstOrDefault();
             if(data!=null)
             {
-                data.PrescriptionGoods = _prescriptionGoodsRespository.GetList(id);
+                data.PrescriptionGoods = _prescriptionGoodsRespository.GetListAsync(id);
             }
             return data;
         }

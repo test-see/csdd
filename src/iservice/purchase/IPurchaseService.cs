@@ -15,6 +15,6 @@ namespace iservice.purchase
         int Submit(int id);
         int Comfirm(int id);
         int Revoke(int id);
-        void Generate(int id);
+        Task GenerateAsync(int id);
     }
 }
