@@ -4,6 +4,7 @@ using irespository.user.hospital.model;
 using iservice.user;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Info
 {
@@ -18,9 +19,9 @@ namespace csdd.Controllers.Info
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<UserHospitalListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<UserHospitalListQueryModel> query)
         {
-            var data = _UserHospitalService.GetPagerListAsync(query);
+            var data = await _UserHospitalService.GetPagerListAsync(query);
             return Json(data);
         }
 

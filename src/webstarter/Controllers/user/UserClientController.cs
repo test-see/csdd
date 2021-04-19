@@ -4,6 +4,7 @@ using irespository.user.client.model;
 using iservice.user;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace csdd.Controllers.Info
 {
@@ -18,9 +19,9 @@ namespace csdd.Controllers.Info
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<UserClientListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<UserClientListQueryModel> query)
         {
-            var data = _UserClientService.GetPagerListAsync(query);
+            var data = await _UserClientService.GetPagerListAsync(query);
             return Json(data);
         }
 

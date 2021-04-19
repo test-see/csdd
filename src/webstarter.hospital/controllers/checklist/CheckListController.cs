@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.CheckList
 {
@@ -22,9 +23,9 @@ namespace webstarter.hospital.controllers.CheckList
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<CheckListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<CheckListQueryModel> query)
         {
-            var data = _CheckListService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
+            var data = await _CheckListService.GetPagerListAsync(query, HospitalDepartment.Hospital.Id);
             return Json(data);
         }
 
@@ -40,9 +41,9 @@ namespace webstarter.hospital.controllers.CheckList
 
         [HttpPost]
         [Route("add")]
-        public JsonResult Post(CheckListCreateApiModel created)
+        public async Task<JsonResult> PostAsync(CheckListCreateApiModel created)
         {
-            var data = _CheckListService.CreateAsync(created, Profile.Id);
+            var data = await _CheckListService.CreateAsync(created, Profile.Id);
             return Json(data);
         }
 
@@ -57,9 +58,9 @@ namespace webstarter.hospital.controllers.CheckList
 
         [HttpGet]
         [Route("{id}/index")]
-        public JsonResult GetIndex(int id)
+        public async Task<JsonResult> GetIndexAsync(int id)
         {
-            var data = _CheckListService.GetIndexAsync(id);
+            var data = await _CheckListService.GetIndexAsync(id);
             return Json(data);
         }
 
@@ -73,17 +74,17 @@ namespace webstarter.hospital.controllers.CheckList
 
         [HttpPost]
         [Route("{id}/preview")]
-        public JsonResult GetPreviewList(int id, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        public async Task<JsonResult> GetPreviewListAsync(int id, PagerQuery<CheckListGoodsPreviewQueryModel> query)
         {
-            var data = _CheckListService.GetPagerPreviewListAsync(id, query);
+            var data = await _CheckListService.GetPagerPreviewListAsync(id, query);
             return Json(data);
         }
 
         [HttpGet]
         [Route("{id}/bill")]
-        public JsonResult Bill(int id)
+        public async Task<JsonResult> BillAsync(int id)
         {
-            var data = _CheckListService.BillAsync(id, Profile.Id);
+            var data = await _CheckListService.BillAsync(id, Profile.Id);
             return Json(data);
         }
     }

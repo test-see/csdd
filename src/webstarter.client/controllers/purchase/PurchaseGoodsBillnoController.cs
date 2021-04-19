@@ -4,6 +4,7 @@ using irespository.purchase.model;
 using iservice.purchase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace webstarter.hospital.controllers.purchase
 {
@@ -18,9 +19,9 @@ namespace webstarter.hospital.controllers.purchase
 
         [HttpPost]
         [Route("list")]
-        public JsonResult GetList(PagerQuery<PurchaseGoodsBillnoListQueryModel> query)
+        public async Task<JsonResult> GetListAsync(PagerQuery<PurchaseGoodsBillnoListQueryModel> query)
         {
-            var data = _PurchaseGoodsBillnoService.GetPagerListByClientAsync(query, Client.Id);
+            var data = await _PurchaseGoodsBillnoService.GetPagerListByClientAsync(query, Client.Id);
             return Json(data);
         }
 
