@@ -19,9 +19,9 @@ namespace foundation.mediator
             var request = new Pipe<T>(t);
             await mediator.SendAsync(request);
         }
-        public static async Task<IList<R>> ListAsync<T, R>(this IMediator mediator, T t = null) where T : class, IRequest
+        public static async Task<IList<R>> ListAsync<T, R>(this IMediator mediator, T t = null) where T : class, IRequest, new()
         {
-            var response = await mediator.RequestAsync<T, ListResponse<R>>(t);
+            var response = await mediator.RequestAsync<T, ListResponse<R>>(t ?? new T());
             return response.Payloads;
         }
         public static async Task<R> GetAsync<T, R>(this IMediator mediator, T t = null) where T : class, IRequest
