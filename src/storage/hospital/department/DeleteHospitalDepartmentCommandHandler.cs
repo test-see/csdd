@@ -17,7 +17,7 @@ namespace mediator.client
         }
         public async Task Handle(IReceiveContext<DeleteHospitalDepartmentCommand> context, CancellationToken cancellationToken)
         {
-            var id = context.Message;
+            var id = context.Message.Id;
             var goods = _context.HospitalDepartment.Find(id);
             _context.HospitalDepartment.Remove(goods);
             await _context.SaveChangesAsync();
