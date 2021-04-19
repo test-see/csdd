@@ -30,7 +30,7 @@ namespace service.checklist
         {
             return new CheckListPreviewApiModel
             {
-                CheckListGoods = _CheckListGoodsContext.GetPagerPreviewList(checkListId, query),
+                CheckListGoods = _CheckListGoodsContext.GetPagerPreviewListAsync(checkListId, query),
                 Amount = _CheckListGoodsContext.GetPreviewListAmount(checkListId),
             };
         }
@@ -72,7 +72,7 @@ namespace service.checklist
         }
         public int Bill(int id, int userId)
         {
-            return _CheckListContext.Bill(id, userId);
+            return _CheckListContext.BillAsync(id, userId);
         }
     }
 }

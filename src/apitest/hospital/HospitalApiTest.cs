@@ -28,7 +28,7 @@ namespace apitest.hospital
             var hospital = await _rootpath
                 .AppendPathSegment("/api/Hospital/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new CreateHospitalResponse { Name = "q", Remark = "d" })
+                .PostJsonAsync(new CreateHospitalRequest { Name = "q", Remark = "d" })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Hospital>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/Hospital/{hospital.Data.Id}/delete")
@@ -43,7 +43,7 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/Hospital/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new UpdateHospitalResponse { Name = "q", Remark = "d" })
+                .PostJsonAsync(new UpdateHospitalRequest { Name = "q", Remark = "d" })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);

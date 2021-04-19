@@ -9,20 +9,23 @@ using System;
 using System.Linq;
 using irespository.checklist.goods.model;
 using System.Collections.Generic;
+using Mediator.Net;
+using foundation.mediator;
+using storage.hospitalgoods.carrier;
+using System.Threading.Tasks;
 
 namespace respository.checklist
 {
     public class CheckListGoodsRespository : ICheckListGoodsRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
-        public CheckListGoodsRespository(DefaultDbContext context,
-            IHospitalGoodsRespository hospitalGoodsRespository)
+        private readonly IMediator _mediator;
+        public CheckListGoodsRespository(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
-            _hospitalGoodsRespository = hospitalGoodsRespository;
+            _mediator = mediator;
         }
-        public PagerResult<CheckListGoodsListApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
+        public async Task<PagerResult<CheckListGoodsListApiModel>> GetPagerListAsync(PagerQuery<CheckListGoodsQueryModel> query)
         {
             var sql = from r in _context.CheckListGoods
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -32,7 +35,7 @@ namespace respository.checklist
                           Id = r.Id,
                           CheckQty = r.CheckQty,
                           CheckListId = r.CheckListId,
-                          HospitalGoods = new HospitalGoodsValueModel
+                          HospitalGoods = new GetHospitalGoodsResponse
                           {
                               Id = r.HospitalGoodsId,
                           },
@@ -50,7 +53,7 @@ namespace respository.checklist
             var data = new PagerResult<CheckListGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
@@ -59,7 +62,7 @@ namespace respository.checklist
             return data;
         }
 
-        public PagerResult<CheckListGoodsPreviewListApiModel> GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        public async Task<PagerResult<CheckListGoodsPreviewListApiModel>> GetPagerPreviewListAsync(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
         {
             var sql = from r in _context.CheckListGoods
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -69,7 +72,7 @@ namespace respository.checklist
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           CheckQty = r.CheckQty,
-                          HospitalGoods = new HospitalGoodsValueModel
+                          HospitalGoods = new GetHospitalGoodsResponse
                           {
                               Id = r.HospitalGoodsId,
                           },
@@ -79,7 +82,7 @@ namespace respository.checklist
             var data = new PagerResult<CheckListGoodsPreviewListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
+                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
@@ -87,7 +90,7 @@ namespace respository.checklist
             }
             return data;
         }
-        public IList<CheckListGoodsPreviewListApiModel> GetPreviewList(int checkListId)
+        public async Task<IList<CheckListGoodsPreviewListApiModel>> GetPreviewListAsync(int checkListId)
         {
             var sql = from r in _context.CheckListGoods
                       join u in _context.User on r.CreateUserId equals u.Id
@@ -97,7 +100,7 @@ namespace respository.checklist
                           CreateTime = r.CreateTime,
                           Id = r.Id,
                           CheckQty = r.CheckQty,
-                          HospitalGoods = new HospitalGoodsValueModel
+                          HospitalGoods = new GetHospitalGoodsResponse
                           {
                               Id = r.HospitalGoodsId,
                           },
@@ -105,7 +108,7 @@ namespace respository.checklist
                           StoreQty = r.StoreQty,
                       };
             var data = sql.ToList();
-            var goods = _hospitalGoodsRespository.GetValue(data.Select(x => x.HospitalGoods.Id).ToArray());
+            var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
             foreach (var m in data)
             {
                 m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);

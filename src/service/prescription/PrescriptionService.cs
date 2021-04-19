@@ -3,6 +3,7 @@ using foundation.config;
 using foundation.ef5.poco;
 using irespository.prescription.model;
 using iservice.prescription;
+using System.Threading.Tasks;
 
 namespace service.prescription
 {
@@ -22,9 +23,9 @@ namespace service.prescription
         {
             return _prescriptionContext.GetPagerList(query, hospitalId);
         }
-        public int Submit(int id, int userId)
+        public async Task<int> SubmitAsync(int id, int userId)
         {
-            return _prescriptionContext.Submit(id, userId);
+            return await _prescriptionContext.SubmitAsync(id, userId);
         }
         public PrescriptionIndexApiModel GetIndex(int id)
         {

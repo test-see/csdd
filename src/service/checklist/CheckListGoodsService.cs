@@ -4,6 +4,7 @@ using foundation.ef5.poco;
 using irespository.checklist.goods.model;
 using irespository.checklist.model;
 using iservice.checklist;
+using System.Threading.Tasks;
 
 namespace service.checklist
 {
@@ -14,9 +15,9 @@ namespace service.checklist
         {
             _CheckListGoodsContext = CheckListGoodsContext;
         }
-        public PagerResult<CheckListGoodsListApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
+        public async Task<PagerResult<CheckListGoodsListApiModel>> GetPagerListAsync(PagerQuery<CheckListGoodsQueryModel> query)
         {
-            return _CheckListGoodsContext.GetPagerList(query);
+            return await _CheckListGoodsContext.GetPagerListAsync(query);
         }
         public CheckListGoods Create(CheckListGoodsCreateApiModel created, int userId)
         {

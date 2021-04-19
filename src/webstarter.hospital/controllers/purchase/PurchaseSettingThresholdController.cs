@@ -2,7 +2,6 @@
 using foundation.config;
 using irespository.hospital.goods.model;
 using irespository.purchase.model;
-using iservice.hospital;
 using iservice.purchase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +12,9 @@ namespace webstarter.hospital.controllers.purchase
     public class PurchaseSettingThresholdController : DefaultControllerBase
     {
         private readonly IPurchaseSettingThresholdService _purchaseSettingThresholdService;
-        private readonly IHospitalGoodsService _hospitalGoodsService;
-        public PurchaseSettingThresholdController(IPurchaseSettingThresholdService purchaseSettingThresholdService,
-            IHospitalGoodsService hospitalGoodsService)
+        public PurchaseSettingThresholdController(IPurchaseSettingThresholdService purchaseSettingThresholdService)
         {
             _purchaseSettingThresholdService = purchaseSettingThresholdService;
-            _hospitalGoodsService = hospitalGoodsService;
         }
 
         [HttpPost]
@@ -52,16 +48,6 @@ namespace webstarter.hospital.controllers.purchase
         public JsonResult Update(int id, PurchaseSettingThresholdUpdateApiModel updated)
         {
             var data = _purchaseSettingThresholdService.Update(id, updated);
-            return Json(data);
-        }
-
-        [HttpPost]
-        [Route("goods")]
-        public JsonResult GetHospitalGoodsList(PagerQuery<ListHospitalGoodsRequest> query)
-        {
-            query.Query = query.Query ?? new ListHospitalGoodsRequest { };
-            query.Query.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = _hospitalGoodsService.GetPagerList(query);
             return Json(data);
         }
 

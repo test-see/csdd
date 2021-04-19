@@ -9,6 +9,7 @@ using irespository.prescription.profile.enums;
 using irespository.store.model;
 using irespository.store.profile.model;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace domain.prescription
 {
@@ -39,10 +40,10 @@ namespace domain.prescription
             return _prescriptionRespository.Create(created, departmentId, userId);
         }
 
-        public int Submit(int id, int userId)
+        public async Task<int> SubmitAsync(int id, int userId)
         {
             var model = _prescriptionRespository.GetIndex(id);
-            var list = _prescriptionGoodsRespository.GetListAsync(id);
+            var list = await _prescriptionGoodsRespository.GetListAsync(id);
             var goods = list.Select(x => new StoreChangeGoodsValueModel
             {
                 HospitalGoodId = x.HospitalGoods.Id,

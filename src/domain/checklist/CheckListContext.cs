@@ -10,6 +10,7 @@ using irespository.store.model;
 using irespository.store.profile.model;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace domain.checklist
 {
@@ -55,10 +56,10 @@ namespace domain.checklist
         {
             return _checkListRespository.UpdateStatus(id, CheckListStatus.Submited);
         }
-        public int Bill(int id, int userId)
+        public async Task<int> BillAsync(int id, int userId)
         {
             var model = _checkListRespository.GetIndex(id);
-            var list = _checkListGoodsRespository.GetPreviewList(id);
+            var list = await _checkListGoodsRespository.GetPreviewListAsync(id);
             using (var trans = _defaultDbTransaction.Begin())
             {
                 var goods1 = list.Where(x => x.StoreQty > x.CheckQty).Select(x => new StoreChangeGoodsValueModel

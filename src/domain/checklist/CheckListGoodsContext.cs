@@ -3,6 +3,7 @@ using foundation.ef5.poco;
 using irespository.checklist;
 using irespository.checklist.goods.model;
 using irespository.checklist.model;
+using System.Threading.Tasks;
 
 namespace domain.checklist
 {
@@ -14,9 +15,9 @@ namespace domain.checklist
             _CheckListGoodsRespository = CheckListGoodsRespositoryy;
         }
 
-        public PagerResult<CheckListGoodsListApiModel> GetPagerList(PagerQuery<CheckListGoodsQueryModel> query)
+        public async Task<PagerResult<CheckListGoodsListApiModel>> GetPagerListAsync(PagerQuery<CheckListGoodsQueryModel> query)
         {
-            return _CheckListGoodsRespository.GetPagerList(query);
+            return await _CheckListGoodsRespository.GetPagerListAsync(query);
         }
         public CheckListGoods Create(CheckListGoodsCreateApiModel created, int userId)
         {
@@ -30,9 +31,9 @@ namespace domain.checklist
         {
             return _CheckListGoodsRespository.Update(id, updated);
         }
-        public PagerResult<CheckListGoodsPreviewListApiModel> GetPagerPreviewList(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
+        public async Task<PagerResult<CheckListGoodsPreviewListApiModel>> GetPagerPreviewListAsync(int checkListId, PagerQuery<CheckListGoodsPreviewQueryModel> query)
         {
-            return _CheckListGoodsRespository.GetPagerPreviewList(checkListId, query);
+            return await _CheckListGoodsRespository.GetPagerPreviewListAsync(checkListId, query);
         }
         public decimal GetPreviewListAmount(int checkListId)
         {

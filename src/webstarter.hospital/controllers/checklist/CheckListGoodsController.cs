@@ -20,7 +20,7 @@ namespace webstarter.hospital.controllers.CheckList
         [Route("list")]
         public JsonResult GetList(PagerQuery<CheckListGoodsQueryModel> query)
         {
-            var data = _CheckListGoodsService.GetPagerList(query);
+            var data = _CheckListGoodsService.GetPagerListAsync(query);
             return Json(data);
         }
 
