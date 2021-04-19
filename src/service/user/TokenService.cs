@@ -30,7 +30,7 @@ namespace service.user
         {
             var code = await _tokenContext.GenerateVerificationCodeAsync(phone);
             await _smsSendRequest.SendVerificationCodeAsync(new string[] { phone }, code);
-            return string.Empty;
+            return code;
         }
         public User Login(LoginApiModel login)
         {
