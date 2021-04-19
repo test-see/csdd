@@ -26,14 +26,14 @@ namespace csdd.Controllers.Info
         [Route("{id}/index")]
         public async Task<JsonResult> GetAsync(int id)
         {
-            var data = await _mediator.RequestSingleByIdAsync<GetClientRequest, GetClientResponse>(id);
+            var data = await _mediator.GetByIdAsync<GetClientRequest, GetClientResponse>(id);
             return Json(data);
         }
         [HttpPost]
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListClientRequest> query)
         {
-            var data = await _mediator.RequestPagerListAsync<ListClientRequest, ListClientResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListClientRequest, ListClientResponse>(query);
             return Json(data);
         }
 
@@ -42,7 +42,7 @@ namespace csdd.Controllers.Info
         public async Task<JsonResult> PostAsync(CreateClientRequest created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<CreateClientRequest, Client>(created);
+            var data = await _mediator.ToPipeAsync<CreateClientRequest, Client>(created);
             return Json(data);
         }
         [HttpPost]
@@ -51,14 +51,14 @@ namespace csdd.Controllers.Info
         {
             updated.Id = id;
             updated.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<UpdateClientRequest, Client>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateClientRequest, Client>(updated);
             return Json(data);
         }
         [HttpGet]
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteClientCommand { Id = id });
+            await _mediator.ToPipeAsync(new DeleteClientCommand { Id = id });
             return Json(id);
         }
     }

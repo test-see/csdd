@@ -60,7 +60,7 @@ namespace respository.store
             var data = new PagerResult<StoreInoutListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
+                var departments = await _mediator.ListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
@@ -134,7 +134,7 @@ namespace respository.store
             var data = sql.FirstOrDefault();
             if (data != null)
             {
-                data.HospitalDepartment = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.HospitalDepartment.Id);
+                data.HospitalDepartment = await _mediator.GetByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.HospitalDepartment.Id);
             }
             return data;
         }

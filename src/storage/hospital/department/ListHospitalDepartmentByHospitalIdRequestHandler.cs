@@ -49,7 +49,7 @@ namespace mediator.request.client
                           Parent = rp_def_t != null ? new IdNameValueModel { Id = rp_def_t.Id, Name = rp_def_t.Name } : null,
                       };
             var data = await sql.ToListAsync();
-            var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(data.Select(x => x.Hospital.Id).ToList());
+            var hospitals = await _mediator.ListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(data.Select(x => x.Hospital.Id).ToList());
 
             foreach (var m in data)
             {

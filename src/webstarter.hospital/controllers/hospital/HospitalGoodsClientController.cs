@@ -25,7 +25,7 @@ namespace webstarter.hospital.controllers.hospital
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalGoodsClientRequest> query)
         {
-            var data = await _mediator.RequestPagerListAsync<ListHospitalGoodsClientRequest, ListHospitalGoodsClientResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListHospitalGoodsClientRequest, ListHospitalGoodsClientResponse>(query);
             return Json(data);
         }
 
@@ -33,7 +33,7 @@ namespace webstarter.hospital.controllers.hospital
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteHospitalGoodsClientCommand { Id = id });
+            await _mediator.ToPipeAsync(new DeleteHospitalGoodsClientCommand { Id = id });
             return Json(id);
         }
 
@@ -47,7 +47,7 @@ namespace webstarter.hospital.controllers.hospital
                 HospitalGoodsId = goodsId,
                 UserId = Profile.Id,
             };
-            var data = await _mediator.RequestPipeAsync<CreateHospitalGoodsClientRequest, HospitalGoodsClient>(created);
+            var data = await _mediator.ToPipeAsync<CreateHospitalGoodsClientRequest, HospitalGoodsClient>(created);
             return Json(data);
         }
 

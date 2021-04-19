@@ -23,7 +23,7 @@ namespace webstarter.hospital.controllers.hospital
         public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalGoodsRequest> query)
         {
             query.Query = query.Query ?? new ListHospitalGoodsRequest { };
-            var data = await _mediator.RequestPagerListAsync<ListHospitalGoodsRequest, ListHospitalGoodsResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListHospitalGoodsRequest, ListHospitalGoodsResponse>(query);
             return Json(data);
         }
     }

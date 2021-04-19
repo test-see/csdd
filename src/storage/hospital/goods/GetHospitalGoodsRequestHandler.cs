@@ -52,8 +52,8 @@ namespace mediator.client.profile
                       };
             var profiles = await sql.ToListAsync();
 
-            var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(profiles.Select(x => x.Hospital.Id).ToArray());
-            var logs = await _mediator.RequestListAsync<ListEventlogByGoodsIdRequest, ListEventlogByGoodsIdResponse>(new ListEventlogByGoodsIdRequest { GoodsIds = profiles.Select(x => x.Id).ToArray() });
+            var hospitals = await _mediator.ListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(profiles.Select(x => x.Hospital.Id).ToArray());
+            var logs = await _mediator.ListAsync<ListEventlogByGoodsIdRequest, ListEventlogByGoodsIdResponse>(new ListEventlogByGoodsIdRequest { GoodsIds = profiles.Select(x => x.Id).ToArray() });
 
             foreach (var profile in profiles)
             {

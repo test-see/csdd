@@ -27,7 +27,7 @@ namespace webstarter.hospital.controllers.hospital
         {
             query.Query = query.Query ?? new ListHospitalGoodsRequest { };
             query.Query.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = await _mediator.RequestPagerListAsync<ListHospitalGoodsRequest, ListHospitalGoodsResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListHospitalGoodsRequest, ListHospitalGoodsResponse>(query);
             return Json(data);
         }
 
@@ -37,7 +37,7 @@ namespace webstarter.hospital.controllers.hospital
         {
             query.Query = query.Query ?? new ListHospitalGoodsStoreRequest { };
             query.Query.HospitalDepartmentId = HospitalDepartment.Id;
-            var data = await _mediator.RequestPagerListAsync<ListHospitalGoodsStoreRequest, ListHospitalGoodsStoreResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListHospitalGoodsStoreRequest, ListHospitalGoodsStoreResponse>(query);
             return Json(data);
         }
 
@@ -45,7 +45,7 @@ namespace webstarter.hospital.controllers.hospital
         [Route("index/query")]
         public async Task<JsonResult> GetByBarcodeAsync(string barcode)
         {
-            var data = await _mediator.RequestSingleAsync<GetHospitalGoodsByBarcodeRequest, GetHospitalGoodsResponse>(
+            var data = await _mediator.GetAsync<GetHospitalGoodsByBarcodeRequest, GetHospitalGoodsResponse>(
                 new GetHospitalGoodsByBarcodeRequest(barcode));
             return Json(data);
         }
@@ -54,7 +54,7 @@ namespace webstarter.hospital.controllers.hospital
         [Route("{id}/index")]
         public async Task<JsonResult> GetAsync(int id)
         {
-            var data = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(id);
+            var data = await _mediator.GetByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(id);
             return Json(data);
         }
 
@@ -62,7 +62,7 @@ namespace webstarter.hospital.controllers.hospital
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteHospitalGoodsCommand { Id = id });
+            await _mediator.ToPipeAsync(new DeleteHospitalGoodsCommand { Id = id });
             return Json(id);
         }
 
@@ -72,7 +72,7 @@ namespace webstarter.hospital.controllers.hospital
         {
             created.UserId = Profile.Id;
             created.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = await _mediator.RequestPipeAsync<CreateHospitalGoodsRequest, HospitalGoods>(created);
+            var data = await _mediator.ToPipeAsync<CreateHospitalGoodsRequest, HospitalGoods>(created);
             return Json(data);
         }
 
@@ -81,7 +81,7 @@ namespace webstarter.hospital.controllers.hospital
         public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalGoodsRequest updated)
         {
             updated.Id = id;
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsRequest, HospitalGoods>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateHospitalGoodsRequest, HospitalGoods>(updated);
             return Json(data);
         }
 
@@ -90,7 +90,7 @@ namespace webstarter.hospital.controllers.hospital
         public async Task<JsonResult> UpdateInActiveAsync(int id)
         {
             var updated = new UpdateHospitalGoodsIsActiveRequest { Id = id, IsActive = false, };
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
             return Json(data);
         }
 
@@ -99,7 +99,7 @@ namespace webstarter.hospital.controllers.hospital
         public async Task<JsonResult> UpdateActiveAsync(int id)
         {
             var updated = new UpdateHospitalGoodsIsActiveRequest { Id = id, IsActive = true, };
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
             return Json(data);
         }
     }

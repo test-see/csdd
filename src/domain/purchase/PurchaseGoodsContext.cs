@@ -75,7 +75,7 @@ namespace domain.purchase
 
         public async Task GenerateAsync(int purchaseId, PurchaseSettingThreshold threshold, int departmentId, int userId)
         {
-            var clients = await _mediator.RequestListAsync<ListHospitalGoodsClientRequest, ListHospitalGoodsClientResponse>(new ListHospitalGoodsClientRequest
+            var clients = await _mediator.ListAsync<ListHospitalGoodsClientRequest, ListHospitalGoodsClientResponse>(new ListHospitalGoodsClientRequest
             {
                 HospitalGoodsId = threshold.HospitalGoodsId
             });
@@ -113,7 +113,7 @@ namespace domain.purchase
 
         private async Task<int> GetPurchaseGoodsQtyByPercentAsync(PurchaseSettingThreshold threshold, int storeQty, int departmentId)
         {
-            var department = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(departmentId);
+            var department = await _mediator.GetByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(departmentId);
             var total = _storeRecordContext.GetConsumeAmount(departmentId, threshold.HospitalGoodsId, department.Hospital.ConsumeDays);
             var average = total / department.Hospital.ConsumeDays;
             if (storeQty < average * threshold.DownQty)

@@ -40,7 +40,7 @@ namespace mediator.client.profile
                           DepartmentType = d,
                       };
             var profiles = await sql.ToListAsync();
-            var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(profiles.Select(x => x.Hospital.Id).ToArray());
+            var hospitals = await _mediator.ListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(profiles.Select(x => x.Hospital.Id).ToArray());
 
             foreach (var department in profiles)
             {

@@ -24,14 +24,14 @@ namespace csdd.Controllers.Sys
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListConfigRequest> query)
         {
-            var data = await _mediator.RequestPagerListAsync<ListConfigRequest, ListConfigResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListConfigRequest, ListConfigResponse>(query);
             return Json(data);
         }
         [HttpGet]
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteConfigCommand { Id = id });
+            await _mediator.ToPipeAsync(new DeleteConfigCommand { Id = id });
             return Json(id);
         }
 
@@ -40,7 +40,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> PostAsync(CreateConfigRequest created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<CreateConfigRequest, SysConfig>(created);
+            var data = await _mediator.ToPipeAsync<CreateConfigRequest, SysConfig>(created);
             return Json(data);
         }
 

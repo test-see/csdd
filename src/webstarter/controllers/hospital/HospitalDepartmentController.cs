@@ -28,7 +28,7 @@ namespace csdd.Controllers.Sys
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalDepartmentRequest> query)
         {
-            var data = await _mediator.RequestPagerListAsync<ListHospitalDepartmentRequest, ListHospitalDepartmentResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListHospitalDepartmentRequest, ListHospitalDepartmentResponse>(query);
             return Json(data);
         }
 
@@ -37,7 +37,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalDepartmentRequest updated)
         {
             updated.Id = id;
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalDepartmentRequest, HospitalDepartment>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateHospitalDepartmentRequest, HospitalDepartment>(updated);
             return Json(data);
         }
 
@@ -45,7 +45,7 @@ namespace csdd.Controllers.Sys
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteHospitalDepartmentCommand { Id = id });
+            await _mediator.ToPipeAsync(new DeleteHospitalDepartmentCommand { Id = id });
             return Json(id);
         }
 
@@ -54,7 +54,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> PostAsync(CreateHospitalDepartmentRequest created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<CreateHospitalDepartmentRequest, HospitalDepartment>(created);
+            var data = await _mediator.ToPipeAsync<CreateHospitalDepartmentRequest, HospitalDepartment>(created);
             return Json(data);
         }
 
@@ -62,7 +62,7 @@ namespace csdd.Controllers.Sys
         [Route("parent")]
         public async Task<JsonResult> ListParentAsync()
         {
-            var data = await _mediator.RequestListAsync<ListParentHospitalDepartmentRequest, IdNameValueModel>();
+            var data = await _mediator.ListAsync<ListParentHospitalDepartmentRequest, IdNameValueModel>();
             return Json(data);
         }
 
@@ -70,7 +70,7 @@ namespace csdd.Controllers.Sys
         [Route("type")]
         public async Task<JsonResult> ListTypeAsync()
         {
-            var data = await _mediator.RequestListAsync<ListDepartmentTypeRequest, IdNameValueModel>();
+            var data = await _mediator.ListAsync<ListDepartmentTypeRequest, IdNameValueModel>();
             return Json(data);
         }
     }

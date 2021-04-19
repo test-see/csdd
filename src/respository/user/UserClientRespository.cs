@@ -86,7 +86,7 @@ namespace respository.user
             var data = new PagerResult<UserClientListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var clients = await _mediator.RequestListByIdsAsync<GetClientRequest, GetClientResponse>(data.Select(x => x.Client.Id));
+                var clients = await _mediator.ListByIdsAsync<GetClientRequest, GetClientResponse>(data.Select(x => x.Client.Id));
                 foreach (var m in data.Result)
                 {
                     m.Client = clients.FirstOrDefault(x => x.Id == m.Client.Id);
@@ -122,7 +122,7 @@ namespace respository.user
             var user = sql.FirstOrDefault();
             if (user != null)
             {
-                user.Client = await _mediator.RequestSingleByIdAsync<GetClientRequest, GetClientResponse>(user.Client.Id );
+                user.Client = await _mediator.GetByIdAsync<GetClientRequest, GetClientResponse>(user.Client.Id );
             }
             return user;
         }

@@ -74,8 +74,8 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var clients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
-                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
+                var clients = await _mediator.ListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
+                var goods = await _mediator.ListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 var purachses = await _purchaseRespository.GetValueAsync(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
@@ -137,8 +137,8 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var clients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
-                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
+                var clients = await _mediator.ListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
+                var goods = await _mediator.ListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 var purachses = await  _purchaseRespository.GetValueAsync(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
@@ -208,8 +208,8 @@ namespace respository.purchase
             var data = sql.FirstOrDefault();
             if (data!=null)
             {
-                data.HospitalGoods = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.HospitalGoods.Id);
-                data.HospitalClient = await _mediator.RequestSingleByIdAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.HospitalClient.Id );
+                data.HospitalGoods = await _mediator.GetByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.HospitalGoods.Id);
+                data.HospitalClient = await _mediator.GetByIdAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.HospitalClient.Id );
                 data.Purchase =( await  _purchaseRespository.GetValueAsync(new int[] { data.Purchase.Id })).FirstOrDefault();
             }
             return data;

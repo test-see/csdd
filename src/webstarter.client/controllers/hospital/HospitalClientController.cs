@@ -24,7 +24,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalClientRequest> query)
         {
             query.Query = query.Query ?? new ListHospitalClientRequest { };
-            var data = await _mediator.RequestPagerListAsync<ListHospitalClientRequest, ListHospitalClientResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListHospitalClientRequest, ListHospitalClientResponse>(query);
             return Json(data);
         }
 

@@ -53,7 +53,7 @@ namespace respository.checklist
             var data = new PagerResult<CheckListGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
+                var goods = await _mediator.ListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
@@ -82,7 +82,7 @@ namespace respository.checklist
             var data = new PagerResult<CheckListGoodsPreviewListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
+                var goods = await _mediator.ListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
@@ -108,7 +108,7 @@ namespace respository.checklist
                           StoreQty = r.StoreQty,
                       };
             var data = sql.ToList();
-            var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
+            var goods = await _mediator.ListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
             foreach (var m in data)
             {
                 m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);

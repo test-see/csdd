@@ -21,7 +21,7 @@ namespace csdd.Controllers.Sys
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListEventlogRequest> query)
         {
-            var data = await _mediator.RequestPagerListAsync<ListEventlogRequest, ListEventlogResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListEventlogRequest, ListEventlogResponse>(query);
             return Json(data);
         }
     }

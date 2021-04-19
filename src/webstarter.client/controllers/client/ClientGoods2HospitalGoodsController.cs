@@ -24,7 +24,7 @@ namespace csdd.controllers.client
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteClientGoods2HospitalGoodsCommand { Id = id });
+            await _mediator.ToPipeAsync(new DeleteClientGoods2HospitalGoodsCommand { Id = id });
             return Json(id);
         }
 
@@ -33,7 +33,7 @@ namespace csdd.controllers.client
         public async Task<JsonResult> PostAsync(CreateClientGoods2HospitalGoodsRequest created)
         {
             created.UserId = Profile.Id;
-            var data = await _mediator.RequestPipeAsync<CreateClientGoods2HospitalGoodsRequest, ClientGoods2HospitalGoods>(created);
+            var data = await _mediator.ToPipeAsync<CreateClientGoods2HospitalGoodsRequest, ClientGoods2HospitalGoods>(created);
             return Json(data);
         }
     }

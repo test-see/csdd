@@ -62,7 +62,7 @@ namespace mediator.request.client
             var data = new PagerResult<ListHospitalDepartmentResponse>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(data.Select(x => x.Hospital.Id).ToList());
+                var hospitals = await _mediator.ListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(data.Select(x => x.Hospital.Id).ToList());
 
                 foreach (var m in data.Result)
                 {

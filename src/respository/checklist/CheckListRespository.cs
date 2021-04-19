@@ -56,7 +56,7 @@ namespace respository.checklist
             var data = new PagerResult<CheckListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id).ToList());
+                var departments = await _mediator.ListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
@@ -141,7 +141,7 @@ namespace respository.checklist
             var setting =  sql.FirstOrDefault();
             if (setting != null)
             {
-                setting.HospitalDepartment = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(setting.HospitalDepartment.Id);
+                setting.HospitalDepartment = await _mediator.GetByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(setting.HospitalDepartment.Id);
             }
             return setting;
         }

@@ -51,7 +51,7 @@ namespace mediator.client.profile
                       };
 
             var profiles = await sql.ToListAsync();
-            var mappings = await _mediator.RequestListAsync<ListClientGoods2HospitalGoodsRequest, ListClientGoods2HospitalGoodsResponse>(
+            var mappings = await _mediator.ListAsync<ListClientGoods2HospitalGoodsRequest, ListClientGoods2HospitalGoodsResponse>(
                 new ListClientGoods2HospitalGoodsRequest
                 {
                     ClientGoodsIds = profiles.Select(x => x.Id).ToArray(),

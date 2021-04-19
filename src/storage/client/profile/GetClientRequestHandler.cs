@@ -52,7 +52,7 @@ namespace mediator.client.profile
                       };
 
             var mappings = await sql.ToListAsync();
-            var hospitalclients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(mappings.Select(x => x.HospitalClient.Id).ToArray());
+            var hospitalclients = await _mediator.ListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(mappings.Select(x => x.HospitalClient.Id).ToArray());
             foreach (var m in mappings)
             {
                 m.HospitalClient = hospitalclients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);

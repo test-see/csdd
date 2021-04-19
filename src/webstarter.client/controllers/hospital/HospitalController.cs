@@ -22,7 +22,7 @@ namespace csdd.Controllers.Info
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalRequest> query)
         {
-            var data = await _mediator.RequestPagerListAsync<ListHospitalRequest, ListHospitalResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListHospitalRequest, ListHospitalResponse>(query);
             return Json(data);
         }
     }

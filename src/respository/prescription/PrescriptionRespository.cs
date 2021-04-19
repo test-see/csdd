@@ -95,7 +95,7 @@ namespace respository.prescription
             var data = new PagerResult<PrescriptionListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
+                var departments = await _mediator.ListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);

@@ -26,7 +26,7 @@ namespace csdd.Controllers.Sys
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListHospitalGoodsRequest> query)
         {
-            var data = await _mediator.RequestPagerListAsync<ListHospitalGoodsRequest, ListHospitalGoodsResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListHospitalGoodsRequest, ListHospitalGoodsResponse>(query);
             return Json(data);
         }
 
@@ -35,7 +35,7 @@ namespace csdd.Controllers.Sys
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteHospitalGoodsCommand { Id = id });
+            await _mediator.ToPipeAsync(new DeleteHospitalGoodsCommand { Id = id });
             return Json(id);
         }
 
@@ -44,7 +44,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> PostAsync(CreateHospitalGoodsRequest created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<CreateHospitalGoodsRequest, HospitalGoods>(created);
+            var data = await _mediator.ToPipeAsync<CreateHospitalGoodsRequest, HospitalGoods>(created);
             return Json(data);
         }
 
@@ -53,7 +53,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalGoodsRequest updated)
         {
             updated.Id = id;
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsRequest, HospitalGoods>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateHospitalGoodsRequest, HospitalGoods>(updated);
             return Json(data);
         }
 
@@ -61,7 +61,7 @@ namespace csdd.Controllers.Sys
         [Route("{id}/index")]
         public async Task<JsonResult> GetAsync(int id)
         {
-            var data = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(id);
+            var data = await _mediator.GetByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(id);
             return Json(data);
         }
 
@@ -71,7 +71,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> UpdateInActiveAsync(int id)
         {
             var updated = new UpdateHospitalGoodsIsActiveRequest { Id = id, IsActive = false, };
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
             return Json(data);
         }
 
@@ -80,7 +80,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> UpdateActiveAsync(int id)
         {
             var updated = new UpdateHospitalGoodsIsActiveRequest { Id = id, IsActive = true, };
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
             return Json(data);
         }
     }

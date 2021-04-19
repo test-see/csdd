@@ -70,8 +70,8 @@ namespace respository.store
             var data = new PagerResult<StoreRecordListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
-                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
+                var departments = await _mediator.ListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
+                var goods = await _mediator.ListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 foreach (var m in data.Result)
                 {
                     m.HospitalGoods = goods.FirstOrDefault(x => x.Id == m.HospitalGoods.Id);
@@ -83,7 +83,7 @@ namespace respository.store
 
         public async Task<StoreRecord> CreateAsync(StoreRecordCreateApiModel created, int userId)
         {
-            var goods = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(created.HospitalGoodsId );
+            var goods = await _mediator.GetByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(created.HospitalGoodsId );
             var record = new StoreRecord
             {
                 BeforeQty = created.BeforeQty,

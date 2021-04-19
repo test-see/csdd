@@ -26,7 +26,7 @@ namespace csdd.Controllers.Sys
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListClientGoodsRequest> query)
         {
-            var data = await _mediator.RequestPagerListAsync<ListClientGoodsRequest, ListClientGoodsResponse>(query);
+            var data = await _mediator.ListByPageAsync<ListClientGoodsRequest, ListClientGoodsResponse>(query);
             return Json(data);
         }
 
@@ -34,7 +34,7 @@ namespace csdd.Controllers.Sys
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteClientGoodsCommand { Id = id });
+            await _mediator.ToPipeAsync(new DeleteClientGoodsCommand { Id = id });
             return Json(id);
         }
 
@@ -43,7 +43,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> PostAsync(CreateClientGoodsRequest created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<CreateClientGoodsRequest, ClientGoods>(created);
+            var data = await _mediator.ToPipeAsync<CreateClientGoodsRequest, ClientGoods>(created);
             return Json(data);
         }
 
@@ -53,7 +53,7 @@ namespace csdd.Controllers.Sys
         {
             updated.Id = id;
             updated.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<UpdateClientGoodsRequest, ClientGoods>(updated);
+            var data = await _mediator.ToPipeAsync<UpdateClientGoodsRequest, ClientGoods>(updated);
             return Json(data);
         }
 
@@ -61,7 +61,7 @@ namespace csdd.Controllers.Sys
         [Route("{id}/index")]
         public async Task<JsonResult> GetAsync(int id)
         {
-            var data = await _mediator.RequestSingleByIdAsync<GetClientGoodsRequest, GetClientGoodsResponse>(id);
+            var data = await _mediator.GetByIdAsync<GetClientGoodsRequest, GetClientGoodsResponse>(id);
             return Json(data);
         }
     }

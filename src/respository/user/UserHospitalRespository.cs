@@ -76,7 +76,7 @@ namespace respository.user
                       };
             if (query.Query != null && query.Query.HospitalId != null)
             {
-               var departments= await _mediator.RequestListAsync<ListHospitalDepartmentRequest, ListHospitalDepartmentResponse>(new ListHospitalDepartmentRequest { 
+               var departments= await _mediator.ListAsync<ListHospitalDepartmentRequest, ListHospitalDepartmentResponse>(new ListHospitalDepartmentRequest { 
                  HospitalId= query.Query.HospitalId.Value,
                 });
                 sql = sql.Where(x => departments.Select(x => x.Id).ToList().Contains(x.HospitalDepartment.Id));
@@ -88,7 +88,7 @@ namespace respository.user
             var data = new PagerResult<UserHospitalListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var departments = await _mediator.RequestListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
+                var departments = await _mediator.ListByIdsAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(data.Select(x => x.HospitalDepartment.Id));
                 foreach (var m in data.Result)
                 {
                     m.HospitalDepartment = departments.FirstOrDefault(x => x.Id == m.HospitalDepartment.Id);
@@ -124,7 +124,7 @@ namespace respository.user
             var user = sql.FirstOrDefault();
             if (user != null)
             {
-                user.HospitalDepartment = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(user.HospitalDepartment.Id);
+                user.HospitalDepartment = await _mediator.GetByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(user.HospitalDepartment.Id);
             }
             return user;
         }

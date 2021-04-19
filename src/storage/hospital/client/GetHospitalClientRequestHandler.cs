@@ -49,7 +49,7 @@ namespace mediator.client.profile
                            Id = c.Id,
                            Name = c.Name,
                        }).ToList();
-            var hospitals = await _mediator.RequestListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(hospitalClients.Select(x => x.Hospital.Id).ToArray());
+            var hospitals = await _mediator.ListByIdsAsync<GetHospitalRequest, GetHospitalResponse>(hospitalClients.Select(x => x.Hospital.Id).ToArray());
 
             foreach (var c in hospitalClients)
             {

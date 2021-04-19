@@ -17,7 +17,7 @@ namespace domain.eventlog
         }
         public async Task<EventlogHospitalGoods> CreateAsync(CreateEventlogHospitalGoodsRequest created)
         {
-            var goods = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(created.GoodsId);
+            var goods = await _mediator.GetByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(created.GoodsId);
             created.HospitalGoods = goods;
             return await _mediator.RequestAsync<CreateEventlogHospitalGoodsRequest, EventlogHospitalGoods>(created);
         }
