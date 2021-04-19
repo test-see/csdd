@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <ProjectReference Include="..\domain\domain.csproj" />
+    <ProjectReference Include="..\carrier\carrier.csproj" />
   </ItemGroup>
 
 </Project>
