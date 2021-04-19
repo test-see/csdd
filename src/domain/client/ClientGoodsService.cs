@@ -17,11 +17,11 @@ namespace domain.client
 
         public async Task<ClientGoods> UpdateAsync(UpdateClientGoodsRequest updated)
         {
-            return await _mediator.RequestSingleAsync<UpdateClientGoodsRequest, ClientGoods>(updated);
+            return await _mediator.RequestAsync<UpdateClientGoodsRequest, ClientGoods>(updated);
         }
         public async Task<ClientGoods> CreateAsync(CreateClientGoodsRequest created)
         {
-            return await _mediator.RequestSingleAsync<CreateClientGoodsRequest, ClientGoods>(created);
+            return await _mediator.RequestAsync<CreateClientGoodsRequest, ClientGoods>(created);
         }
         public async Task DeleteAsync(DeleteClientGoodsCommand deleted)
         {

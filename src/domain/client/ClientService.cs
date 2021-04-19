@@ -16,12 +16,12 @@ namespace domain.client
 
         public async Task<Client> UpdateAsync(UpdateClientRequest updated)
         {
-            return await _mediator.RequestSingleAsync<UpdateClientRequest, Client>(updated);
+            return await _mediator.RequestAsync<UpdateClientRequest, Client>(updated);
         }
 
         public async Task<Client> CreateAsync(CreateClientRequest created)
         {
-            return await _mediator.RequestSingleAsync<CreateClientRequest, Client>(created);
+            return await _mediator.RequestAsync<CreateClientRequest, Client>(created);
         }
         public async Task DeleteAsync(DeleteClientCommand deleted)
         {

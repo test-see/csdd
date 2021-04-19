@@ -16,7 +16,7 @@ namespace domain.sys
 
         public async Task<SysConfig> CreateAsync(CreateConfigRequest created)
         {
-            return await _mediator.RequestSingleAsync<CreateConfigRequest, SysConfig>(created);
+            return await _mediator.RequestAsync<CreateConfigRequest, SysConfig>(created);
         }
         public async Task DeleteAsync(DeleteConfigCommand deleted)
         {
