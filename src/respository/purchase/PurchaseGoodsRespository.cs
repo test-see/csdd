@@ -1,6 +1,7 @@
 ﻿using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
 using irespository.client;
 using irespository.hospital;
 using irespository.hospital.client.model;
@@ -10,29 +11,29 @@ using irespository.hospital.profile.model;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
+using Mediator.Net;
+using nouns.client.profile;
+using storage.hospitalgoods.carrier;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace respository.purchase
 {
     public class PurchaseGoodsRespository : IPurchaseGoodsRespository
     {
         private readonly DefaultDbContext _context;
-        private readonly IHospitalGoodsRespository _hospitalGoodsRespository;
-        private readonly IHospitalClientRespository _hospitalClientRespository;
+        private readonly IMediator _mediator;
         private readonly IPurchaseRespository _purchaseRespository;
-        public PurchaseGoodsRespository(DefaultDbContext context,
-            IHospitalGoodsRespository hospitalGoodsRespository,
-            IHospitalClientRespository hospitalClientRespository,
+        public PurchaseGoodsRespository(DefaultDbContext context, IMediator mediator,
             IPurchaseRespository purchaseRespository)
         {
             _context = context;
-            _hospitalGoodsRespository = hospitalGoodsRespository;
-            _hospitalClientRespository = hospitalClientRespository;
+            _mediator = mediator;
             _purchaseRespository = purchaseRespository;
         }
 
-        public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
+        public async Task<PagerResult<PurchaseGoodsListApiModel>> GetPagerListAsync(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
             var sql = from r in _context.PurchaseGoods
                       orderby r.Id descending
@@ -46,7 +47,7 @@ namespace respository.purchase
                               Id = r.PurchaseId,
                           },
                           Status = r.Status,
-                          HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
+                          HospitalGoods = new GetHospitalGoodsResponse { Id = r.HospitalGoodsId, },
                           HospitalClient = new GetHospitalClientResponse { Id = r.HospitalClientId },
                       };
             if (query.Query?.HospitalGoodsId != null)
@@ -73,8 +74,8 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
-                var clients = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());
+                var clients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
+                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
@@ -87,7 +88,7 @@ namespace respository.purchase
         }
 
 
-        public PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
+        public async Task<PagerResult<PurchaseGoodsListApiModel>> GetPagerListByClientAsync(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
             var sql = from r in _context.PurchaseGoods
                       join x in _context.Purchase on r.PurchaseId equals x.Id
@@ -109,7 +110,7 @@ namespace respository.purchase
                               }
                           },
                           Status = r.Status,
-                          HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
+                          HospitalGoods = new GetHospitalGoodsResponse { Id = r.HospitalGoodsId, },
                           HospitalClient = new GetHospitalClientResponse { Id = r.HospitalClientId },
                       };
             if (query.Query?.Status != null)
@@ -136,8 +137,8 @@ namespace respository.purchase
             var data = new PagerResult<PurchaseGoodsListApiModel>(query.Index, query.Size, sql);
             if (data.Total > 0)
             {
-                var goods = _hospitalGoodsRespository.GetValue(data.Result.Select(x => x.HospitalGoods.Id).ToArray());
-                var clients = _hospitalClientRespository.GetValue(data.Result.Select(x => x.HospitalClient.Id).ToArray());
+                var clients = await _mediator.RequestListByIdsAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.Select(x => x.HospitalClient.Id));
+                var goods = await _mediator.RequestListByIdsAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.Select(x => x.HospitalGoods.Id).ToList());
                 var purachses = _purchaseRespository.GetValue(data.Result.Select(x => x.Purchase.Id).ToArray());
                 foreach (var m in data.Result)
                 {
@@ -187,7 +188,7 @@ namespace respository.purchase
             return setting.Id;
         }
 
-        public PurchaseGoodsListApiModel GetIndex(int id)
+        public async Task<PurchaseGoodsListApiModel> GetIndexAsync(int id)
         {
             var sql = from r in _context.PurchaseGoods
                       where r.Id == id
@@ -201,14 +202,14 @@ namespace respository.purchase
                               Id = r.PurchaseId,
                           },
                           Status = r.Status,
-                          HospitalGoods = new HospitalGoodsValueModel { Id = r.HospitalGoodsId, },
+                          HospitalGoods = new GetHospitalGoodsResponse { Id = r.HospitalGoodsId, },
                           HospitalClient = new GetHospitalClientResponse { Id = r.HospitalClientId },
                       };
             var data = sql.FirstOrDefault();
             if (data!=null)
             {
-                data.HospitalGoods = _hospitalGoodsRespository.GetValue(new int[] { data.HospitalGoods.Id }).FirstOrDefault();
-                data.HospitalClient = _hospitalClientRespository.GetValue(new int[] { data.HospitalClient.Id }).FirstOrDefault();
+                data.HospitalGoods = await _mediator.RequestSingleByIdAsync<GetHospitalGoodsRequest, GetHospitalGoodsResponse>(data.HospitalGoods.Id);
+                data.HospitalClient = await _mediator.RequestSingleByIdAsync<GetHospitalClientRequest, GetHospitalClientResponse>(data.HospitalClient.Id );
                 data.Purchase = _purchaseRespository.GetValue(new int[] { data.Purchase.Id }).FirstOrDefault();
             }
             return data;

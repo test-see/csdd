@@ -50,12 +50,12 @@ namespace domain.purchase
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
         {
-            return _purchaseGoodsRespository.GetPagerList(query);
+            return _purchaseGoodsRespository.GetPagerListAsync(query);
         }
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsListQueryModel> query, int clientId)
         {
-            return _purchaseGoodsRespository.GetPagerListByClient(query, clientId);          
+            return _purchaseGoodsRespository.GetPagerListByClientAsync(query, clientId);          
         }
 
         public PurchaseGoods Create(PurchaseGoodsCreateApiModel created, int userId)
@@ -123,7 +123,7 @@ namespace domain.purchase
         
         public PurchaseGoodsListApiModel GetIndex(int id)
         {
-            return _purchaseGoodsRespository.GetIndex(id);
+            return _purchaseGoodsRespository.GetIndexAsync(id);
         }
 
         public int Submit(int id)
