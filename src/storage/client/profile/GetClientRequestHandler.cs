@@ -43,7 +43,7 @@ namespace mediator.client.profile
                       where payload.Ids.Contains(p.ClientId)
                       select new ListClient2HospitalClientResponse
                       {
-                          Client = clients.First(x => x.Id == p.ClientId),
+                          Client = new GetClientResponse { Id = p.ClientId },
                           ClientMappingId = p.Id,
                           HospitalClient = new GetHospitalClientResponse
                           {
@@ -56,6 +56,7 @@ namespace mediator.client.profile
             foreach (var m in mappings)
             {
                 m.HospitalClient = hospitalclients.FirstOrDefault(x => x.Id == m.HospitalClient.Id);
+                m.Client = clients.First(x => x.Id == m.Client.Id);
             }
             foreach (var client in clients)
             {
