@@ -71,6 +71,7 @@ namespace csdd.Controllers.Sys
         public async Task<JsonResult> ListTypeAsync()
         {
             var data = await _mediator.ListAsync<ListDepartmentTypeRequest, IdNameValueModel>();
+
             return Json(data);
         }
     }
