@@ -9,21 +9,19 @@ using System.Threading.Tasks;
 
 namespace storage.sys.eventlog
 {
-    public class CreateEventlogHospitalGoodsRequestHandler : IRequestHandler<CreateEventlogHospitalGoods, EventlogHospitalGoods>
+    public class CreateEventlogHospitalGoodsRequestHandler : IRequestHandler<CreateEventlogHospitalGoodsRequest, EventlogHospitalGoods>
     {
         private readonly DefaultDbContext _context;
         public CreateEventlogHospitalGoodsRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<EventlogHospitalGoods> Handle(IReceiveContext<CreateEventlogHospitalGoods> context, CancellationToken cancellationToken)
+        public async Task<EventlogHospitalGoods> Handle(IReceiveContext<CreateEventlogHospitalGoodsRequest> context, CancellationToken cancellationToken)
         {
             var created = context.Message;
             var log = new Eventlog
             {
-                Content = created.ChangeValue == null ?
-                    "没有记录细节" :
-                    $"修改药品信息 {created.ChangeValue.Field} 从 {created.ChangeValue.Source} 改为 {created.ChangeValue.Result}",
+                Content = "-",
                 Title = $"修改药品 {created.HospitalGoods.Name}",
                 OptionUserId = created.UserId,
                 CreateTime = DateTime.Now,

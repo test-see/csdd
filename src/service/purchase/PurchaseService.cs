@@ -24,7 +24,7 @@ namespace service.purchase
         }
         public void Generate(int id)
         {
-            _purchaseContext.Generate(id);
+            _purchaseContext.GenerateAsync(id);
         }
 
         public int Delete(int id)

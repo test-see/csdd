@@ -39,7 +39,7 @@ namespace domain.purchase
             }
             return purchase;
         }
-        public void Generate(int id)
+        public async Task GenerateAsync(int id)
         {
             var purchase = GetIndex(id);
             if (purchase.PurchaseSettingId != null)
@@ -47,7 +47,7 @@ namespace domain.purchase
                 var thresholds = _purchaseSettingThresholdContext.GetListBySettingId(purchase.PurchaseSettingId.Value);
                 foreach (var item in thresholds)
                 {
-                    _purchaseGoodsContext.Generate(purchase.Id, item, purchase.HospitalDepartment.Id, purchase.CreateUserId);
+                    await _purchaseGoodsContext.GenerateAsync(purchase.Id, item, purchase.HospitalDepartment.Id, purchase.CreateUserId);
                 }
             }
             _purchaseRespository.UpdateStatus(purchase.Id, PurchaseStatus.Pendding);

@@ -53,7 +53,7 @@ namespace apitest.hospital
             var hospital = await _rootpath
                 .AppendPathSegment("/api/HospitalGoods/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new CreateHospitalGoods
+                .PostJsonAsync(new CreateHospitalGoodsRequest
                 {
                     Name = "q",
                     HospitalId = 1,
@@ -77,7 +77,7 @@ namespace apitest.hospital
             var message = await _rootpath
                 .AppendPathSegment("/api/HospitalGoods/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new UpdateHospitalGoods
+                .PostJsonAsync(new UpdateHospitalGoodsRequest
                 {
                     Name = "q",
                     Producer = "x",

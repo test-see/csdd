@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class CreateHospitalDepartmentRequestHandler : IRequestHandler<CreateHospitalDepartment, HospitalDepartment>
+    public class CreateHospitalDepartmentRequestHandler : IRequestHandler<CreateHospitalDepartmentRequest, HospitalDepartment>
     {
         private readonly DefaultDbContext _context;
         public CreateHospitalDepartmentRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<HospitalDepartment> Handle(IReceiveContext<CreateHospitalDepartment> context, CancellationToken cancellationToken)
+        public async Task<HospitalDepartment> Handle(IReceiveContext<CreateHospitalDepartmentRequest> context, CancellationToken cancellationToken)
         {
-            var created = context.Message.Payload;
+            var created = context.Message;
             var goods = new HospitalDepartment
             {
                 Name = created.Name,

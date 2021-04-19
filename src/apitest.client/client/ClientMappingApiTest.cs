@@ -18,7 +18,7 @@ namespace apitest.client
             var Client = await _rootpath
                 .AppendPathSegment("/api/ClientMapping/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new CreateClient2HospitalClient { ClientId = 1, HospitalClientId = 1 })
+                .PostJsonAsync(new CreateClient2HospitalClientRequest { ClientId = 1, HospitalClientId = 1 })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Client2HospitalClient>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/ClientMapping/{Client.Data.Id}/delete")

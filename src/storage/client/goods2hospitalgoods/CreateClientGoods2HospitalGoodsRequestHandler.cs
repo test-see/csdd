@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class CreateClientGoods2HospitalGoodsRequestHandler : IRequestHandler<CreateClientGoods2HospitalGoods, ClientGoods2HospitalGoods>
+    public class CreateClientGoods2HospitalGoodsRequestHandler : IRequestHandler<CreateClientGoods2HospitalGoodsRequest, ClientGoods2HospitalGoods>
     {
         private readonly DefaultDbContext _context;
         public CreateClientGoods2HospitalGoodsRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<ClientGoods2HospitalGoods> Handle(IReceiveContext<CreateClientGoods2HospitalGoods> context, CancellationToken cancellationToken)
+        public async Task<ClientGoods2HospitalGoods> Handle(IReceiveContext<CreateClientGoods2HospitalGoodsRequest> context, CancellationToken cancellationToken)
         {
             var created = context.Message;
             var mapping = new ClientGoods2HospitalGoods

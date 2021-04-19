@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\carrier\carrier.csproj" />
     <ProjectReference Include="..\foundation\foundation.csproj" />
   </ItemGroup>
 

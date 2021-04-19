@@ -29,7 +29,7 @@ namespace apitest.client
             var Client = await _rootpath
                 .AppendPathSegment("/api/ClientGoods/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new CreateClientGoods
+                .PostJsonAsync(new CreateClientGoodsRequest
                 {
                     Name = "q",
                     ClientId = 1,
@@ -51,7 +51,7 @@ namespace apitest.client
             var message = await _rootpath
                 .AppendPathSegment("/api/ClientGoods/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new UpdateClientGoods
+                .PostJsonAsync(new UpdateClientGoodsRequest
                 {
                     Name = "q",
                     Producer = "x",

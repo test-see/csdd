@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace mediator.Config
 {
-    public class CreateConfigRequestHandler : IRequestHandler<CreateConfig, SysConfig>
+    public class CreateConfigRequestHandler : IRequestHandler<CreateConfigRequest, SysConfig>
     {
         private readonly DefaultDbContext _context;
         public CreateConfigRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task<SysConfig> Handle(IReceiveContext<CreateConfig> context, CancellationToken cancellationToken)
+        public async Task<SysConfig> Handle(IReceiveContext<CreateConfigRequest> context, CancellationToken cancellationToken)
         {
             var created = context.Message;
             var config = new SysConfig

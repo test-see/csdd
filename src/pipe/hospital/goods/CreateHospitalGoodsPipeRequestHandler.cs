@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class CreateHospitalGoodsPipeRequestHandler : IRequestHandler<Pipe<CreateHospitalGoods>, HospitalGoods>
+    public class CreateHospitalGoodsPipeRequestHandler : IRequestHandler<Pipe<CreateHospitalGoodsRequest>, HospitalGoods>
     {
         private readonly HospitalGoodsService _service;
         public CreateHospitalGoodsPipeRequestHandler(HospitalGoodsService service)
         {
             _service = service;
         }
-        public async Task<HospitalGoods> Handle(IReceiveContext<Pipe<CreateHospitalGoods>> context, CancellationToken cancellationToken)
+        public async Task<HospitalGoods> Handle(IReceiveContext<Pipe<CreateHospitalGoodsRequest>> context, CancellationToken cancellationToken)
         {
             return await _service.CreateAsync(context.Message.Payload);
         }

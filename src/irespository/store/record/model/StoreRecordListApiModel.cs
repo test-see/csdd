@@ -10,7 +10,7 @@ namespace irespository.store.profile.model
     {
         public int Id { get; set; }
         public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
-        public HospitalGoodsValueModel HospitalGoods { get; set; }
+        public GetHospitalGoodsResponse HospitalGoods { get; set; }
         public int BeforeQty { get; set; }
         public DataStoreChangeType ChangeType { get; set; }
         public int ChangeQty { get; set; }

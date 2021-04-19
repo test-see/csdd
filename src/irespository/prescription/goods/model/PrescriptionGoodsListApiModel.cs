@@ -6,7 +6,7 @@ namespace irespository.prescription.model
     {
         public int Id { get; set; }
         public int PrescriptionId { get; set; }
-        public HospitalGoodsValueModel HospitalGoods { get; set; }
+        public GetHospitalGoodsResponse HospitalGoods { get; set; }
         public int Qty { get; set; }
     }
 }

@@ -31,16 +31,16 @@ namespace csdd.Controllers.Sys
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteConfig { Id = id });
+            await _mediator.SendPipeAsync(new DeleteConfigCommand { Id = id });
             return Json(id);
         }
 
         [HttpPost]
         [Route("add")]
-        public async Task<JsonResult> PostAsync(CreateConfig created)
+        public async Task<JsonResult> PostAsync(CreateConfigRequest created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<CreateConfig, SysConfig>(created);
+            var data = await _mediator.RequestPipeAsync<CreateConfigRequest, SysConfig>(created);
             return Json(data);
         }
 

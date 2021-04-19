@@ -33,7 +33,7 @@ namespace webstarter.hospital.controllers.hospital
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteHospitalGoodsClient { Id = id });
+            await _mediator.SendPipeAsync(new DeleteHospitalGoodsClientCommand { Id = id });
             return Json(id);
         }
 
@@ -41,13 +41,13 @@ namespace webstarter.hospital.controllers.hospital
         [Route("add")]
         public async Task<JsonResult> PostAsync(int goodsId, int clientId)
         {
-            var created = new CreateHospitalGoodsClient
+            var created = new CreateHospitalGoodsClientRequest
             {
                 HospitalClientId = clientId,
                 HospitalGoodsId = goodsId,
                 UserId = Profile.Id,
             };
-            var data = await _mediator.RequestPipeAsync<CreateHospitalGoodsClient, HospitalGoodsClient>(created);
+            var data = await _mediator.RequestPipeAsync<CreateHospitalGoodsClientRequest, HospitalGoodsClient>(created);
             return Json(data);
         }
 

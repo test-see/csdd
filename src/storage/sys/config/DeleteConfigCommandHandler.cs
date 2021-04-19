@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace mediator.config
 {
-    public class DeleteConfigCommandHandler : ICommandHandler<DeleteConfig>
+    public class DeleteConfigCommandHandler : ICommandHandler<DeleteConfigCommand>
     {
         private readonly DefaultDbContext _context;
         public DeleteConfigCommandHandler(DefaultDbContext context)
         {
             _context = context;
         }
-        public async Task Handle(IReceiveContext<DeleteConfig> context, CancellationToken cancellationToken)
+        public async Task Handle(IReceiveContext<DeleteConfigCommand> context, CancellationToken cancellationToken)
         {
             var config = _context.SysConfig.Find(context.Message.Id);
             _context.SysConfig.Remove(config);

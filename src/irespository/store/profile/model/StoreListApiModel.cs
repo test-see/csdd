@@ -8,7 +8,7 @@ namespace irespository.store.profile.model
     {
         public int Id { get; set; }
         public GetHospitalDepartmentResponse HospitalDepartment { get; set; }
-        public HospitalGoodsValueModel HospitalGoods { get; set; }
+        public GetHospitalGoodsResponse HospitalGoods { get; set; }
         public int Qty { get; set; }
         public DateTime CreateTime { get; set; }
         public string CreateUserName { get; set; }

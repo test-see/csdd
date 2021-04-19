@@ -62,26 +62,26 @@ namespace webstarter.hospital.controllers.hospital
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteHospitalGoods { Id = id });
+            await _mediator.SendPipeAsync(new DeleteHospitalGoodsCommand { Id = id });
             return Json(id);
         }
 
         [HttpPost]
         [Route("add")]
-        public async Task<JsonResult> PostAsync(CreateHospitalGoods created)
+        public async Task<JsonResult> PostAsync(CreateHospitalGoodsRequest created)
         {
             created.UserId = Profile.Id;
             created.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = await _mediator.RequestPipeAsync<CreateHospitalGoods, HospitalGoods>(created);
+            var data = await _mediator.RequestPipeAsync<CreateHospitalGoodsRequest, HospitalGoods>(created);
             return Json(data);
         }
 
         [HttpPost]
         [Route("{id}/update")]
-        public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalGoods updated)
+        public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalGoodsRequest updated)
         {
             updated.Id = id;
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoods, HospitalGoods>(updated);
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsRequest, HospitalGoods>(updated);
             return Json(data);
         }
 
@@ -89,8 +89,8 @@ namespace webstarter.hospital.controllers.hospital
         [Route("{id}/inactive")]
         public async Task<JsonResult> UpdateInActiveAsync(int id)
         {
-            var updated = new UpdateHospitalGoodsIsActive { Id = id, IsActive = false, };
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActive, HospitalGoods>(updated);
+            var updated = new UpdateHospitalGoodsIsActiveRequest { Id = id, IsActive = false, };
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
             return Json(data);
         }
 
@@ -98,8 +98,8 @@ namespace webstarter.hospital.controllers.hospital
         [Route("{id}/active")]
         public async Task<JsonResult> UpdateActiveAsync(int id)
         {
-            var updated = new UpdateHospitalGoodsIsActive { Id = id, IsActive = true, };
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActive, HospitalGoods>(updated);
+            var updated = new UpdateHospitalGoodsIsActiveRequest { Id = id, IsActive = true, };
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
             return Json(data);
         }
     }

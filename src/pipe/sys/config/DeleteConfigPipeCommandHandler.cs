@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class DeleteConfigPipeCommandHandler : ICommandHandler<Pipe<DeleteConfig>>
+    public class DeleteConfigPipeCommandHandler : ICommandHandler<Pipe<DeleteConfigCommand>>
     {
         private readonly ConfigService _clientContext;
         public DeleteConfigPipeCommandHandler(ConfigService clientContext)
         {
             _clientContext = clientContext;
         }
-        public async Task Handle(IReceiveContext<Pipe<DeleteConfig>> context, CancellationToken cancellationToken)
+        public async Task Handle(IReceiveContext<Pipe<DeleteConfigCommand>> context, CancellationToken cancellationToken)
         {
             await _clientContext.DeleteAsync(context.Message.Payload);
         }

@@ -4,11 +4,18 @@ using domain.store;
 using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
+using foundation.mediator;
+using irespository.hospital.department.model;
+using irespository.hospital.goods.model;
+using irespository.hospital.model;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
 using irespository.purchase.setting.threshold.enums;
+using Mediator.Net;
+using storage.hospital.department.carrier;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace domain.purchase
 {
@@ -21,13 +28,15 @@ namespace domain.purchase
         private readonly HospitalDepartmentService _hospitalDepartmentContext;
         private readonly DefaultDbTransaction _defaultDbTransaction;
         private readonly PurchaseGoodsBillnoContext _purchaseGoodsBillnoContext;
+        private readonly IMediator _mediator;
         public PurchaseGoodsContext(IPurchaseGoodsRespository purchaseGoodsRespositoryy,
             StoreContext storeContext,
             HospitalGoodsClientService hospitalGoodsClientContext,
             DefaultDbTransaction defaultDbTransaction,
             StoreRecordContext storeRecordContext,
             HospitalDepartmentService hospitalDepartmentContext,
-            PurchaseGoodsBillnoContext purchaseGoodsBillnoContext)
+            PurchaseGoodsBillnoContext purchaseGoodsBillnoContext,
+            IMediator mediator)
         {
             _purchaseGoodsRespository = purchaseGoodsRespositoryy;
             _storeContext = storeContext;
@@ -36,6 +45,7 @@ namespace domain.purchase
             _hospitalDepartmentContext = hospitalDepartmentContext;
             _defaultDbTransaction = defaultDbTransaction;
             _purchaseGoodsBillnoContext = purchaseGoodsBillnoContext;
+            _mediator = mediator;
         }
 
         public PagerResult<PurchaseGoodsListApiModel> GetPagerList(PagerQuery<PurchaseGoodsListQueryModel> query)
@@ -63,12 +73,15 @@ namespace domain.purchase
             return _purchaseGoodsRespository.Update(id, updated);
         }
 
-        public void Generate(int purchaseId, PurchaseSettingThreshold threshold, int departmentId, int userId)
+        public async Task GenerateAsync(int purchaseId, PurchaseSettingThreshold threshold, int departmentId, int userId)
         {
-            var clients = _hospitalGoodsClientContext.GetListByGoodsId(threshold.HospitalGoodsId);
+            var clients = await _mediator.RequestListAsync<ListHospitalGoodsClientRequest, ListHospitalGoodsClientResponse>(new ListHospitalGoodsClientRequest
+            {
+                HospitalGoodsId = threshold.HospitalGoodsId
+            });
             if (!clients.Any()) return;
 
-            var qty = GetPurchaseGoodsQty(threshold, departmentId);
+            var qty = await GetPurchaseGoodsQtyAsync(threshold, departmentId);
             if (qty <= 0) return;
 
             Create(new PurchaseGoodsCreateApiModel
@@ -80,7 +93,7 @@ namespace domain.purchase
             }, userId);
         }
 
-        private int GetPurchaseGoodsQty(PurchaseSettingThreshold threshold, int departmentId)
+        private async Task<int> GetPurchaseGoodsQtyAsync(PurchaseSettingThreshold threshold, int departmentId)
         {
             var store = _storeContext.GetIndexByGoods(departmentId, threshold.HospitalGoodsId);
             var storeQty = store?.Qty ?? 0;
@@ -92,15 +105,15 @@ namespace domain.purchase
                         qty = threshold.UpQty - storeQty;
                     break;
                 case (int)PurchaseSettingThresholdType.ByPercent:
-                    qty = GetPurchaseGoodsQtyByPercent(threshold, storeQty, departmentId);
+                    qty = await GetPurchaseGoodsQtyByPercentAsync(threshold, storeQty, departmentId);
                     break;
             }
             return qty;
         }
 
-        private int GetPurchaseGoodsQtyByPercent(PurchaseSettingThreshold threshold, int storeQty, int departmentId)
+        private async Task<int> GetPurchaseGoodsQtyByPercentAsync(PurchaseSettingThreshold threshold, int storeQty, int departmentId)
         {
-            var department = _hospitalDepartmentContext.GetValue(departmentId);
+            var department = await _mediator.RequestSingleByIdAsync<GetHospitalDepartmentRequest, GetHospitalDepartmentResponse>(departmentId);
             var total = _storeRecordContext.GetConsumeAmount(departmentId, threshold.HospitalGoodsId, department.Hospital.ConsumeDays);
             var average = total / department.Hospital.ConsumeDays;
             if (storeQty < average * threshold.DownQty)

@@ -30,7 +30,7 @@ namespace apitest.client
             var Client = await _rootpath
                 .AppendPathSegment("/api/Client/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new CreateClient { Name = "q" })
+                .PostJsonAsync(new CreateClientRequest { Name = "q" })
                 .ReceiveJson<OkMessage<foundation.ef5.poco.Client>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/Client/{Client.Data.Id}/delete")
@@ -45,7 +45,7 @@ namespace apitest.client
             var message = await _rootpath
                 .AppendPathSegment("/api/Client/1/update")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new UpdateClient { Name = "q" })
+                .PostJsonAsync(new UpdateClientRequest { Name = "q" })
                 .ReceiveJson<OkMessage<int>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data > 0);

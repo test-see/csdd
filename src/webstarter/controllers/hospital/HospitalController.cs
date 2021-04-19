@@ -30,10 +30,10 @@ namespace csdd.Controllers.Info
 
         [HttpPost]
         [Route("{id}/update")]
-        public async Task<JsonResult> UpdateAsync(int id, UpdateHospital updated)
+        public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalRequest updated)
         {
             updated.Id = id;
-            var data = await _mediator.RequestPipeAsync<UpdateHospital, Hospital>(updated);
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalRequest, Hospital>(updated);
             return Json(data);
         }
 
@@ -41,16 +41,16 @@ namespace csdd.Controllers.Info
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteHospital { Id = id });
+            await _mediator.SendPipeAsync(new DeleteHospitalCommand { Id = id });
             return Json(id);
         }
 
         [HttpPost]
         [Route("add")]
-        public async Task<JsonResult> PostAsync(CreateHospital created)
+        public async Task<JsonResult> PostAsync(CreateHospitalRequest created)
         {
             created.UserId = UserId;
-            var data = await _mediator.RequestPipeAsync<CreateHospital, Hospital>(created);
+            var data = await _mediator.RequestPipeAsync<CreateHospitalRequest, Hospital>(created);
             return Json(data);
         }
     }

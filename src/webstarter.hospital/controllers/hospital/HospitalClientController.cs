@@ -36,26 +36,26 @@ namespace csdd.Controllers.Sys
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)
         {
-            await _mediator.SendPipeAsync(new DeleteHospitalClient { Id = id });
+            await _mediator.SendPipeAsync(new DeleteHospitalClientCommand { Id = id });
             return Json(id);
         }
 
         [HttpPost]
         [Route("add")]
-        public async Task<JsonResult> PostAsync(CreateHospitalClient created)
+        public async Task<JsonResult> PostAsync(CreateHospitalClientRequest created)
         {
             created.UserId = Profile.Id;
             created.HospitalId = HospitalDepartment.Hospital.Id;
-            var data = await _mediator.RequestPipeAsync<CreateHospitalClient, HospitalClient>(created);
+            var data = await _mediator.RequestPipeAsync<CreateHospitalClientRequest, HospitalClient>(created);
             return Json(data);
         }
 
         [HttpPost]
         [Route("{id}/update")]
-        public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalClient updated)
+        public async Task<JsonResult> UpdateAsync(int id, UpdateHospitalClientRequest updated)
         {
             updated.Id = id;
-            var data = await _mediator.RequestPipeAsync<UpdateHospitalClient, HospitalClient>(updated);
+            var data = await _mediator.RequestPipeAsync<UpdateHospitalClientRequest, HospitalClient>(updated);
             return Json(data);
         }
     }

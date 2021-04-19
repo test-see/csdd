@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace mediator.client
 {
-    public class DeleteHospitalPipeCommandHandler : ICommandHandler<Pipe<DeleteHospital>>
+    public class DeleteHospitalPipeCommandHandler : ICommandHandler<Pipe<DeleteHospitalCommand>>
     {
         private readonly HospitalService _service;
         public DeleteHospitalPipeCommandHandler(HospitalService service)
         {
             _service = service;
         }
-        public async Task Handle(IReceiveContext<Pipe<DeleteHospital>> context, CancellationToken cancellationToken)
+        public async Task Handle(IReceiveContext<Pipe<DeleteHospitalCommand>> context, CancellationToken cancellationToken)
         {
             await _service.DeleteAsync(context.Message.Payload);
         }
