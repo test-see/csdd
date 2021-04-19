@@ -21,12 +21,12 @@ namespace domain.hospital
         }
         public async Task<HospitalGoods> CreateAsync(CreateHospitalGoodsRequest created)
         {
-            return await _mediator.RequestSingleAsync<CreateHospitalGoodsRequest, HospitalGoods>(created);
+            return await _mediator.RequestAsync<CreateHospitalGoodsRequest, HospitalGoods>(created);
         }
 
         public async Task<HospitalGoods> UpdateAsync(UpdateHospitalGoodsRequest updated)
         {
-            var response = await _mediator.RequestSingleAsync<UpdateHospitalGoodsRequest, HospitalGoods>(updated);
+            var response = await _mediator.RequestAsync<UpdateHospitalGoodsRequest, HospitalGoods>(updated);
             await _eventlogHospitalGoodsContext.CreateAsync(new CreateEventlogHospitalGoodsRequest
             {
                 GoodsId = response.Id,
@@ -41,7 +41,7 @@ namespace domain.hospital
         }
         public async Task<HospitalGoods> UpdateIsActiveAsync(UpdateHospitalGoodsIsActiveRequest updated)
         {
-            return await _mediator.RequestSingleAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
+            return await _mediator.RequestAsync<UpdateHospitalGoodsIsActiveRequest, HospitalGoods>(updated);
         }
     }
 }
