@@ -27,15 +27,15 @@ namespace domain.purchase
 
         public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByHospital(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int hospitalId)
         {
-            return _purchaseGoodsBillnoRespository.GetPagerListByHospital(query, hospitalId);
+            return _purchaseGoodsBillnoRespository.GetPagerListByHospitalAsync(query, hospitalId);
         }
         public PagerResult<PurchaseGoodsBillnoListApiModel> GetPagerListByClient(PagerQuery<PurchaseGoodsBillnoListQueryModel> query, int clientId)
         {
-            return _purchaseGoodsBillnoRespository.GetPagerListByClient(query, clientId);
+            return _purchaseGoodsBillnoRespository.GetPagerListByClientAsync(query, clientId);
         }
         public IList<PurchaseGoodsBillnoListApiModel> GetListByPurchaseGoodsId(int purchaseGoodsId)
         {
-            return _purchaseGoodsBillnoRespository.GetListByPurchaseGoodsId(purchaseGoodsId);
+            return _purchaseGoodsBillnoRespository.GetListByPurchaseGoodsIdAsync(purchaseGoodsId);
         }
 
         public PurchaseGoodsBillno Create(PurchaseGoodsBillnoCreateApiModel created, int userId)
@@ -55,7 +55,7 @@ namespace domain.purchase
         {
             foreach (var id in ids)
             {
-                var goods = _purchaseGoodsBillnoRespository.GetIndex(id);
+                var goods = _purchaseGoodsBillnoRespository.GetIndexAsync(id);
                 var changed = new StoreChangeApiModel
                 {
                     ChangeTypeId = (int)StoreChangeType.Purchase,
