@@ -53,7 +53,7 @@ namespace csdd.Controllers.Shared
         public async Task<JsonResult> GenerateVerificationCodeAsync(string phone)
         {
             var data = await _userService.GenerateVerificationCodeAsync(phone);
-            return Json(data);
+            return Json(string.Empty);
         }
     }
 }
