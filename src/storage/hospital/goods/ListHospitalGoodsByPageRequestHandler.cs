@@ -14,11 +14,11 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListHospitalGoodsRequestHandler : IRequestHandler<PagerQuery<ListHospitalGoodsRequest>, PagerResult<ListHospitalGoodsResponse>>
+    public class ListHospitalGoodsByPageRequestHandler : IRequestHandler<PagerQuery<ListHospitalGoodsRequest>, PagerResult<ListHospitalGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
         private readonly IMediator _mediator;
-        public ListHospitalGoodsRequestHandler(DefaultDbContext context, IMediator mediator)
+        public ListHospitalGoodsByPageRequestHandler(DefaultDbContext context, IMediator mediator)
         {
             _context = context;
             _mediator = mediator;

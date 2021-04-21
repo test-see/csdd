@@ -1,4 +1,5 @@
 ﻿using apitest.shared;
+using domain.client.profile.entity;
 using Flurl;
 using Flurl.Http;
 using foundation.config;
@@ -18,8 +19,8 @@ namespace apitest.sys
             var message = await _rootpath
                 .AppendPathSegment("/api/WhitePhone/list")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new PagerQuery<WhitePhoneListQueryModel> { })
-                .ReceiveJson<OkMessage<PagerResult<WhitePhoneListApiModel>>>();
+                .PostJsonAsync(new PagerQuery<ListWhitePhoneRequest> { })
+                .ReceiveJson<OkMessage<PagerResult<ListWhitePhoneResponse>>>();
             Assert.AreEqual(200, message.Code);
             Assert.IsTrue(message.Data.Total > 0);
         }
@@ -29,7 +30,7 @@ namespace apitest.sys
             var role = await _rootpath
                 .AppendPathSegment("/api/WhitePhone/add")
                 .WithOAuthBearerToken(await getToken())
-                .PostJsonAsync(new WhitePhoneCreateApiModel { Phone = "1" })
+                .PostJsonAsync(new CreateWhitePhoneRequest { Phone = "1" })
                 .ReceiveJson<OkMessage<SysWhitePhone>>();
             var message = await _rootpath
                 .AppendPathSegment($"/api/WhitePhone/{role.Data.Id}/delete")

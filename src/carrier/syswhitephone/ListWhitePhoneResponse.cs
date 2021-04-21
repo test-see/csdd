@@ -2,7 +2,7 @@
 
 namespace irespository.sys.model
 {
-    public class WhitePhoneListApiModel
+    public class ListWhitePhoneResponse
     {
         public int Id { get; set; }
         public string Phone { get; set; }

@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListEventlogRequestHandler : IRequestHandler<PagerQuery<ListEventlogRequest>, PagerResult<ListEventlogResponse>>
+    public class ListEventlogByPageRequestHandler : IRequestHandler<PagerQuery<ListEventlogRequest>, PagerResult<ListEventlogResponse>>
     {
         private readonly DefaultDbContext _context;
-        public ListEventlogRequestHandler(DefaultDbContext context)
+        public ListEventlogByPageRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }

@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace mediator.request.client
 {
-    public class ListClientGoodseRequestHandler : IRequestHandler<PagerQuery<ListClientGoodsRequest>, PagerResult<ListClientGoodsResponse>>
+    public class ListClientGoodsByPageRequestHandler : IRequestHandler<PagerQuery<ListClientGoodsRequest>, PagerResult<ListClientGoodsResponse>>
     {
         private readonly DefaultDbContext _context;
-        public ListClientGoodseRequestHandler(DefaultDbContext context)
+        public ListClientGoodsByPageRequestHandler(DefaultDbContext context)
         {
             _context = context;
         }
