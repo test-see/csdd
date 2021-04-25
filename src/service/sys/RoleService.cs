@@ -10,8 +10,8 @@ namespace service.sys
 {
     public class RoleService : IRoleService
     {
-        private readonly RoleContext _roleContext;
-        public RoleService(RoleContext roleContext)
+        private readonly domain.sys.RoleService _roleContext;
+        public RoleService(domain.sys.RoleService roleContext)
         {
             _roleContext = roleContext;
         }

@@ -1,10 +1,11 @@
-﻿using EasyNetQ;
-using foundation.config;
+﻿using foundation.config;
 using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
 using System.Threading.Tasks;
+using RabbitMQ.Client.Core.DependencyInjection;
+using RabbitMQ.Client.Core.DependencyInjection.Services.Interfaces;
 
 namespace domain.purchase
 {
@@ -13,11 +14,11 @@ namespace domain.purchase
         private readonly IPurchaseRespository _purchaseRespository;
         private readonly PurchaseSettingThresholdContext _purchaseSettingThresholdContext;
         private readonly PurchaseGoodsContext _purchaseGoodsContext;
-        private readonly IBus _bus;
+        private readonly IProducingService _bus;
         public PurchaseContext(IPurchaseRespository purchaseRespository,
             PurchaseSettingThresholdContext purchaseSettingThresholdContext,
             PurchaseGoodsContext purchaseGoodsContext,
-            IBus bus)
+            IProducingService bus)
         {
             _purchaseRespository = purchaseRespository;
             _purchaseSettingThresholdContext = purchaseSettingThresholdContext;
@@ -34,7 +35,7 @@ namespace domain.purchase
             var purchase = _purchaseRespository.Create(created, departmentId, userId);
             if (created.PurchaseSettingId != null)
             {
-                await _bus.PubSub.PublishAsync(new RabbitMqMessage<int> { Payload = purchase.Id }, "Purchase.Generate");
+                await _bus.SendAsync(new RabbitMqMessage<int> { Payload = purchase.Id }, "exchange.name", "purchase.generate");
                 _purchaseRespository.UpdateStatus(purchase.Id, PurchaseStatus.Generating);
             }
             return purchase;

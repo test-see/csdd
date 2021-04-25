@@ -9,10 +9,10 @@ using System.Linq;
 
 namespace domain.sys
 {
-    public class RoleContext
+    public class RoleService
     {
         private readonly ISysRoleRespository _sysRoleRespository;
-        public RoleContext(ISysRoleRespository sysRoleRespository)
+        public RoleService(ISysRoleRespository sysRoleRespository)
         {
             _sysRoleRespository = sysRoleRespository;
         }

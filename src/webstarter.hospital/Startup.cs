@@ -1,9 +1,7 @@
 using csdd.Middlewares;
-using EasyNetQ;
 using foundation.config;
 using foundation.servicecollection;
 using irespository.user.enums;
-using iservice.purchase;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,14 +10,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client.Core.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
+using webstarter.hospital.handlers;
 
 namespace webstarter.hospital
 {
@@ -94,7 +92,12 @@ namespace webstarter.hospital
                 });
             });
 
-            Task.Run(() => SubscribeAsync(services));
+            services.AddRabbitMqProducer(Configuration.GetSection("AppConfig:RabbitMq"))
+                .AddProductionExchange("exchange.name", Configuration.GetSection("AppConfig:RabbitMqExchange"));
+
+            services.AddRabbitMqServices(Configuration.GetSection("AppConfig:RabbitMq"))
+                .AddProductionExchange("exchange.name", Configuration.GetSection("AppConfig:RabbitMqExchange"))
+                .AddAsyncMessageHandlerTransient<PurchaseGenerateAsyncMessageHandler>("purchase.generate");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -138,21 +141,6 @@ namespace webstarter.hospital
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", $"My API {Version}");
             });
-        }
-
-        private async Task SubscribeAsync(IServiceCollection services)
-        {
-            var sp = services.BuildServiceProvider();
-            var bus = sp.GetService<IBus>();
-            var log = sp.GetService<ILoggerFactory>().CreateLogger<Startup>();
-            await bus.PubSub.SubscribeAsync<RabbitMqMessage<int>>("my_subscription_id",
-                async msg =>
-                {
-                    log.LogInformation("begin...");
-                    await sp.GetService<IPurchaseService>().GenerateAsync(msg.Payload);
-                    log.LogInformation("end...");
-                },
-                x => x.WithTopic("Purchase.Generate"));
         }
     }
 }

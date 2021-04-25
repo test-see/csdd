@@ -12,4 +12,8 @@
     <ProjectReference Include="..\foundation\foundation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="sysrole\" />
+  </ItemGroup>
+
 </Project>

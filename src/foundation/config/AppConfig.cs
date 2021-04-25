@@ -1,4 +1,6 @@
-﻿namespace foundation.config
+﻿using System.Collections.Generic;
+
+namespace foundation.config
 {
     public class AppConfig
     {
@@ -6,6 +8,7 @@
         public AuthenticationConfig Authentication { get; set; }
         public TencentCloudSmsConfig TencentCloudSMS { get; set; }
         public RabbitMqConfig RabbitMq { get; set; }
+        public RabbitMqExchangeConfig RabbitMqExchange { get; set; }
     }
     public class AuthenticationConfig
     {
@@ -24,5 +27,14 @@
         public int Port { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
+    }
+    public class RabbitMqExchangeConfig
+    {
+        public string Type { get; set; }
+        public IList<RabbitMqExchangeQueuesConfig> Queues { get; set; }
+    }
+    public class RabbitMqExchangeQueuesConfig
+    {
+        public string Name { get; set; }
     }
 }
