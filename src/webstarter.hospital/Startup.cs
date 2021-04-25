@@ -92,11 +92,11 @@ namespace webstarter.hospital
                 });
             });
 
-            services.AddRabbitMqProducer(Configuration.GetSection("AppConfig:RabbitMq"))
-                .AddProductionExchange("exchange.name", Configuration.GetSection("AppConfig:RabbitMqExchange"));
+            services.AddRabbitMqProducer(Configuration.GetSection("AppConfig").GetSection("RabbitMq"))
+                .AddProductionExchange("exchange.name", Configuration.GetSection("AppConfig").GetSection("RabbitMqExchange"));
 
-            services.AddRabbitMqServices(Configuration.GetSection("AppConfig:RabbitMq"))
-                .AddProductionExchange("exchange.name", Configuration.GetSection("AppConfig:RabbitMqExchange"))
+            services.AddRabbitMqServices(Configuration.GetSection("AppConfig").GetSection("RabbitMq"))
+                .AddProductionExchange("exchange.name", Configuration.GetSection("AppConfig").GetSection("RabbitMqExchange"))
                 .AddAsyncMessageHandlerTransient<PurchaseGenerateAsyncMessageHandler>("purchase.generate");
         }
 
