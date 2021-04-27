@@ -92,12 +92,9 @@ namespace webstarter.hospital
                 });
             });
 
-            services.AddRabbitMqProducer(Configuration.GetSection("AppConfig").GetSection("RabbitMq"))
-                .AddProductionExchange("exchange.name", Configuration.GetSection("AppConfig").GetSection("RabbitMqExchange"));
-
-            services.AddRabbitMqServices(Configuration.GetSection("AppConfig").GetSection("RabbitMq"))
-                .AddProductionExchange("exchange.name", Configuration.GetSection("AppConfig").GetSection("RabbitMqExchange"))
-                .AddAsyncMessageHandlerTransient<PurchaseGenerateAsyncMessageHandler>("purchase.generate");
+            services.AddRabbitMqClient(Configuration.GetSection("AppConfig").GetSection("RabbitMq"))
+                .AddExchange("exchange.name", true, Configuration.GetSection("AppConfig").GetSection("RabbitMqExchange"))
+                .AddAsyncNonCyclicMessageHandlerTransient<PurchaseGenerateAsyncMessageHandler>("purchase.generate");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

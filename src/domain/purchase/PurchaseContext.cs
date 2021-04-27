@@ -3,9 +3,8 @@ using foundation.ef5.poco;
 using irespository.purchase;
 using irespository.purchase.model;
 using irespository.purchase.profile.enums;
+using RabbitMQ.Client.Core.DependencyInjection.Services;
 using System.Threading.Tasks;
-using RabbitMQ.Client.Core.DependencyInjection;
-using RabbitMQ.Client.Core.DependencyInjection.Services.Interfaces;
 
 namespace domain.purchase
 {
@@ -14,11 +13,11 @@ namespace domain.purchase
         private readonly IPurchaseRespository _purchaseRespository;
         private readonly PurchaseSettingThresholdContext _purchaseSettingThresholdContext;
         private readonly PurchaseGoodsContext _purchaseGoodsContext;
-        private readonly IProducingService _bus;
+        private readonly IQueueService _bus;
         public PurchaseContext(IPurchaseRespository purchaseRespository,
             PurchaseSettingThresholdContext purchaseSettingThresholdContext,
-            PurchaseGoodsContext purchaseGoodsContext,
-            IProducingService bus)
+            PurchaseGoodsContext purchaseGoodsContext, IQueueService bus
+            )
         {
             _purchaseRespository = purchaseRespository;
             _purchaseSettingThresholdContext = purchaseSettingThresholdContext;
