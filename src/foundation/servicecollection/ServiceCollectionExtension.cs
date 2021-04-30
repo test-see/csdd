@@ -38,7 +38,7 @@ namespace foundation.servicecollection
                     t.UserName = AppConfig.RabbitMq.UserName;
                     t.Password = AppConfig.RabbitMq.Password;
                 });
-                x.UseInMemoryStorage();
+                x.UseEntityFramework<DefaultDbContext>();
             });
         }
     }
