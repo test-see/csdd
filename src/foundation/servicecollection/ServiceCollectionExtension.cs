@@ -33,7 +33,11 @@ namespace foundation.servicecollection
 
             services.AddCap(x =>
             {
-                x.UseRabbitMQ("localhost:5672");
+                x.UseRabbitMQ(t => {
+                    t.HostName = "localhost";
+                    t.UserName = "guest";
+                    t.Password = "guest";
+                });
                 x.UseInMemoryStorage();
             });
         }
