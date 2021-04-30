@@ -34,9 +34,9 @@ namespace foundation.servicecollection
             services.AddCap(x =>
             {
                 x.UseRabbitMQ(t => {
-                    t.HostName = "localhost";
-                    t.UserName = "guest";
-                    t.Password = "guest";
+                    t.HostName = AppConfig.RabbitMq.HostName;
+                    t.UserName = AppConfig.RabbitMq.UserName;
+                    t.Password = AppConfig.RabbitMq.Password;
                 });
                 x.UseInMemoryStorage();
             });
