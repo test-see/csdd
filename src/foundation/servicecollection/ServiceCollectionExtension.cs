@@ -31,7 +31,11 @@ namespace foundation.servicecollection
             mediaBuilder.RegisterHandlers(Assembly.Load("pipe"), Assembly.Load("storage"));
             services.RegisterMediator(mediaBuilder);
 
-
+            services.AddCap(x =>
+            {
+                x.UseRabbitMQ("localhost:5672");
+                x.UseInMemoryStorage();
+            });
         }
     }
 }

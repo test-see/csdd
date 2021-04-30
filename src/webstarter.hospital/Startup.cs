@@ -1,5 +1,6 @@
 using csdd.Middlewares;
 using foundation.config;
+using foundation.ef5;
 using foundation.servicecollection;
 using irespository.user.enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,7 +13,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RabbitMQ.Client.Core.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,6 +39,7 @@ namespace webstarter.hospital
         {
             services.AddHealthChecks();
             services.AddControllers();
+            services.AddTransient<PurchaseGenerateAsyncMessageHandler>();
             services.AddExtensionCollections(AppConfig);
             services.AddCors(options =>
             {
@@ -92,9 +93,7 @@ namespace webstarter.hospital
                 });
             });
 
-            services.AddRabbitMqClient(Configuration.GetSection("AppConfig").GetSection("RabbitMq"))
-                .AddExchange("exchange.name", true, Configuration.GetSection("AppConfig").GetSection("RabbitMqExchange"))
-                .AddAsyncNonCyclicMessageHandlerTransient<PurchaseGenerateAsyncMessageHandler>("purchase.generate");
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

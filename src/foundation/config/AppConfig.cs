@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace foundation.config
+﻿namespace foundation.config
 {
     public class AppConfig
     {
         public string ConnectionString { get; set; }
         public AuthenticationConfig Authentication { get; set; }
         public TencentCloudSmsConfig TencentCloudSMS { get; set; }
-        public RabbitMqConfig RabbitMq { get; set; }
-        public RabbitMqExchangeConfig RabbitMqExchange { get; set; }
     }
     public class AuthenticationConfig
     {
@@ -20,21 +16,5 @@ namespace foundation.config
     {
         public string SecretId { get; set; }
         public string SecretKey { get; set; }
-    }
-    public class RabbitMqConfig
-    {
-        public string HostName { get; set; }
-        public int Port { get; set; }
-        public string Password { get; set; }
-        public string UserName { get; set; }
-    }
-    public class RabbitMqExchangeConfig
-    {
-        public string Type { get; set; }
-        public IList<RabbitMqExchangeQueuesConfig> Queues { get; set; }
-    }
-    public class RabbitMqExchangeQueuesConfig
-    {
-        public string Name { get; set; }
     }
 }

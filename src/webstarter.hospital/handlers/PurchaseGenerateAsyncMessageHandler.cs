@@ -1,34 +1,21 @@
-﻿using foundation.config;
+﻿using DotNetCore.CAP;
+using foundation.config;
 using iservice.purchase;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using RabbitMQ.Client.Core.DependencyInjection;
-using RabbitMQ.Client.Core.DependencyInjection.MessageHandlers;
-using RabbitMQ.Client.Core.DependencyInjection.Services;
-using RabbitMQ.Client.Events;
-using System;
 using System.Threading.Tasks;
 
 namespace webstarter.hospital.handlers
 {
-    public class PurchaseGenerateAsyncMessageHandler : IAsyncNonCyclicMessageHandler
+    public class PurchaseGenerateAsyncMessageHandler: ICapSubscribe
     {
-        private readonly ILogger<PurchaseGenerateAsyncMessageHandler> _logger;
         private readonly IPurchaseService _service;
-        public PurchaseGenerateAsyncMessageHandler(ILogger<PurchaseGenerateAsyncMessageHandler> logger,
-            IServiceProvider provider)
+        public PurchaseGenerateAsyncMessageHandler(IPurchaseService service)
         {
-            _logger = logger;
-            _service = provider.GetRequiredService<IPurchaseService>();
+            _service = service;
         }
-
-        public async Task Handle(BasicDeliverEventArgs eventArgs, string matchingRoute, IQueueService queueService)
+        [CapSubscribe("purchase.generate")]
+        public async Task Handle(RabbitMqMessage<int> message)
         {
-            _logger.LogInformation($"Handling message {eventArgs.GetMessage()} by routing key {matchingRoute}");
-            var purchase = JsonConvert.DeserializeObject<RabbitMqMessage<int>>(eventArgs.GetMessage());
-            await _service.GenerateAsync(purchase.Payload);
-            _logger.LogInformation($"Completed message {eventArgs.GetMessage()} by routing key {matchingRoute}");
+            await _service.GenerateAsync(message.Payload);
         }
     }
 }
