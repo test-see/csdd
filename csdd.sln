@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webstarter.client", "src\we
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apitest.client", "src\apitest.client\apitest.client.csproj", "{6214F13C-1FDC-4442-9A86-BB3C4BC499CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pipe", "src\pipe\pipe.csproj", "{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "domain.bff", "src\domain.bff\domain.bff.csproj", "{CFCF2B73-35B5-446B-BE1D-3C99C36AC2BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.facade", "4.facade", "{2C2CC1B4-CF38-4F8B-9B7C-5DAEAD239557}"
 EndProject
@@ -47,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storage", "3.storage", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage", "src\storage\storage.csproj", "{49B22CE6-3E0B-4229-8B8F-75377F4F3BFC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "carrier", "src\carrier\carrier.csproj", "{165D803C-9A7E-4B5F-B978-433A694EBB0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage.carrier", "src\storage.carrier\storage.carrier.csproj", "{165D803C-9A7E-4B5F-B978-433A694EBB0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

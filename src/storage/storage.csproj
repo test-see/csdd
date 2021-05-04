@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\carrier\carrier.csproj" />
+    <ProjectReference Include="..\storage.carrier\storage.carrier.csproj" />
   </ItemGroup>
 
 </Project>

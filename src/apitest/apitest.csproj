@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\pipe\pipe.csproj" />
+    <ProjectReference Include="..\domain.bff\domain.bff.csproj" />
     <ProjectReference Include="..\service\service.csproj" />
   </ItemGroup>
 

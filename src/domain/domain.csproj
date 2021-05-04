@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\carrier\carrier.csproj" />
+    <ProjectReference Include="..\storage.carrier\storage.carrier.csproj" />
     <ProjectReference Include="..\irespository\irespository.csproj" />
   </ItemGroup>
 
