@@ -4,6 +4,8 @@ using storage.qurable.v2.client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using static domain.v2.client.Client2HospitalClientService;
+using static storage.qurable.v2.client.IClient2HospitalClientQurableRespository;
 
 namespace client.application.v2
 {

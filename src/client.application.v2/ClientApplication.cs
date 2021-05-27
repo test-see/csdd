@@ -5,6 +5,8 @@ using storage.qurable.v2.client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using static domain.v2.client.ClientService;
+using static storage.qurable.v2.client.IClientQurableRespository;
 
 namespace client.application.v2
 {

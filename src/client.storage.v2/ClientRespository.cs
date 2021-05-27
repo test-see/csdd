@@ -3,11 +3,11 @@ using foundation.ef5;
 using foundation.ef5.poco;
 using Microsoft.EntityFrameworkCore;
 using storage.adapter.v2.client;
-using storage.qurable.v2.client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static storage.qurable.v2.client.IClientQurableRespository;
 
 namespace storage.v2.client
 {

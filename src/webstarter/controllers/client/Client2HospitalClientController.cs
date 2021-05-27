@@ -1,14 +1,12 @@
 ﻿using client.application.v2;
 using csdd.Controllers.Shared;
-using domain.v2.client;
 using foundation.config;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using storage.qurable.v2.client;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 using static client.application.v2.Client2HospitalClientApplication;
+using static domain.v2.client.Client2HospitalClientService;
+using static storage.qurable.v2.client.IClient2HospitalClientQurableRespository;
 
 namespace csdd.controllers.client
 {

@@ -28,10 +28,10 @@ namespace domain.v2.client
                 HospitalClientId = payload.HospitalClientId,
             });
         }
-    }
-    public class Client2HospitalClientCreation
-    {
-        public int ClientId { get; set; }
-        public int HospitalClientId { get; set; }
+        public class Client2HospitalClientCreation
+        {
+            public int ClientId { get; set; }
+            public int HospitalClientId { get; set; }
+        }
     }
 }

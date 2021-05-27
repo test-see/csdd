@@ -37,14 +37,14 @@ namespace domain.v2.client
             await HospitalClientService.DeleteAllByClientIdAsync(id);
             await _clientRespository.DeleteAsync(id);
         }
-    }
-    public class ClientCreation
-    {
-        public string Name { get; set; }
-    }
-    public class ClientUpdation
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public class ClientCreation
+        {
+            public string Name { get; set; }
+        }
+        public class ClientUpdation
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
     }
 }

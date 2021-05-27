@@ -8,14 +8,14 @@ namespace storage.qurable.v2.client
     {
         Task<ClientOverview> GetOverviewByIdAsync(int id);
         PagerResult<ClientOverview> ListOverviewByPage(PagerQuery<ClientQurable> payload);
-    }
-    public class ClientOverview
-    {
-        public Client Client { get; set; }
-        public User User { get; set; }
-    }
-    public class ClientQurable
-    {
-        public string Name { get; set; }
+        public class ClientOverview
+        {
+            public Client Client { get; set; }
+            public User User { get; set; }
+        }
+        public class ClientQurable
+        {
+            public string Name { get; set; }
+        }
     }
 }
