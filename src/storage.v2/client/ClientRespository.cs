@@ -65,5 +65,11 @@ namespace storage.v2.client
             await _context.SaveChangesAsync();
             return data;
         }
+        public async Task DeleteAsync(int id)
+        {
+            var data = _context.Client.Find(id);
+            _context.Client.Remove(data);
+            await _context.SaveChangesAsync();
+        }
     }
 }

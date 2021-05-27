@@ -8,5 +8,6 @@ namespace storage.adapter.v2.client
     {
         Task<Client> CreateAsync(Client payload);
         Task<Client> UpdateAsync(Client payload);
+        Task DeleteAsync(int id);
     }
 }

@@ -1,11 +1,7 @@
 ﻿using application.v2.client;
 using csdd.Controllers.Shared;
-using domain.client.profile.entity;
 using domain.v2.client;
 using foundation.config;
-using foundation.ef5.poco;
-using foundation.mediator;
-using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using storage.qurable.v2.client;
@@ -18,14 +14,11 @@ namespace csdd.Controllers.Info
     [Authorize(Policy = "RequireAdministratorRole")]
     public class ClientController : DefaultControllerBase
     {
-        private readonly IMediator _mediator;
         private readonly IClientQurableRespository _clientRespository;
         private readonly ClientApplication _clientApplication;
-        public ClientController(IMediator mediator,
-            IClientQurableRespository clientRespository,
+        public ClientController(IClientQurableRespository clientRespository,
             ClientApplication clientApplication)
         {
-            _mediator = mediator;
             _clientRespository = clientRespository;
             _clientApplication = clientApplication;
         }
@@ -77,15 +70,12 @@ namespace csdd.Controllers.Info
             var data = await _clientApplication.UpdateAsync(payload);
             return OkMessage(data.Id);
         }
-
-
-        // 待续
         [HttpGet]
         [Route("{id}/delete")]
-        public async Task<JsonResult> DeleteAsync(int id)
+        public async Task<OkMessage<int>> DeleteAsync(int id)
         {
-            await _mediator.ToPipeAsync(new DeleteClientCommand { Id = id });
-            return Json(id);
+            await _clientApplication.DeleteAsync(id);
+            return OkMessage(id);
         }
     }
     public class GetClient

@@ -19,5 +19,9 @@ namespace application.v2.client
         {
             return await _clientService.UpdateAsync(payload);
         }
+        public async Task DeleteAsync(int id)
+        {
+            await _clientService.DeleteAsync(id);
+        }
     }
 }

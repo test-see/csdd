@@ -7,9 +7,12 @@ namespace domain.v2.client
     public class ClientService
     {
         private readonly IClientRespository _clientRespository;
-        public ClientService(IClientRespository clientRespository)
+        public Client2HospitalClientService HospitalClientService { get; private set; }
+        public ClientService(IClientRespository clientRespository,
+            Client2HospitalClientService hospitalClientService)
         {
             _clientRespository = clientRespository;
+            HospitalClientService = hospitalClientService;
         }
         public async Task<Client> CreateAsync(ClientCreation payload, int userId)
         {
@@ -26,8 +29,12 @@ namespace domain.v2.client
                 Name = payload.Name,
             });
         }
+        public async Task DeleteAsync(int id)
+        {
+            await HospitalClientService.DeleteAllByClientIdAsync(id);
+            await _clientRespository.DeleteAsync(id);
+        }
     }
-
     public class ClientCreation
     {
         public string Name { get; set; }
