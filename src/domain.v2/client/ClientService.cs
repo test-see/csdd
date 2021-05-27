@@ -8,11 +8,14 @@ namespace domain.v2.client
     {
         private readonly IClientRespository _clientRespository;
         public Client2HospitalClientService HospitalClientService { get; private set; }
+        public ClientGoodsService GoodsService { get; private set; }
         public ClientService(IClientRespository clientRespository,
-            Client2HospitalClientService hospitalClientService)
+            Client2HospitalClientService hospitalClientService,
+           ClientGoodsService goodsService)
         {
             _clientRespository = clientRespository;
             HospitalClientService = hospitalClientService;
+            GoodsService = goodsService;
         }
         public async Task<Client> CreateAsync(ClientCreation payload, int userId)
         {
