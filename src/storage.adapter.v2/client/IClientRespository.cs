@@ -7,4 +7,9 @@ namespace storage.adapter.v2.client
     {
          Task<ClientOverview> GetOverviewByIdAsync(int id);
     }
+    public class ClientOverview
+    {
+        public Client Client { get; set; }
+        public User User { get; set; }
+    }
 }

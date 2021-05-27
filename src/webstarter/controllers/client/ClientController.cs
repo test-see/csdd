@@ -38,6 +38,7 @@ namespace csdd.Controllers.Info
                 Name = data.Client.Name,
             });
         }
+        
         [HttpPost]
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListClientRequest> query)
