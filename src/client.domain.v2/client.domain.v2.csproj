@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\domain.v2\domain.v2.csproj" />
+    <ProjectReference Include="..\client.storage.adapter.v2\client.storage.adapter.v2.csproj" />
   </ItemGroup>
 
 </Project>

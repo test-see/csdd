@@ -53,13 +53,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v2020", "v2020", "{7C020F78
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v2021.5", "v2021.5", "{6E812523-0FDA-4884-A19C-4A5FD4146557}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "domain.v2", "src\domain.v2\domain.v2.csproj", "{6D8FA4B6-BDD2-4170-A8E4-826FB6C08528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client.domain.v2", "src\client.domain.v2\client.domain.v2.csproj", "{6D8FA4B6-BDD2-4170-A8E4-826FB6C08528}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage.v2", "src\storage.v2\storage.v2.csproj", "{20110C49-6956-4C3B-A82A-B51F6C5D111F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client.storage.v2", "src\client.storage.v2\client.storage.v2.csproj", "{20110C49-6956-4C3B-A82A-B51F6C5D111F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage.adapter.v2", "src\storage.adapter.v2\storage.adapter.v2.csproj", "{DF669182-BA1B-4399-B764-5DB0E4895419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client.storage.adapter.v2", "src\client.storage.adapter.v2\client.storage.adapter.v2.csproj", "{DF669182-BA1B-4399-B764-5DB0E4895419}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage.qurable.v2", "src\storage.qurable.v2\storage.qurable.v2.csproj", "{E67BFC61-931C-49F2-A21E-9C83E34B2708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client.storage.qurable.v2", "src\client.storage.qurable.v2\client.storage.qurable.v2.csproj", "{E67BFC61-931C-49F2-A21E-9C83E34B2708}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

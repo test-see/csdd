@@ -36,6 +36,7 @@ namespace csdd.Controllers.Sys
         {
             await _mediator.ToPipeAsync(new DeleteClientGoodsCommand { Id = id });
             return Json(id);
+
         }
 
         [HttpPost]

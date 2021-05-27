@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\storage.adapter.v2\storage.adapter.v2.csproj" />
+    <ProjectReference Include="..\foundation\foundation.csproj" />
+    <ProjectReference Include="..\client.storage.qurable.v2\client.storage.qurable.v2.csproj" />
   </ItemGroup>
 
 </Project>
