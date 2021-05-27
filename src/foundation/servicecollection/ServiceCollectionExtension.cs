@@ -26,6 +26,8 @@ namespace foundation.servicecollection
                 .AsImplementedInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("domain")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsSelfWithInterfaces().WithScopedLifetime());
+            services.Scan(scan => scan.FromAssemblies(Assembly.Load("domain.v2")).AddClasses(t => t.Where(type => type.IsClass))
+                .AsSelf().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
 
