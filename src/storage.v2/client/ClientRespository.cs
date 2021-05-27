@@ -1,12 +1,13 @@
-﻿using foundation.ef5;
+﻿using foundation.config;
+using foundation.ef5;
 using foundation.ef5.poco;
+using Microsoft.EntityFrameworkCore;
 using storage.adapter.v2.client;
+using storage.qurable.v2.client;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using foundation.config;
+using System.Threading.Tasks;
 
 namespace storage.v2.client
 {
@@ -46,6 +47,14 @@ namespace storage.v2.client
             }
             var data = new PagerResult<ClientOverview>(payload.Index, payload.Size, sql);
             return data;
+        }
+
+        public async Task<Client> CreateAsync(Client payload)
+        {
+            payload.CreateTime = DateTime.Now;
+            _context.Client.Add(payload);
+            await _context.SaveChangesAsync();
+            return payload;
         }
     }
 }

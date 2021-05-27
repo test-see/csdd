@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\foundation\foundation.csproj" />
+    <ProjectReference Include="..\storage.qurable.v2\storage.qurable.v2.csproj" />
   </ItemGroup>
 
 </Project>

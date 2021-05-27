@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\storage.adapter.v2\storage.adapter.v2.csproj" />
+    <ProjectReference Include="..\foundation\foundation.csproj" />
   </ItemGroup>
 
 </Project>

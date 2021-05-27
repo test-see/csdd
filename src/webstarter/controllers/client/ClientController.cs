@@ -1,12 +1,14 @@
-﻿using csdd.Controllers.Shared;
+﻿using application.v2.client;
+using csdd.Controllers.Shared;
 using domain.client.profile.entity;
+using domain.v2.client;
 using foundation.config;
 using foundation.ef5.poco;
 using foundation.mediator;
 using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using storage.adapter.v2.client;
+using storage.qurable.v2.client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,12 +19,15 @@ namespace csdd.Controllers.Info
     public class ClientController : DefaultControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IClientRespository _clientRespository;
+        private readonly IClientQurableRespository _clientRespository;
+        private readonly ClientApplication _clientApplication;
         public ClientController(IMediator mediator,
-            IClientRespository clientRespository)
+            IClientQurableRespository clientRespository,
+            ClientApplication clientApplication)
         {
             _mediator = mediator;
             _clientRespository = clientRespository;
+            _clientApplication = clientApplication;
         }
 
         [HttpGet]
@@ -57,17 +62,16 @@ namespace csdd.Controllers.Info
                 }).ToList(),
             });
         }
+        [HttpPost]
+        [Route("add")]
+        public async Task<OkMessage<int>> PostAsync(ClientCreation payload)
+        {
+            var data = await _clientApplication.CreateAsync(payload, UserId);
+            return OkMessage(data.Id);
+        }
 
 
         // 待续
-        [HttpPost]
-        [Route("add")]
-        public async Task<JsonResult> PostAsync(CreateClientRequest created)
-        {
-            created.UserId = UserId;
-            var data = await _mediator.ToPipeAsync<CreateClientRequest, Client>(created);
-            return Json(data);
-        }
         [HttpPost]
         [Route("{id}/update")]
         public async Task<JsonResult> UpdateAsync(int id, UpdateClientRequest updated)

@@ -30,6 +30,8 @@ namespace foundation.servicecollection
                 .AsSelf().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
+            services.Scan(scan => scan.FromAssemblies(Assembly.Load("application.v2")).AddClasses(t => t.Where(type => type.IsClass))
+                .AsSelf().WithScopedLifetime());
 
             var mediaBuilder = new MediatorBuilder();
             mediaBuilder.RegisterHandlers(Assembly.Load("domain.bff"), Assembly.Load("storage"));
