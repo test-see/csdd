@@ -7,5 +7,6 @@ namespace storage.adapter.v2.client
     public interface IClientRespository: IClientQurableRespository
     {
         Task<Client> CreateAsync(Client payload);
+        Task<Client> UpdateAsync(Client payload);
     }
 }

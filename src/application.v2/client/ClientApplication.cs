@@ -15,5 +15,9 @@ namespace application.v2.client
         {
             return await _clientService.CreateAsync(payload, userId);
         }
+        public async Task<Client> UpdateAsync(ClientUpdation payload)
+        {
+            return await _clientService.UpdateAsync(payload);
+        }
     }
 }

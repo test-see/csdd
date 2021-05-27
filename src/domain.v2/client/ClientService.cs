@@ -19,10 +19,22 @@ namespace domain.v2.client
                 Name = payload.Name,
             });
         }
+        public async Task<Client> UpdateAsync(ClientUpdation payload)
+        {
+            return await _clientRespository.UpdateAsync(new Client
+            {
+                Name = payload.Name,
+            });
+        }
     }
 
     public class ClientCreation
     {
+        public string Name { get; set; }
+    }
+    public class ClientUpdation
+    {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

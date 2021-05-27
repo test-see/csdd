@@ -69,18 +69,17 @@ namespace csdd.Controllers.Info
             var data = await _clientApplication.CreateAsync(payload, UserId);
             return OkMessage(data.Id);
         }
+        [HttpPost]
+        [Route("{id}/update")]
+        public async Task<OkMessage<int>> UpdateAsync(int id, ClientUpdation payload)
+        {
+            payload.Id = id;
+            var data = await _clientApplication.UpdateAsync(payload);
+            return OkMessage(data.Id);
+        }
 
 
         // 待续
-        [HttpPost]
-        [Route("{id}/update")]
-        public async Task<JsonResult> UpdateAsync(int id, UpdateClientRequest updated)
-        {
-            updated.Id = id;
-            updated.UserId = UserId;
-            var data = await _mediator.ToPipeAsync<UpdateClientRequest, Client>(updated);
-            return Json(data);
-        }
         [HttpGet]
         [Route("{id}/delete")]
         public async Task<JsonResult> DeleteAsync(int id)

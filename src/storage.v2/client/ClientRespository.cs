@@ -56,5 +56,14 @@ namespace storage.v2.client
             await _context.SaveChangesAsync();
             return payload;
         }
+        public async Task<Client> UpdateAsync(Client payload)
+        {
+            var data = _context.Client.First(x => x.Id == payload.Id);
+            data.Name = payload.Name;
+
+            _context.Client.Update(data);
+            await _context.SaveChangesAsync();
+            return data;
+        }
     }
 }
