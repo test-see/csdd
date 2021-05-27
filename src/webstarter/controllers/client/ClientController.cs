@@ -7,9 +7,8 @@ using irespository.client.model;
 using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using nouns.client.profile;
 using storage.adapter.v2.client;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 
 namespace csdd.Controllers.Info
@@ -28,10 +27,10 @@ namespace csdd.Controllers.Info
 
         [HttpGet]
         [Route("{id}/index")]
-        public async Task<OkMessage<GetClientResponse>> GetAsync(int id)
+        public async Task<OkMessage<GetClient>> GetAsync(int id)
         {
             var data = await _clientRespository.GetOverviewByIdAsync(id);
-            return OkMessage(new GetClientResponse
+            return OkMessage(new GetClient
             {
                 CreateTime = data.Client.CreateTime,
                 CreateUserName = data.User.Username,
@@ -71,5 +70,12 @@ namespace csdd.Controllers.Info
             await _mediator.ToPipeAsync(new DeleteClientCommand { Id = id });
             return Json(id);
         }
+    }
+    public class GetClient
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime CreateTime { get; set; }
+        public string CreateUserName { get; set; }
     }
 }
