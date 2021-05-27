@@ -53,15 +53,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v2020", "v2020", "{7C020F78
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "v2021.5", "v2021.5", "{6E812523-0FDA-4884-A19C-4A5FD4146557}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "domain.v2", "src\domain.v2\domain.v2.csproj", "{6D8FA4B6-BDD2-4170-A8E4-826FB6C08528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "domain.v2", "src\domain.v2\domain.v2.csproj", "{6D8FA4B6-BDD2-4170-A8E4-826FB6C08528}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "storage.v2", "src\storage.v2\storage.v2.csproj", "{20110C49-6956-4C3B-A82A-B51F6C5D111F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage.v2", "src\storage.v2\storage.v2.csproj", "{20110C49-6956-4C3B-A82A-B51F6C5D111F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "storage.adapter.v2", "src\storage.adapter.v2\storage.adapter.v2.csproj", "{DF669182-BA1B-4399-B764-5DB0E4895419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage.adapter.v2", "src\storage.adapter.v2\storage.adapter.v2.csproj", "{DF669182-BA1B-4399-B764-5DB0E4895419}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "application.v2", "src\application.v2\application.v2.csproj", "{3E75E671-8806-43FB-BFE3-1FB48BA8112E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "storage.qurable.v2", "src\storage.qurable.v2\storage.qurable.v2.csproj", "{E67BFC61-931C-49F2-A21E-9C83E34B2708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "storage.qurable.v2", "src\storage.qurable.v2\storage.qurable.v2.csproj", "{E67BFC61-931C-49F2-A21E-9C83E34B2708}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,10 +139,6 @@ Global
 		{DF669182-BA1B-4399-B764-5DB0E4895419}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF669182-BA1B-4399-B764-5DB0E4895419}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF669182-BA1B-4399-B764-5DB0E4895419}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E75E671-8806-43FB-BFE3-1FB48BA8112E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E75E671-8806-43FB-BFE3-1FB48BA8112E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E75E671-8806-43FB-BFE3-1FB48BA8112E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E75E671-8806-43FB-BFE3-1FB48BA8112E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E67BFC61-931C-49F2-A21E-9C83E34B2708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E67BFC61-931C-49F2-A21E-9C83E34B2708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E67BFC61-931C-49F2-A21E-9C83E34B2708}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -177,7 +171,6 @@ Global
 		{6D8FA4B6-BDD2-4170-A8E4-826FB6C08528} = {6E812523-0FDA-4884-A19C-4A5FD4146557}
 		{20110C49-6956-4C3B-A82A-B51F6C5D111F} = {6E812523-0FDA-4884-A19C-4A5FD4146557}
 		{DF669182-BA1B-4399-B764-5DB0E4895419} = {6E812523-0FDA-4884-A19C-4A5FD4146557}
-		{3E75E671-8806-43FB-BFE3-1FB48BA8112E} = {6E812523-0FDA-4884-A19C-4A5FD4146557}
 		{E67BFC61-931C-49F2-A21E-9C83E34B2708} = {6E812523-0FDA-4884-A19C-4A5FD4146557}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

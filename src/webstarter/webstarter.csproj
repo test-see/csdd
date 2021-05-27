@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\application.v2\application.v2.csproj" />
     <ProjectReference Include="..\domain.bff\domain.bff.csproj" />
+    <ProjectReference Include="..\domain.v2\domain.v2.csproj" />
     <ProjectReference Include="..\respository\respository.csproj" />
     <ProjectReference Include="..\service\service.csproj" />
     <ProjectReference Include="..\storage.v2\storage.v2.csproj" />

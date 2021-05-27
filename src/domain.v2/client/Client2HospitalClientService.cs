@@ -14,5 +14,9 @@ namespace domain.v2.client
         {
             await _client2HospitalClientRespository.DeleteAllByClientIdAsync(clientId);
         }
+        public async Task DeleteAsync(int id)
+        {
+            await _client2HospitalClientRespository.DeleteAsync(id);
+        }
     }
 }

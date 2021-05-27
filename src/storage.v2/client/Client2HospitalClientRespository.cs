@@ -18,5 +18,11 @@ namespace storage.v2.client
             _context.Client2HospitalClient.RemoveRange(data);
             await _context.SaveChangesAsync();
         }
+        public async Task DeleteAsync(int id)
+        {
+            var data = _context.Client2HospitalClient.Find(id);
+            _context.Client2HospitalClient.Remove(data);
+            await _context.SaveChangesAsync();
+        }
     }
 }

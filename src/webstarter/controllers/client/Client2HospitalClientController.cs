@@ -1,5 +1,6 @@
 ﻿using csdd.Controllers.Shared;
 using domain.client.profile.entity;
+using domain.v2.client;
 using foundation.config;
 using foundation.ef5.poco;
 using foundation.mediator;
@@ -17,11 +18,22 @@ namespace csdd.controllers.client
     public class Client2HospitalClientController : DefaultControllerBase
     {
         private readonly IMediator _mediator;
-        public Client2HospitalClientController(IMediator mediator)
+        private readonly ClientService _clientService;
+        public Client2HospitalClientController(IMediator mediator,
+            ClientService clientService)
         {
             _mediator = mediator;
+            _clientService = clientService;
+        }
+        [HttpGet]
+        [Route("{id}/delete")]
+        public async Task<OkMessage<int>> DeleteAsync(int id)
+        {
+            await _clientService.HospitalClientService.DeleteAsync(id);
+            return OkMessage(id);
         }
 
+        // 待续
         [HttpPost]
         [Route("list")]
         public async Task<JsonResult> ListAsync(PagerQuery<ListClient2HospitalClientRequest> query)
@@ -30,13 +42,6 @@ namespace csdd.controllers.client
             return Json(data);
         }
 
-        [HttpGet]
-        [Route("{id}/delete")]
-        public async Task<JsonResult> DeleteAsync(int id)
-        {
-            await _mediator.ToPipeAsync(new DeleteClient2HospitalClientCommand { Id = id });
-            return Json(id);
-        }
 
         [HttpPost]
         [Route("add")]

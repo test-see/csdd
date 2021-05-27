@@ -1,5 +1,4 @@
-﻿using application.v2.client;
-using csdd.Controllers.Shared;
+﻿using csdd.Controllers.Shared;
 using domain.v2.client;
 using foundation.config;
 using Microsoft.AspNetCore.Authorization;
@@ -15,12 +14,12 @@ namespace csdd.Controllers.Info
     public class ClientController : DefaultControllerBase
     {
         private readonly IClientQurableRespository _clientRespository;
-        private readonly ClientApplication _clientApplication;
+        private readonly ClientService _clientService;
         public ClientController(IClientQurableRespository clientRespository,
-            ClientApplication clientApplication)
+            ClientService clientService)
         {
             _clientRespository = clientRespository;
-            _clientApplication = clientApplication;
+            _clientService = clientService;
         }
 
         [HttpGet]
@@ -59,7 +58,7 @@ namespace csdd.Controllers.Info
         [Route("add")]
         public async Task<OkMessage<int>> PostAsync(ClientCreation payload)
         {
-            var data = await _clientApplication.CreateAsync(payload, UserId);
+            var data = await _clientService.CreateAsync(payload, UserId);
             return OkMessage(data.Id);
         }
         [HttpPost]
@@ -67,14 +66,14 @@ namespace csdd.Controllers.Info
         public async Task<OkMessage<int>> UpdateAsync(int id, ClientUpdation payload)
         {
             payload.Id = id;
-            var data = await _clientApplication.UpdateAsync(payload);
+            var data = await _clientService.UpdateAsync(payload);
             return OkMessage(data.Id);
         }
         [HttpGet]
         [Route("{id}/delete")]
         public async Task<OkMessage<int>> DeleteAsync(int id)
         {
-            await _clientApplication.DeleteAsync(id);
+            await _clientService.DeleteAsync(id);
             return OkMessage(id);
         }
     }
