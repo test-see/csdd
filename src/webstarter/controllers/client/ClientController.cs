@@ -8,6 +8,7 @@ using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nouns.client.profile;
+using storage.adapter.v2.client;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,17 +18,26 @@ namespace csdd.Controllers.Info
     public class ClientController : DefaultControllerBase
     {
         private readonly IMediator _mediator;
-        public ClientController(IMediator mediator)
+        private readonly IClientRespository _clientRespository;
+        public ClientController(IMediator mediator,
+            IClientRespository clientRespository)
         {
             _mediator = mediator;
+            _clientRespository = clientRespository;
         }
 
         [HttpGet]
         [Route("{id}/index")]
-        public async Task<JsonResult> GetAsync(int id)
+        public async Task<OkMessage<GetClientResponse>> GetAsync(int id)
         {
-            var data = await _mediator.GetByIdAsync<GetClientRequest, GetClientResponse>(id);
-            return Json(data);
+            var data = await _clientRespository.GetOverviewByIdAsync(id);
+            return OkMessage(new GetClientResponse
+            {
+                CreateTime = data.Client.CreateTime,
+                CreateUserName = data.User.Username,
+                Id = data.Client.Id,
+                Name = data.Client.Name,
+            });
         }
         [HttpPost]
         [Route("list")]

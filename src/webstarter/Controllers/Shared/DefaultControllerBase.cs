@@ -16,5 +16,9 @@ namespace csdd.Controllers.Shared
         {
             return new JsonResult(new OkMessage<T>(d));
         }
+        protected OkMessage<T> OkMessage<T>(T d)
+        {
+            return new OkMessage<T>(d);
+        }
     }
 }

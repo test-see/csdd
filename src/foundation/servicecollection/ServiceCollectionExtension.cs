@@ -22,13 +22,15 @@ namespace foundation.servicecollection
             services.AddScoped<DefaultDbTransaction>();
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("respository")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
+            services.Scan(scan => scan.FromAssemblies(Assembly.Load("storage.v2")).AddClasses(t => t.Where(type => type.IsClass))
+                .AsImplementedInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("domain")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsSelfWithInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
 
             var mediaBuilder = new MediatorBuilder();
-            mediaBuilder.RegisterHandlers(Assembly.Load("pipe"), Assembly.Load("storage"));
+            mediaBuilder.RegisterHandlers(Assembly.Load("domain.bff"), Assembly.Load("storage"));
             services.RegisterMediator(mediaBuilder);
 
             services.AddCap(x =>
