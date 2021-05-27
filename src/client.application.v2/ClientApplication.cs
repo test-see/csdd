@@ -12,11 +12,14 @@ namespace client.application.v2
     {
         private readonly ClientService _clientService;
         private readonly IClientQurableRespository _clientRespository;
+        public Client2HospitalClientApplication HospitalClientApplication { get; private set; }
         public ClientApplication(IClientQurableRespository clientRespository,
-            ClientService clientService)
+            ClientService clientService,
+            Client2HospitalClientApplication hospitalClientApplication)
         {
             _clientService = clientService;
             _clientRespository = clientRespository;
+            HospitalClientApplication = hospitalClientApplication;
         }
         public async Task<Client> CreateAsync(ClientCreation payload, int userId)
         {
@@ -58,12 +61,13 @@ namespace client.application.v2
                 }).ToList(),
             };
         }
-    }
-    public class GetClient
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime CreateTime { get; set; }
-        public string CreateUserName { get; set; }
+
+        public class GetClient
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public DateTime CreateTime { get; set; }
+            public string CreateUserName { get; set; }
+        }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using storage.qurable.v2.client;
 using System.Threading.Tasks;
+using static client.application.v2.ClientApplication;
 
 namespace csdd.Controllers.Info
 {
