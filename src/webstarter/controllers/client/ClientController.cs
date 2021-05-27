@@ -28,9 +28,9 @@ namespace csdd.Controllers.Info
         }
         [HttpPost]
         [Route("list")]
-        public OkMessage<PagerResult<GetClient>> List(PagerQuery<ClientQurable> payload)
+        public OkMessage<PagerResult<GetClient>> GetByPage(PagerQuery<ClientQurable> payload)
         {
-            var data = _clientApplication.ListOverviewByPage(payload);
+            var data = _clientApplication.GetOverviewByPage(payload);
             return OkMessage(data);
         }
         [HttpPost]

@@ -28,7 +28,7 @@ namespace client.application.v2
             var data = await _clientService.HospitalClientService.CreateAsync(payload, userId);
             return data.Id;
         }
-        public PagerResult<GetClient2HospitalClient> ListOverviewByPage(PagerQuery<Client2HospitalClientQurable> payload)
+        public PagerResult<GetClient2HospitalClient> GetOverviewByPage(PagerQuery<Client2HospitalClientQurable> payload)
         {
             var data = _client2HospitalClientQurableRespository.ListOverviewByPage(payload);
             return new PagerResult<GetClient2HospitalClient>

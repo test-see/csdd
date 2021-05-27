@@ -35,9 +35,9 @@ namespace csdd.controllers.client
         }
         [HttpPost]
         [Route("list")]
-        public OkMessage<PagerResult<GetClient2HospitalClient>> List(PagerQuery<Client2HospitalClientQurable> payload)
+        public OkMessage<PagerResult<GetClient2HospitalClient>> GetByPage(PagerQuery<Client2HospitalClientQurable> payload)
         {
-            var data = _clientApplication.HospitalClientApplication.ListOverviewByPage(payload);
+            var data = _clientApplication.HospitalClientApplication.GetOverviewByPage(payload);
             return OkMessage(data);
         }
     }

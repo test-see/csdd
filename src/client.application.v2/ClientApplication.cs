@@ -46,7 +46,7 @@ namespace client.application.v2
                 Name = data.Client.Name,
             };
         }
-        public PagerResult<GetClient> ListOverviewByPage(PagerQuery<ClientQurable> payload)
+        public PagerResult<GetClient> GetOverviewByPage(PagerQuery<ClientQurable> payload)
         {
             var data = _clientRespository.ListOverviewByPage(payload);
             return new PagerResult<GetClient>
