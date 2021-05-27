@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using foundation.config;
 
 namespace storage.v2.client
 {
@@ -27,6 +28,24 @@ namespace storage.v2.client
                           User = u,
                       };
             return await sql.FirstOrDefaultAsync();
+        }
+
+        public PagerResult<ClientOverview> ListOverviewByPage(PagerQuery<ClientQurable> payload)
+        {
+            var sql = from r in _context.Client
+                      join u in _context.User on r.CreateUserId equals u.Id
+                      orderby r.Id descending
+                      select new ClientOverview
+                      {
+                          Client = r,
+                          User = u,
+                      };
+            if (!string.IsNullOrEmpty(payload.Query?.Name))
+            {
+                sql = sql.Where(x => x.Client.Name.Contains(payload.Query.Name));
+            }
+            var data = new PagerResult<ClientOverview>(payload.Index, payload.Size, sql);
+            return data;
         }
     }
 }

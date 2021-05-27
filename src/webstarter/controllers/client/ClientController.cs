@@ -3,12 +3,12 @@ using domain.client.profile.entity;
 using foundation.config;
 using foundation.ef5.poco;
 using foundation.mediator;
-using irespository.client.model;
 using Mediator.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using storage.adapter.v2.client;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace csdd.Controllers.Info
@@ -38,15 +38,28 @@ namespace csdd.Controllers.Info
                 Name = data.Client.Name,
             });
         }
-        
         [HttpPost]
         [Route("list")]
-        public async Task<JsonResult> ListAsync(PagerQuery<ListClientRequest> query)
+        public OkMessage<PagerResult<GetClient>> List(PagerQuery<ClientQurable> payload)
         {
-            var data = await _mediator.ListByPageAsync<ListClientRequest, ListClientResponse>(query);
-            return Json(data);
+            var data = _clientRespository.ListOverviewByPage(payload);
+            return OkMessage(new PagerResult<GetClient>
+            {
+                Index = data.Index,
+                Size = data.Size,
+                Total = data.Total,
+                Result = data.Result.Select(x => new GetClient
+                {
+                    CreateTime = x.Client.CreateTime,
+                    CreateUserName = x.User.Username,
+                    Id = x.Client.Id,
+                    Name = x.Client.Name,
+                }).ToList(),
+            });
         }
 
+
+        // 待续
         [HttpPost]
         [Route("add")]
         public async Task<JsonResult> PostAsync(CreateClientRequest created)
