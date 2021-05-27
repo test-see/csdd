@@ -37,7 +37,7 @@ namespace storage.v2.client
             return payload;
         }
 
-        public PagerResult<Client2HospitalClientOverview> ListOverviewByPage(PagerQuery<Client2HospitalClientQurable> payload)
+        public PagerResult<Client2HospitalClientOverview> GetOverviewByPage(PagerQuery<Client2HospitalClientQurable> payload)
         {
             var sql = from p in _context.Client2HospitalClient
                       join u in _context.User on p.CreateUserId equals u.Id

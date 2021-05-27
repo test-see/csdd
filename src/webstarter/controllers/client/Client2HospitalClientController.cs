@@ -37,7 +37,7 @@ namespace csdd.controllers.client
         [Route("list")]
         public OkMessage<PagerResult<GetClient2HospitalClient>> GetByPage(PagerQuery<Client2HospitalClientQurable> payload)
         {
-            var data = _clientApplication.HospitalClientApplication.GetOverviewByPage(payload);
+            var data = _clientApplication.HospitalClientApplication.GetByPage(payload);
             return OkMessage(data);
         }
     }

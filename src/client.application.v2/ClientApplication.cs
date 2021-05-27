@@ -35,7 +35,7 @@ namespace client.application.v2
         {
             await _clientService.DeleteAsync(id);
         }
-        public async Task<GetClient> GetOverviewByIdAsync(int id)
+        public async Task<GetClient> GetByIdAsync(int id)
         {
             var data = await _clientRespository.GetOverviewByIdAsync(id);
             return new GetClient
@@ -46,9 +46,9 @@ namespace client.application.v2
                 Name = data.Client.Name,
             };
         }
-        public PagerResult<GetClient> GetOverviewByPage(PagerQuery<ClientQurable> payload)
+        public PagerResult<GetClient> GetByPage(PagerQuery<ClientQurable> payload)
         {
-            var data = _clientRespository.ListOverviewByPage(payload);
+            var data = _clientRespository.GetOverviewByPage(payload);
             return new PagerResult<GetClient>
             {
                 Index = data.Index,

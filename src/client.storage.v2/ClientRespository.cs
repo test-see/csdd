@@ -31,7 +31,7 @@ namespace storage.v2.client
             return await sql.FirstOrDefaultAsync();
         }
 
-        public PagerResult<ClientOverview> ListOverviewByPage(PagerQuery<ClientQurable> payload)
+        public PagerResult<ClientOverview> GetOverviewByPage(PagerQuery<ClientQurable> payload)
         {
             var sql = from r in _context.Client
                       join u in _context.User on r.CreateUserId equals u.Id

@@ -23,14 +23,14 @@ namespace csdd.Controllers.Info
         [Route("{id}/index")]
         public async Task<OkMessage<GetClient>> GetAsync(int id)
         {
-            var data = await _clientApplication.GetOverviewByIdAsync(id);
+            var data = await _clientApplication.GetByIdAsync(id);
             return OkMessage(data);
         }
         [HttpPost]
         [Route("list")]
         public OkMessage<PagerResult<GetClient>> GetByPage(PagerQuery<ClientQurable> payload)
         {
-            var data = _clientApplication.GetOverviewByPage(payload);
+            var data = _clientApplication.GetByPage(payload);
             return OkMessage(data);
         }
         [HttpPost]

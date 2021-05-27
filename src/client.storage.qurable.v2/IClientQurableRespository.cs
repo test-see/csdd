@@ -7,7 +7,7 @@ namespace storage.qurable.v2.client
     public interface IClientQurableRespository
     {
         Task<ClientOverview> GetOverviewByIdAsync(int id);
-        PagerResult<ClientOverview> ListOverviewByPage(PagerQuery<ClientQurable> payload);
+        PagerResult<ClientOverview> GetOverviewByPage(PagerQuery<ClientQurable> payload);
         public class ClientOverview
         {
             public Client Client { get; set; }

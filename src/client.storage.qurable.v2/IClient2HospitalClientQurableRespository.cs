@@ -5,7 +5,7 @@ namespace storage.qurable.v2.client
 {
     public interface IClient2HospitalClientQurableRespository
     {
-        PagerResult<Client2HospitalClientOverview> ListOverviewByPage(PagerQuery<Client2HospitalClientQurable> payload);
+        PagerResult<Client2HospitalClientOverview> GetOverviewByPage(PagerQuery<Client2HospitalClientQurable> payload);
         public class Client2HospitalClientOverview
         {
             public User User { get; set; }
