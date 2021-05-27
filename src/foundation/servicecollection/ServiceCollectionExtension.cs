@@ -22,14 +22,16 @@ namespace foundation.servicecollection
             services.AddScoped<DefaultDbTransaction>();
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("respository")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("storage.v2")).AddClasses(t => t.Where(type => type.IsClass))
+            services.Scan(scan => scan.FromAssemblies(Assembly.Load("client.storage.v2")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("domain")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsSelfWithInterfaces().WithScopedLifetime());
-            services.Scan(scan => scan.FromAssemblies(Assembly.Load("domain.v2")).AddClasses(t => t.Where(type => type.IsClass))
+            services.Scan(scan => scan.FromAssemblies(Assembly.Load("client.domain.v2")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsSelf().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblies(Assembly.Load("service")).AddClasses(t => t.Where(type => type.IsClass))
                 .AsImplementedInterfaces().WithScopedLifetime());
+            services.Scan(scan => scan.FromAssemblies(Assembly.Load("client.application.v2")).AddClasses(t => t.Where(type => type.IsClass))
+                .AsSelf().WithScopedLifetime());
 
             var mediaBuilder = new MediatorBuilder();
             mediaBuilder.RegisterHandlers(Assembly.Load("domain.bff"), Assembly.Load("storage"));

@@ -13,9 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\client.storage.v2\client.storage.v2.csproj" />
+    <ProjectReference Include="..\client.application.v2\client.application.v2.csproj" />
     <ProjectReference Include="..\domain.bff\domain.bff.csproj" />
-    <ProjectReference Include="..\client.domain.v2\client.domain.v2.csproj" />
     <ProjectReference Include="..\respository\respository.csproj" />
     <ProjectReference Include="..\service\service.csproj" />
     <ProjectReference Include="..\storage\storage.csproj" />

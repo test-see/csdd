@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\client.domain.v2\client.domain.v2.csproj" />
+    <ProjectReference Include="..\client.storage.v2\client.storage.v2.csproj" />
+  </ItemGroup>
+
+</Project>
