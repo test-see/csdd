@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using foundation.ef5.poco;
+using System.Threading.Tasks;
 
 namespace storage.adapter.v2.client
 {
@@ -6,5 +7,6 @@ namespace storage.adapter.v2.client
     {
         Task DeleteAllByClientIdAsync(int clientId);
         Task DeleteAsync(int id);
+        Task<Client2HospitalClient> CreateAsync(Client2HospitalClient payload);
     }
 }

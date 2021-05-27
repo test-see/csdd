@@ -1,5 +1,4 @@
 ﻿using csdd.Controllers.Shared;
-using domain.client.profile.entity;
 using domain.v2.client;
 using foundation.config;
 using foundation.ef5.poco;
@@ -32,6 +31,13 @@ namespace csdd.controllers.client
             await _clientService.HospitalClientService.DeleteAsync(id);
             return OkMessage(id);
         }
+        [HttpPost]
+        [Route("add")]
+        public async Task<OkMessage<int>> PostAsync(Client2HospitalClientCreation payload)
+        {
+            var data = await _clientService.HospitalClientService.CreateAsync(payload, UserId);
+            return OkMessage(data.Id);
+        }
 
         // 待续
         [HttpPost]
@@ -42,14 +48,5 @@ namespace csdd.controllers.client
             return Json(data);
         }
 
-
-        [HttpPost]
-        [Route("add")]
-        public async Task<JsonResult> PostAsync(CreateClient2HospitalClientRequest created)
-        {
-            created.UserId = UserId;
-            var data = await _mediator.ToPipeAsync<CreateClient2HospitalClientRequest, Client2HospitalClient>(created);
-            return Json(data);
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using storage.adapter.v2.client;
+﻿using foundation.ef5.poco;
+using storage.adapter.v2.client;
 using System.Threading.Tasks;
 
 namespace domain.v2.client
@@ -18,5 +19,19 @@ namespace domain.v2.client
         {
             await _client2HospitalClientRespository.DeleteAsync(id);
         }
+        public async Task<Client2HospitalClient> CreateAsync(Client2HospitalClientCreation payload, int userId)
+        {
+            return await _client2HospitalClientRespository.CreateAsync(new Client2HospitalClient
+            {
+                CreateUserId = userId,
+                ClientId = payload.ClientId,
+                HospitalClientId = payload.HospitalClientId,
+            });
+        }
+    }
+    public class Client2HospitalClientCreation
+    {
+        public int ClientId { get; set; }
+        public int HospitalClientId { get; set; }
     }
 }

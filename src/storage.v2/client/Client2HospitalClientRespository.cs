@@ -1,5 +1,7 @@
 ﻿using foundation.ef5;
+using foundation.ef5.poco;
 using storage.adapter.v2.client;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +25,14 @@ namespace storage.v2.client
             var data = _context.Client2HospitalClient.Find(id);
             _context.Client2HospitalClient.Remove(data);
             await _context.SaveChangesAsync();
+        }
+        public async Task<Client2HospitalClient> CreateAsync(Client2HospitalClient payload)
+        {
+            payload.CreateTime = DateTime.Now;
+            _context.Client2HospitalClient.Add(payload);
+            await _context.SaveChangesAsync();
+
+            return payload;
         }
     }
 }
