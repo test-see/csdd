@@ -1,12 +1,12 @@
-﻿using domain.v2.client;
+﻿using client.application.v2.view;
+using client.domain.v2.entity;
+using client.storage.qurable.v2.data;
+using domain.v2.client;
 using foundation.config;
 using foundation.ef5.poco;
 using storage.qurable.v2.client;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static domain.v2.client.ClientService;
-using static storage.qurable.v2.client.IClientQurableRespository;
 
 namespace client.application.v2
 {
@@ -64,12 +64,5 @@ namespace client.application.v2
             };
         }
 
-        public class GetClient
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public DateTime CreateTime { get; set; }
-            public string CreateUserName { get; set; }
-        }
     }
 }

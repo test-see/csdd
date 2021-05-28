@@ -1,4 +1,5 @@
-﻿using foundation.ef5.poco;
+﻿using client.domain.v2.entity;
+using foundation.ef5.poco;
 using storage.adapter.v2.client;
 using System.Threading.Tasks;
 
@@ -36,15 +37,6 @@ namespace domain.v2.client
         {
             await HospitalClientService.DeleteAllByClientIdAsync(id);
             await _clientRespository.DeleteAsync(id);
-        }
-        public class ClientCreation
-        {
-            public string Name { get; set; }
-        }
-        public class ClientUpdation
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
         }
     }
 }

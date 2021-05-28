@@ -1,4 +1,5 @@
-﻿using foundation.config;
+﻿using client.storage.qurable.v2.data;
+using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static storage.qurable.v2.client.IClientQurableRespository;
 
 namespace storage.v2.client
 {
