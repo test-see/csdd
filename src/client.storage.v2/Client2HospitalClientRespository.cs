@@ -1,11 +1,11 @@
-﻿using foundation.config;
+﻿using client.storage.qurable.v2.data;
+using foundation.config;
 using foundation.ef5;
 using foundation.ef5.poco;
 using storage.adapter.v2.client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static storage.qurable.v2.client.IClient2HospitalClientQurableRespository;
 
 namespace storage.v2.client
 {

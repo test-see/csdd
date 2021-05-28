@@ -1,4 +1,5 @@
-﻿using foundation.ef5.poco;
+﻿using client.domain.v2.entity;
+using foundation.ef5.poco;
 using storage.adapter.v2.client;
 using System.Threading.Tasks;
 
@@ -27,11 +28,6 @@ namespace domain.v2.client
                 ClientId = payload.ClientId,
                 HospitalClientId = payload.HospitalClientId,
             });
-        }
-        public class Client2HospitalClientCreation
-        {
-            public int ClientId { get; set; }
-            public int HospitalClientId { get; set; }
         }
     }
 }

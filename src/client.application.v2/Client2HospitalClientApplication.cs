@@ -1,11 +1,11 @@
-﻿using domain.v2.client;
+﻿using client.application.v2.view;
+using client.domain.v2.entity;
+using client.storage.qurable.v2.data;
+using domain.v2.client;
 using foundation.config;
 using storage.qurable.v2.client;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static domain.v2.client.Client2HospitalClientService;
-using static storage.qurable.v2.client.IClient2HospitalClientQurableRespository;
 
 namespace client.application.v2
 {
@@ -41,11 +41,11 @@ namespace client.application.v2
                     ClientMappingId = x.Mapping.Id,
                     CreateTime = x.Mapping.CreateTime,
                     CreateUserName = x.User.Username,
-                    HospitalClient = new GetHospitalClient
+                    HospitalClient = new GetClient2HospitalClient.GetHospitalClient
                     {
                         Id = x.HospitalClient.Id,
                         Name = x.HospitalClient.Name,
-                        Hospital = new GetHospital
+                        Hospital = new GetClient2HospitalClient.GetHospital
                         {
                             Id = x.Hospital.Id,
                             Name = x.Hospital.Name,
@@ -53,39 +53,13 @@ namespace client.application.v2
                             Remark = x.Hospital.Remark,
                         },
                     },
-                    Client = new GetClient
+                    Client = new GetClient2HospitalClient.GetClient
                     {
                         Id = x.Client.Id,
                         Name = x.Client.Name,
                     }
                 })
             };
-        }
-        public class GetClient2HospitalClient
-        {
-            public int ClientMappingId { get; set; }
-            public GetHospitalClient HospitalClient { get; set; }
-            public GetClient Client { get; set; }
-            public DateTime CreateTime { get; set; }
-            public string CreateUserName { get; set; }
-        }
-        public class GetHospitalClient
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public GetHospital Hospital { get; set; }
-        }
-        public class GetClient
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-        }
-        public class GetHospital
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public int ConsumeDays { get; set; }
-            public string Remark { get; set; }
         }
     }
 }
